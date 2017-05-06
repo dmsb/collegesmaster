@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -16,8 +17,8 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "TB_PROFESSOR")
-public class Professor extends Person implements Serializable {
+@Table(name = "PROFESSOR")
+public class Professor extends User implements Serializable {
 
     private static final long serialVersionUID = 6162120714620872426L;
 
@@ -43,8 +44,11 @@ public class Professor extends Person implements Serializable {
              joinColumns={@JoinColumn(name="PROFESSOR_ID")},
              inverseJoinColumns={@JoinColumn(name="DISCIPLINE_ID")})
     private List<Discipline> disciplines;
-        
-    public List<Challenge> getChallenges() {
+    
+    @Embedded
+    private GeneralInfo generalInfo;
+
+	public List<Challenge> getChallenges() {
         return challenges;
     }
 
@@ -83,4 +87,12 @@ public class Professor extends Person implements Serializable {
     public void setDisciplines(List<Discipline> disciplines) {
         this.disciplines = disciplines;
     }
+    
+    public GeneralInfo getGeneralInfo() {
+		return generalInfo;
+	}
+
+	public void setGeneralInfo(GeneralInfo generalInfo) {
+		this.generalInfo = generalInfo;
+	}
 }

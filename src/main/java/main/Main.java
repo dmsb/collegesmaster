@@ -10,25 +10,22 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 import br.com.collegesmaster.enums.Profile;
 import br.com.collegesmaster.model.Course;
 import br.com.collegesmaster.model.Discipline;
+import br.com.collegesmaster.model.GeneralInfo;
 import br.com.collegesmaster.model.Institute;
 import br.com.collegesmaster.model.Localization;
 import br.com.collegesmaster.model.Professor;
 import br.com.collegesmaster.model.Student;
 import br.com.collegesmaster.model.User;
+import br.com.collegesmaster.util.FunctionUtils;
 
 /**
  *
@@ -63,7 +60,7 @@ public class Main {
 
     private static <T> T insert(T object) {      
     	
-    	showInvalidColumnsValues(object);
+    	FunctionUtils.showInvalidColumnsValues(object);
     	
         try {            
             ET.begin();
@@ -73,39 +70,6 @@ public class Main {
             if (EM != null) {
                 EM.clear();
             }            
-        }
-        return object;
-    }
-
-	private static <T> void showInvalidColumnsValues(T object) {
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    	Validator validator = factory.getValidator();
-
-    	Set<ConstraintViolation<T>> constraintViolations = validator.validate(object);
-
-    	if (constraintViolations.size() > 0 ) {
-    	System.out.println("Constraint Violations occurred..");
-    	for (ConstraintViolation<T> contraints : constraintViolations) {
-    	System.out.println(contraints.getRootBeanClass().getSimpleName()+
-    	"." + contraints.getPropertyPath() + " " + contraints.getMessage());
-    	  }
-    	}
-	}
-
-    private static <T> T select(Long id) {
-        return null;
-    }
-
-    private static <T> T update(T object) {
-
-        try {
-            ET.begin();
-            EM.merge(object);
-            ET.commit();
-        } finally {
-            if (EM != null) {
-            	EM.clear();
-            }
         }
         return object;
     }
@@ -147,12 +111,7 @@ public class Main {
     private static User buildUser(final Profile profile, final Institute institute, 
             final Course course, final Discipline discipline) {
         
-        final User user = new User();
-
-        user.setPassword("Password3");
-        user.setRawPassword("Password3");
-        user.setSalt("78");
-        user.setProfile(profile);
+        User user = new User();        
 
         final Calendar calendar = new GregorianCalendar();
         calendar.setTime(new Date());
@@ -166,36 +125,43 @@ public class Main {
         local.setCity("Recife");
         
         if (profile.equals(Profile.STUDENT)) {
-            user.setCpf("10719498457");
-            Student person = new Student();
-
-            person.setBirthdate(calendar.getTime());
-            person.setEmail("diogo@diogo.com");
-            person.setLastName("Brito");
-            person.setFirstName("Diogo");
-            person.setRegistration("11000");
-
-            person.setLocalization(local);
-
-            person.setInstitute(institute);
-            person.setCourse(course);
-
-            user.setPerson(person);
+        	
+        	Student student = new Student();
+        	student.setUsername("diogo.brito");
+        	student.setPassword("123456");
+        	student.setSalt("123");
+        	student.setRawPassword("1234");
+        	student.setGeneralInfo(new GeneralInfo());
+            student.getGeneralInfo().setCpf("10719498457");
+            student.getGeneralInfo().setBirthdate(calendar.getTime());
+            student.getGeneralInfo().setEmail("diogo@diogo.com");
+            student.getGeneralInfo().setFirstName("Diogo");
+            student.getGeneralInfo().setLastName("Brito");
+            student.setRegistration("11000");            
+            student.getGeneralInfo().setLocalization(local);            
+            student.setInstitute(institute);
+            student.setCourse(course);          
+            user = student;
             
-        } else {
+        } else {            
             
-            user.setCpf("20121201210");
-            Professor person = new Professor();
-            person.setBirthdate(calendar.getTime());
-            person.setEmail("dppg@dopgp.com");
-            person.setFirstName("Tainara");
-            person.setLastName("Datas");
-            person.setSiape("1011011010");
-            person.setLocalization(local);
-            person.setInstitute(institute);
+            Professor professor = new Professor();
+            professor.setUsername("tainara.dantas");
+            professor.setPassword("123456");
+            professor.setSalt("123");
+            professor.setRawPassword("1234");
+            professor.setGeneralInfo(new GeneralInfo());
+            professor.getGeneralInfo().setCpf("20121201210");
+            professor.getGeneralInfo().setBirthdate(calendar.getTime());
+            professor.getGeneralInfo().setEmail("dppg@dopgp.com");
+            professor.getGeneralInfo().setFirstName("Tainara");
+            professor.getGeneralInfo().setLastName("Datas");
+            professor.setSiape("1011011010");
+            professor.getGeneralInfo().setLocalization(local);
+            professor.setInstitute(institute);
             
             final List<Professor> professors = new ArrayList<Professor>();
-            professors.add(person);
+            professors.add(professor);
             
             course.setProfessors(professors);           
             final List<Course> courses = new ArrayList<Course>();                        
@@ -205,12 +171,11 @@ public class Main {
             final List<Discipline> disciplines = new ArrayList<Discipline>();            
             disciplines.add(discipline);                        
             
-            person.setCourses(courses);
-            person.setDisciplines(disciplines);
-            
-            user.setPerson(person);            
+            professor.setCourses(courses);
+            professor.setDisciplines(disciplines);
+            user = professor;
         }        
-
+        
         return user;
 
     }

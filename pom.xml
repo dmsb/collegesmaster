@@ -80,11 +80,23 @@
 			<artifactId>jquery</artifactId>
 			<version>3.1.1-1</version>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<version>1.7.21</version>
+		</dependency>
+				
+		<dependency>
+		    <groupId>javax.el</groupId>
+		    <artifactId>javax.el-api</artifactId>
+		    <version>3.0.0</version>
+		</dependency>
+		
+		<dependency>
+		   <groupId>org.glassfish</groupId>
+		   <artifactId>javax.el</artifactId>
+		   <version>3.0.1-b08</version>
 		</dependency>
 
 	</dependencies>

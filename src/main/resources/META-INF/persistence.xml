@@ -11,7 +11,7 @@
 		<class>br.com.collegesmaster.model.Discipline</class>
 		<class>br.com.collegesmaster.model.Institute</class>
 		<class>br.com.collegesmaster.model.Localization</class>
-		<class>br.com.collegesmaster.model.Person</class>
+		<class>br.com.collegesmaster.model.GeneralInfo</class>		
 		<class>br.com.collegesmaster.model.Professor</class>
 		<class>br.com.collegesmaster.model.Student</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
@@ -27,7 +27,6 @@
 			<property name="eclipselink.create-ddl-jdbc-file-name" value="create.sql" />
 			<property name="eclipselink.logging.level" value="FINE" />
 			<property name="eclipselink.logging.parameters" value="true"/>
-<!-- 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" /> -->
 			
 		</properties>
 	</persistence-unit>

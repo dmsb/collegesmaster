@@ -12,16 +12,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import br.com.collegesmaster.enums.Alternative;
+import br.com.collegesmaster.enums.Level;
 
 @Entity
-@Table(name = "TB_CHALLENGE")
+@Table(name = "CHALLENGE")
 public class Challenge implements Serializable {
 
 	private static final long serialVersionUID = 6314730845000580522L;
@@ -29,20 +28,25 @@ public class Challenge implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@Column(name = "path_name", unique = true, nullable = false)
-	@NotBlank
-	private String pathName;
-
+	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@NotNull
 	private Professor professor;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "discipline_id")
 	private Discipline discipline;
+	
+	@Column(name = "quest_path")
+	@NotNull
+	private String questPath;
 
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private Alternative response;
+	
+	@Enumerated(EnumType.STRING)
+	@NotNull
+	private Level level;
 
 	public Long getId() {
 		return id;
@@ -50,14 +54,6 @@ public class Challenge implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getPathName() {
-		return pathName;
-	}
-
-	public void setPathName(String pathName) {
-		this.pathName = pathName;
 	}
 
 	public Professor getProfessor() {
@@ -82,6 +78,22 @@ public class Challenge implements Serializable {
 
 	public void setResponse(Alternative response) {
 		this.response = response;
+	}
+	
+	public String getQuestPath() {
+		return questPath;
+	}
+
+	public void setQuestPath(String questPath) {
+		this.questPath = questPath;
+	}
+	
+	public Level getLevel() {
+		return level;
+	}
+
+	public void setLevel(Level level) {
+		this.level = level;
 	}
 	
 	@Override

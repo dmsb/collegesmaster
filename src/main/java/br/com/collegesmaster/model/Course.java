@@ -6,10 +6,8 @@ import java.util.Objects;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "TB_COURSE")
+@Table(name = "COURSE")
 @Access(AccessType.FIELD)
 public class Course implements Serializable {
 
@@ -41,9 +39,6 @@ public class Course implements Serializable {
     @JoinColumn(name = "INSTITUTE_ID")
     @NotNull
     private Institute institute;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Discipline> disciplines;
 
     @OneToMany(mappedBy = "course")
     private List<Student> students;
@@ -87,14 +82,6 @@ public class Course implements Serializable {
         }
         final Course other = (Course) obj;
         return getId() != null && Objects.equals(getId(), other.getId());
-    }
-
-    public List<Discipline> getDisciplines() {
-        return disciplines;
-    }
-
-    public void setDisciplines(List<Discipline> disciplines) {
-        this.disciplines = disciplines;
     }
 
     public List<Student> getStudents() {

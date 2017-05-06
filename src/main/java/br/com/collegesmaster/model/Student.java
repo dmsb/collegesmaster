@@ -3,6 +3,7 @@ package br.com.collegesmaster.model;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -12,8 +13,8 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "TB_STUDENT")
-public class Student extends Person implements Serializable {
+@Table(name = "STUDENT")
+public class Student extends User implements Serializable {
 
     private static final long serialVersionUID = 4255404420897428496L;
 
@@ -31,7 +32,10 @@ public class Student extends Person implements Serializable {
         
     @Column(name = "score")    
     private Integer score;
-
+    
+    @Embedded
+    private GeneralInfo generalInfo;
+    
     public String getRegistration() {
         return registration;
     }
@@ -63,4 +67,12 @@ public class Student extends Person implements Serializable {
     public void setInstitute(Institute institute) {
         this.institute = institute;
     }
+    
+    public GeneralInfo getGeneralInfo() {
+		return generalInfo;
+	}
+
+	public void setGeneralInfo(GeneralInfo generalInfo) {
+		this.generalInfo = generalInfo;
+	}
 }

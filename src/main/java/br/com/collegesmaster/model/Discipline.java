@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "TB_DISCIPLINE")
+@Table(name = "DISCIPLINE")
 public class Discipline implements Serializable {
 
     private static final long serialVersionUID = -8467860341227715787L;

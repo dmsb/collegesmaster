@@ -8,7 +8,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Localization implements Serializable {
 	
-private static final long serialVersionUID = -8555407559997206124L;
+	private static final long serialVersionUID = -8555407559997206124L;
 	
 	@Column(name = "country")
 	private String country;
