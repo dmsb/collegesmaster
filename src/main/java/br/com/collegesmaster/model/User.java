@@ -13,10 +13,12 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import br.com.collegesmaster.util.Password;
+import br.com.collegesmaster.util.Password.SecurityLevel;
 
 @Table(name = "USER")
 @Entity
@@ -43,12 +45,7 @@ public class User implements Serializable {
     private String salt;
 
     @NotEmpty
-    @Pattern.List({
-//        @Pattern(regexp = "(?=.*[0-9])", message = "Password must contain one digit."),
-//        @Pattern(regexp = "(?=.*[a-z])", message = "Password must contain one lowercase letter."),
-//        @Pattern(regexp = "(?=.*[A-Z])", message = "Password must contain one uppercase letter."),
-//        @Pattern(regexp = "(?=\\S+$)", message = "Password must contain no whitespace.")
-        })
+    @Password(securityLevel = SecurityLevel.ADVANCED)
     @Transient
     private String rawPassword;
 

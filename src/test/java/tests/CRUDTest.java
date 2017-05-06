@@ -26,7 +26,6 @@ import org.junit.runners.MethodSorters;
 import br.com.collegesmaster.model.Challenge;
 import br.com.collegesmaster.model.Discipline;
 import br.com.collegesmaster.model.Institute;
-import br.com.collegesmaster.model.Student;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CRUDTest {
@@ -194,8 +193,8 @@ public class CRUDTest {
 		
 		queryBuilder = new StringBuilder();
 		queryBuilder
-				.append("SELECT COUNT(*)  ")
-				.append("FROM   Challenge");			
+				.append("SELECT COUNT(c) ")
+				.append("FROM   Challenge c");			
 		
 		final String totalOfChallenges = queryBuilder.toString();
 		logger.info("Proccessing test 05: " + totalOfChallenges);
@@ -209,8 +208,9 @@ public class CRUDTest {
         em.clear();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
-	public void test05_sortStudentScores() {
+	public void test06_sortStudentScores() {
 		
 		queryBuilder = new StringBuilder();
 		queryBuilder
@@ -222,26 +222,22 @@ public class CRUDTest {
 		final String scores = queryBuilder.toString();
 		logger.info("Proccessing test 05: " + scores);
 		
-		final TypedQuery<Student> query = em.createQuery(
-				scores,
-        		Student.class);                     
+		final Query query = em.createQuery(queryBuilder.toString());
 		
-		final List<Student> students = query.getResultList();		       
+		final List<Object[]> students = query.getResultList();		       
         
-		Student aux = new Student();
-		aux.setScore(Integer.valueOf(0));
+		Integer aux = 0;		
 		
-		for(final Student student : students) {
+		for(final Object[] student : students) {
 	
-			if(aux.getScore() > student.getScore()) {
+			if(aux > Integer.valueOf(String.valueOf(student[1]))) {
 				fail("Fail to sort student scores");
 			}
-			aux = student;
+			aux = Integer.valueOf(String.valueOf(student[1]));
 		}
 		
 		assertEquals(2, students.size());
 		
         em.clear();
 	}
-	
 }
