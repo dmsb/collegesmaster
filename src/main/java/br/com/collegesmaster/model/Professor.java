@@ -2,6 +2,7 @@ package br.com.collegesmaster.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -97,4 +98,18 @@ public class Professor extends User implements Serializable {
 	public void setGeneralInfo(GeneralInfo generalInfo) {
 		this.generalInfo = generalInfo;
 	}
+	
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if ((obj instanceof Professor) == false) {
+            return false;
+        }
+        final Professor other = (Professor) obj;
+        return getId() != null && Objects.equals(getId(), other.getId());
+    }
 }

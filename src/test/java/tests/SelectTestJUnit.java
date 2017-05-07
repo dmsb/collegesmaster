@@ -4,6 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -182,7 +187,6 @@ public class SelectTestJUnit extends ConfigurationTest {
 
 	}
 	
-	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void test07_getAttachments() {
@@ -190,12 +194,26 @@ public class SelectTestJUnit extends ConfigurationTest {
 		QUERYBUILDER = new StringBuilder();
 		QUERYBUILDER
 				.append("SELECT c.attachment ")
-				.append("FROM   Challenge c");			
+				.append("FROM   Challenge c where c.attachment is not null");			
 		
 		final String totalAttachments = QUERYBUILDER.toString();
 		LOGGER.info("Proccessing test 07: " + totalAttachments);
 		
 		final Query query = EM.createQuery(QUERYBUILDER.toString());                          
-		final List<Byte> result = (List<Byte>) query.getResultList();		
+		final List<byte[]> result = (List<byte[]>) query.getResultList();		
+		
+		try {			
+			for(final byte[] bytesFile : result) {				
+				final byte[] test = "12345".getBytes();
+				assertTrue(Arrays.equals(bytesFile, test));
+				final Path path = FileSystems.getDefault().getPath("D:", "testeDownloaded.pdf");				
+				Files.write(path, bytesFile);				
+			}
+		} catch (IOException e) {		
+			e.printStackTrace();
+		}
+		
+		assertEquals(3, result.size());
+		
 	}
 }

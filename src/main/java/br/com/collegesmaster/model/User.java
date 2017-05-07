@@ -1,6 +1,7 @@
 package br.com.collegesmaster.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -88,4 +89,17 @@ public class User implements Serializable {
     public void setRawPassword(String rawPassword) {
         this.rawPassword = rawPassword;
     }
+    
+    public int hashCode() {
+		return Objects.hashCode(getId());
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if ((obj instanceof User) == false) {
+			return false;
+		}
+		final User other = (User) obj;
+		return getId() != null && Objects.equals(getId(), other.getId());
+	}
 }

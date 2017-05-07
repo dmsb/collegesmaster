@@ -1,5 +1,9 @@
 package tests;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -141,9 +145,17 @@ public class InsertTestsJUnit extends ConfigurationTest {
 		challenge.setResponse(Alternative.D);
 		challenge.setLevel(Level.EXPERT);
 		challenge.setProfessor(professor);
-		challenge.setDiscipline(discipline);
-		challenge.setAttachment("attachmentTest".getBytes());
-		challenge.setExtension("pdf");
+		challenge.setDiscipline(discipline);		
+		challenge.setFileName("teste.pdf");				
+		
+		try {			
+			final Path path = FileSystems.getDefault().getPath("D:", "teste.pdf");
+			final byte[] fileBytes = Files.readAllBytes(path);			
+			challenge.setAttachment(fileBytes);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+				
 		EM.persist(challenge);
 	}
 }

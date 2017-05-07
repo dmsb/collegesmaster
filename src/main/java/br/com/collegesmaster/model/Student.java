@@ -1,6 +1,7 @@
 package br.com.collegesmaster.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -17,64 +18,78 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "STUDENT")
 public class Student extends User implements Serializable {
 
-    private static final long serialVersionUID = 4255404420897428496L;
+	private static final long serialVersionUID = 4255404420897428496L;
 
-    @Column(name = "registration", unique = true, nullable = false, updatable = false)
-    @NotBlank
-    private String registration;
+	@Column(name = "registration", unique = true, nullable = false, updatable = false)
+	@NotBlank
+	private String registration;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "COURSE_ID", nullable = false)
-    private Course course;
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "COURSE_ID", nullable = false)
+	private Course course;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "INSTITUTE_ID", nullable = false)
-    private Institute institute;
-        
-    @Column(name = "score")    
-    private Integer score;
-    
-    @Embedded
-    @Valid
-    private GeneralInfo generalInfo;
-    
-    public String getRegistration() {
-        return registration;
-    }
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "INSTITUTE_ID", nullable = false)
+	private Institute institute;
 
-    public void setRegistration(String registration) {
-        this.registration = registration;
-    }
+	@Column(name = "score")
+	private Integer score;
 
-    public Course getCourse() {
-        return course;
-    }
+	@Embedded
+	@Valid
+	private GeneralInfo generalInfo;
 
-    public void setCourse(Course course) {
-        this.course = course;
-    }
+	public String getRegistration() {
+		return registration;
+	}
 
-    public Integer getScore() {
-        return score;
-    }
+	public void setRegistration(String registration) {
+		this.registration = registration;
+	}
 
-    public void setScore(Integer score) {
-        this.score = score;
-    }
+	public Course getCourse() {
+		return course;
+	}
 
-    public Institute getInstitute() {
-        return institute;
-    }
+	public void setCourse(Course course) {
+		this.course = course;
+	}
 
-    public void setInstitute(Institute institute) {
-        this.institute = institute;
-    }
-    
-    public GeneralInfo getGeneralInfo() {
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+
+	public Institute getInstitute() {
+		return institute;
+	}
+
+	public void setInstitute(Institute institute) {
+		this.institute = institute;
+	}
+
+	public GeneralInfo getGeneralInfo() {
 		return generalInfo;
 	}
 
 	public void setGeneralInfo(GeneralInfo generalInfo) {
 		this.generalInfo = generalInfo;
 	}
+
+	public int hashCode() {
+		return Objects.hashCode(getId());
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if ((obj instanceof Student) == false) {
+			return false;
+		}
+		final Student other = (Student) obj;
+		return getId() != null && Objects.equals(getId(), other.getId());
+	}
+
 }

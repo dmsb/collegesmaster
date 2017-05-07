@@ -44,9 +44,9 @@ public class Challenge implements Serializable {
 	@NotNull
 	private byte[] attachment;	
 	
-	@Column(name = "extension")	
+	@Column(name = "file_name")	
 	@NotNull
-	private String extension;
+	private String fileName;
 
 	@Enumerated(EnumType.STRING)
 	@NotNull
@@ -104,12 +104,12 @@ public class Challenge implements Serializable {
 		this.attachment = attachment;
 	}
 	
-	public String getExtension() {
-		return extension;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setExtension(String extension) {
-		this.extension = extension;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	
 	@Override
