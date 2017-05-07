@@ -3,6 +3,7 @@ package br.com.collegesmaster.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -36,9 +38,15 @@ public class Challenge implements Serializable {
 	@ManyToOne
 	private Discipline discipline;
 	
-	@Column(name = "quest_path")
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(name = "attachment", columnDefinition="MEDIUMBLOB")
 	@NotNull
-	private String questPath;
+	private byte[] attachment;	
+	
+	@Column(name = "extension")	
+	@NotNull
+	private String extension;
 
 	@Enumerated(EnumType.STRING)
 	@NotNull
@@ -47,7 +55,7 @@ public class Challenge implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private Level level;
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -80,20 +88,28 @@ public class Challenge implements Serializable {
 		this.response = response;
 	}
 	
-	public String getQuestPath() {
-		return questPath;
-	}
-
-	public void setQuestPath(String questPath) {
-		this.questPath = questPath;
-	}
-	
 	public Level getLevel() {
 		return level;
 	}
 
 	public void setLevel(Level level) {
 		this.level = level;
+	}
+	
+	public byte[] getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(byte[] attachment) {
+		this.attachment = attachment;
+	}
+	
+	public String getExtension() {
+		return extension;
+	}
+
+	public void setExtension(String extension) {
+		this.extension = extension;
 	}
 	
 	@Override

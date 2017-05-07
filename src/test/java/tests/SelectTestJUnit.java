@@ -146,9 +146,8 @@ public class SelectTestJUnit extends ConfigurationTest {
         
         final Long total = (Long)query.getSingleResult();       
 
-        assertEquals(Integer.valueOf(5), total);
-        
-        EM.clear();
+        assertEquals(Long.valueOf(5), total);
+      
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -180,7 +179,23 @@ public class SelectTestJUnit extends ConfigurationTest {
 		}
 		
 		assertEquals(2, students.size());
+
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void test07_getAttachments() {
 		
-        EM.clear();
+		QUERYBUILDER = new StringBuilder();
+		QUERYBUILDER
+				.append("SELECT c.attachment ")
+				.append("FROM   Challenge c");			
+		
+		final String totalAttachments = QUERYBUILDER.toString();
+		LOGGER.info("Proccessing test 07: " + totalAttachments);
+		
+		final Query query = EM.createQuery(QUERYBUILDER.toString());                          
+		final List<Byte> result = (List<Byte>) query.getResultList();		
 	}
 }

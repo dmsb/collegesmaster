@@ -4,7 +4,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import br.com.collegesmaster.enums.Alternative;
 import br.com.collegesmaster.enums.Level;
@@ -17,6 +19,7 @@ import br.com.collegesmaster.model.Localization;
 import br.com.collegesmaster.model.Professor;
 import br.com.collegesmaster.model.Student;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class InsertTestsJUnit extends ConfigurationTest {
 	
 	@Test
@@ -135,11 +138,12 @@ public class InsertTestsJUnit extends ConfigurationTest {
         professor.setRawPassword("#T3st3");
         
 		final Challenge challenge = new Challenge();		
-		challenge.setQuestPath("quests/professorId/questName");
 		challenge.setResponse(Alternative.D);
 		challenge.setLevel(Level.EXPERT);
 		challenge.setProfessor(professor);
-		challenge.setDiscipline(discipline);		
+		challenge.setDiscipline(discipline);
+		challenge.setAttachment("attachmentTest".getBytes());
+		challenge.setExtension("pdf");
 		EM.persist(challenge);
 	}
 }
