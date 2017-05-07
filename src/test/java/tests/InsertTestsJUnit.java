@@ -16,7 +16,6 @@ import br.com.collegesmaster.model.Institute;
 import br.com.collegesmaster.model.Localization;
 import br.com.collegesmaster.model.Professor;
 import br.com.collegesmaster.model.Student;
-import br.com.collegesmaster.util.FunctionUtils;
 
 public class InsertTestsJUnit extends ConfigurationTest {
 	
@@ -71,7 +70,7 @@ public class InsertTestsJUnit extends ConfigurationTest {
         
         final Localization local = new Localization();
 		local.setCountry("BRASIL");
-		local.setState("PERNAMBUCO1");
+		local.setState("PERNAMBUCO");
 		local.setCity("RECIFE");
 		
         final Institute institute = EM.find(Institute.class, 1);
@@ -81,7 +80,7 @@ public class InsertTestsJUnit extends ConfigurationTest {
     	student.setUsername("diogo.brito.teste");
     	student.setPassword("123456");
     	student.setSalt("123");
-    	student.setRawPassword("1234");
+    	student.setRawPassword("#T41n4r4");
     	student.setGeneralInfo(new GeneralInfo());
         student.getGeneralInfo().setCpf("50168636280");
         student.getGeneralInfo().setBirthdate(calendar.getTime());
@@ -115,7 +114,7 @@ public class InsertTestsJUnit extends ConfigurationTest {
         professor.setUsername("tainara.dantas.teste");
         professor.setPassword("123456");
         professor.setSalt("123");
-        professor.setRawPassword("1234");
+        professor.setRawPassword("#D10g0");
         professor.setGeneralInfo(new GeneralInfo());
         professor.getGeneralInfo().setCpf("24185135998");
         professor.getGeneralInfo().setBirthdate(calendar.getTime());
@@ -124,8 +123,7 @@ public class InsertTestsJUnit extends ConfigurationTest {
         professor.getGeneralInfo().setLastName("TESTE");
         professor.setSiape("102311010");
         professor.getGeneralInfo().setLocalization(local);
-        professor.setInstitute(institute);
-        FunctionUtils.showInvalidColumnsValues(professor);
+        professor.setInstitute(institute);        
         EM.persist(professor);        
 	}
 		
@@ -134,7 +132,7 @@ public class InsertTestsJUnit extends ConfigurationTest {
 		
 		final Discipline discipline = EM.find(Discipline.class, 1);
         final Professor professor = EM.find(Professor.class, 1);
-        professor.setRawPassword("123");
+        professor.setRawPassword("#T3st3");
         
 		final Challenge challenge = new Challenge();		
 		challenge.setQuestPath("quests/professorId/questName");
@@ -142,8 +140,6 @@ public class InsertTestsJUnit extends ConfigurationTest {
 		challenge.setLevel(Level.EXPERT);
 		challenge.setProfessor(professor);
 		challenge.setDiscipline(discipline);		
-		FunctionUtils.showInvalidColumnsValues(challenge.getDiscipline());
-		FunctionUtils.showInvalidColumnsValues(challenge.getProfessor());
 		EM.persist(challenge);
 	}
 }
