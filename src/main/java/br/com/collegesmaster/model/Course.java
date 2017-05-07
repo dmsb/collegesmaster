@@ -29,7 +29,7 @@ public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "name")
     @NotBlank
@@ -46,11 +46,11 @@ public class Course implements Serializable {
     @ManyToMany(mappedBy = "courses")
     private List<Professor> professors;
     
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

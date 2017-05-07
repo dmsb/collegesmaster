@@ -17,8 +17,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import br.com.collegesmaster.util.Password;
-import br.com.collegesmaster.util.Password.SecurityLevel;
+import br.com.collegesmaster.annotations.Password;
+import br.com.collegesmaster.annotations.Password.SecurityLevel;
 
 @Table(name = "USER")
 @Entity
@@ -30,7 +30,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     
     @Column(name = "username", unique= true)
     @NotNull
@@ -49,11 +49,11 @@ public class User implements Serializable {
     @Transient
     private String rawPassword;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     

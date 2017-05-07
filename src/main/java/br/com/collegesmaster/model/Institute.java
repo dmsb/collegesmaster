@@ -22,7 +22,7 @@ public class Institute implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @NotBlank
     @Column(name = "name")
@@ -32,11 +32,11 @@ public class Institute implements Serializable {
     @Embedded
     private Localization localization;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

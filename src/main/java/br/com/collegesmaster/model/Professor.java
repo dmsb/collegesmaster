@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -46,6 +47,7 @@ public class Professor extends User implements Serializable {
     private List<Discipline> disciplines;
     
     @Embedded
+    @Valid
     private GeneralInfo generalInfo;
 
 	public List<Challenge> getChallenges() {

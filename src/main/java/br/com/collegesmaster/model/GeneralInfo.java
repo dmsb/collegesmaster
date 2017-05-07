@@ -8,6 +8,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -43,6 +44,7 @@ public class GeneralInfo implements Serializable {
     private Date birthdate;
     
     @Embedded
+    @Valid
     private Localization localization;
     
     public String getCpf() {
