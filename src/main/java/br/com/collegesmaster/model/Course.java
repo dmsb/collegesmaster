@@ -6,12 +6,13 @@ import java.util.Objects;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -35,12 +36,14 @@ public class Course implements Serializable {
     @NotBlank
     private String name;
     
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "INSTITUTE_ID")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @NotNull
     private Institute institute;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "course")
+    private List<Discipline> disciplines;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = false, mappedBy = "course")
     private List<Student> students;
     
     @ManyToMany(mappedBy = "courses")
@@ -69,7 +72,15 @@ public class Course implements Serializable {
     public void setInstitute(Institute institute) {
         this.institute = institute;
     }
+    
+    public List<Discipline> getDisciplines() {
+		return disciplines;
+	}
 
+	public void setDisciplines(List<Discipline> disciplines) {
+		this.disciplines = disciplines;
+	}
+	
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());

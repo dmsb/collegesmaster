@@ -3,14 +3,17 @@ package br.com.collegesmaster.model;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -34,12 +37,14 @@ public class Discipline implements Serializable {
     @NotNull
     private Integer workload;
     
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "COURSE_ID")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)    
     @NotNull
     private Course course;
     
-    @ManyToMany(mappedBy = "disciplines")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "discipline")
+    private List<Challenge> challenges;
+
+	@ManyToMany(mappedBy = "disciplines")
     private List<Professor> professors;
     
     public Integer getWorkload() {
@@ -73,7 +78,15 @@ public class Discipline implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+    public List<Challenge> getChallenges() {
+		return challenges;
+	}
 
+	public void setChallenges(List<Challenge> challenges) {
+		this.challenges = challenges;
+	}
+	
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());

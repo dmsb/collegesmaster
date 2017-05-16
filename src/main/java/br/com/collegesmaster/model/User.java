@@ -19,7 +19,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.collegesmaster.annotations.Password;
-import br.com.collegesmaster.annotations.Password.SecurityLevel;
 
 @Table(name = "USER")
 @Entity
@@ -37,16 +36,15 @@ public class User implements Serializable {
     @NotNull
     private String username;  
 
-	@Column(name = "password", unique = false, updatable = true, nullable = false)
     @NotEmpty
+	@Column(name = "password", unique = false, updatable = true, nullable = false)
+	@Password
     private String password;
 
     @Column(name = "salt")
     @NotBlank
     private String salt;
-
-    @NotEmpty
-    @Password(securityLevel = SecurityLevel.ADVANCED)
+       
     @Transient
     private String rawPassword;
 

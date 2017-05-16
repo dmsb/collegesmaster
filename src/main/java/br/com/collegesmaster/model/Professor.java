@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -11,7 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -24,27 +24,29 @@ public class Professor extends User implements Serializable {
 
     private static final long serialVersionUID = 6162120714620872426L;
 
-    @OneToMany(mappedBy = "professor")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "professor")
     private List<Challenge> challenges;
 
     @Column(name = "siape", unique = true)
     @NotBlank
     private String siape;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "INSTITUTE_ID", nullable = false)
-    private Institute institute;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="professor_institute",
+             joinColumns={@JoinColumn(name="professor_id")},
+             inverseJoinColumns={@JoinColumn(name="institute_id")})    
+    private List<Institute> institutes;
     
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="PROFESSOR_COURSE",
-             joinColumns={@JoinColumn(name="PROFESSOR_ID")},
-             inverseJoinColumns={@JoinColumn(name="COURSE_ID")})
+    @JoinTable(name="professor_course",
+             joinColumns={@JoinColumn(name="professor_id")},
+             inverseJoinColumns={@JoinColumn(name="course_id")})
     private List<Course> courses;
     
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="PROFESSOR_DISCIPLINE",
-             joinColumns={@JoinColumn(name="PROFESSOR_ID")},
-             inverseJoinColumns={@JoinColumn(name="DISCIPLINE_ID")})
+    @JoinTable(name="professor_discipline",
+             joinColumns={@JoinColumn(name="professor_id")},
+             inverseJoinColumns={@JoinColumn(name="discipline_id")})
     private List<Discipline> disciplines;
     
     @Embedded
@@ -67,12 +69,12 @@ public class Professor extends User implements Serializable {
         this.siape = siape;
     }
 
-    public Institute getInstitute() {
-        return institute;
+    public List<Institute> getInstitutes() {
+        return institutes;
     }
 
-    public void setInstitute(Institute institute) {
-        this.institute = institute;
+    public void setInstitutes(List<Institute> institutes) {
+        this.institutes = institutes;
     }
     
     public List<Course> getCourses() {

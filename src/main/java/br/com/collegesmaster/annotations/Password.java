@@ -13,12 +13,6 @@ import javax.validation.Payload;
 @Constraint(validatedBy = PasswordValidator.class)
 public @interface Password {
 	
-	public enum SecurityLevel {
-		NORMAL, ADVANCED;
-	}
-	
-	SecurityLevel securityLevel();
-	
 	String message() default "{br.com.collegesmaster.User.rawPassword}";
     
 	Class<?>[] groups() default {};

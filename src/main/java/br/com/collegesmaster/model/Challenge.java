@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -31,11 +30,11 @@ public class Challenge implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@NotNull
 	private Professor professor;
 	
-	@ManyToOne
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	private Discipline discipline;
 	
 	@Lob
@@ -48,11 +47,11 @@ public class Challenge implements Serializable {
 	@NotNull
 	private String fileName;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.STRING)	
 	@NotNull
 	private Alternative response;
 	
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	@NotNull
 	private Level level;
 	
@@ -89,7 +88,7 @@ public class Challenge implements Serializable {
 	}
 	
 	public Level getLevel() {
-		return level;
+		return Level.valueOf(level.getLevel());
 	}
 
 	public void setLevel(Level level) {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -12,6 +13,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import java.util.List;
 import br.com.collegesmaster.enums.Alternative;
 import br.com.collegesmaster.enums.Level;
 import br.com.collegesmaster.model.Challenge;
@@ -24,7 +26,7 @@ import br.com.collegesmaster.model.Professor;
 import br.com.collegesmaster.model.Student;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class InsertTestsJUnit extends ConfigurationTest {
+public class JUnitInserts extends JUnitConfiguration {
 	
 	@Test
 	public void test01_insertInstitute() {
@@ -85,9 +87,9 @@ public class InsertTestsJUnit extends ConfigurationTest {
         
 		final Student student = new Student();
     	student.setUsername("diogo.brito.teste");
-    	student.setPassword("123456");
+    	student.setRawPassword("123456");
     	student.setSalt("123");
-    	student.setRawPassword("#T41n4r4");
+    	student.setPassword("#T41n4r4");
     	student.setGeneralInfo(new GeneralInfo());
         student.getGeneralInfo().setCpf("50168636280");
         student.getGeneralInfo().setBirthdate(calendar.getTime());
@@ -115,13 +117,14 @@ public class InsertTestsJUnit extends ConfigurationTest {
 		local.setState("PERNAMBUCO");
 		local.setCity("RECIFE");
 		
-        final Institute institute = EM.find(Institute.class, 1);
+        final List<Institute> institutes = new ArrayList<>();
+        institutes.add(EM.find(Institute.class, 1));
         
 		final Professor professor = new Professor();
         professor.setUsername("tainara.dantas.teste");
-        professor.setPassword("123456");
+        professor.setRawPassword("123456");
         professor.setSalt("123");
-        professor.setRawPassword("#D10g0");
+        professor.setPassword("#D10g0");
         professor.setGeneralInfo(new GeneralInfo());
         professor.getGeneralInfo().setCpf("24185135998");
         professor.getGeneralInfo().setBirthdate(calendar.getTime());
@@ -130,7 +133,7 @@ public class InsertTestsJUnit extends ConfigurationTest {
         professor.getGeneralInfo().setLastName("TESTE");
         professor.setSiape("102311010");
         professor.getGeneralInfo().setLocalization(local);
-        professor.setInstitute(institute);        
+        professor.setInstitutes(institutes);        
         EM.persist(professor);        
 	}
 		
@@ -138,8 +141,7 @@ public class InsertTestsJUnit extends ConfigurationTest {
 	public void test06_insertChallenge() {
 		
 		final Discipline discipline = EM.find(Discipline.class, 1);
-        final Professor professor = EM.find(Professor.class, 1);
-        professor.setRawPassword("#T3st3");
+        final Professor professor = EM.find(Professor.class, 1);        
         
 		final Challenge challenge = new Challenge();		
 		challenge.setResponse(Alternative.D);

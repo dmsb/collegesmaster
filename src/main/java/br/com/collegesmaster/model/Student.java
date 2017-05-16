@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -24,12 +23,10 @@ public class Student extends User implements Serializable {
 	@NotBlank
 	private String registration;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "COURSE_ID", nullable = false)
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)	
 	private Course course;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "INSTITUTE_ID", nullable = false)
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)	
 	private Institute institute;
 
 	@Column(name = "score")

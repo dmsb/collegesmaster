@@ -15,7 +15,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
-public class ConfigurationTest {
+public class JUnitConfiguration {
 	
 	public static EntityManagerFactory EMF;
 	public static Logger LOGGER = Logger.getGlobal();    

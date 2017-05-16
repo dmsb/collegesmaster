@@ -21,11 +21,12 @@ import org.junit.runners.MethodSorters;
 import br.com.collegesmaster.model.Challenge;
 import br.com.collegesmaster.model.Discipline;
 import br.com.collegesmaster.model.Institute;
+import br.com.collegesmaster.util.FunctionUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SelectTestJUnit extends ConfigurationTest {
+public class JUnitSelects extends JUnitConfiguration {
     
-    public SelectTestJUnit() {
+    public JUnitSelects() {
     }
 
 	@Test
@@ -127,13 +128,13 @@ public class SelectTestJUnit extends ConfigurationTest {
         query.setParameter("siape", siape);
         
         final List<Challenge> challenges = query.getResultList();
-
-        for (final Challenge challenge : challenges) {        	
+        
+        for (final Challenge challenge : challenges) {
+        	FunctionUtils.showInvalidColumnsValues(challenge);
             assertTrue(siape.equals(challenge.getProfessor().getSiape()));
         }
 
-        assertEquals(2, challenges.size());
-        EM.clear();
+        assertEquals(3, challenges.size());        
 	}
 	
 	@Test
@@ -189,23 +190,24 @@ public class SelectTestJUnit extends ConfigurationTest {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void test07_getAttachments() {
+	public void test07_getChallenges() {
 		
 		QUERYBUILDER = new StringBuilder();
 		QUERYBUILDER
 				.append("SELECT c.attachment ")
-				.append("FROM   Challenge c where c.attachment is not null");			
+				.append("FROM   Challenge c where c.attachment = :attachment");			
 		
 		final String totalAttachments = QUERYBUILDER.toString();
 		LOGGER.info("Proccessing test 07: " + totalAttachments);
 		
-		final Query query = EM.createQuery(QUERYBUILDER.toString());                          
+		final Query query = EM.createQuery(QUERYBUILDER.toString());		
+        query.setParameter("attachment", "12345".getBytes());
+        
 		final List<byte[]> result = (List<byte[]>) query.getResultList();		
 		
 		try {			
 			for(final byte[] bytesFile : result) {				
-				final byte[] test = "12345".getBytes();
-				assertTrue(Arrays.equals(bytesFile, test));
+				assertTrue(Arrays.equals(bytesFile, "12345".getBytes()));
 				final Path path = FileSystems.getDefault().getPath("D:", "testeDownloaded.pdf");				
 				Files.write(path, bytesFile);				
 			}
@@ -213,7 +215,7 @@ public class SelectTestJUnit extends ConfigurationTest {
 			e.printStackTrace();
 		}
 		
-		assertEquals(3, result.size());
+		assertEquals(1, result.size());
 		
 	}
 }
