@@ -87,8 +87,6 @@ public class JUnitInserts extends JUnitConfiguration {
         
 		final Student student = new Student();
     	student.setUsername("diogo.brito.teste");
-    	student.setRawPassword("123456");
-    	student.setSalt("123");
     	student.setPassword("#T41n4r4");
     	student.setGeneralInfo(new GeneralInfo());
         student.getGeneralInfo().setCpf("50168636280");
@@ -122,8 +120,6 @@ public class JUnitInserts extends JUnitConfiguration {
         
 		final Professor professor = new Professor();
         professor.setUsername("tainara.dantas.teste");
-        professor.setRawPassword("123456");
-        professor.setSalt("123");
         professor.setPassword("#D10g0");
         professor.setGeneralInfo(new GeneralInfo());
         professor.getGeneralInfo().setCpf("24185135998");
@@ -141,7 +137,7 @@ public class JUnitInserts extends JUnitConfiguration {
 	public void test06_insertChallenge() {
 		
 		final Discipline discipline = EM.find(Discipline.class, 1);
-        final Professor professor = EM.find(Professor.class, 1);        
+        final Professor professor = EM.find(Professor.class, 1);
         
 		final Challenge challenge = new Challenge();		
 		challenge.setResponse(Alternative.D);

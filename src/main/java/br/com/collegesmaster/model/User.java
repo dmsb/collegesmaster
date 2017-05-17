@@ -12,10 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.collegesmaster.annotations.Password;
@@ -38,15 +36,8 @@ public class User implements Serializable {
 
     @NotEmpty
 	@Column(name = "password", unique = false, updatable = true, nullable = false)
-	@Password
+    @Password
     private String password;
-
-    @Column(name = "salt")
-    @NotBlank
-    private String salt;
-       
-    @Transient
-    private String rawPassword;
 
     public Integer getId() {
         return id;
@@ -70,22 +61,6 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
-    public String getRawPassword() {
-        return rawPassword;
-    }
-
-    public void setRawPassword(String rawPassword) {
-        this.rawPassword = rawPassword;
     }
     
     public int hashCode() {
