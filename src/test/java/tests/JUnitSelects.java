@@ -31,17 +31,17 @@ public class JUnitSelects extends JUnitConfiguration {
 
 	@Test
 	public void test01_getInstitutes() {
-		QUERYBUILDER = new StringBuilder();
-		QUERYBUILDER
+		queryBuilder = new StringBuilder();
+		queryBuilder
 				.append("SELECT institute  ")
 				.append("FROM   Institute institute ")
 				.append("WHERE  institute.name LIKE :name ")
 				.append("ORDER  BY institute.name");
 		
-		final String selectAllFederalInstitutesQuery = QUERYBUILDER.toString();
-		LOGGER.info("Proccessing test 01: " + selectAllFederalInstitutesQuery);
+		final String selectAllFederalInstitutesQuery = queryBuilder.toString();
+		logger.info("Proccessing test 01: " + selectAllFederalInstitutesQuery);
         
-		final TypedQuery<Institute> query = EM.createQuery(
+		final TypedQuery<Institute> query = em.createQuery(
         		selectAllFederalInstitutesQuery,
                 Institute.class);
         query.setParameter("name", "INSTITUTO%");
@@ -57,17 +57,17 @@ public class JUnitSelects extends JUnitConfiguration {
 	
 	@Test
 	public void test02_getDisciplines() {
-		QUERYBUILDER = new StringBuilder();
-		QUERYBUILDER
+		queryBuilder = new StringBuilder();
+		queryBuilder
 				.append("SELECT discipline  ")
 				.append("FROM   Discipline discipline ")
 				.append("WHERE  discipline.name LIKE :name ")
 				.append("ORDER  BY discipline.name");			
 		
-		final String selectAllCorporativeSoftwareDisciplneQuery = QUERYBUILDER.toString();
-		LOGGER.info("Proccessing test 02: " + selectAllCorporativeSoftwareDisciplneQuery);
+		final String selectAllCorporativeSoftwareDisciplneQuery = queryBuilder.toString();
+		logger.info("Proccessing test 02: " + selectAllCorporativeSoftwareDisciplneQuery);
 		
-		final TypedQuery<Discipline> query = EM.createQuery(
+		final TypedQuery<Discipline> query = em.createQuery(
         		selectAllCorporativeSoftwareDisciplneQuery,
                 Discipline.class);
         query.setParameter("name", "Software Corporativo%");
@@ -83,17 +83,17 @@ public class JUnitSelects extends JUnitConfiguration {
 	
 	@Test
 	public void test03_getDisciplinesWith80Hours() {
-		QUERYBUILDER = new StringBuilder();
-		QUERYBUILDER
+		queryBuilder = new StringBuilder();
+		queryBuilder
 				.append("SELECT discipline  ")
 				.append("FROM   Discipline discipline ")
 				.append("WHERE  discipline.workload = :workload ")
 				.append("ORDER  BY discipline.name");			
 		
-		final String selectAllDisciplinesWith80Hours = QUERYBUILDER.toString();
-		LOGGER.info("Proccessing test 03: " + selectAllDisciplinesWith80Hours);
+		final String selectAllDisciplinesWith80Hours = queryBuilder.toString();
+		logger.info("Proccessing test 03: " + selectAllDisciplinesWith80Hours);
 		
-		final TypedQuery<Discipline> query = EM.createQuery(
+		final TypedQuery<Discipline> query = em.createQuery(
         		selectAllDisciplinesWith80Hours,
                 Discipline.class);
         query.setParameter("workload", 80);
@@ -113,16 +113,16 @@ public class JUnitSelects extends JUnitConfiguration {
 		
 		final String siape = "321";
 		
-		QUERYBUILDER = new StringBuilder();
-		QUERYBUILDER
+		queryBuilder = new StringBuilder();
+		queryBuilder
 				.append("SELECT challenge  ")
 				.append("FROM   Challenge challenge ")
 				.append("WHERE  challenge.professor.siape = :siape ");			
 		
-		final String selectAllProfessorChallenges = QUERYBUILDER.toString();
-		LOGGER.info("Proccessing test 04: " + selectAllProfessorChallenges);
+		final String selectAllProfessorChallenges = queryBuilder.toString();
+		logger.info("Proccessing test 04: " + selectAllProfessorChallenges);
 		
-		final TypedQuery<Challenge> query = EM.createQuery(
+		final TypedQuery<Challenge> query = em.createQuery(
         		selectAllProfessorChallenges,
         		Challenge.class);
         query.setParameter("siape", siape);
@@ -140,15 +140,15 @@ public class JUnitSelects extends JUnitConfiguration {
 	@Test
 	public void test05_getTotalOfChallenges() {
 		
-		QUERYBUILDER = new StringBuilder();
-		QUERYBUILDER
+		queryBuilder = new StringBuilder();
+		queryBuilder
 				.append("SELECT COUNT(c) ")
 				.append("FROM   Challenge c");			
 		
-		final String totalOfChallenges = QUERYBUILDER.toString();
-		LOGGER.info("Proccessing test 05: " + totalOfChallenges);
+		final String totalOfChallenges = queryBuilder.toString();
+		logger.info("Proccessing test 05: " + totalOfChallenges);
 		
-		final Query query = EM.createQuery(QUERYBUILDER.toString());		       
+		final Query query = em.createQuery(queryBuilder.toString());		       
         
         final Long total = (Long)query.getSingleResult();       
 
@@ -160,17 +160,17 @@ public class JUnitSelects extends JUnitConfiguration {
 	@Test
 	public void test06_sortStudentScores() {
 		
-		QUERYBUILDER = new StringBuilder();
-		QUERYBUILDER
+		queryBuilder = new StringBuilder();
+		queryBuilder
 				.append("SELECT   student.generalInfo.cpf, ")
 				.append("		  student.score ")
 				.append("FROM     Student student ")
 				.append("ORDER BY student.score");			
 		
-		final String scores = QUERYBUILDER.toString();
-		LOGGER.info("Proccessing test 05: " + scores);
+		final String scores = queryBuilder.toString();
+		logger.info("Proccessing test 05: " + scores);
 		
-		final Query query = EM.createQuery(QUERYBUILDER.toString());
+		final Query query = em.createQuery(queryBuilder.toString());
 		
 		final List<Object[]> students = query.getResultList();		       
         
@@ -192,15 +192,15 @@ public class JUnitSelects extends JUnitConfiguration {
 	@Test
 	public void test07_getChallenges() {
 		
-		QUERYBUILDER = new StringBuilder();
-		QUERYBUILDER
+		queryBuilder = new StringBuilder();
+		queryBuilder
 				.append("SELECT c.attachment ")
 				.append("FROM   Challenge c where c.attachment = :attachment");			
 		
-		final String totalAttachments = QUERYBUILDER.toString();
-		LOGGER.info("Proccessing test 07: " + totalAttachments);
+		final String totalAttachments = queryBuilder.toString();
+		logger.info("Proccessing test 07: " + totalAttachments);
 		
-		final Query query = EM.createQuery(QUERYBUILDER.toString());		
+		final Query query = em.createQuery(queryBuilder.toString());		
         query.setParameter("attachment", "12345".getBytes());
         
 		final List<byte[]> result = (List<byte[]>) query.getResultList();		

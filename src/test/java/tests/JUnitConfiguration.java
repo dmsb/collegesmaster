@@ -1,67 +1,78 @@
 package tests;
 
-import static org.junit.Assert.fail;
-
+import br.com.collegesmaster.model.Institute;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import static junit.framework.Assert.assertEquals;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
 public class JUnitConfiguration {
-	
-	public static EntityManagerFactory EMF;
-	public static Logger LOGGER = Logger.getGlobal();    
-	public static EntityManager EM;
-	public static EntityTransaction ET;
-	public static StringBuilder QUERYBUILDER;
-	
-	
-	@BeforeClass
+
+    protected static EntityManagerFactory emf;
+    protected final static Logger logger = Logger.getGlobal();
+    protected static EntityManager em;
+    protected static EntityTransaction et;
+    protected static StringBuilder queryBuilder;
+    protected static Validator validator;
+    
+    @BeforeClass
     public static void setUpClass() {
-        LOGGER.setLevel(Level.INFO);
-        EMF = Persistence.createEntityManagerFactory("collegesmasterPU");        
+        logger.setLevel(Level.INFO);
+        emf = Persistence.createEntityManagerFactory("collegesmasterPU");
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
         DBUnitUtil.inserirDados();
     }
 
     @AfterClass
     public static void tearDownClass() {
-        EMF.close();
+        emf.close();
     }
 
     @Before
     public void setUp() {
-        EM = EMF.createEntityManager();
+        em = emf.createEntityManager();
         beginTransaction();
     }
 
     @After
     public void tearDown() {
         commitTransaction();
-        EM.close();
+        em.close();
     }
-	
-	public void beginTransaction() {
-        ET = EM.getTransaction();
-        ET.begin();
+
+    public void beginTransaction() {
+        et = em.getTransaction();
+        et.begin();
     }
 
     public void commitTransaction() {
-        try {        	
-            ET.commit();            
+        try {
+            et.commit();
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
-            ET.rollback();
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            et.rollback();
             fail(ex.getMessage());
         }
-        
-        EM.clear();
+
+        em.clear();
+    }
+    
+    public <T> void validateConstraints(final T object) {
+        final Set<ConstraintViolation<T>> constraintViolations = validator.validate( object );
+        assertEquals(constraintViolations.size(), 0);
     }
 }

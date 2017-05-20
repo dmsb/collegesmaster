@@ -18,7 +18,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import br.com.collegesmaster.enums.Alternative;
-import br.com.collegesmaster.enums.Level;
+import br.com.collegesmaster.enums.ChallengeLevel;
 
 @Entity
 @Table(name = "CHALLENGE")
@@ -53,7 +53,7 @@ public class Challenge implements Serializable {
 	
 	@Enumerated(EnumType.ORDINAL)
 	@NotNull
-	private Level level;
+	private ChallengeLevel level;
 	
 	public Integer getId() {
 		return id;
@@ -87,11 +87,11 @@ public class Challenge implements Serializable {
 		this.response = response;
 	}
 	
-	public Level getLevel() {
-		return Level.valueOf(level.getLevel());
+	public ChallengeLevel getLevel() {
+		return ChallengeLevel.valueOf(level.getLevel());
 	}
 
-	public void setLevel(Level level) {
+	public void setLevel(ChallengeLevel level) {
 		this.level = level;
 	}
 	

@@ -1,6 +1,6 @@
 package br.com.collegesmaster.enums;
 
-public enum Level {
+public enum ChallengeLevel {
 	NEWBIE("NEWBIE"), 
 	BEGGINER("BEGGINER"), 
 	INTERMEDIATE("INTERMEDIATE"),
@@ -9,7 +9,7 @@ public enum Level {
 	
 	private final String level;
 	
-	private Level(String level) {
+	private ChallengeLevel(String level) {
 		this.level = level;
 	}
 	
