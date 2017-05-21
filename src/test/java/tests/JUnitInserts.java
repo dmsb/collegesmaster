@@ -1,16 +1,5 @@
 package tests;
 
-import br.com.collegesmaster.enums.Alternative;
-import br.com.collegesmaster.enums.ChallengeLevel;
-import br.com.collegesmaster.model.Challenge;
-import br.com.collegesmaster.model.Course;
-import br.com.collegesmaster.model.Discipline;
-import br.com.collegesmaster.model.GeneralInfo;
-import br.com.collegesmaster.model.Institute;
-import br.com.collegesmaster.model.Localization;
-import br.com.collegesmaster.model.Professor;
-import br.com.collegesmaster.model.Student;
-import br.com.collegesmaster.util.FunctionUtils;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -21,9 +10,21 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import br.com.collegesmaster.enums.Alternative;
+import br.com.collegesmaster.enums.ChallengeLevel;
+import br.com.collegesmaster.model.Challenge;
+import br.com.collegesmaster.model.Course;
+import br.com.collegesmaster.model.Discipline;
+import br.com.collegesmaster.model.GeneralInfo;
+import br.com.collegesmaster.model.Institute;
+import br.com.collegesmaster.model.Localization;
+import br.com.collegesmaster.model.Professor;
+import br.com.collegesmaster.model.Student;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JUnitInserts extends JUnitConfiguration {
@@ -126,7 +127,7 @@ public class JUnitInserts extends JUnitConfiguration {
 
         final Professor professor = new Professor();
         professor.setUsername("tainara.dantas.teste");
-        professor.setPassword("");
+        professor.setPassword("T4inara#");
         professor.setGeneralInfo(new GeneralInfo());
         professor.getGeneralInfo().setCpf("24185135998");
         professor.getGeneralInfo().setBirthdate(calendar.getTime());
@@ -137,7 +138,6 @@ public class JUnitInserts extends JUnitConfiguration {
         professor.getGeneralInfo().setLocalization(local);
         professor.setInstitutes(institutes);
         
-        FunctionUtils.showInvalidColumnsValues(professor);
         validateConstraints(professor);
         em.persist(professor);
     }

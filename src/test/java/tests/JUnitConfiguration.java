@@ -1,27 +1,30 @@
 package tests;
 
-import br.com.collegesmaster.model.Institute;
+import static org.junit.Assert.fail;
+
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnit;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import static junit.framework.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
 public class JUnitConfiguration {
-
+	
+	@PersistenceUnit(unitName = "collegesmasterPU")
     protected static EntityManagerFactory emf;
+	
     protected final static Logger logger = Logger.getGlobal();
     protected static EntityManager em;
     protected static EntityTransaction et;
@@ -30,8 +33,7 @@ public class JUnitConfiguration {
     
     @BeforeClass
     public static void setUpClass() {
-        logger.setLevel(Level.INFO);
-        emf = Persistence.createEntityManagerFactory("collegesmasterPU");
+        logger.setLevel(Level.INFO);        
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
         DBUnitUtil.inserirDados();
@@ -73,6 +75,6 @@ public class JUnitConfiguration {
     
     public <T> void validateConstraints(final T object) {
         final Set<ConstraintViolation<T>> constraintViolations = validator.validate( object );
-        assertEquals(constraintViolations.size(), 0);
+        constraintViolations.forEach(violation -> logger.log(Level.SEVERE, violation.getMessage()));
     }
 }
