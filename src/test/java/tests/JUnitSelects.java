@@ -226,7 +226,7 @@ public class JUnitSelects extends JUnitConfiguration {
 	public void test08_login() {
 		
 		final String username = "DIOGO.BRITO";
-		final String password = "D10g0!s";
+		final String password = "D10g0!";
 		
 		queryBuilder = new StringBuilder();
 		queryBuilder

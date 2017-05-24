@@ -2,10 +2,11 @@ package br.com.collegesmaster.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Set;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -53,17 +54,29 @@ public abstract class FunctionUtils {
     }
 	
 	public static String generateSalt() {
-		SecureRandom sr = null;
+		KeyGenerator keyGen = null;
 		try {
-			sr = SecureRandom.getInstance("SHA1PRNG");
+			keyGen = KeyGenerator.getInstance("AES");
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-        
-		final byte[] salt = new byte[128];
-        sr.nextBytes(salt);        
-        
-        final String saltGenerated = Base64.getEncoder().encodeToString(salt);; 
-        return saltGenerated;
+		keyGen.init(256);
+		SecretKey secretKey = keyGen.generateKey();
+		final String stringKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
+		
+		return stringKey;
+		
+//		SecureRandom sr = null;
+//		try {
+//			sr = SecureRandom.getInstance("SHA1PRNG");
+//		} catch (NoSuchAlgorithmException e) {
+//			e.printStackTrace();
+//		}
+//        
+//		final byte[] salt = new byte[128];
+//        sr.nextBytes(salt);        
+//        
+//        final String saltGenerated = Base64.getEncoder().encodeToString(salt); 
+//        return saltGenerated;
     }
 }
