@@ -24,13 +24,13 @@ public class DBUnitUtil {
             conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/collegesmaster?useSSL=true&useTimezone=true&serverTimezone=UTC", "root", "root");
             db_conn = new DatabaseConnection(conn, "collegesmaster");
-            final DatabaseConfig dbConfig = db_conn.getConfig();            
+            final DatabaseConfig dbConfig = db_conn.getConfig();
             dbConfig.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySqlDataTypeFactory());
             dbConfig.setProperty(DatabaseConfig.PROPERTY_METADATA_HANDLER, new MySqlMetadataHandler());
             final FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
-            builder.setColumnSensing(true);            
-            final URL url = DBUnitUtil.class.getResource(XML_FILE);                
-            final IDataSet dataSet = builder.build(url);             
+            builder.setColumnSensing(true);
+            final URL url = DBUnitUtil.class.getResource(XML_FILE);
+            final IDataSet dataSet = builder.build(url);           
             DatabaseOperation.CLEAN_INSERT.execute(db_conn, dataSet);
         } catch (Exception ex) {
             throw new RuntimeException(ex.getMessage(), ex);

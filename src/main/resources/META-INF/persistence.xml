@@ -2,19 +2,18 @@
 <persistence version="2.1"
 	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="collegesmasterPU"
-		transaction-type="JTA">
-		
+	
+	<persistence-unit name="collegesmasterPU" transaction-type="RESOURCE_LOCAL">
+	
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<jta-data-source>java:/collegesmasterDS</jta-data-source>
-		<class>br.com.collegesmaster.model.Challenge</class>
+		<class>br.com.collegesmaster.model.Institute</class>
 		<class>br.com.collegesmaster.model.Course</class>
 		<class>br.com.collegesmaster.model.Discipline</class>
-		<class>br.com.collegesmaster.model.Institute</class>
 		<class>br.com.collegesmaster.model.Localization</class>
 		<class>br.com.collegesmaster.model.GeneralInfo</class>		
 		<class>br.com.collegesmaster.model.Professor</class>
 		<class>br.com.collegesmaster.model.Student</class>
+		<class>br.com.collegesmaster.model.Challenge</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		
 		<properties>
@@ -22,11 +21,39 @@
 				value="jdbc:mysql://localhost:3306/collegesmaster?useSSL=true&amp;useTimezone=true&amp;serverTimezone=UTC" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="root" />
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />			
 			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
-						
-			<property name="hibernate.show_sql" value="true" />					
 			
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+			<property name="hibernate.show_sql" value="true" />			
 		</properties>
 	</persistence-unit>
+	
+<!-- 	<persistence-unit name="collegesmasterPU" transaction-type="JTA"> -->
+		
+<!-- 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
+<!-- 		<jta-data-source>java:/collegesmasterDS</jta-data-source> -->
+<!-- 		<class>br.com.collegesmaster.model.Institute</class> -->
+<!-- 		<class>br.com.collegesmaster.model.Course</class> -->
+<!-- 		<class>br.com.collegesmaster.model.Discipline</class> -->
+<!-- 		<class>br.com.collegesmaster.model.Localization</class> -->
+<!-- 		<class>br.com.collegesmaster.model.GeneralInfo</class>		 -->
+<!-- 		<class>br.com.collegesmaster.model.Professor</class> -->
+<!-- 		<class>br.com.collegesmaster.model.Student</class> -->
+<!-- 		<class>br.com.collegesmaster.model.Challenge</class> -->
+<!-- 		<exclude-unlisted-classes>false</exclude-unlisted-classes> -->
+		
+<!-- 		<properties> -->
+<!-- 			<property name="javax.persistence.jdbc.url" -->
+<!-- 				value="jdbc:mysql://localhost:3306/collegesmaster?useSSL=true&amp;useTimezone=true&amp;serverTimezone=UTC" /> -->
+<!-- 			<property name="javax.persistence.jdbc.user" value="root" /> -->
+<!-- 			<property name="javax.persistence.jdbc.password" value="root" /> -->
+<!-- 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />					 -->
+			
+<!-- 			<property name="hibernate.show_sql" value="true" /> -->
+<!-- 			<property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
+<!-- 			<property name="hibernate.transaction.flush_before_completion" value="true"/> -->
+			
+<!-- 		</properties> -->
+<!-- 	</persistence-unit> -->	
 </persistence>

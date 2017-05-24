@@ -14,9 +14,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import br.com.collegesmaster.annotations.Password;
+
 
 @Table(name = "USER")
 @Entity
@@ -30,16 +29,28 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column(name = "username", unique= true)
     @NotNull
+    @Column(name = "username", unique= true, length = 25)
     private String username;  
 
-    @NotEmpty
-	@Column(name = "password", unique = false, updatable = true, nullable = false)
-    @Password
+    @NotNull
+	@Column(name = "password", unique = false, nullable = false, length = 60)
+    @Password    
     private String password;
+    
+    @NotNull
+	@Column(name = "salt", unique = false, nullable = false, length = 256)
+    private String salt;
+    
+	public String getSalt() {		
+		return salt;
+	}
 
-    public Integer getId() {
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -62,7 +73,7 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+	
     public int hashCode() {
 		return Objects.hashCode(getId());
 	}

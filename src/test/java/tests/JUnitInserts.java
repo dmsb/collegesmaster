@@ -25,6 +25,7 @@ import br.com.collegesmaster.model.Institute;
 import br.com.collegesmaster.model.Localization;
 import br.com.collegesmaster.model.Professor;
 import br.com.collegesmaster.model.Student;
+import br.com.collegesmaster.util.FunctionUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JUnitInserts extends JUnitConfiguration {
@@ -92,7 +93,8 @@ public class JUnitInserts extends JUnitConfiguration {
 
         final Student student = new Student();
         student.setUsername("diogo.brito.teste");
-        student.setPassword("#T41n4r4");
+        student.setSalt(FunctionUtils.generateSalt());
+        student.setPassword(FunctionUtils.getHashedPassword("D10g0!", student.getSalt()));
         student.setGeneralInfo(new GeneralInfo());
         student.getGeneralInfo().setCpf("50168636280");
         student.getGeneralInfo().setBirthdate(calendar.getTime());
@@ -107,7 +109,7 @@ public class JUnitInserts extends JUnitConfiguration {
         validateConstraints(student);
         em.persist(student);
     }
-
+    
     @Test
     public void test05_insertProfessor() {
 
@@ -127,7 +129,8 @@ public class JUnitInserts extends JUnitConfiguration {
 
         final Professor professor = new Professor();
         professor.setUsername("tainara.dantas.teste");
-        professor.setPassword("T4inara#");
+        professor.setSalt(FunctionUtils.generateSalt());
+        professor.setPassword(FunctionUtils.getHashedPassword("T4inara#", professor.getSalt()));
         professor.setGeneralInfo(new GeneralInfo());
         professor.getGeneralInfo().setCpf("24185135998");
         professor.getGeneralInfo().setBirthdate(calendar.getTime());

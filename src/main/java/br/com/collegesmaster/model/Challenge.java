@@ -3,6 +3,8 @@ package br.com.collegesmaster.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +24,7 @@ import br.com.collegesmaster.enums.ChallengeLevel;
 
 @Entity
 @Table(name = "CHALLENGE")
+@Access(AccessType.FIELD)
 public class Challenge implements Serializable {
 
 	private static final long serialVersionUID = 6314730845000580522L;

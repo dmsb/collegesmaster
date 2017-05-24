@@ -21,6 +21,9 @@ import org.junit.runners.MethodSorters;
 import br.com.collegesmaster.model.Challenge;
 import br.com.collegesmaster.model.Discipline;
 import br.com.collegesmaster.model.Institute;
+import br.com.collegesmaster.model.Professor;
+import br.com.collegesmaster.model.Student;
+import br.com.collegesmaster.model.User;
 import br.com.collegesmaster.util.FunctionUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -218,4 +221,55 @@ public class JUnitSelects extends JUnitConfiguration {
 		assertEquals(1, result.size());
 		
 	}
+	
+	@Test
+	public void test08_login() {
+		
+		final String username = "DIOGO.BRITO";
+		final String password = "D10g0!";
+		
+		queryBuilder = new StringBuilder();
+		queryBuilder
+				.append("SELECT user.salt ")
+				.append("FROM   User user where user.username = :username");			
+		
+		final String totalAttachments = queryBuilder.toString();
+		logger.info("Proccessing test 07: " + totalAttachments);
+		
+		final Query query = em.createQuery(queryBuilder.toString());		
+        query.setParameter("username", username);
+        
+        final String salt = (String) query.getSingleResult();
+        
+		final User user = processLogin(username, password, salt);		
+		
+		assertEquals(username, user.getUsername());
+		
+	}
+
+	private User processLogin(final String username, final String password, final String salt) {		
+		
+		final String hashedPassword = FunctionUtils.getHashedPassword(password, salt);
+		
+		queryBuilder = new StringBuilder();
+		queryBuilder
+				.append("SELECT user ")
+				.append("FROM   User user where user.username = :username and user.password = :hashedPassword");
+		
+		final TypedQuery<User> query = em.createQuery(
+				queryBuilder.toString(), User.class);
+		
+        query.setParameter("username", username);
+        query.setParameter("hashedPassword", hashedPassword);        
+        
+        final User user = query.getSingleResult();
+        
+        if(user.getClass().isAssignableFrom(Professor.class)) {
+        	return (Professor) user;        
+        } else {
+        	return (Student) user;	
+        }               
+	}
+		
 }
+

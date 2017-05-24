@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceUnit;
+import javax.persistence.Persistence;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -21,8 +21,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 public class JUnitConfiguration {
-	
-	@PersistenceUnit(unitName = "collegesmasterPU")
+		
     protected static EntityManagerFactory emf;
 	
     protected final static Logger logger = Logger.getGlobal();
@@ -36,12 +35,13 @@ public class JUnitConfiguration {
         logger.setLevel(Level.INFO);        
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
+        emf = Persistence.createEntityManagerFactory("collegesmasterPU");
         DBUnitUtil.inserirDados();
     }
 
     @AfterClass
     public static void tearDownClass() {
-        emf.close();
+        emf.close();        
     }
 
     @Before
