@@ -34,12 +34,12 @@ public class User implements Serializable {
     private String username;  
 
     @NotNull
-	@Column(name = "password", unique = false, nullable = false, length = 60)
+	@Column(name = "password", unique = false, nullable = false, length = 90)
     @Password    
     private String password;
     
     @NotNull
-	@Column(name = "salt", unique = false, nullable = false, length = 256)
+	@Column(name = "salt", unique = false, nullable = false, length = 180)
     private String salt;
     
 	public String getSalt() {		

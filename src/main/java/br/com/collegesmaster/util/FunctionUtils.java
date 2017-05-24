@@ -3,14 +3,13 @@ package br.com.collegesmaster.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
-import org.dbunit.util.Base64;
 
 public abstract class FunctionUtils {
 	
@@ -34,19 +33,26 @@ public abstract class FunctionUtils {
 		MessageDigest digest = null;
 		
 		try {
-			digest = MessageDigest.getInstance("SHA-256");
+			digest = MessageDigest.getInstance("SHA-512");
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
 		
-        digest.reset();
-        digest.update(salt.getBytes());        
-        final String hashedPasswordWithSalt = Base64.encodeBytes(digest.digest()); 
+		digest.reset();
+		digest.update(password.getBytes());
+		String hashedPassword = Base64.getEncoder().encodeToString(digest.digest());	
+		
+		hashedPassword = hashedPassword.concat(salt); 
+		
+		digest.reset();
+        digest.update(hashedPassword.getBytes());
+        
+        final String hashedPasswordWithSalt = Base64.getEncoder().encodeToString(digest.digest()); 
         
         return hashedPasswordWithSalt;        
     }
 	
-	public static String generateSalt() {        
+	public static String generateSalt() {
 		SecureRandom sr = null;
 		try {
 			sr = SecureRandom.getInstance("SHA1PRNG");
@@ -57,7 +63,7 @@ public abstract class FunctionUtils {
 		final byte[] salt = new byte[128];
         sr.nextBytes(salt);        
         
-        final String saltGenerated = Base64.encodeBytes(salt); 
+        final String saltGenerated = Base64.getEncoder().encodeToString(salt);; 
         return saltGenerated;
     }
 }

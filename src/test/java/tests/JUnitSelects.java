@@ -226,15 +226,12 @@ public class JUnitSelects extends JUnitConfiguration {
 	public void test08_login() {
 		
 		final String username = "DIOGO.BRITO";
-		final String password = "D10g0!";
+		final String password = "D10g0!s";
 		
 		queryBuilder = new StringBuilder();
 		queryBuilder
 				.append("SELECT user.salt ")
-				.append("FROM   User user where user.username = :username");			
-		
-		final String totalAttachments = queryBuilder.toString();
-		logger.info("Proccessing test 07: " + totalAttachments);
+				.append("FROM   User user where user.username = :username");				
 		
 		final Query query = em.createQuery(queryBuilder.toString());		
         query.setParameter("username", username);
@@ -259,7 +256,7 @@ public class JUnitSelects extends JUnitConfiguration {
 		final TypedQuery<User> query = em.createQuery(
 				queryBuilder.toString(), User.class);
 		
-        query.setParameter("username", username);
+        query.setParameter("username", username);        
         query.setParameter("hashedPassword", hashedPassword);        
         
         final User user = query.getSingleResult();
