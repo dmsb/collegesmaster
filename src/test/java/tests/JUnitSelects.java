@@ -13,6 +13,11 @@ import java.util.List;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Selection;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -24,7 +29,11 @@ import br.com.collegesmaster.model.Institute;
 import br.com.collegesmaster.model.Professor;
 import br.com.collegesmaster.model.Student;
 import br.com.collegesmaster.model.User;
+import br.com.collegesmaster.util.CryptoUtils;
 import br.com.collegesmaster.util.FunctionUtils;
+import dto.ProfessorDTO;
+import dto.StudentDTO;
+import dto.UserDTO;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JUnitSelects extends JUnitConfiguration {
@@ -223,11 +232,34 @@ public class JUnitSelects extends JUnitConfiguration {
 	}
 	
 	@Test
-	public void test08_login() {
+	public void test08_professorLogin() {
+
+		//Informações de acesso de um professor já cadastrado no sistema.		
+		final String username = "TAINARA.DANTAS";
+		final String password = "D10g0!";
 		
+		final String salt = getUserSalt(username);        
+		final ProfessorDTO user = buildLogin(username, password, salt, ProfessorDTO.class, Professor.class);		
+		
+		assertEquals(username, user.getUsername());
+		
+	}
+	
+	@Test
+	public void test09_studentLogin() {
+		
+		//Informações de acesso de um estudante já cadastrado no sistema.
 		final String username = "DIOGO.BRITO";
 		final String password = "D10g0!";
 		
+		final String salt = getUserSalt(username);        
+		final StudentDTO user = buildLogin(username, password, salt, StudentDTO.class, Student.class);
+		
+		assertEquals(username, user.getUsername());
+		
+	}
+
+	private String getUserSalt(final String username) {
 		queryBuilder = new StringBuilder();
 		queryBuilder
 				.append("SELECT user.salt ")
@@ -237,35 +269,61 @@ public class JUnitSelects extends JUnitConfiguration {
         query.setParameter("username", username);
         
         final String salt = (String) query.getSingleResult();
-        
-		final User user = processLogin(username, password, salt);		
-		
-		assertEquals(username, user.getUsername());
-		
+		return salt;
 	}
 
-	private User processLogin(final String username, final String password, final String salt) {		
+	private <T extends UserDTO, K extends User> T buildLogin(final String username, final String password, final String salt,
+			final Class<T> userDTOType,  final Class<K> userType) {
 		
-		final String hashedPassword = FunctionUtils.getHashedPassword(password, salt);
+		final String hashedPassword = CryptoUtils.getHashedPassword(password, salt);        	
 		
-		queryBuilder = new StringBuilder();
-		queryBuilder
-				.append("SELECT user ")
-				.append("FROM   User user where user.username = :username and user.password = :hashedPassword");
+		final CriteriaBuilder builder = em.getCriteriaBuilder();
+		final CriteriaQuery<T> criteria = builder.createQuery(userDTOType);		
+		final Root<K> userRoot = criteria.from(userType);		
 		
-		final TypedQuery<User> query = em.createQuery(
-				queryBuilder.toString(), User.class);
+		final Selection<T> compoundSelection = generateCompoundSelection(userDTOType, builder, userRoot);
 		
-        query.setParameter("username", username);        
-        query.setParameter("hashedPassword", hashedPassword);        
-        
-        final User user = query.getSingleResult();
-        
-        if(user.getClass().isAssignableFrom(Professor.class)) {
-        	return (Professor) user;        
-        } else {
-        	return (Student) user;	
-        }               
+		criteria.select(compoundSelection);
+		System.out.println(criteria.getSelection().getCompoundSelectionItems());
+		
+		final Predicate usernamePredicate = builder.equal(userRoot.get("username"), username);
+		final Predicate passwordPredicate = builder.equal(userRoot.get("password"), hashedPassword);
+		criteria.where(usernamePredicate, passwordPredicate);
+		
+		final TypedQuery<T> querys = em.createQuery(criteria);
+		
+		final T user = querys.getSingleResult();
+                
+        return user;
+	}
+
+	private <T extends UserDTO, K extends User> Selection<T> generateCompoundSelection(final Class<T> userType,
+			final CriteriaBuilder builder, final Root<K> userRoot) {
+		
+		final Selection<T> idField = userRoot.get("id");
+		final Selection<T> usernameField = userRoot.get("username");		
+		final Selection<T> generalInfoField = userRoot.get("generalInfo");
+		
+		if(userType.isAssignableFrom(StudentDTO.class)) {
+			final Selection<T> registrationField = userRoot.get("registration");
+			final Selection<T> instituteField = userRoot.get("institute");
+			final Selection<T> courseField = userRoot.get("course");
+			final Selection<T> scoreField = userRoot.get("score");
+			
+			return builder.construct(userType, idField, usernameField, registrationField, instituteField, courseField, scoreField, generalInfoField);	
+		} else if(userType.isAssignableFrom(ProfessorDTO.class)) {
+
+			final Selection<T> siapeField = userRoot.get("siape");
+//			final Join<K, Challenge> challenges = userRoot.join("challenges");
+//			final Join<K, Institute> institutes = userRoot.join("institutes");
+//			final Join<K, Course> courses = userRoot.join("courses");
+//			final Join<K, Discipline> disciplines = userRoot.join("disciplines");			
+
+			
+			return builder.construct(userType, idField, usernameField, siapeField, generalInfoField);	
+		} else {
+			return null;
+		}
 	}
 		
 }

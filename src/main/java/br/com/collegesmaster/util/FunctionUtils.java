@@ -1,12 +1,7 @@
 package br.com.collegesmaster.util;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.Set;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -27,56 +22,5 @@ public abstract class FunctionUtils {
     	"." + contraints.getPropertyPath() + " " + contraints.getMessage());
     	  }
     	}
-	}
-	
-	public static String getHashedPassword(final String password, final String salt) {
-        
-		MessageDigest digest = null;
-		
-		try {
-			digest = MessageDigest.getInstance("SHA-512");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		
-		digest.reset();
-		digest.update(password.getBytes());
-		String hashedPassword = Base64.getEncoder().encodeToString(digest.digest());	
-		
-		hashedPassword = hashedPassword.concat(salt); 
-		
-		digest.reset();
-        digest.update(hashedPassword.getBytes());
-        
-        final String hashedPasswordWithSalt = Base64.getEncoder().encodeToString(digest.digest()); 
-        
-        return hashedPasswordWithSalt;        
-    }
-	
-	public static String generateSalt() {
-		KeyGenerator keyGen = null;
-		try {
-			keyGen = KeyGenerator.getInstance("AES");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		keyGen.init(256);
-		SecretKey secretKey = keyGen.generateKey();
-		final String stringKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
-		
-		return stringKey;
-		
-//		SecureRandom sr = null;
-//		try {
-//			sr = SecureRandom.getInstance("SHA1PRNG");
-//		} catch (NoSuchAlgorithmException e) {
-//			e.printStackTrace();
-//		}
-//        
-//		final byte[] salt = new byte[128];
-//        sr.nextBytes(salt);        
-//        
-//        final String saltGenerated = Base64.getEncoder().encodeToString(salt); 
-//        return saltGenerated;
-    }
+	}	
 }
