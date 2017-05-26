@@ -235,7 +235,7 @@ public class JUnitSelects extends JUnitConfiguration {
 	public void test08_professorLogin() {
 
 		//Informações de acesso de um professor já cadastrado no sistema.		
-		final String username = "TAINARA.DANTAS";
+		final String username = "DIOGO.BRITO";
 		final String password = "D10g0!";
 		
 		final String salt = getUserSalt(username);        
