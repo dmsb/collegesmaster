@@ -66,7 +66,6 @@ public class JUnitInserts extends JUnitConfiguration {
 
         final Discipline discipline = new Discipline();
         discipline.setName("Software Corporativo");
-        discipline.setWorkload(Integer.valueOf(64));
         discipline.setCourse(course);
         
         validateConstraints(discipline);
@@ -87,8 +86,7 @@ public class JUnitInserts extends JUnitConfiguration {
         local.setCountry("BRASIL");
         local.setState("PERNAMBUCO");
         local.setCity("RECIFE");
-
-        final Institute institute = em.find(Institute.class, 1);
+        
         final Course course = em.find(Course.class, 1);
 
         final Student student = new Student();
@@ -103,7 +101,6 @@ public class JUnitInserts extends JUnitConfiguration {
         student.getGeneralInfo().setLastName("TESTE");
         student.setRegistration("130340");
         student.getGeneralInfo().setLocalization(local);
-        student.setInstitute(institute);
         student.setCourse(course);
         
         validateConstraints(student);
@@ -124,8 +121,9 @@ public class JUnitInserts extends JUnitConfiguration {
         local.setState("PERNAMBUCO");
         local.setCity("RECIFE");
 
-        final List<Institute> institutes = new ArrayList<>();
-        institutes.add(em.find(Institute.class, 1));
+        final List<Discipline> disciplines = new ArrayList<>();
+        disciplines.add(em.find(Discipline.class, 1));
+        disciplines.add(em.find(Discipline.class, 2));
 
         final Professor professor = new Professor();
         professor.setUsername("tainara.dantas.teste");
@@ -138,8 +136,8 @@ public class JUnitInserts extends JUnitConfiguration {
         professor.getGeneralInfo().setFirstName("TAINARA");
         professor.getGeneralInfo().setLastName("TESTE");
         professor.setSiape("102311010");
-        professor.getGeneralInfo().setLocalization(local);
-        professor.setInstitutes(institutes);
+        professor.getGeneralInfo().setLocalization(local); 
+        professor.setDisciplines(disciplines);
         
         validateConstraints(professor);
         em.persist(professor);

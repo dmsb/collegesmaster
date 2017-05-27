@@ -14,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -22,7 +21,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "INSTITUTE")
+@Table(name = "Institute")
 @Access(AccessType.FIELD)
 public class Institute implements Serializable {
 
@@ -30,6 +29,7 @@ public class Institute implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
     @NotBlank
@@ -39,12 +39,6 @@ public class Institute implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "institute")
     private List<Course> courses;
-    
-    @ManyToMany(mappedBy = "institutes")
-    private List<Professor> professors;
-    
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = false, mappedBy = "institute")
-    private List<Student> students;
 
 	@Embedded
     private Localization localization;
@@ -80,22 +74,6 @@ public class Institute implements Serializable {
     public void setLocalization(Localization localization) {
         this.localization = localization;
     }
-    
-    public List<Professor> getProfessors() {
-		return professors;
-	}
-
-	public void setProfessors(List<Professor> professors) {
-		this.professors = professors;
-	}
-	
-	public List<Student> getStudents() {
-		return students;
-	}
-
-	public void setStudents(List<Student> students) {
-		this.students = students;
-	}
 	
     @Override
     public int hashCode() {

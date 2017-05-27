@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -20,25 +21,23 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "DISCIPLINE")
+@Table(name = "Discipline")
 public class Discipline implements Serializable {
 
     private static final long serialVersionUID = -8467860341227715787L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "name")
     @NotBlank
     private String name;
-
-    @Column(name = "workload")
-    @NotNull
-    private Integer workload;
     
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)    
     @NotNull
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "courseId", referencedColumnName = "id")
     private Course course;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "discipline")
@@ -46,14 +45,6 @@ public class Discipline implements Serializable {
 
 	@ManyToMany(mappedBy = "disciplines")
     private List<Professor> professors;
-    
-    public Integer getWorkload() {
-        return workload;
-    }
-
-    public void setWorkload(Integer workload) {
-        this.workload = workload;
-    }
 
     public Course getCourse() {
         return course;

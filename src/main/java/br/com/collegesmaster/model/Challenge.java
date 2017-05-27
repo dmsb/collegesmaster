@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -23,7 +24,7 @@ import br.com.collegesmaster.enums.Alternative;
 import br.com.collegesmaster.enums.ChallengeLevel;
 
 @Entity
-@Table(name = "CHALLENGE")
+@Table(name = "Challenge")
 @Access(AccessType.FIELD)
 public class Challenge implements Serializable {
 
@@ -31,6 +32,7 @@ public class Challenge implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Integer id;
 	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
@@ -38,6 +40,7 @@ public class Challenge implements Serializable {
 	private Professor professor;
 	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "disciplineId", referencedColumnName = "id")
 	private Discipline discipline;
 	
 	@Lob
@@ -46,7 +49,7 @@ public class Challenge implements Serializable {
 	@NotNull
 	private byte[] attachment;	
 	
-	@Column(name = "file_name")	
+	@Column(name = "fileName")	
 	@NotNull
 	private String fileName;
 

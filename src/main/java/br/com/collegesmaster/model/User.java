@@ -16,8 +16,7 @@ import javax.validation.constraints.NotNull;
 
 import br.com.collegesmaster.annotations.Password;
 
-
-@Table(name = "USER")
+@Table(name = "User")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "profile_type")
@@ -27,6 +26,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
     
     @NotNull

@@ -13,7 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "COURSE")
+@Table(name = "Course")
 @Access(AccessType.FIELD)
 public class Course implements Serializable {
 
@@ -30,6 +30,7 @@ public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "name")
@@ -37,17 +38,12 @@ public class Course implements Serializable {
     private String name;
     
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "instituteId", referencedColumnName = "id")
     @NotNull
     private Institute institute;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "course")
     private List<Discipline> disciplines;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = false, mappedBy = "course")
-    private List<Student> students;
-    
-    @ManyToMany(mappedBy = "courses")
-    private List<Professor> professors;
     
     public Integer getId() {
         return id;
@@ -93,21 +89,5 @@ public class Course implements Serializable {
         }
         final Course other = (Course) obj;
         return getId() != null && Objects.equals(getId(), other.getId());
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
-    public List<Professor> getProfessors() {
-        return professors;
-    }
-
-    public void setProfessors(List<Professor> professors) {
-        this.professors = professors;
     }
 }

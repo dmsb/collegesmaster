@@ -99,7 +99,7 @@ public class JUnitSelects extends JUnitConfiguration {
 		queryBuilder
 				.append("SELECT discipline  ")
 				.append("FROM   Discipline discipline ")
-				.append("WHERE  discipline.workload = :workload ")
+				.append("WHERE  discipline.name = :name ")
 				.append("ORDER  BY discipline.name");			
 		
 		final String selectAllDisciplinesWith80Hours = queryBuilder.toString();
@@ -108,12 +108,12 @@ public class JUnitSelects extends JUnitConfiguration {
 		final TypedQuery<Discipline> query = em.createQuery(
         		selectAllDisciplinesWith80Hours,
                 Discipline.class);
-        query.setParameter("workload", 80);
+        query.setParameter("name", "discipline 1");
         
         final List<Discipline> disciplines = query.getResultList();
 
         for (final Discipline discipline : disciplines) {
-        	if(Integer.valueOf(80).equals(discipline.getWorkload()) == false) {
+        	if("discipline 1".equals(discipline.getName()) == false) {
         		fail();
         	}
         }

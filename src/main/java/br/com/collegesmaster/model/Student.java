@@ -1,20 +1,23 @@
 package br.com.collegesmaster.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "STUDENT")
+@Table(name = "Student")
 public class Student extends User implements Serializable {
 
 	private static final long serialVersionUID = 4255404420897428496L;
@@ -25,13 +28,14 @@ public class Student extends User implements Serializable {
 
 	@ManyToOne(optional = true, fetch = FetchType.EAGER)	
 	private Course course;
-
-	@ManyToOne(optional = true, fetch = FetchType.EAGER)	
-	private Institute institute;
-
+	
 	@Column(name = "score")
 	private Integer score;
-
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<UserChallenge> userChallenges;
+	
+	
 	@Embedded
 	@Valid
 	private GeneralInfo generalInfo;
@@ -58,14 +62,6 @@ public class Student extends User implements Serializable {
 
 	public void setScore(Integer score) {
 		this.score = score;
-	}
-
-	public Institute getInstitute() {
-		return institute;
-	}
-
-	public void setInstitute(Institute institute) {
-		this.institute = institute;
 	}
 
 	public GeneralInfo getGeneralInfo() {

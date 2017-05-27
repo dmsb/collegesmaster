@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "PROFESSOR")
+@Table(name = "Professor")
 public class Professor extends User implements Serializable {
 
     private static final long serialVersionUID = 6162120714620872426L;
@@ -30,23 +30,11 @@ public class Professor extends User implements Serializable {
     @Column(name = "siape", unique = true)
     @NotBlank
     private String siape;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="professor_institute",
-             joinColumns={@JoinColumn(name="professor_id")},
-             inverseJoinColumns={@JoinColumn(name="institute_id")})    
-    private List<Institute> institutes;
     
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="professor_course",
-             joinColumns={@JoinColumn(name="professor_id")},
-             inverseJoinColumns={@JoinColumn(name="course_id")})
-    private List<Course> courses;
-    
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="professor_discipline",
-             joinColumns={@JoinColumn(name="professor_id")},
-             inverseJoinColumns={@JoinColumn(name="discipline_id")})
+    @JoinTable(name="Professor_Discipline",
+             joinColumns={@JoinColumn(name="professorId")},
+             inverseJoinColumns={@JoinColumn(name="disciplineId")})
     private List<Discipline> disciplines;
     
     @Embedded
@@ -67,22 +55,6 @@ public class Professor extends User implements Serializable {
 
     public void setSiape(String siape) {
         this.siape = siape;
-    }
-
-    public List<Institute> getInstitutes() {
-        return institutes;
-    }
-
-    public void setInstitutes(List<Institute> institutes) {
-        this.institutes = institutes;
-    }
-    
-    public List<Course> getCourses() {
-        return courses;
-    }
-    
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
     }
     
     public List<Discipline> getDisciplines() {
