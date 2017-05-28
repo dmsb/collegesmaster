@@ -17,7 +17,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Selection;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -27,13 +26,9 @@ import br.com.collegesmaster.model.Challenge;
 import br.com.collegesmaster.model.Discipline;
 import br.com.collegesmaster.model.Institute;
 import br.com.collegesmaster.model.Professor;
-import br.com.collegesmaster.model.Student;
 import br.com.collegesmaster.model.User;
 import br.com.collegesmaster.util.CryptoUtils;
 import br.com.collegesmaster.util.FunctionUtils;
-import dto.ProfessorDTO;
-import dto.StudentDTO;
-import dto.UserDTO;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JUnitSelects extends JUnitConfiguration {
@@ -232,31 +227,19 @@ public class JUnitSelects extends JUnitConfiguration {
 	}
 	
 	@Test
-	public void test08_professorLogin() {
+	public void test08_login() {
 
-		//Informações de acesso de um professor já cadastrado no sistema.		
 		final String username = "DIOGO.BRITO";
 		final String password = "D10g0!";
 		
 		final String salt = getUserSalt(username);        
-		final ProfessorDTO user = buildLogin(username, password, salt, ProfessorDTO.class, Professor.class);		
+		final User user = buildLogin(username, password, salt);
 		
-		assertEquals(username, user.getUsername());
-		
-	}
-	
-	@Test
-	public void test09_studentLogin() {
-		
-		//Informações de acesso de um estudante já cadastrado no sistema.
-		final String username = "DIOGO.BRITO";
-		final String password = "D10g0!";
-		
-		final String salt = getUserSalt(username);        
-		final StudentDTO user = buildLogin(username, password, salt, StudentDTO.class, Student.class);
-		
-		assertEquals(username, user.getUsername());
-		
+		if(user.getClass().isAssignableFrom(Professor.class)) {
+			assertEquals("Professor logged!", username, user.getUsername());			
+		} else {
+			assertEquals("Student logged!", username, user.getUsername());
+		}		
 	}
 
 	private String getUserSalt(final String username) {
@@ -272,59 +255,23 @@ public class JUnitSelects extends JUnitConfiguration {
 		return salt;
 	}
 
-	private <T extends UserDTO, K extends User> T buildLogin(final String username, final String password, final String salt,
-			final Class<T> userDTOType,  final Class<K> userType) {
+	private User buildLogin(final String username, final String password, final String salt) {
 		
 		final String hashedPassword = CryptoUtils.getHashedPassword(password, salt);        	
 		
 		final CriteriaBuilder builder = em.getCriteriaBuilder();
-		final CriteriaQuery<T> criteria = builder.createQuery(userDTOType);		
-		final Root<K> userRoot = criteria.from(userType);		
-		
-		final Selection<T> compoundSelection = generateCompoundSelection(userDTOType, builder, userRoot);
-		
-		criteria.select(compoundSelection);
-		System.out.println(criteria.getSelection().getCompoundSelectionItems());
+		final CriteriaQuery<User> criteria = builder.createQuery(User.class);		
+		final Root<User> userRoot = criteria.from(User.class);
 		
 		final Predicate usernamePredicate = builder.equal(userRoot.get("username"), username);
 		final Predicate passwordPredicate = builder.equal(userRoot.get("password"), hashedPassword);
 		criteria.where(usernamePredicate, passwordPredicate);
 		
-		final TypedQuery<T> querys = em.createQuery(criteria);
+		final TypedQuery<User> querys = em.createQuery(criteria);
 		
-		final T user = querys.getSingleResult();
+		final User user = querys.getSingleResult();
                 
         return user;
-	}
-
-	private <T extends UserDTO, K extends User> Selection<T> generateCompoundSelection(final Class<T> userType,
-			final CriteriaBuilder builder, final Root<K> userRoot) {
-		
-		final Selection<T> idField = userRoot.get("id");
-		final Selection<T> usernameField = userRoot.get("username");		
-		final Selection<T> generalInfoField = userRoot.get("generalInfo");
-		
-		if(userType.isAssignableFrom(StudentDTO.class)) {
-			final Selection<T> registrationField = userRoot.get("registration");
-			final Selection<T> instituteField = userRoot.get("institute");
-			final Selection<T> courseField = userRoot.get("course");
-			final Selection<T> scoreField = userRoot.get("score");
-			
-			return builder.construct(userType, idField, usernameField, registrationField, instituteField, courseField, scoreField, generalInfoField);	
-		} else if(userType.isAssignableFrom(ProfessorDTO.class)) {
-
-			final Selection<T> siapeField = userRoot.get("siape");
-//			final Join<K, Challenge> challenges = userRoot.join("challenges");
-//			final Join<K, Institute> institutes = userRoot.join("institutes");
-//			final Join<K, Course> courses = userRoot.join("courses");
-//			final Join<K, Discipline> disciplines = userRoot.join("disciplines");			
-
-			
-			return builder.construct(userType, idField, usernameField, siapeField, generalInfoField);	
-		} else {
-			return null;
-		}
-	}
-		
+	}	
 }
 

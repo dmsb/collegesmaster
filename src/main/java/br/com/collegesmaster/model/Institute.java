@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "Institute")
+@Table(name = "institute")
 @Access(AccessType.FIELD)
 public class Institute implements Serializable {
 

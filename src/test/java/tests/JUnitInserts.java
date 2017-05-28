@@ -87,8 +87,12 @@ public class JUnitInserts extends JUnitConfiguration {
         local.setState("PERNAMBUCO");
         local.setCity("RECIFE");
         
-        final Course course = em.find(Course.class, 1);
-
+        final List<Discipline> disciplines = new ArrayList<Discipline>();
+        disciplines.add(em.find(Discipline.class, 1));
+        
+        final List<Challenge> challenges = new ArrayList<Challenge>();
+        challenges.add(em.find(Challenge.class, 1));
+        
         final Student student = new Student();
         student.setUsername("diogo.brito.teste");
         student.setSalt(CryptoUtils.generateSalt());
@@ -101,7 +105,8 @@ public class JUnitInserts extends JUnitConfiguration {
         student.getGeneralInfo().setLastName("TESTE");
         student.setRegistration("130340");
         student.getGeneralInfo().setLocalization(local);
-        student.setCourse(course);
+        student.setCompletedChallenges(challenges);
+        student.setDisciplines(disciplines);
         
         validateConstraints(student);
         em.persist(student);
@@ -121,10 +126,14 @@ public class JUnitInserts extends JUnitConfiguration {
         local.setState("PERNAMBUCO");
         local.setCity("RECIFE");
 
-        final List<Discipline> disciplines = new ArrayList<>();
+        final List<Discipline> disciplines = new ArrayList<Discipline>();
         disciplines.add(em.find(Discipline.class, 1));
         disciplines.add(em.find(Discipline.class, 2));
-
+        
+        final List<Challenge> challenges = new ArrayList<Challenge>();
+        challenges.add(em.find(Challenge.class, 1));
+        
+        
         final Professor professor = new Professor();
         professor.setUsername("tainara.dantas.teste");
         professor.setSalt(CryptoUtils.generateSalt());
@@ -138,6 +147,7 @@ public class JUnitInserts extends JUnitConfiguration {
         professor.setSiape("102311010");
         professor.getGeneralInfo().setLocalization(local); 
         professor.setDisciplines(disciplines);
+        professor.setChallenges(challenges);
         
         validateConstraints(professor);
         em.persist(professor);
@@ -154,6 +164,7 @@ public class JUnitInserts extends JUnitConfiguration {
         challenge.setLevel(ChallengeLevel.EXPERT);
         challenge.setProfessor(professor);
         challenge.setDiscipline(discipline);
+        challenge.setPontuation(100);
         challenge.setFileName("teste.pdf");
 
         try {

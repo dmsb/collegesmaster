@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "Course")
+@Table(name = "course")
 @Access(AccessType.FIELD)
 public class Course implements Serializable {
 
@@ -37,9 +37,9 @@ public class Course implements Serializable {
     @NotBlank
     private String name;
     
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "instituteId", referencedColumnName = "id")
     @NotNull
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "instituteId", referencedColumnName = "id")
     private Institute institute;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "course")

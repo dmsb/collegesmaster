@@ -19,22 +19,22 @@ import javax.validation.Valid;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "Professor")
+@Table(name = "professor")
 public class Professor extends User implements Serializable {
 
     private static final long serialVersionUID = 6162120714620872426L;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "professor")
-    private List<Challenge> challenges;
 
     @Column(name = "siape", unique = true)
     @NotBlank
     private String siape;
     
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "professor")
+    private List<Challenge> challenges;
+    
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="Professor_Discipline",
-             joinColumns={@JoinColumn(name="professorId")},
-             inverseJoinColumns={@JoinColumn(name="disciplineId")})
+    @JoinTable(name="professor_discipline",
+             joinColumns={@JoinColumn(name="professorFK", referencedColumnName = "id")},
+             inverseJoinColumns={@JoinColumn(name="disciplineFK", referencedColumnName = "id")})
     private List<Discipline> disciplines;
     
     @Embedded

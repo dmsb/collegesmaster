@@ -16,10 +16,10 @@ import javax.validation.constraints.NotNull;
 
 import br.com.collegesmaster.annotations.Password;
 
-@Table(name = "User")
+@Table(name = "user")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "profile_type")
+@DiscriminatorColumn(name = "profileType")
 public class User implements Serializable {
 
     private static final long serialVersionUID = -7809703915845045860L;
@@ -34,12 +34,12 @@ public class User implements Serializable {
     private String username;  
 
     @NotNull
-	@Column(name = "password", unique = false, nullable = false, length = 90)
+	@Column(name = "password", unique = false, nullable = false, length = 88)
     @Password    
     private String password;
     
     @NotNull
-	@Column(name = "salt", unique = false, nullable = false, length = 180)
+	@Column(name = "salt", unique = false, nullable = false, length = 88)
     private String salt;
     
 	public String getSalt() {		

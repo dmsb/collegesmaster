@@ -41,7 +41,7 @@ public abstract class CryptoUtils {
 			e.printStackTrace();
 		}
 
-		final byte[] seed = secureRandom.generateSeed(256);
+		final byte[] seed = secureRandom.generateSeed(64);
 		secureRandom.setSeed(seed);
 		secureRandom.nextBytes(seed);
 

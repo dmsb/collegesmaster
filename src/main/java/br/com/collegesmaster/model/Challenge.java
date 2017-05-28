@@ -24,7 +24,7 @@ import br.com.collegesmaster.enums.Alternative;
 import br.com.collegesmaster.enums.ChallengeLevel;
 
 @Entity
-@Table(name = "Challenge")
+@Table(name = "challenge")
 @Access(AccessType.FIELD)
 public class Challenge implements Serializable {
 
@@ -35,31 +35,38 @@ public class Challenge implements Serializable {
 	@Column(name = "id")
 	private Integer id;
 	
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@NotNull
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "professorFK", referencedColumnName = "id")
 	private Professor professor;
 	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "disciplineId", referencedColumnName = "id")
+	@JoinColumn(name = "disciplineFK", referencedColumnName = "id")
 	private Discipline discipline;
 	
+	@NotNull
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column(name = "attachment", columnDefinition="MEDIUMBLOB")
-	@NotNull
 	private byte[] attachment;	
 	
-	@Column(name = "fileName")	
-	@NotNull
+	@NotNull	
+	@Column(name = "fileName", nullable = false, length = 60)
 	private String fileName;
 
-	@Enumerated(EnumType.STRING)	
 	@NotNull
+	@Basic(optional = false)
+	@Enumerated(EnumType.STRING)	
 	private Alternative response;
 	
-	@Enumerated(EnumType.ORDINAL)
 	@NotNull
+	@Basic(optional = false)
+	@Enumerated(EnumType.ORDINAL)
 	private ChallengeLevel level;
+	
+	@NotNull
+	@Column(name = "pontuation", nullable = false)
+	private Integer pontuation;
 	
 	public Integer getId() {
 		return id;
@@ -117,6 +124,14 @@ public class Challenge implements Serializable {
 		this.fileName = fileName;
 	}
 	
+	public Integer getPontuation() {
+		return pontuation;
+	}
+
+	public void setPontuation(Integer pontuation) {
+		this.pontuation = pontuation;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hashCode(getId());

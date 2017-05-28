@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "Discipline")
+@Table(name = "discipline")
 public class Discipline implements Serializable {
 
     private static final long serialVersionUID = -8467860341227715787L;
@@ -37,7 +37,7 @@ public class Discipline implements Serializable {
     
     @NotNull
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @JoinColumn(name = "courseFK", referencedColumnName = "id")
     private Course course;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "discipline")
@@ -45,6 +45,9 @@ public class Discipline implements Serializable {
 
 	@ManyToMany(mappedBy = "disciplines")
     private List<Professor> professors;
+	
+	@ManyToMany(mappedBy = "disciplines")
+    private List<Student> students;
 
     public Course getCourse() {
         return course;

@@ -1,87 +1,98 @@
 <?xml version='1.0' encoding='utf-8'?>
 <dataset>
 
-	<INSTITUTE NAME='INSTITUTO FEDERAL DE PERNAMBUCO' COUNTRY='BRASIL' STATE='PERNAMBUCO' CITY='RECIFE' />
-	<INSTITUTE NAME='INSTITUTO FEDERAL DE PERNAMBUCO' COUNTRY='BRASIL' STATE='PERNAMBUCO' CITY='JABOATÃO' />
-	<INSTITUTE NAME='INSTITUTO FEDERAL DE PERNAMBUCO' COUNTRY='BRASIL' STATE='PERNAMBUCO' CITY='GARANHUNS' />	
-	<INSTITUTE NAME='UNIVERSIDADE FEDERAL DE PERNAMBUCO' COUNTRY='BRASIL' STATE='PERNAMBUCO' CITY='RECIFE' />
-	<INSTITUTE NAME='INSTITUTO FEDERAL DA BAHIA' COUNTRY='BRASIL' STATE='BAHIA' CITY='SALVADOR' />
-	<INSTITUTE NAME='UNIVERSIDADE DE SÃO PAULO' COUNTRY='BRASIL' STATE='SÃO PAULO' CITY='SÃO PAULO' />
+	<institute name='instituto federal de pernambuco' country='brasil' state='pernambuco' city='recife' />
+	<institute name='instituto federal de pernambuco' country='brasil' state='pernambuco' city='jaboatão' />
+	<institute name='instituto federal de pernambuco' country='brasil' state='pernambuco' city='garanhuns' />	
+	<institute name='universidade federal de pernambuco' country='brasil' state='pernambuco' city='recife' />
+	<institute name='instituto federal da bahia' country='brasil' state='bahia' city='salvador' />
+	<institute name='universidade de são paulo' country='brasil' state='são paulo' city='são paulo' />
 	
-	<COURSE INSTITUTEID='1' NAME='ANÁLISE E DESENVOLVIMENTO DE SISTEMAS' />
-	<COURSE INSTITUTEID='1' NAME='ENGENHARIA AMBIENTAL' />
-	<COURSE INSTITUTEID='1' NAME='ELETRONICA' />
+	<course instituteId='1' name='análise e desenvolvimento de sistemas' />
+	<course instituteId='1' name='engenharia ambiental' />
+	<course instituteId='1' name='eletronica' />
 	
-	<COURSE INSTITUTEID='2' NAME='ANÁLISE E DESENVOLVIMENTO DE SISTEMAS' />
-	<COURSE INSTITUTEID='2' NAME='ENGENHARIA QUÍMICA' />
-	<COURSE INSTITUTEID='2' NAME='ENGENHARIA ELETRICA' />
+	<course instituteId='2' name='análise e desenvolvimento de sistemas' />
+	<course instituteId='2' name='engenharia química' />
+	<course instituteId='2' name='engenharia eletrica' />
 	
-	<COURSE INSTITUTEID='3' NAME='GEOGRAFIA' />
-	<COURSE INSTITUTEID='3' NAME='ENGENHARIA QUÍMICA' />
-	<COURSE INSTITUTEID='3' NAME='ENGENHARIA ELETRICA' />
+	<course instituteId='3' name='geografia' />
+	<course instituteId='3' name='engenharia química' />
+	<course instituteId='3' name='engenharia eletrica' />
 	
-	<COURSE INSTITUTEID='4' NAME='GEOGRAFIA' />
-	<COURSE INSTITUTEID='4' NAME='FÍSICA' />
-	<COURSE INSTITUTEID='4' NAME='HISTÓRIA' />
+	<course instituteId='4' name='geografia' />
+	<course instituteId='4' name='física' />
+	<course instituteId='4' name='história' />
 	
-	<COURSE INSTITUTEID='4' NAME='EDUCAÇÃO FÍSICA' />
-	<COURSE INSTITUTEID='4' NAME='FÍSICA' />
-	<COURSE INSTITUTEID='4' NAME='HISTÓRIA' />
+	<course instituteId='4' name='educação física' />
+	<course instituteId='4' name='física' />
+	<course instituteId='4' name='história' />
 	
-	<COURSE INSTITUTEID='5' NAME='ANÁLISE E DESENVOLVIMENTO DE SISTEMAS' />	
-	<COURSE INSTITUTEID='5' NAME='HISTÓRIA' />	
+	<course instituteId='5' name='análise e desenvolvimento de sistemas' />	
+	<course instituteId='5' name='história' />	
 	
-	<COURSE INSTITUTEID='6' NAME='ANÁLISE E DESENVOLVIMENTO DE SISTEMAS' />	
-	<COURSE INSTITUTEID='6' NAME='MATEMÁRICA' />
+	<course instituteId='6' name='análise e desenvolvimento de sistemas' />	
+	<course instituteId='6' name='matemárica' />
 	
-	<DISCIPLINE COURSEID='1' NAME='SOFTWARE CORPORATIVO I' />
-	<DISCIPLINE COURSEID='1' NAME='REDES' />
-	<DISCIPLINE COURSEID='1' NAME='INTRIDUÇÃO À PROGRAMAÇÃO' />
+	<discipline courseFK='1' name='software corporativo i' />
+	<discipline courseFK='1' name='redes' />
+	<discipline courseFK='1' name='intridução à programação' />
 	
-	<DISCIPLINE COURSEID='3' NAME='FISCA I' />
-	<DISCIPLINE COURSEID='3' NAME='FISCA II' />
-	<DISCIPLINE COURSEID='3' NAME='FISCA III'/>
+	<discipline courseFK='3' name='fisca i' />
+	<discipline courseFK='3' name='fisca ii' />
+	<discipline courseFK='3' name='fisca iii'/>
 	
-	<DISCIPLINE COURSEID='4' NAME='SOFTWARE CORPORATIVO II' />
-	<DISCIPLINE COURSEID='5' NAME='QUIMICA I' />
-	<DISCIPLINE COURSEID='6' NAME='FISICA IV' />
+	<discipline courseFK='4' name='software corporativo ii' />
+	<discipline courseFK='5' name='quimica i' />
+	<discipline courseFK='6' name='fisica iv' />
 	
-	<!-- password = D10g0! -->
-	<USER ID='1' PROFILETYPE='Professor' USERNAME='DIOGO.BRITO'
-	PASSWORD='q3YmSl/q/JKGmZCjQxdK4pGVjK4OpAVIaa+MlMPqGZscxyrs9LotokImn0Vt25raWV4QE7QO1gBoEx4gcmfhQw==' 
-	SALT='QeYT59i2Y8gqnj8Q72l3bCu9OWrDoIkIh4Wa7bTgOQM=' />	
+	<!-- password = d10g0! -->
+	<user id='1' profiletype='professor' username='diogo.brito'
+	password='q3ymsl/q/jkgmzcjqxdk4pgvjk4opaviaa+mlmpqgzscxyrs9lotokimn0vt25rawv4qe7qo1gboex4gcmfhqw==' 
+	salt='qeyt59i2y8gqnj8q72l3bcu9owrdoikih4wa7btgoqm=' />	
 	
-	<PROFESSOR ID='1' SIAPE='123' BIRTHDATE='1993-10-17 00:00:00'
-	CPF='10719498457' EMAIL='DIOGOMSB1@GMAIL.COM' FIRSTNAME='DIOGO' LASTNAME='BRITO'  
-	CITY='RECIFE' COUNTRY='BRASIL' STATE='PERNAMBUCO' />
+	<professor id='1' siape='123' birthdate='1993-10-17 00:00:00'
+	cpf='10719498457' email='diogomsb1@gmail.com' firstname='diogo' lastname='brito'  
+	city='recife' country='brasil' state='pernambuco' />
 	
-	<USER ID='2' PROFILETYPE='Professor' USERNAME='TAINARA.DANTAS' PASSWORD='#T41n4r4' SALT='12345@#12' />
+	<user id='2' profiletype='professor' username='tainara.dantas' password='#t41n4r4' salt='12345@#12' />
 	
-	<PROFESSOR ID='2' SIAPE='321' BIRTHDATE='1998-10-17 00:00:00' CPF='42518426507' EMAIL='TAINARAMSB1@GMAIL.COM' 
-	FIRSTNAME='TAINARA' LASTNAME='DANTAS' CITY='RECIFE' COUNTRY='BRASIL' STATE='PERNAMBUCO' />
+	<professor id='2' siape='321' birthdate='1998-10-17 00:00:00' cpf='42518426507' email='tainaramsb1@gmail.com' 
+	firstname='tainara' lastname='dantas' city='recife' country='brasil' state='pernambuco' />
 	
-	<USER ID='3' PROFILETYPE='Student' USERNAME='FERNANDO.RIBEIRO' PASSWORD='#T41n4r4' SALT='12345@#12' />
+	<user id='3' profiletype='student' username='fernando.ribeiro' password='#t41n4r4' salt='12345@#12' />
 	
-	<STUDENT ID='3' REGISTRATION='123456' SCORE='150' BIRTHDATE='1998-10-17 00:00:00' CPF='44046156201' EMAIL='TRANSOC@GMAIL.COM' 
-	FIRSTNAME='FERNANDO' LASTNAME='RIBEIRO' CITY='SÃO PAULO' COUNTRY='BRASIL' STATE='PERNAMBUCO' INSTITUTEID='6' COURSEID='3' />
+	<student id='3' registration='123456' birthdate='1998-10-17 00:00:00' cpf='44046156201' email='transoc@gmail.com' 
+	firstname='fernando' lastname='ribeiro' city='são paulo' country='brasil' state='pernambuco' />
 	
-	<USER ID='4' PROFILETYPE='Student' USERNAME='LUCAS.MUNIZ' PASSWORD='#D10g01' SALT='12345@#12' />
+	<user id='4' profiletype='student' username='lucas.muniz' password='#d10g01' salt='12345@#12' />
 	
-	<STUDENT ID='4' REGISTRATION='654321' SCORE='100' BIRTHDATE='1998-10-17 00:00:00' CPF='34796683305' EMAIL='JUCA1@GMAIL.COM' 
-	FIRSTNAME='LUCAS' LASTNAME='MUNIZ' CITY='BAHIA' COUNTRY='BRASIL' STATE='PERNAMBUCO' INSTITUTEID='5' COURSEID='5' />
+	<student id='4' registration='654321' birthdate='1998-10-17 00:00:00' cpf='34796683305' email='juca1@gmail.com' 
+	firstname='lucas' lastname='muniz' city='bahia' country='brasil' state='pernambuco' />
 	
-	<PROFESSOR_DISCIPLINE DISCIPLINEID='1' PROFESSORID='1' />
-	<PROFESSOR_DISCIPLINE DISCIPLINEID='2' PROFESSORID='1' />
-	<PROFESSOR_DISCIPLINE DISCIPLINEID='3' PROFESSORID='1' />
-	<PROFESSOR_DISCIPLINE DISCIPLINEID='4' PROFESSORID='2' />
-	<PROFESSOR_DISCIPLINE DISCIPLINEID='5' PROFESSORID='2' />
-	<PROFESSOR_DISCIPLINE DISCIPLINEID='6' PROFESSORID='2' />
+	<professor_discipline disciplineFK='1' professorFK='1' />
+	<professor_discipline disciplineFK='2' professorFK='1' />
+	<professor_discipline disciplineFK='3' professorFK='1' />
+	<professor_discipline disciplineFK='4' professorFK='2' />
+	<professor_discipline disciplineFK='5' professorFK='2' />
+	<professor_discipline disciplineFK='6' professorFK='2' />
 	
-	<CHALLENGE LEVEL='1' ATTACHMENT='MTIzNDU=' FILENAME='TESTE1.pdf' RESPONSE='A' DISCIPLINEID='3' PROFESSORID='1' />
-	<CHALLENGE LEVEL='2' ATTACHMENT='MTIzNDU2' FILENAME='TESTE2.pdf' RESPONSE='C' DISCIPLINEID='4' PROFESSORID='2' />
-	<CHALLENGE LEVEL='3' ATTACHMENT='MTIzNDU3' FILENAME='TESTE3.pdf' RESPONSE='D' DISCIPLINEID='1' PROFESSORID='1' />
-	<CHALLENGE LEVEL='3' ATTACHMENT='MTIzNDU3OA==' FILENAME='TESTE4.pdf' RESPONSE='C' DISCIPLINEID='6' PROFESSORID='2' />
-	<CHALLENGE LEVEL='4' ATTACHMENT='MTIzNDU3ODk=' FILENAME='TESTE5.pdf' RESPONSE='B' DISCIPLINEID='9' PROFESSORID='2' />
+	<student_discipline disciplineFK='1' studentFK='1' />
+	<student_discipline disciplineFK='2' studentFK='1' />
+	<student_discipline disciplineFK='3' studentFK='1' />
+	<student_discipline disciplineFK='4' studentFK='2' />
+	<student_discipline disciplineFK='5' studentFK='2' />
+	<student_discipline disciplineFK='6' studentFK='2' />
 	
+	<challenge level='1' attachment='mtizndu=' filename='teste1.pdf' response='A' pontuation='100' disciplineFK='3' professorFK='1' />
+	<challenge level='2' attachment='mtizndu2' filename='teste2.pdf' response='C' pontuation='80' disciplineFK='4' professorFK='2' />
+	<challenge level='3' attachment='mtizndu3' filename='teste3.pdf' response='D' pontuation='150' disciplineFK='1' professorFK='1' />
+	<challenge level='3' attachment='mtizndu3oa==' filename='teste4.pdf' response='A' pontuation='85' disciplineFK='6' professorFK='2' />
+	<challenge level='4' attachment='mtizndu3odk=' filename='teste5.pdf' response='B' pontuation='100' disciplineFK='9' professorFK='2' />
+	
+	<challenges_made studentFK='3' challengeFK='2' />
+	<challenges_made studentFK='3' challengeFK='1' />
+	<challenges_made studentFK='4' challengeFK='4' />
+		
 </dataset>
 

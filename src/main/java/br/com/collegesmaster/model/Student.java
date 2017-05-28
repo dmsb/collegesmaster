@@ -9,7 +9,9 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -17,7 +19,7 @@ import javax.validation.Valid;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "Student")
+@Table(name = "student")
 public class Student extends User implements Serializable {
 
 	private static final long serialVersionUID = 4255404420897428496L;
@@ -25,16 +27,18 @@ public class Student extends User implements Serializable {
 	@Column(name = "registration", unique = true, nullable = false, updatable = false)
 	@NotBlank
 	private String registration;
-
-	@ManyToOne(optional = true, fetch = FetchType.EAGER)	
-	private Course course;
 	
-	@Column(name = "score")
-	private Integer score;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinTable(name="challenges_made",
+	    joinColumns={@JoinColumn(name="studentFK", referencedColumnName = "id")},
+	    inverseJoinColumns={@JoinColumn(name="challengeFK", referencedColumnName = "id")})
+	private List<Challenge> completedChallenges;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<UserChallenge> userChallenges;
-	
+	@ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="student_discipline",
+             joinColumns={@JoinColumn(name="studentFK", referencedColumnName = "id")},
+             inverseJoinColumns={@JoinColumn(name="disciplineFK", referencedColumnName = "id")})
+    private List<Discipline> disciplines;
 	
 	@Embedded
 	@Valid
@@ -48,22 +52,6 @@ public class Student extends User implements Serializable {
 		this.registration = registration;
 	}
 
-	public Course getCourse() {
-		return course;
-	}
-
-	public void setCourse(Course course) {
-		this.course = course;
-	}
-
-	public Integer getScore() {
-		return score;
-	}
-
-	public void setScore(Integer score) {
-		this.score = score;
-	}
-
 	public GeneralInfo getGeneralInfo() {
 		return generalInfo;
 	}
@@ -74,6 +62,22 @@ public class Student extends User implements Serializable {
 
 	public int hashCode() {
 		return Objects.hashCode(getId());
+	}
+	
+	public List<Challenge> getCompletedChallenges() {
+		return completedChallenges;
+	}
+
+	public void setCompletedChallenges(List<Challenge> completedChallenges) {
+		this.completedChallenges = completedChallenges;
+	}
+
+	public List<Discipline> getDisciplines() {
+		return disciplines;
+	}
+
+	public void setDisciplines(List<Discipline> disciplines) {
+		this.disciplines = disciplines;
 	}
 
 	@Override
