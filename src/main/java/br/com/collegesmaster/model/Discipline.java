@@ -25,12 +25,12 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Discipline implements Serializable {
 
     private static final long serialVersionUID = -8467860341227715787L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
-
+   
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
+	
     @Column(name = "name")
     @NotBlank
     private String name;
@@ -48,8 +48,24 @@ public class Discipline implements Serializable {
 	
 	@ManyToMany(mappedBy = "disciplines")
     private List<Student> students;
+	
+    public Integer getId() {
+		return id;
+	}
 
-    public Course getCourse() {
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+
+	public Course getCourse() {
         return course;
     }
 
@@ -64,14 +80,6 @@ public class Discipline implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
     
     public List<Challenge> getChallenges() {
 		return challenges;
@@ -81,11 +89,14 @@ public class Discipline implements Serializable {
 		this.challenges = challenges;
 	}
 	
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
+    public List<Professor> getProfessors() {
+        return professors;
     }
 
+    public void setProfessors(List<Professor> professors) {
+        this.professors = professors;
+    }
+    
     @Override
     public boolean equals(final Object obj) {
         if ((obj instanceof Discipline) == false) {
@@ -94,12 +105,9 @@ public class Discipline implements Serializable {
         final Discipline other = (Discipline) obj;
         return getId() != null && Objects.equals(getId(), other.getId());
     }
-
-    public List<Professor> getProfessors() {
-        return professors;
-    }
-
-    public void setProfessors(List<Professor> professors) {
-        this.professors = professors;
+    
+	@Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
     }
 }

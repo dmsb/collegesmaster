@@ -29,12 +29,12 @@ import br.com.collegesmaster.enums.ChallengeLevel;
 public class Challenge implements Serializable {
 
 	private static final long serialVersionUID = 6314730845000580522L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
-	
+
 	@NotNull
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "professorFK", referencedColumnName = "id")
@@ -75,7 +75,7 @@ public class Challenge implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	
 	public Professor getProfessor() {
 		return professor;
 	}
@@ -131,11 +131,6 @@ public class Challenge implements Serializable {
 	public void setPontuation(Integer pontuation) {
 		this.pontuation = pontuation;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hashCode(getId());
-	}
 	
 	@Override
 	public boolean equals(final Object obj) {
@@ -145,5 +140,9 @@ public class Challenge implements Serializable {
 		final Challenge other = (Challenge) obj;		
 		return getId() != null && Objects.equals(getId(), other.getId());
 	}
-
+	
+	@Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
 }

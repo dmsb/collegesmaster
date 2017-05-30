@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,6 +21,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "professor")
+@DiscriminatorValue("professor")
 public class Professor extends User implements Serializable {
 
     private static final long serialVersionUID = 6162120714620872426L;
@@ -86,4 +88,5 @@ public class Professor extends User implements Serializable {
         final Professor other = (Professor) obj;
         return getId() != null && Objects.equals(getId(), other.getId());
     }
+    
 }

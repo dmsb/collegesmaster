@@ -26,12 +26,12 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Institute implements Serializable {
 
     private static final long serialVersionUID = -7480055661943707725L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
-
+    
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
+	
     @NotBlank
     @Column(name = "name")
     @Size(min = 5)
@@ -42,16 +42,16 @@ public class Institute implements Serializable {
 
 	@Embedded
     private Localization localization;
-
+	
     public Integer getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public String getName() {
+	public String getName() {
         return name;
     }
 
@@ -74,11 +74,6 @@ public class Institute implements Serializable {
     public void setLocalization(Localization localization) {
         this.localization = localization;
     }
-	
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
 
     @Override
     public boolean equals(final Object obj) {
@@ -87,5 +82,10 @@ public class Institute implements Serializable {
         }
         final Institute other = (Institute) obj;
         return getId() != null && Objects.equals(getId(), other.getId());
+    }
+    
+	@Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
     }
 }

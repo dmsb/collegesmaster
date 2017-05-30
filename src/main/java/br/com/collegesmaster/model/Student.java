@@ -4,15 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
 
@@ -20,6 +19,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "student")
+@DiscriminatorValue("student")
 public class Student extends User implements Serializable {
 
 	private static final long serialVersionUID = 4255404420897428496L;
@@ -28,7 +28,7 @@ public class Student extends User implements Serializable {
 	@NotBlank
 	private String registration;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="challenges_made",
 	    joinColumns={@JoinColumn(name="studentFK", referencedColumnName = "id")},
 	    inverseJoinColumns={@JoinColumn(name="challengeFK", referencedColumnName = "id")})

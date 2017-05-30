@@ -26,68 +26,68 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.FIELD)
 public class Course implements Serializable {
 
-    private static final long serialVersionUID = -8528499270451458997L;
+	private static final long serialVersionUID = -8528499270451458997L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
 
-    @Column(name = "name")
-    @NotBlank
-    private String name;
-    
-    @NotNull
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "instituteId", referencedColumnName = "id")
-    private Institute institute;
-    
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "course")
-    private List<Discipline> disciplines;
-    
-    public Integer getId() {
-        return id;
-    }
+	@Column(name = "name")
+	@NotBlank
+	private String name;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	@NotNull
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "instituteId", referencedColumnName = "id")
+	private Institute institute;
 
-    public String getName() {
-        return name;
-    }
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "course")
+	private List<Discipline> disciplines;
+	
+	public Integer getId() {
+		return id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Institute getInstitute() {
-        return institute;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setInstitute(Institute institute) {
-        this.institute = institute;
-    }
-    
-    public List<Discipline> getDisciplines() {
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Institute getInstitute() {
+		return institute;
+	}
+
+	public void setInstitute(Institute institute) {
+		this.institute = institute;
+	}
+
+	public List<Discipline> getDisciplines() {
 		return disciplines;
 	}
 
 	public void setDisciplines(List<Discipline> disciplines) {
 		this.disciplines = disciplines;
 	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if ((obj instanceof Course) == false) {
+			return false;
+		}
+		final Course other = (Course) obj;
+		return getId() != null && Objects.equals(getId(), other.getId());
+	}
 	
-    @Override
+	@Override
     public int hashCode() {
         return Objects.hashCode(getId());
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        if ((obj instanceof Course) == false) {
-            return false;
-        }
-        final Course other = (Course) obj;
-        return getId() != null && Objects.equals(getId(), other.getId());
     }
 }

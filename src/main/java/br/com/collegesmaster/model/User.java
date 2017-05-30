@@ -20,15 +20,15 @@ import br.com.collegesmaster.annotations.Password;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "profileType")
-public class User implements Serializable {
+public class User  implements Serializable {
 
     private static final long serialVersionUID = -7809703915845045860L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
     
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
+	
     @NotNull
     @Column(name = "username", unique= true, length = 25)
     private String username;  
@@ -42,6 +42,14 @@ public class User implements Serializable {
 	@Column(name = "salt", unique = false, nullable = false, length = 88)
     private String salt;
     
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String getSalt() {		
 		return salt;
 	}
@@ -49,14 +57,6 @@ public class User implements Serializable {
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
-
-	public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
     
     public String getUsername() {
   		return username;
@@ -73,10 +73,6 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-	
-    public int hashCode() {
-		return Objects.hashCode(getId());
-	}
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -86,4 +82,9 @@ public class User implements Serializable {
 		final User other = (User) obj;
 		return getId() != null && Objects.equals(getId(), other.getId());
 	}
+	
+	@Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
 }

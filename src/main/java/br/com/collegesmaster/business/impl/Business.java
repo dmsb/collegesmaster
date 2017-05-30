@@ -15,8 +15,8 @@ import br.com.collegesmaster.business.IBusiness;
 public class Business implements IBusiness {
 	
 	@PersistenceUnit(unitName = "collegesmasterPU")
-	protected static EntityManagerFactory emf;	
-    protected static EntityManager em;
+	protected static EntityManagerFactory entityManagerFactory;	
+    protected static EntityManager entityManager;
 	
     protected static StringBuilder queryBuilder;   
     protected final static Logger logger = Logger.getGlobal();
@@ -24,14 +24,14 @@ public class Business implements IBusiness {
     @Override
 	@PostConstruct
 	public void init() {
-    	em = emf.createEntityManager();
+    	entityManager = entityManagerFactory.createEntityManager();
     }
     
     @Override
 	@PreDestroy
 	public void cleanup() {
-    	if(em.isOpen()) {
-    		em.close();
+    	if(entityManager.isOpen()) {
+    		entityManager.close();
     	}
     }	
     

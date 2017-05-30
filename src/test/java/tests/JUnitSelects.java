@@ -51,12 +51,12 @@ public class JUnitSelects extends JUnitConfiguration {
 		final TypedQuery<Institute> query = em.createQuery(
         		selectAllFederalInstitutesQuery,
                 Institute.class);
-        query.setParameter("name", "INSTITUTO%");
+        query.setParameter("name", "instituto%");
         
         final List<Institute> institutes = query.getResultList();
 
         for (final Institute institute : institutes) {
-            assertTrue(institute.getName().startsWith("INSTITUTO"));
+            assertTrue(institute.getName().startsWith("instituto"));
         }
 
         assertEquals(4, institutes.size());
@@ -77,19 +77,19 @@ public class JUnitSelects extends JUnitConfiguration {
 		final TypedQuery<Discipline> query = em.createQuery(
         		selectAllCorporativeSoftwareDisciplneQuery,
                 Discipline.class);
-        query.setParameter("name", "Software Corporativo%");
+        query.setParameter("name", "software corporativo%");
         
         final List<Discipline> disciplines = query.getResultList();
 
         for (final Discipline discipline : disciplines) {
-            assertTrue(discipline.getName().startsWith("SOFTWARE CORP"));
+            assertTrue(discipline.getName().startsWith("software corp"));
         }
 
         assertEquals(2, disciplines.size());
 	}
 	
 	@Test
-	public void test03_getDisciplinesWith80Hours() {
+	public void test03_getDisciplinesByName() {
 		queryBuilder = new StringBuilder();
 		queryBuilder
 				.append("SELECT discipline  ")
@@ -97,22 +97,23 @@ public class JUnitSelects extends JUnitConfiguration {
 				.append("WHERE  discipline.name = :name ")
 				.append("ORDER  BY discipline.name");			
 		
-		final String selectAllDisciplinesWith80Hours = queryBuilder.toString();
-		logger.info("Proccessing test 03: " + selectAllDisciplinesWith80Hours);
+		final String selectAllDisciplinesByName = queryBuilder.toString();
+		logger.info("Proccessing test 03: " + selectAllDisciplinesByName);
 		
 		final TypedQuery<Discipline> query = em.createQuery(
-        		selectAllDisciplinesWith80Hours,
+        		selectAllDisciplinesByName,
                 Discipline.class);
-        query.setParameter("name", "discipline 1");
+        query.setParameter("name", "quimica i");
         
         final List<Discipline> disciplines = query.getResultList();
 
         for (final Discipline discipline : disciplines) {
-        	if("discipline 1".equals(discipline.getName()) == false) {
+        	if("quimica i".equals(discipline.getName()) == false) {
         		fail();
+        		return;
         	}
         }
-        assertEquals(6, disciplines.size());
+        assertEquals(1, disciplines.size());
 	}
 	
 	@Test
@@ -165,31 +166,21 @@ public class JUnitSelects extends JUnitConfiguration {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void test06_sortStudentScores() {
+	public void test06_sortStudentFirstName() {
 		
 		queryBuilder = new StringBuilder();
 		queryBuilder
 				.append("SELECT   student.generalInfo.cpf, ")
-				.append("		  student.score ")
+				.append("		  student.generalInfo.firstName ")
 				.append("FROM     Student student ")
-				.append("ORDER BY student.score");			
+				.append("ORDER BY student.generalInfo.firstName");
 		
-		final String scores = queryBuilder.toString();
-		logger.info("Proccessing test 05: " + scores);
+		final String listByName = queryBuilder.toString();
+		logger.info("Proccessing test 05: " + listByName);
 		
 		final Query query = em.createQuery(queryBuilder.toString());
 		
-		final List<Object[]> students = query.getResultList();		       
-        
-		Integer aux = 0;		
-		
-		for(final Object[] student : students) {
-	
-			if(aux > Integer.valueOf(String.valueOf(student[1]))) {
-				fail("Fail to sort student scores");
-			}
-			aux = Integer.valueOf(String.valueOf(student[1]));
-		}
+		final List<Object[]> students = query.getResultList();
 		
 		assertEquals(2, students.size());
 
@@ -218,7 +209,7 @@ public class JUnitSelects extends JUnitConfiguration {
 				final Path path = FileSystems.getDefault().getPath("D:", "testeDownloaded.pdf");				
 				Files.write(path, bytesFile);				
 			}
-		} catch (IOException e) {		
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
@@ -229,7 +220,7 @@ public class JUnitSelects extends JUnitConfiguration {
 	@Test
 	public void test08_login() {
 
-		final String username = "DIOGO.BRITO";
+		final String username = "diogo.brito";
 		final String password = "D10g0!";
 		
 		final String salt = getUserSalt(username);        

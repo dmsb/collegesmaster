@@ -32,11 +32,11 @@
 	<course instituteId='5' name='história' />	
 	
 	<course instituteId='6' name='análise e desenvolvimento de sistemas' />	
-	<course instituteId='6' name='matemárica' />
+	<course instituteId='6' name='matemática' />
 	
 	<discipline courseFK='1' name='software corporativo i' />
 	<discipline courseFK='1' name='redes' />
-	<discipline courseFK='1' name='intridução à programação' />
+	<discipline courseFK='1' name='introdução à programação' />
 	
 	<discipline courseFK='3' name='fisca i' />
 	<discipline courseFK='3' name='fisca ii' />
@@ -48,7 +48,7 @@
 	
 	<!-- password = d10g0! -->
 	<user id='1' profiletype='professor' username='diogo.brito'
-	password='q3ymsl/q/jkgmzcjqxdk4pgvjk4opaviaa+mlmpqgzscxyrs9lotokimn0vt25rawv4qe7qo1gboex4gcmfhqw==' 
+	password='faqmeJFuy0DtqYz4mt0fVI3inV4AOwHMKjo6tJXG3fFkFEzW7n6TaQ03GltUFGZ+1fetQdYmCTVhE5js4RF83A==' 
 	salt='qeyt59i2y8gqnj8q72l3bcu9owrdoikih4wa7btgoqm=' />	
 	
 	<professor id='1' siape='123' birthdate='1993-10-17 00:00:00'
@@ -84,11 +84,11 @@
 	<student_discipline disciplineFK='5' studentFK='2' />
 	<student_discipline disciplineFK='6' studentFK='2' />
 	
-	<challenge level='1' attachment='mtizndu=' filename='teste1.pdf' response='A' pontuation='100' disciplineFK='3' professorFK='1' />
-	<challenge level='2' attachment='mtizndu2' filename='teste2.pdf' response='C' pontuation='80' disciplineFK='4' professorFK='2' />
-	<challenge level='3' attachment='mtizndu3' filename='teste3.pdf' response='D' pontuation='150' disciplineFK='1' professorFK='1' />
-	<challenge level='3' attachment='mtizndu3oa==' filename='teste4.pdf' response='A' pontuation='85' disciplineFK='6' professorFK='2' />
-	<challenge level='4' attachment='mtizndu3odk=' filename='teste5.pdf' response='B' pontuation='100' disciplineFK='9' professorFK='2' />
+	<challenge level='1' attachment='MTIzNDU=' filename='teste1.pdf' response='A' pontuation='100' disciplineFK='3' professorFK='1' />
+	<challenge level='2' attachment='MTIzNDU2' filename='teste2.pdf' response='C' pontuation='80' disciplineFK='4' professorFK='2' />
+	<challenge level='3' attachment='MTIzNDU2Nw==' filename='teste3.pdf' response='D' pontuation='150' disciplineFK='1' professorFK='1' />
+	<challenge level='3' attachment='MTIzNDU2Nzg=' filename='teste4.pdf' response='A' pontuation='85' disciplineFK='6' professorFK='2' />
+	<challenge level='4' attachment='MTIzNDU2Nzg5' filename='teste5.pdf' response='B' pontuation='100' disciplineFK='9' professorFK='2' />
 	
 	<challenges_made studentFK='3' challengeFK='2' />
 	<challenges_made studentFK='3' challengeFK='1' />

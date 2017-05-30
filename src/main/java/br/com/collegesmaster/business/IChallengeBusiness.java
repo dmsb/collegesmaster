@@ -4,10 +4,10 @@ import br.com.collegesmaster.model.Challenge;
 
 public interface IChallengeBusiness {
 
-	void persistChallenge(Challenge challenge);
+	public void persistChallenge(Challenge challenge);
 
-	void mergeChallenge(Challenge challenge);
+	public void mergeChallenge(Challenge challenge);
 
-	void removeChallenge(Challenge challenge);
+	public void removeChallenge(Challenge challenge);
 
 }

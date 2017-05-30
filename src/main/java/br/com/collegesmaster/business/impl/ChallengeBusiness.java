@@ -7,16 +7,16 @@ public class ChallengeBusiness extends Business implements IChallengeBusiness {
 	
 	@Override
 	public void persistChallenge(Challenge challenge) {		
-		em.persist(challenge);
+		entityManager.persist(challenge);
 	}
 	
 	@Override
 	public void mergeChallenge(Challenge challenge) {
-		em.merge(challenge);
+		entityManager.merge(challenge);
 	}
 	
 	@Override
 	public void removeChallenge(Challenge challenge) {
-		em.remove(challenge);
-	}	
+		entityManager.remove(challenge);
+	}
 }
