@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model;
+package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,10 +17,12 @@ import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import br.com.collegesmaster.model.IStudent;
+
 @Entity
 @Table(name = "student")
 @DiscriminatorValue("student")
-public class Student extends User implements Serializable {
+public class Student extends User implements Serializable, IStudent {
 
 	private static final long serialVersionUID = 4255404420897428496L;
 
@@ -44,18 +46,34 @@ public class Student extends User implements Serializable {
 	@Valid
 	private GeneralInfo generalInfo;
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IStudent#getRegistration()
+	 */
+	@Override
 	public String getRegistration() {
 		return registration;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IStudent#setRegistration(java.lang.String)
+	 */
+	@Override
 	public void setRegistration(String registration) {
 		this.registration = registration;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IStudent#getGeneralInfo()
+	 */
+	@Override
 	public GeneralInfo getGeneralInfo() {
 		return generalInfo;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IStudent#setGeneralInfo(br.com.collegesmaster.model.imp.GeneralInfo)
+	 */
+	@Override
 	public void setGeneralInfo(GeneralInfo generalInfo) {
 		this.generalInfo = generalInfo;
 	}
@@ -64,18 +82,34 @@ public class Student extends User implements Serializable {
 		return Objects.hashCode(getId());
 	}
 	
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IStudent#getCompletedChallenges()
+	 */
+	@Override
 	public List<Challenge> getCompletedChallenges() {
 		return completedChallenges;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IStudent#setCompletedChallenges(java.util.List)
+	 */
+	@Override
 	public void setCompletedChallenges(List<Challenge> completedChallenges) {
 		this.completedChallenges = completedChallenges;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IStudent#getDisciplines()
+	 */
+	@Override
 	public List<Discipline> getDisciplines() {
 		return disciplines;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IStudent#setDisciplines(java.util.List)
+	 */
+	@Override
 	public void setDisciplines(List<Discipline> disciplines) {
 		this.disciplines = disciplines;
 	}

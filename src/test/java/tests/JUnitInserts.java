@@ -17,14 +17,20 @@ import org.junit.runners.MethodSorters;
 
 import br.com.collegesmaster.enums.Alternative;
 import br.com.collegesmaster.enums.ChallengeLevel;
-import br.com.collegesmaster.model.Challenge;
-import br.com.collegesmaster.model.Course;
-import br.com.collegesmaster.model.Discipline;
-import br.com.collegesmaster.model.GeneralInfo;
-import br.com.collegesmaster.model.Institute;
-import br.com.collegesmaster.model.Localization;
-import br.com.collegesmaster.model.Professor;
-import br.com.collegesmaster.model.Student;
+import br.com.collegesmaster.model.IChallenge;
+import br.com.collegesmaster.model.ICourse;
+import br.com.collegesmaster.model.IDiscipline;
+import br.com.collegesmaster.model.IInstitute;
+import br.com.collegesmaster.model.IProfessor;
+import br.com.collegesmaster.model.IStudent;
+import br.com.collegesmaster.model.imp.Challenge;
+import br.com.collegesmaster.model.imp.Course;
+import br.com.collegesmaster.model.imp.Discipline;
+import br.com.collegesmaster.model.imp.GeneralInfo;
+import br.com.collegesmaster.model.imp.Institute;
+import br.com.collegesmaster.model.imp.Localization;
+import br.com.collegesmaster.model.imp.Professor;
+import br.com.collegesmaster.model.imp.Student;
 import br.com.collegesmaster.util.CryptoUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -33,7 +39,7 @@ public class JUnitInserts extends JUnitConfiguration {
     @Test
     public void test01_insertInstitute() {
 
-        final Institute institute = new Institute();
+        final IInstitute institute = new Institute();
         institute.setName("INSTITUTO FEDERAL DE PERNAMBUCO");
 
         final Localization local = new Localization();
@@ -49,9 +55,9 @@ public class JUnitInserts extends JUnitConfiguration {
     @Test
     public void test02_insertCourse() {
 
-        final Institute institute = em.find(Institute.class, 1);
+        final IInstitute institute = em.find(Institute.class, 1);
 
-        final Course course = new Course();
+        final ICourse course = new Course();
         course.setName("TADS");
         course.setInstitute(institute);
 
@@ -62,9 +68,9 @@ public class JUnitInserts extends JUnitConfiguration {
     @Test
     public void test03_insertDiscipline() {
 
-        final Course course = em.find(Course.class, 1);
+        final ICourse course = em.find(Course.class, 1);
 
-        final Discipline discipline = new Discipline();
+        final IDiscipline discipline = new Discipline();
         discipline.setName("Software Corporativo");
         discipline.setCourse(course);
         
@@ -93,7 +99,7 @@ public class JUnitInserts extends JUnitConfiguration {
         final List<Challenge> challenges = new ArrayList<Challenge>();
         challenges.add(em.find(Challenge.class, 1));
         
-        final Student student = new Student();
+        final IStudent student = new Student();
         student.setUsername("diogo.brito.teste");
         student.setSalt(CryptoUtils.generateSalt());
         student.setPassword(CryptoUtils.getHashedPassword("D10g0!", student.getSalt()));
@@ -134,7 +140,7 @@ public class JUnitInserts extends JUnitConfiguration {
         challenges.add(em.find(Challenge.class, 1));
         
         
-        final Professor professor = new Professor();
+        final IProfessor professor = new Professor();
         professor.setUsername("tainara.dantas.teste");
         professor.setSalt(CryptoUtils.generateSalt());
         professor.setPassword(CryptoUtils.getHashedPassword("T4inara#", professor.getSalt()));
@@ -156,10 +162,10 @@ public class JUnitInserts extends JUnitConfiguration {
     @Test
     public void test06_insertChallenge() {
 
-        final Discipline discipline = em.find(Discipline.class, 1);
-        final Professor professor = em.find(Professor.class, 1);
+        final IDiscipline discipline = em.find(Discipline.class, 1);
+        final IProfessor professor = em.find(Professor.class, 1);
 
-        final Challenge challenge = new Challenge();
+        final IChallenge challenge = new Challenge();
         challenge.setResponse(Alternative.D);
         challenge.setLevel(ChallengeLevel.EXPERT);
         challenge.setProfessor(professor);

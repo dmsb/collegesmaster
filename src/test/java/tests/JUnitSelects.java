@@ -22,11 +22,15 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.collegesmaster.model.Challenge;
-import br.com.collegesmaster.model.Discipline;
-import br.com.collegesmaster.model.Institute;
-import br.com.collegesmaster.model.Professor;
-import br.com.collegesmaster.model.User;
+import br.com.collegesmaster.model.IChallenge;
+import br.com.collegesmaster.model.IDiscipline;
+import br.com.collegesmaster.model.IInstitute;
+import br.com.collegesmaster.model.IUser;
+import br.com.collegesmaster.model.imp.Challenge;
+import br.com.collegesmaster.model.imp.Discipline;
+import br.com.collegesmaster.model.imp.Institute;
+import br.com.collegesmaster.model.imp.Professor;
+import br.com.collegesmaster.model.imp.User;
 import br.com.collegesmaster.util.CryptoUtils;
 import br.com.collegesmaster.util.FunctionUtils;
 
@@ -55,7 +59,7 @@ public class JUnitSelects extends JUnitConfiguration {
         
         final List<Institute> institutes = query.getResultList();
 
-        for (final Institute institute : institutes) {
+        for (final IInstitute institute : institutes) {
             assertTrue(institute.getName().startsWith("instituto"));
         }
 
@@ -81,7 +85,7 @@ public class JUnitSelects extends JUnitConfiguration {
         
         final List<Discipline> disciplines = query.getResultList();
 
-        for (final Discipline discipline : disciplines) {
+        for (final IDiscipline discipline : disciplines) {
             assertTrue(discipline.getName().startsWith("software corp"));
         }
 
@@ -107,7 +111,7 @@ public class JUnitSelects extends JUnitConfiguration {
         
         final List<Discipline> disciplines = query.getResultList();
 
-        for (final Discipline discipline : disciplines) {
+        for (final IDiscipline discipline : disciplines) {
         	if("quimica i".equals(discipline.getName()) == false) {
         		fail();
         		return;
@@ -137,7 +141,7 @@ public class JUnitSelects extends JUnitConfiguration {
         
         final List<Challenge> challenges = query.getResultList();
         
-        for (final Challenge challenge : challenges) {
+        for (final IChallenge challenge : challenges) {
         	FunctionUtils.showInvalidColumnsValues(challenge);
             assertTrue(siape.equals(challenge.getProfessor().getSiape()));
         }
@@ -224,7 +228,7 @@ public class JUnitSelects extends JUnitConfiguration {
 		final String password = "D10g0!";
 		
 		final String salt = getUserSalt(username);        
-		final User user = buildLogin(username, password, salt);
+		final IUser user = buildLogin(username, password, salt);
 		
 		if(user.getClass().isAssignableFrom(Professor.class)) {
 			assertEquals("Professor logged!", username, user.getUsername());			
@@ -246,7 +250,7 @@ public class JUnitSelects extends JUnitConfiguration {
 		return salt;
 	}
 
-	private User buildLogin(final String username, final String password, final String salt) {
+	private IUser buildLogin(final String username, final String password, final String salt) {
 		
 		final String hashedPassword = CryptoUtils.getHashedPassword(password, salt);        	
 		
@@ -257,12 +261,11 @@ public class JUnitSelects extends JUnitConfiguration {
 		final Predicate usernamePredicate = builder.equal(userRoot.get("username"), username);
 		final Predicate passwordPredicate = builder.equal(userRoot.get("password"), hashedPassword);
 		criteria.where(usernamePredicate, passwordPredicate);
+		final TypedQuery<User> query = em.createQuery(criteria);		
 		
-		final TypedQuery<User> querys = em.createQuery(criteria);
-		
-		final User user = querys.getSingleResult();
+		final IUser user = query.getSingleResult();
                 
         return user;
-	}	
+	}
 }
 

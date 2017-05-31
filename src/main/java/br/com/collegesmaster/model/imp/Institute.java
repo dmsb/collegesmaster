@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model;
+package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,10 +20,12 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import br.com.collegesmaster.model.IInstitute;
+
 @Entity
 @Table(name = "institute")
 @Access(AccessType.FIELD)
-public class Institute implements Serializable {
+public class Institute implements Serializable, IInstitute {
 
     private static final long serialVersionUID = -7480055661943707725L;
     
@@ -43,35 +45,61 @@ public class Institute implements Serializable {
 	@Embedded
     private Localization localization;
 	
+	@Override
     public Integer getId() {
 		return id;
 	}
-
+    
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IInstitute#getName()
+	 */
+	@Override
 	public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IInstitute#setName(java.lang.String)
+	 */
+    @Override
+	public void setName(String name) {
         this.name = name;
     }
     
-    public List<Course> getCourses() {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IInstitute#getCourses()
+	 */
+    @Override
+	public List<Course> getCourses() {
 		return courses;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IInstitute#setCourses(java.util.List)
+	 */
+	@Override
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
 
-    public Localization getLocalization() {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IInstitute#getLocalization()
+	 */
+    @Override
+	public Localization getLocalization() {
         return localization;
     }
 
-    public void setLocalization(Localization localization) {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IInstitute#setLocalization(br.com.collegesmaster.model.imp.Localization)
+	 */
+    @Override
+	public void setLocalization(Localization localization) {
         this.localization = localization;
     }
 
@@ -84,6 +112,9 @@ public class Institute implements Serializable {
         return getId() != null && Objects.equals(getId(), other.getId());
     }
     
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IInstitute#hashCode()
+	 */
 	@Override
     public int hashCode() {
         return Objects.hashCode(getId());

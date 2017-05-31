@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model;
+package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
 import java.util.Date;

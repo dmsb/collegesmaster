@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model;
+package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,10 +19,12 @@ import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import br.com.collegesmaster.model.IProfessor;
+
 @Entity
 @Table(name = "professor")
 @DiscriminatorValue("professor")
-public class Professor extends User implements Serializable {
+public class Professor extends User implements Serializable, IProfessor {
 
     private static final long serialVersionUID = 6162120714620872426L;
 
@@ -43,34 +45,66 @@ public class Professor extends User implements Serializable {
     @Valid
     private GeneralInfo generalInfo;
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IProfessor#getChallenges()
+	 */
+	@Override
 	public List<Challenge> getChallenges() {
         return challenges;
     }
 
-    public void setChallenges(List<Challenge> challenges) {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IProfessor#setChallenges(java.util.List)
+	 */
+    @Override
+	public void setChallenges(List<Challenge> challenges) {
         this.challenges = challenges;
     }
 
-    public String getSiape() {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IProfessor#getSiape()
+	 */
+    @Override
+	public String getSiape() {
         return siape;
     }
 
-    public void setSiape(String siape) {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IProfessor#setSiape(java.lang.String)
+	 */
+    @Override
+	public void setSiape(String siape) {
         this.siape = siape;
     }
     
-    public List<Discipline> getDisciplines() {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IProfessor#getDisciplines()
+	 */
+    @Override
+	public List<Discipline> getDisciplines() {
         return disciplines;
     }
 
-    public void setDisciplines(List<Discipline> disciplines) {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IProfessor#setDisciplines(java.util.List)
+	 */
+    @Override
+	public void setDisciplines(List<Discipline> disciplines) {
         this.disciplines = disciplines;
     }
     
-    public GeneralInfo getGeneralInfo() {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IProfessor#getGeneralInfo()
+	 */
+    @Override
+	public GeneralInfo getGeneralInfo() {
 		return generalInfo;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IProfessor#setGeneralInfo(br.com.collegesmaster.model.imp.GeneralInfo)
+	 */
+	@Override
 	public void setGeneralInfo(GeneralInfo generalInfo) {
 		this.generalInfo = generalInfo;
 	}

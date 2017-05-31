@@ -1,12 +1,7 @@
 package br.com.collegesmaster.business;
 
-import br.com.collegesmaster.model.Institute;
+import br.com.collegesmaster.model.IInstitute;
 
-public interface IInstituteBusiness extends IBusiness {
-	
-	public void persistInstitute(Institute institute);
+public interface IInstituteBusiness extends IBusiness<IInstitute> {
 
-	public void mergeInstitute(Institute institute);
-	
-	public void removeInstitute(Institute institute);
 }

@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model;
+package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,9 +20,12 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import br.com.collegesmaster.model.ICourse;
+import br.com.collegesmaster.model.IDiscipline;
+
 @Entity
 @Table(name = "discipline")
-public class Discipline implements Serializable {
+public class Discipline implements Serializable, IDiscipline {
 
     private static final long serialVersionUID = -8467860341227715787L;
    
@@ -36,9 +39,9 @@ public class Discipline implements Serializable {
     private String name;
     
     @NotNull
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Course.class, optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "courseFK", referencedColumnName = "id")
-    private Course course;
+    private ICourse course;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "discipline")
     private List<Challenge> challenges;
@@ -57,43 +60,83 @@ public class Discipline implements Serializable {
 		this.id = id;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IDiscipline#getStudents()
+	 */
+	@Override
 	public List<Student> getStudents() {
 		return students;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IDiscipline#setStudents(java.util.List)
+	 */
+	@Override
 	public void setStudents(List<Student> students) {
 		this.students = students;
 	}
 
-	public Course getCourse() {
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IDiscipline#getCourse()
+	 */
+	@Override
+	public ICourse getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IDiscipline#setCourse(br.com.collegesmaster.model.ICourse)
+	 */
+    @Override
+	public void setCourse(ICourse course) {
         this.course = course;
     }
 
-    public String getName() {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IDiscipline#getName()
+	 */
+    @Override
+	public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IDiscipline#setName(java.lang.String)
+	 */
+    @Override
+	public void setName(String name) {
         this.name = name;
     }
     
-    public List<Challenge> getChallenges() {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IDiscipline#getChallenges()
+	 */
+    @Override
+	public List<Challenge> getChallenges() {
 		return challenges;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IDiscipline#setChallenges(java.util.List)
+	 */
+	@Override
 	public void setChallenges(List<Challenge> challenges) {
 		this.challenges = challenges;
 	}
 	
-    public List<Professor> getProfessors() {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IDiscipline#getProfessors()
+	 */
+    @Override
+	public List<Professor> getProfessors() {
         return professors;
     }
 
-    public void setProfessors(List<Professor> professors) {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IDiscipline#setProfessors(java.util.List)
+	 */
+    @Override
+	public void setProfessors(List<Professor> professors) {
         this.professors = professors;
     }
     

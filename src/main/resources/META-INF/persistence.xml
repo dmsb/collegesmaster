@@ -6,14 +6,14 @@
 	<persistence-unit name="collegesmasterPU" transaction-type="RESOURCE_LOCAL">
 	
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<class>br.com.collegesmaster.model.Institute</class>
-		<class>br.com.collegesmaster.model.Course</class>
-		<class>br.com.collegesmaster.model.Discipline</class>
-		<class>br.com.collegesmaster.model.Localization</class>
-		<class>br.com.collegesmaster.model.GeneralInfo</class>		
-		<class>br.com.collegesmaster.model.Professor</class>
-		<class>br.com.collegesmaster.model.Student</class>
-		<class>br.com.collegesmaster.model.Challenge</class>
+		<class>br.com.collegesmaster.model.imp.Institute</class>
+		<class>br.com.collegesmaster.model.imp.Course</class>
+		<class>br.com.collegesmaster.model.imp.Discipline</class>
+		<class>br.com.collegesmaster.model.imp.Localization</class>
+		<class>br.com.collegesmaster.model.imp.GeneralInfo</class>		
+		<class>br.com.collegesmaster.model.imp.Professor</class>
+		<class>br.com.collegesmaster.model.imp.Student</class>
+		<class>br.com.collegesmaster.model.imp.Challenge</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		
 		<properties>

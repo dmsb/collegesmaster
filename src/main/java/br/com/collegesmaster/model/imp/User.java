@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model;
+package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -15,12 +15,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import br.com.collegesmaster.annotations.Password;
+import br.com.collegesmaster.model.IUser;
 
 @Table(name = "user")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "profileType")
-public class User  implements Serializable {
+public class User  implements Serializable, IUser {
 
     private static final long serialVersionUID = -7809703915845045860L;
     
@@ -42,35 +43,61 @@ public class User  implements Serializable {
 	@Column(name = "salt", unique = false, nullable = false, length = 88)
     private String salt;
     
+    @Override
 	public Integer getId() {
 		return id;
 	}
-
+    
+    @Override
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IUser#getSalt()
+	 */
+	@Override
 	public String getSalt() {		
 		return salt;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IUser#setSalt(java.lang.String)
+	 */
+	@Override
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
     
-    public String getUsername() {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IUser#getUsername()
+	 */
+    @Override
+	public String getUsername() {
   		return username;
   	}
 
-  	public void setUsername(String username) {
+  	/* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IUser#setUsername(java.lang.String)
+	 */
+  	@Override
+	public void setUsername(String username) {
   		this.username = username;
   	}
   	
-    public String getPassword() {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IUser#getPassword()
+	 */
+    @Override
+	public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    /* (non-Javadoc)
+	 * @see br.com.collegesmaster.model.imp.IUser#setPassword(java.lang.String)
+	 */
+    @Override
+	public void setPassword(String password) {
         this.password = password;
     }
 

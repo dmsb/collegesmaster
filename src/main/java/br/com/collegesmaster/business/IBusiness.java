@@ -1,18 +1,18 @@
 package br.com.collegesmaster.business;
 
-import javax.ejb.Local;
+import java.util.List;
 
-@Local
-public interface IBusiness {
+import br.com.collegesmaster.model.IModel;
+
+public interface IBusiness <T extends IModel> {
 	
-	public void init();
-
-	public void cleanup();
+	public void persist(T imodel);
 	
-//	public void persist(Institute institute);
-//
-//	public void merge(Institute institute);
-//	
-//	public void remove(Institute institute);
-
+	public void merge(T imodel) ;
+	
+	public void remove(T imodel);
+	
+	public T findById(Integer id, Class<T> modelClass);
+	
+	public List<T> getList();
 }
