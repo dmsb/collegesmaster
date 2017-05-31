@@ -17,20 +17,12 @@ public class InstituteMB {
 	private IInstitute institute;
 	private List<IInstitute> institutes;
 	
-	public void buildInstituteList() {
-		institutes = instituteBusiness.getList();
+	public List<IInstitute> buildInstituteList() {
+		return instituteBusiness.getList();
 	}
 	
 	public void persistInstitute() {
 		instituteBusiness.persist(institute);
-	}
-	
-	public IInstituteBusiness getInstituteBusiness() {
-		return instituteBusiness;
-	}
-
-	public void setInstituteBusiness(IInstituteBusiness instituteBusiness) {
-		this.instituteBusiness = instituteBusiness;
 	}
 
 	public IInstitute getInstitute() {

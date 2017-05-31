@@ -7,6 +7,15 @@
 	<packaging>war</packaging>
 	<name>Colleges Master</name>
 	
+	<repositories>
+	    <repository>
+	        <id>prime-repo</id>
+	        <name>PrimeFaces Maven Repository</name>
+	        <url>http://repository.primefaces.org</url>
+	        <layout>default</layout>
+	    </repository>
+	</repositories>
+
 	<dependencies>
 	
 		<!-- Hibernate -->
@@ -26,6 +35,17 @@
 		    <version>5.2.10.Final</version>
 		</dependency>
 		
+		<!-- Primefaces -->		
+		<dependency>
+		    <groupId>org.primefaces</groupId>
+		    <artifactId>primefaces</artifactId>
+		    <version>6.1</version>
+		</dependency>		
+		<dependency>
+		    <groupId>org.primefaces.themes</groupId>
+		    <artifactId>all-themes</artifactId>
+		    <version>1.0.10</version>
+		</dependency>
 		
 		<dependency>
 			<groupId>dom4j</groupId>

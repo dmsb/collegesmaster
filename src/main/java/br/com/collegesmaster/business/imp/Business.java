@@ -4,11 +4,13 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.criteria.CriteriaBuilder;
 
+@Stateless
 public class Business {
 	
 	@PersistenceUnit(unitName = "collegesmasterPU")
