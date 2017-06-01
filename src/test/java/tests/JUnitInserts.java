@@ -149,8 +149,7 @@ public class JUnitInserts extends JUnitConfiguration {
         professor.getGeneralInfo().setBirthdate(calendar.getTime());
         professor.getGeneralInfo().setEmail("dppg@dopgp.com");
         professor.getGeneralInfo().setFirstName("TAINARA");
-        professor.getGeneralInfo().setLastName("TESTE");
-        professor.setSiape("102311010");
+        professor.getGeneralInfo().setLastName("TESTE");        
         professor.getGeneralInfo().setLocalization(local); 
         professor.setDisciplines(disciplines);
         professor.setChallenges(challenges);

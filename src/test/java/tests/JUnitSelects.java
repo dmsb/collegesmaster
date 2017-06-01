@@ -123,13 +123,13 @@ public class JUnitSelects extends JUnitConfiguration {
 	@Test
 	public void test04_getAllProfessorChallenges() {
 		
-		final String siape = "321";
+		final String cpf = "321";
 		
 		queryBuilder = new StringBuilder();
 		queryBuilder
 				.append("SELECT challenge  ")
 				.append("FROM   Challenge challenge ")
-				.append("WHERE  challenge.professor.siape = :siape ");			
+				.append("WHERE  challenge.professor.generalInfo.cpf = :cpf ");			
 		
 		final String selectAllProfessorChallenges = queryBuilder.toString();
 		logger.info("Proccessing test 04: " + selectAllProfessorChallenges);
@@ -137,13 +137,13 @@ public class JUnitSelects extends JUnitConfiguration {
 		final TypedQuery<Challenge> query = em.createQuery(
         		selectAllProfessorChallenges,
         		Challenge.class);
-        query.setParameter("siape", siape);
+        query.setParameter("cpf", cpf);
         
         final List<Challenge> challenges = query.getResultList();
         
         for (final IChallenge challenge : challenges) {
         	FunctionUtils.showInvalidColumnsValues(challenge);
-            assertTrue(siape.equals(challenge.getProfessor().getSiape()));
+            assertTrue(cpf.equals(challenge.getProfessor().getGeneralInfo().getCpf()));
         }
 
         assertEquals(3, challenges.size());        

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -17,8 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import br.com.collegesmaster.model.IProfessor;
 
 @Entity
@@ -26,11 +23,7 @@ import br.com.collegesmaster.model.IProfessor;
 @DiscriminatorValue("professor")
 public class Professor extends User implements Serializable, IProfessor {
 
-    private static final long serialVersionUID = 6162120714620872426L;
-
-    @Column(name = "siape", unique = true)
-    @NotBlank
-    private String siape;
+    private static final long serialVersionUID = 6162120714620872426L;    
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "professor")
     private List<Challenge> challenges;
@@ -59,22 +52,6 @@ public class Professor extends User implements Serializable, IProfessor {
     @Override
 	public void setChallenges(List<Challenge> challenges) {
         this.challenges = challenges;
-    }
-
-    /* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IProfessor#getSiape()
-	 */
-    @Override
-	public String getSiape() {
-        return siape;
-    }
-
-    /* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IProfessor#setSiape(java.lang.String)
-	 */
-    @Override
-	public void setSiape(String siape) {
-        this.siape = siape;
     }
     
     /* (non-Javadoc)

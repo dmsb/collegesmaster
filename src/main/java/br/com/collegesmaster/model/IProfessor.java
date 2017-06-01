@@ -12,10 +12,6 @@ public interface IProfessor extends IUser, IModel {
 
 	void setChallenges(List<Challenge> challenges);
 
-	String getSiape();
-
-	void setSiape(String siape);
-
 	List<Discipline> getDisciplines();
 
 	void setDisciplines(List<Discipline> disciplines);

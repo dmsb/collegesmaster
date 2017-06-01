@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>#{msg['label_application_title']}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</h:head>
+<body>
+	<h:form id="form">
+		<p:dialog header="#{msg['label_user_register']}" widgetVar="register"
+			resizable="false">
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<p:inputText id="firstName"
+					value="#{professorMB.generalInfo.firstName}" required="true"
+					placeholder="#{msg['label_first_name']}">
+				</p:inputText>
+
+				<p:inputText id="lastName"
+					value="#{professorMB.generalInfo.lastName}" required="true"
+					placeholder="#{msg['label_last_name']}">
+				</p:inputText>
+
+				<p:inputText id="cpf" value="#{professorMB.generalInfo.cpf}"
+					required="true" placeholder="#{msg['label_cpf']}">
+				</p:inputText>
+
+				<p:calender id="birthdate"
+					value="#{professorMB.generalInfo.birthdate}" required="false"
+					placeholder="#{msg['label_birthdate']}" pattern="dd-MM-yyyy"
+					mask="true" />
+
+				<p:inputText id="email"
+					value="#{professorMB.generalInfo.localization.country}"
+					required="true" placeholder="#{msg['label_country']}">
+				</p:inputText>
+
+				<p:inputText id="state"
+					value="#{professorMB.generalInfo.localization.state}"
+					required="true" placeholder="#{msg['label_state']}">
+				</p:inputText>
+
+				<p:inputText id="city"
+					value="#{professorMB.generalInfo.localization.city}"
+					required="true" placeholder="#{msg['label_city']}">
+				</p:inputText>
+
+				<p:inputText id="email" value="#{professorMB.email}" required="true"
+					placeholder="#{msg['label_email']}">
+				</p:inputText>
+
+				<p:inputText id="username" value="#{professorMB.username}"
+					required="true" placeholder="#{msg['label_username']}">
+				</p:inputText>
+
+				<p:password id="password" value="#{professorMB.password}"
+					required="true" placeholder="#{msg['label_password']}">
+				</p:password>
+
+				<f:facet name="footer">
+					<p:commandButton id="registerBtn"
+						value="#{msg['label_register']}"
+						actionListener="#{professorMB.registerProfessor()}" />
+				</f:facet>
+				<br />
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+</body>
+</html>

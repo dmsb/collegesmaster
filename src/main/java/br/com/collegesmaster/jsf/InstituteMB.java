@@ -8,7 +8,7 @@ import javax.faces.bean.ManagedBean;
 import br.com.collegesmaster.business.IInstituteBusiness;
 import br.com.collegesmaster.model.IInstitute;
 
-@ManagedBean
+@ManagedBean(name = "instituteMB")
 public class InstituteMB {
 	
 	@EJB

@@ -32,7 +32,7 @@ public class User  implements Serializable, IUser {
 	
     @NotNull
     @Column(name = "username", unique= true, length = 25)
-    private String username;  
+    private String username;
 
     @NotNull
 	@Column(name = "password", unique = false, nullable = false, length = 88)

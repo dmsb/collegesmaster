@@ -51,13 +51,13 @@
 	password='faqmeJFuy0DtqYz4mt0fVI3inV4AOwHMKjo6tJXG3fFkFEzW7n6TaQ03GltUFGZ+1fetQdYmCTVhE5js4RF83A==' 
 	salt='qeyt59i2y8gqnj8q72l3bcu9owrdoikih4wa7btgoqm=' />	
 	
-	<professor id='1' siape='123' birthdate='1993-10-17 00:00:00'
+	<professor id='1' birthdate='1993-10-17 00:00:00'
 	cpf='10719498457' email='diogomsb1@gmail.com' firstname='diogo' lastname='brito'  
 	city='recife' country='brasil' state='pernambuco' />
 	
 	<user id='2' profiletype='professor' username='tainara.dantas' password='#t41n4r4' salt='12345@#12' />
 	
-	<professor id='2' siape='321' birthdate='1998-10-17 00:00:00' cpf='42518426507' email='tainaramsb1@gmail.com' 
+	<professor id='2' birthdate='1998-10-17 00:00:00' cpf='42518426507' email='tainaramsb1@gmail.com' 
 	firstname='tainara' lastname='dantas' city='recife' country='brasil' state='pernambuco' />
 	
 	<user id='3' profiletype='student' username='fernando.ribeiro' password='#t41n4r4' salt='12345@#12' />
