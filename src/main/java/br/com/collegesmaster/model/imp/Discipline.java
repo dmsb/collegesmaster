@@ -60,33 +60,21 @@ public class Discipline implements Serializable, IDiscipline {
 		this.id = id;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IDiscipline#getStudents()
-	 */
 	@Override
 	public List<Student> getStudents() {
 		return students;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IDiscipline#setStudents(java.util.List)
-	 */
 	@Override
 	public void setStudents(List<Student> students) {
 		this.students = students;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IDiscipline#getCourse()
-	 */
 	@Override
 	public ICourse getCourse() {
         return course;
     }
 
-    /* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IDiscipline#setCourse(br.com.collegesmaster.model.ICourse)
-	 */
     @Override
 	public void setCourse(ICourse course) {
         this.course = course;
@@ -100,33 +88,21 @@ public class Discipline implements Serializable, IDiscipline {
         return name;
     }
 
-    /* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IDiscipline#setName(java.lang.String)
-	 */
     @Override
 	public void setName(String name) {
         this.name = name;
     }
     
-    /* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IDiscipline#getChallenges()
-	 */
     @Override
 	public List<Challenge> getChallenges() {
 		return challenges;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IDiscipline#setChallenges(java.util.List)
-	 */
 	@Override
 	public void setChallenges(List<Challenge> challenges) {
 		this.challenges = challenges;
 	}
 	
-    /* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IDiscipline#getProfessors()
-	 */
     @Override
 	public List<Professor> getProfessors() {
         return professors;

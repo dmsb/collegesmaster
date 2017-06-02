@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -14,8 +16,9 @@ import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.imp.User;
 
 @Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class UserBusiness extends Business implements IUserBusiness {
-
+	
 	@Override
 	public void persist(IUser user) {
 		entityManager.persist(user);

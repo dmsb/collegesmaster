@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.com.collegesmaster.model.imp.Challenge;
 import br.com.collegesmaster.model.imp.Discipline;
-import br.com.collegesmaster.model.imp.GeneralInfo;
 
 public interface IProfessor extends IUser, IModel {
 
@@ -15,9 +14,5 @@ public interface IProfessor extends IUser, IModel {
 	List<Discipline> getDisciplines();
 
 	void setDisciplines(List<Discipline> disciplines);
-
-	GeneralInfo getGeneralInfo();
-
-	void setGeneralInfo(GeneralInfo generalInfo);
 
 }

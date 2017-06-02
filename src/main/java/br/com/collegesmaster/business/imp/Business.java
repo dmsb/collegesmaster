@@ -7,6 +7,7 @@ import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.criteria.CriteriaBuilder;
 
@@ -15,7 +16,8 @@ public class Business {
 	
 	@PersistenceUnit(unitName = "collegesmasterPU")
 	protected static EntityManagerFactory entityManagerFactory;	
-    
+	
+	@PersistenceContext(unitName = "collegesmasterPU")
 	protected static EntityManager entityManager;
 	protected static CriteriaBuilder criteriaBuilder;
 	

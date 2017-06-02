@@ -48,65 +48,41 @@ public class Course implements Serializable, ICourse {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "course")
 	private List<Discipline> disciplines;
 	
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.ICourse#getId()
-	 */
 	@Override
 	public Integer getId() {
 		return id;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.ICourse#setId(java.lang.Integer)
-	 */
 	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.ICourse#getName()
-	 */
 	@Override
 	public String getName() {
 		return name;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.ICourse#setName(java.lang.String)
-	 */
 	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.ICourse#getInstitute()
-	 */
 	@Override
 	public IInstitute getInstitute() {
 		return institute;
 	}
-
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.ICourse#setInstitute(br.com.collegesmaster.model.imp.Institute)
-	 */
+	
 	@Override
 	public void setInstitute(IInstitute institute) {
 		this.institute = institute;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.ICourse#getDisciplines()
-	 */
 	@Override
 	public List<Discipline> getDisciplines() {
 		return disciplines;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.ICourse#setDisciplines(java.util.List)
-	 */
 	@Override
 	public void setDisciplines(List<Discipline> disciplines) {
 		this.disciplines = disciplines;

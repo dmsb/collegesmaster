@@ -47,15 +47,15 @@ public class GeneralInfo implements Serializable {
     @Valid
     private Localization localization;
     
-    public String getCpf() {
+	public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+	public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-    
-    public String getEmail() {
+
+	public String getEmail() {
 		return email;
 	}
 

@@ -1,5 +1,7 @@
 package br.com.collegesmaster.model;
 
+import br.com.collegesmaster.model.imp.GeneralInfo;
+
 public interface IUser extends IModel {
 
 	String getSalt();
@@ -13,5 +15,9 @@ public interface IUser extends IModel {
 	String getPassword();
 
 	void setPassword(String password);
+
+	GeneralInfo getGeneralInfo();
+
+	void setGeneralInfo(GeneralInfo generalInfo);
 
 }

@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -14,7 +13,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.Valid;
 
 import br.com.collegesmaster.model.IProfessor;
 
@@ -33,58 +31,26 @@ public class Professor extends User implements Serializable, IProfessor {
              joinColumns={@JoinColumn(name="professorFK", referencedColumnName = "id")},
              inverseJoinColumns={@JoinColumn(name="disciplineFK", referencedColumnName = "id")})
     private List<Discipline> disciplines;
-    
-    @Embedded
-    @Valid
-    private GeneralInfo generalInfo;
 
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IProfessor#getChallenges()
-	 */
 	@Override
 	public List<Challenge> getChallenges() {
         return challenges;
     }
 
-    /* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IProfessor#setChallenges(java.util.List)
-	 */
     @Override
 	public void setChallenges(List<Challenge> challenges) {
         this.challenges = challenges;
     }
     
-    /* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IProfessor#getDisciplines()
-	 */
     @Override
 	public List<Discipline> getDisciplines() {
         return disciplines;
     }
 
-    /* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IProfessor#setDisciplines(java.util.List)
-	 */
     @Override
 	public void setDisciplines(List<Discipline> disciplines) {
         this.disciplines = disciplines;
     }
-    
-    /* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IProfessor#getGeneralInfo()
-	 */
-    @Override
-	public GeneralInfo getGeneralInfo() {
-		return generalInfo;
-	}
-
-	/* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IProfessor#setGeneralInfo(br.com.collegesmaster.model.imp.GeneralInfo)
-	 */
-	@Override
-	public void setGeneralInfo(GeneralInfo generalInfo) {
-		this.generalInfo = generalInfo;
-	}
 	
     @Override
     public int hashCode() {

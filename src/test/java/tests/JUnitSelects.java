@@ -123,7 +123,7 @@ public class JUnitSelects extends JUnitConfiguration {
 	@Test
 	public void test04_getAllProfessorChallenges() {
 		
-		final String cpf = "321";
+		final String cpf = "10719498457";
 		
 		queryBuilder = new StringBuilder();
 		queryBuilder
@@ -146,7 +146,7 @@ public class JUnitSelects extends JUnitConfiguration {
             assertTrue(cpf.equals(challenge.getProfessor().getGeneralInfo().getCpf()));
         }
 
-        assertEquals(3, challenges.size());        
+        assertEquals(2, challenges.size());        
 	}
 	
 	@Test

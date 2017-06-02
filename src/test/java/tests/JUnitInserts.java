@@ -109,7 +109,6 @@ public class JUnitInserts extends JUnitConfiguration {
         student.getGeneralInfo().setEmail("diogo1@diogo.com");
         student.getGeneralInfo().setFirstName("DIOGO");
         student.getGeneralInfo().setLastName("TESTE");
-        student.setRegistration("130340");
         student.getGeneralInfo().setLocalization(local);
         student.setCompletedChallenges(challenges);
         student.setDisciplines(disciplines);
