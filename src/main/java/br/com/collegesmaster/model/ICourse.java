@@ -2,8 +2,6 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
-import br.com.collegesmaster.model.imp.Discipline;
-
 public interface ICourse extends IModel{
 
 	String getName();
@@ -14,8 +12,8 @@ public interface ICourse extends IModel{
 
 	void setInstitute(IInstitute institute);
 
-	List<Discipline> getDisciplines();
+	List<IDiscipline> getDisciplines();
 
-	void setDisciplines(List<Discipline> disciplines);
+	void setDisciplines(List<IDiscipline> disciplines);
 
 }

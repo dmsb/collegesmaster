@@ -2,17 +2,14 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
-import br.com.collegesmaster.model.imp.Challenge;
-import br.com.collegesmaster.model.imp.Discipline;
-
 public interface IProfessor extends IUser, IModel {
 
-	List<Challenge> getChallenges();
+	List<IChallenge> getChallenges();
 
-	void setChallenges(List<Challenge> challenges);
+	void setChallenges(List<IChallenge> challenges);
 
-	List<Discipline> getDisciplines();
+	List<IDiscipline> getDisciplines();
 
-	void setDisciplines(List<Discipline> disciplines);
+	void setDisciplines(List<IDiscipline> disciplines);
 
 }

@@ -13,33 +13,33 @@ public class StateValidator implements ConstraintValidator<State, String>{
 	@Override
 	public void initialize(State state) {	
 		states = new ArrayList<String>();
-		this.states.add("ACRE");
-        this.states.add("ALAGOAS");
-        this.states.add("AMAPÁ");
-        this.states.add("AMAZONAS");
-        this.states.add("BAHIA");
-        this.states.add("CEARÁ");
-        this.states.add("DISTRITO FEDERAL");
-        this.states.add("ESPÍRITO SANTO");
-        this.states.add("GOIÁS");
-        this.states.add("MARANHÃO");
-        this.states.add("MATO GROSSO");
-        this.states.add("MATO GROSSO DO SUL");
-        this.states.add("MINAS GERAIS");
-        this.states.add("PARÁ");
-        this.states.add("PARAÍBA");
-        this.states.add("PARANÁ");
-        this.states.add("PERNAMBUCO");
-        this.states.add("PIAUÍ");
-        this.states.add("RIO DE JANEIRO");
-        this.states.add("RIO GRANDE DO NORTE");
-        this.states.add("RIO GRANDE DO SUL");
-        this.states.add("RONDÔNIA");
-        this.states.add("RORAIMA");
-        this.states.add("SANTA CATARINA");
-        this.states.add("SÃO PAULO");
-        this.states.add("SERGIPE");
-        this.states.add("TOCANTINS");
+		this.states.add("acre");
+        this.states.add("alagoas");
+        this.states.add("amapá");
+        this.states.add("amazonas");
+        this.states.add("bahia");
+        this.states.add("ceará");
+        this.states.add("distrito federal");
+        this.states.add("espírito santo");
+        this.states.add("goiás");
+        this.states.add("maranhão");
+        this.states.add("mato grosso");
+        this.states.add("mato grosso do sul");
+        this.states.add("minas gerais");
+        this.states.add("pará");
+        this.states.add("paraíba");
+        this.states.add("paraná");
+        this.states.add("pernambuco");
+        this.states.add("piauí");
+        this.states.add("rio de janeiro");
+        this.states.add("rio grande do norte");
+        this.states.add("rio grande do sul");
+        this.states.add("rondônia");
+        this.states.add("roraima");
+        this.states.add("santa catarina");
+        this.states.add("são paulo");
+        this.states.add("sergipe");
+        this.states.add("tocantins");
 	}
 
 	@Override

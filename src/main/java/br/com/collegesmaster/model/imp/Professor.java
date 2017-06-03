@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import br.com.collegesmaster.model.IChallenge;
+import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IProfessor;
 
 @Entity
@@ -23,32 +25,32 @@ public class Professor extends User implements Serializable, IProfessor {
 
     private static final long serialVersionUID = 6162120714620872426L;    
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "professor")
-    private List<Challenge> challenges;
+    @OneToMany(targetEntity = Challenge.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "professor")
+    private List<IChallenge> challenges;
     
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = Discipline.class, fetch = FetchType.LAZY)
     @JoinTable(name="professor_discipline",
              joinColumns={@JoinColumn(name="professorFK", referencedColumnName = "id")},
              inverseJoinColumns={@JoinColumn(name="disciplineFK", referencedColumnName = "id")})
-    private List<Discipline> disciplines;
+    private List<IDiscipline> disciplines;
 
 	@Override
-	public List<Challenge> getChallenges() {
+	public List<IChallenge> getChallenges() {
         return challenges;
     }
 
     @Override
-	public void setChallenges(List<Challenge> challenges) {
+	public void setChallenges(List<IChallenge> challenges) {
         this.challenges = challenges;
     }
     
     @Override
-	public List<Discipline> getDisciplines() {
+	public List<IDiscipline> getDisciplines() {
         return disciplines;
     }
 
     @Override
-	public void setDisciplines(List<Discipline> disciplines) {
+	public void setDisciplines(List<IDiscipline> disciplines) {
         this.disciplines = disciplines;
     }
 	

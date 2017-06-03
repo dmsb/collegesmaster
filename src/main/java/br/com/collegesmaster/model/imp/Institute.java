@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IInstitute;
 
 @Entity
@@ -39,8 +40,9 @@ public class Institute implements Serializable, IInstitute {
     @Size(min = 5)
     private String name;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "institute")
-    private List<Course> courses;
+    @OneToMany(targetEntity = Course.class, cascade = CascadeType.ALL, 
+    		fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "institute")
+    private List<ICourse> courses;
 
 	@Embedded
     private Localization localization;
@@ -66,12 +68,12 @@ public class Institute implements Serializable, IInstitute {
     }
     
     @Override
-	public List<Course> getCourses() {
+	public List<ICourse> getCourses() {
 		return courses;
 	}
 
 	@Override
-	public void setCourses(List<Course> courses) {
+	public void setCourses(List<ICourse> courses) {
 		this.courses = courses;
 	}
 

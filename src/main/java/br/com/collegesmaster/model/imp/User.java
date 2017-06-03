@@ -3,17 +3,20 @@ package br.com.collegesmaster.model.imp;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import br.com.collegesmaster.annotations.Password;
@@ -21,7 +24,7 @@ import br.com.collegesmaster.model.IUser;
 
 @Table(name = "user")
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "profileType")
 public class User implements Serializable, IUser {
 
@@ -45,17 +48,20 @@ public class User implements Serializable, IUser {
 	@Column(name = "salt", unique = false, nullable = false, length = 88)
     private String salt;
 	
-    @Embedded
-	@Valid
-	private GeneralInfo generalInfo;
+    @OneToOne(targetEntity = GeneralInfo.class, cascade = CascadeType.ALL, 
+    		fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
+    @JoinTable(name="user_general_info",
+	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
+	    inverseJoinColumns={@JoinColumn(name="generalInfoFK", referencedColumnName = "id")})
+	private IGeneralInfo generalInfo;
 
 	@Override
-	public GeneralInfo getGeneralInfo() {
+	public IGeneralInfo getGeneralInfo() {
 		return generalInfo;
 	}
 
 	@Override
-	public void setGeneralInfo(GeneralInfo generalInfo) {
+	public void setGeneralInfo(IGeneralInfo generalInfo) {
 		this.generalInfo = generalInfo;
 	}
     @Override

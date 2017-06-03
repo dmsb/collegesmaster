@@ -50,6 +50,7 @@ public class JUnitInserts extends JUnitConfiguration {
 
         validateConstraints(institute);
         em.persist(institute);
+
     }
 
     @Test
@@ -90,13 +91,13 @@ public class JUnitInserts extends JUnitConfiguration {
 
         final Localization local = new Localization();
         local.setCountry("BRASIL");
-        local.setState("PERNAMBUCO");
+        local.setState("pernambuco");
         local.setCity("RECIFE");
         
-        final List<Discipline> disciplines = new ArrayList<Discipline>();
+        final List<IDiscipline> disciplines = new ArrayList<IDiscipline>();
         disciplines.add(em.find(Discipline.class, 1));
         
-        final List<Challenge> challenges = new ArrayList<Challenge>();
+        final List<IChallenge> challenges = new ArrayList<IChallenge>();
         challenges.add(em.find(Challenge.class, 1));
         
         final IStudent student = new Student();
@@ -128,14 +129,14 @@ public class JUnitInserts extends JUnitConfiguration {
 
         final Localization local = new Localization();
         local.setCountry("BRASIL");
-        local.setState("PERNAMBUCO");
+        local.setState("pernambuco");
         local.setCity("RECIFE");
 
-        final List<Discipline> disciplines = new ArrayList<Discipline>();
+        final List<IDiscipline> disciplines = new ArrayList<IDiscipline>();
         disciplines.add(em.find(Discipline.class, 1));
         disciplines.add(em.find(Discipline.class, 2));
         
-        final List<Challenge> challenges = new ArrayList<Challenge>();
+        final List<IChallenge> challenges = new ArrayList<IChallenge>();
         challenges.add(em.find(Challenge.class, 1));
         
         

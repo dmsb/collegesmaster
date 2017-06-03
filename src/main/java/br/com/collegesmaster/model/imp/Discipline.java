@@ -20,8 +20,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
+import br.com.collegesmaster.model.IProfessor;
+import br.com.collegesmaster.model.IStudent;
 
 @Entity
 @Table(name = "discipline")
@@ -39,18 +42,19 @@ public class Discipline implements Serializable, IDiscipline {
     private String name;
     
     @NotNull
-    @ManyToOne(targetEntity = Course.class, optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Course.class, optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "courseFK", referencedColumnName = "id")
     private ICourse course;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "discipline")
-    private List<Challenge> challenges;
+    @OneToMany(targetEntity = Challenge.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+    		orphanRemoval = true, mappedBy = "discipline")
+    private List<IChallenge> challenges;
 
-	@ManyToMany(mappedBy = "disciplines")
-    private List<Professor> professors;
+	@ManyToMany(targetEntity = Professor.class, mappedBy = "disciplines")
+    private List<IProfessor> professors;
 	
-	@ManyToMany(mappedBy = "disciplines")
-    private List<Student> students;
+	@ManyToMany(targetEntity = Student.class, mappedBy = "disciplines")
+    private List<IStudent> students;
 	
     public Integer getId() {
 		return id;
@@ -61,12 +65,12 @@ public class Discipline implements Serializable, IDiscipline {
 	}
 
 	@Override
-	public List<Student> getStudents() {
+	public List<IStudent> getStudents() {
 		return students;
 	}
 
 	@Override
-	public void setStudents(List<Student> students) {
+	public void setStudents(List<IStudent> students) {
 		this.students = students;
 	}
 
@@ -80,9 +84,6 @@ public class Discipline implements Serializable, IDiscipline {
         this.course = course;
     }
 
-    /* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IDiscipline#getName()
-	 */
     @Override
 	public String getName() {
         return name;
@@ -94,25 +95,22 @@ public class Discipline implements Serializable, IDiscipline {
     }
     
     @Override
-	public List<Challenge> getChallenges() {
+	public List<IChallenge> getChallenges() {
 		return challenges;
 	}
 
 	@Override
-	public void setChallenges(List<Challenge> challenges) {
+	public void setChallenges(List<IChallenge> challenges) {
 		this.challenges = challenges;
 	}
 	
     @Override
-	public List<Professor> getProfessors() {
+	public List<IProfessor> getProfessors() {
         return professors;
     }
 
-    /* (non-Javadoc)
-	 * @see br.com.collegesmaster.model.imp.IDiscipline#setProfessors(java.util.List)
-	 */
     @Override
-	public void setProfessors(List<Professor> professors) {
+	public void setProfessors(List<IProfessor> professors) {
         this.professors = professors;
     }
     

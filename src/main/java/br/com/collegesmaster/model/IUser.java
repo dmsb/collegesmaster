@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model;
 
-import br.com.collegesmaster.model.imp.GeneralInfo;
+import br.com.collegesmaster.model.imp.IGeneralInfo;
 
 public interface IUser extends IModel {
 
@@ -16,8 +16,8 @@ public interface IUser extends IModel {
 
 	void setPassword(String password);
 
-	GeneralInfo getGeneralInfo();
+	IGeneralInfo getGeneralInfo();
 
-	void setGeneralInfo(GeneralInfo generalInfo);
+	void setGeneralInfo(IGeneralInfo generalInfo);
 
 }

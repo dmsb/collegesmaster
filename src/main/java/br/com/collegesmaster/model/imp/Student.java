@@ -12,6 +12,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import br.com.collegesmaster.model.IChallenge;
+import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IStudent;
 
 @Entity
@@ -21,35 +23,35 @@ public class Student extends User implements Serializable, IStudent {
 
 	private static final long serialVersionUID = 4255404420897428496L;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(targetEntity = Challenge.class, fetch = FetchType.LAZY)
 	@JoinTable(name="challenges_made",
 	    joinColumns={@JoinColumn(name="studentFK", referencedColumnName = "id")},
 	    inverseJoinColumns={@JoinColumn(name="challengeFK", referencedColumnName = "id")})
-	private List<Challenge> completedChallenges;
+	private List<IChallenge> completedChallenges;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(targetEntity = Discipline.class, fetch = FetchType.LAZY)
     @JoinTable(name="student_discipline",
              joinColumns={@JoinColumn(name="studentFK", referencedColumnName = "id")},
              inverseJoinColumns={@JoinColumn(name="disciplineFK", referencedColumnName = "id")})
-    private List<Discipline> disciplines;
+    private List<IDiscipline> disciplines;
 	
 	@Override
-	public List<Challenge> getCompletedChallenges() {
+	public List<IChallenge> getCompletedChallenges() {
 		return completedChallenges;
 	}
 
 	@Override
-	public void setCompletedChallenges(List<Challenge> completedChallenges) {
+	public void setCompletedChallenges(List<IChallenge> completedChallenges) {
 		this.completedChallenges = completedChallenges;
 	}
 
 	@Override
-	public List<Discipline> getDisciplines() {
+	public List<IDiscipline> getDisciplines() {
 		return disciplines;
 	}
 
 	@Override
-	public void setDisciplines(List<Discipline> disciplines) {
+	public void setDisciplines(List<IDiscipline> disciplines) {
 		this.disciplines = disciplines;
 	}
 

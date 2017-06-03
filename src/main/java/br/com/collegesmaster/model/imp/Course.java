@@ -22,6 +22,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.collegesmaster.model.ICourse;
+import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IInstitute;
 
 @Entity
@@ -45,8 +46,9 @@ public class Course implements Serializable, ICourse {
 	@JoinColumn(name = "instituteId", referencedColumnName = "id")
 	private IInstitute institute;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "course")
-	private List<Discipline> disciplines;
+	@OneToMany(targetEntity = Discipline.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+			orphanRemoval = true, mappedBy = "course")
+	private List<IDiscipline> disciplines;
 	
 	@Override
 	public Integer getId() {
@@ -79,12 +81,12 @@ public class Course implements Serializable, ICourse {
 	}
 
 	@Override
-	public List<Discipline> getDisciplines() {
+	public List<IDiscipline> getDisciplines() {
 		return disciplines;
 	}
 
 	@Override
-	public void setDisciplines(List<Discipline> disciplines) {
+	public void setDisciplines(List<IDiscipline> disciplines) {
 		this.disciplines = disciplines;
 	}
 

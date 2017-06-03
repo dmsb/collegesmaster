@@ -39,11 +39,11 @@ public class Challenge implements Serializable, IChallenge {
 	private Integer id;
 
 	@NotNull
-	@ManyToOne(targetEntity = Professor.class, optional = false, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Professor.class, optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "professorFK", referencedColumnName = "id")
 	private IProfessor professor;
 	
-	@ManyToOne(targetEntity = Discipline.class, optional = false, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Discipline.class, optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "disciplineFK", referencedColumnName = "id")
 	private IDiscipline discipline;
 	
