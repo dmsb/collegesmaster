@@ -4,10 +4,6 @@ import java.util.List;
 
 public interface IDiscipline extends IModel {
 
-	List<IStudent> getStudents();
-
-	void setStudents(List<IStudent> students);
-
 	ICourse getCourse();
 
 	void setCourse(ICourse course);
@@ -19,9 +15,5 @@ public interface IDiscipline extends IModel {
 	List<IChallenge> getChallenges();
 
 	void setChallenges(List<IChallenge> challenges);
-
-	List<IProfessor> getProfessors();
-
-	void setProfessors(List<IProfessor> professors);
 
 }

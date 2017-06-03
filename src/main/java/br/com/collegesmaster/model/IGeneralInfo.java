@@ -1,8 +1,8 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model;
 
 import java.util.Date;
 
-import br.com.collegesmaster.model.IUser;
+import br.com.collegesmaster.model.imp.Localization;
 
 public interface IGeneralInfo {
 

@@ -143,7 +143,7 @@ public class JUnitSelects extends JUnitConfiguration {
         
         for (final IChallenge challenge : challenges) {
         	FunctionUtils.showInvalidColumnsValues(challenge);
-            assertTrue(cpf.equals(challenge.getProfessor().getGeneralInfo().getCpf()));
+            assertTrue(cpf.equals(challenge.getUser().getGeneralInfo().getCpf()));
         }
 
         assertEquals(2, challenges.size());        
@@ -230,7 +230,7 @@ public class JUnitSelects extends JUnitConfiguration {
 		final String salt = getUserSalt(username);        
 		final IUser user = buildLogin(username, password, salt);
 		
-		if(user.getClass().isAssignableFrom(Professor.class)) {
+		if(user.getClass().isAssignableFrom(User.class)) {
 			assertEquals("Professor logged!", username, user.getUsername());			
 		} else {
 			assertEquals("Student logged!", username, user.getUsername());

@@ -22,7 +22,7 @@ public class UserMB implements Serializable {
 	@EJB
 	private IUserBusiness userBusiness;
 
-	private User user;
+	private IUser user;
 	private List<IUser> users;
 	
 	@PostConstruct
@@ -53,7 +53,7 @@ public class UserMB implements Serializable {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(IUser user) {
 		this.user = user;
 	}
 

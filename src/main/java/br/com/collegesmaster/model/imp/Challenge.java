@@ -24,7 +24,7 @@ import br.com.collegesmaster.enums.Alternative;
 import br.com.collegesmaster.enums.ChallengeLevel;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IDiscipline;
-import br.com.collegesmaster.model.IProfessor;
+import br.com.collegesmaster.model.IUser;
 
 @Entity
 @Table(name = "challenge")
@@ -39,9 +39,9 @@ public class Challenge implements Serializable, IChallenge {
 	private Integer id;
 
 	@NotNull
-	@ManyToOne(targetEntity = Professor.class, optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "professorFK", referencedColumnName = "id")
-	private IProfessor professor;
+	@ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "userFK", referencedColumnName = "id")
+	private IUser user;
 	
 	@ManyToOne(targetEntity = Discipline.class, optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "disciplineFK", referencedColumnName = "id")
@@ -82,13 +82,13 @@ public class Challenge implements Serializable, IChallenge {
 	}
 	
 	@Override
-	public IProfessor getProfessor() {
-		return professor;
+	public IUser getUser() {
+		return user;
 	}
 	
 	@Override
-	public void setProfessor(IProfessor professor) {
-		this.professor = professor;
+	public void setUser(IUser professor) {
+		this.user = professor;
 	}
 	
 	@Override

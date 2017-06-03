@@ -24,7 +24,7 @@ import br.com.collegesmaster.model.imp.User;
 public class UserBusiness extends Business implements IUserBusiness {
 
 	@PersistenceUnit(unitName = "collegesmasterPU")
-	protected EntityManagerFactory entityManagerFactory;
+	protected EntityManagerFactory entityManagerFactory;	
 	
 	@Override
 	@PostConstruct
@@ -41,7 +41,7 @@ public class UserBusiness extends Business implements IUserBusiness {
     	}
     }
 	
-	@Override
+	@Override	
 	public void persist(IUser user) {
 		entityManager.persist(user);
 		

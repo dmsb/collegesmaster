@@ -1,6 +1,7 @@
 package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -15,11 +16,16 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import br.com.collegesmaster.annotations.Password;
+import br.com.collegesmaster.model.IChallenge;
+import br.com.collegesmaster.model.IDiscipline;
+import br.com.collegesmaster.model.IGeneralInfo;
+import br.com.collegesmaster.model.IProfile;
 import br.com.collegesmaster.model.IUser;
 
 @Table(name = "user")
@@ -47,6 +53,24 @@ public class User implements Serializable, IUser {
     @NotNull
 	@Column(name = "salt", unique = false, nullable = false, length = 88)
     private String salt;
+
+    @ManyToMany(targetEntity = Challenge.class, fetch = FetchType.LAZY)
+	@JoinTable(name="user_challenges_created",
+	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
+	    inverseJoinColumns={@JoinColumn(name="challengeFK", referencedColumnName = "id")})
+	private List<IChallenge> challengesCreated;
+    
+    @ManyToMany(targetEntity = Challenge.class, fetch = FetchType.LAZY)
+	@JoinTable(name="user_completed_challenges",
+	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
+	    inverseJoinColumns={@JoinColumn(name="challengeFK", referencedColumnName = "id")})
+	private List<IChallenge> completedChallenges;
+	
+	@ManyToMany(targetEntity = Discipline.class, fetch = FetchType.LAZY)
+    @JoinTable(name="user_discipline",
+             joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
+             inverseJoinColumns={@JoinColumn(name="disciplineFK", referencedColumnName = "id")})
+    private List<IDiscipline> disciplines;
 	
     @OneToOne(targetEntity = GeneralInfo.class, cascade = CascadeType.ALL, 
     		fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
@@ -54,6 +78,42 @@ public class User implements Serializable, IUser {
 	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
 	    inverseJoinColumns={@JoinColumn(name="generalInfoFK", referencedColumnName = "id")})
 	private IGeneralInfo generalInfo;
+    
+    @OneToOne(targetEntity = Profile.class, optional = false)
+    @JoinTable(name="user_profile",
+	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
+	    inverseJoinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")})
+    private IProfile profile;
+    
+	@Override
+	public List<IChallenge> getChallengesCreated() {
+		return challengesCreated;
+	}
+
+	@Override
+	public void setChallengesCreated(List<IChallenge> challengesCreated) {
+		this.challengesCreated = challengesCreated;
+	}
+
+	@Override
+	public List<IChallenge> getCompletedChallenges() {
+		return completedChallenges;
+	}
+
+	@Override
+	public void setCompletedChallenges(List<IChallenge> completedChallenges) {
+		this.completedChallenges = completedChallenges;
+	}
+
+	@Override
+	public List<IDiscipline> getDisciplines() {
+		return disciplines;
+	}
+
+	@Override
+	public void setDisciplines(List<IDiscipline> disciplines) {
+		this.disciplines = disciplines;
+	}
 
 	@Override
 	public IGeneralInfo getGeneralInfo() {
@@ -105,11 +165,21 @@ public class User implements Serializable, IUser {
     }
 
 	@Override
+	public IProfile getProfile() {
+		return profile;
+	}
+
+	@Override
+	public void setProfile(IProfile profile) {
+		this.profile = profile;
+	}
+
+	@Override
 	public boolean equals(final Object obj) {
 		if ((obj instanceof User) == false) {
 			return false;
 		}
-		final User other = (User) obj;
+		final IUser other = (IUser) obj;
 		return getId() != null && Objects.equals(getId(), other.getId());
 	}
 	

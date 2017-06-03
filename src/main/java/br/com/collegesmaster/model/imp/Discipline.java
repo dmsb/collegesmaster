@@ -23,8 +23,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
-import br.com.collegesmaster.model.IProfessor;
-import br.com.collegesmaster.model.IStudent;
+import br.com.collegesmaster.model.IUser;
 
 @Entity
 @Table(name = "discipline")
@@ -50,11 +49,6 @@ public class Discipline implements Serializable, IDiscipline {
     		orphanRemoval = true, mappedBy = "discipline")
     private List<IChallenge> challenges;
 
-	@ManyToMany(targetEntity = Professor.class, mappedBy = "disciplines")
-    private List<IProfessor> professors;
-	
-	@ManyToMany(targetEntity = Student.class, mappedBy = "disciplines")
-    private List<IStudent> students;
 	
     public Integer getId() {
 		return id;
@@ -62,16 +56,6 @@ public class Discipline implements Serializable, IDiscipline {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@Override
-	public List<IStudent> getStudents() {
-		return students;
-	}
-
-	@Override
-	public void setStudents(List<IStudent> students) {
-		this.students = students;
 	}
 
 	@Override
@@ -103,16 +87,6 @@ public class Discipline implements Serializable, IDiscipline {
 	public void setChallenges(List<IChallenge> challenges) {
 		this.challenges = challenges;
 	}
-	
-    @Override
-	public List<IProfessor> getProfessors() {
-        return professors;
-    }
-
-    @Override
-	public void setProfessors(List<IProfessor> professors) {
-        this.professors = professors;
-    }
     
     @Override
     public boolean equals(final Object obj) {

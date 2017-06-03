@@ -5,9 +5,9 @@ import br.com.collegesmaster.enums.ChallengeLevel;
 
 public interface IChallenge extends IModel {
 
-	IProfessor getProfessor();
+	IUser getUser();
 
-	void setProfessor(IProfessor professor);
+	void setUser(IUser user);
 
 	IDiscipline getDiscipline();
 

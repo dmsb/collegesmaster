@@ -1,6 +1,7 @@
 package tests;
 
 import static org.junit.Assert.assertNull;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -9,14 +10,12 @@ import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IInstitute;
-import br.com.collegesmaster.model.IProfessor;
-import br.com.collegesmaster.model.IStudent;
+import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.imp.Challenge;
 import br.com.collegesmaster.model.imp.Course;
 import br.com.collegesmaster.model.imp.Discipline;
 import br.com.collegesmaster.model.imp.Institute;
-import br.com.collegesmaster.model.imp.Professor;
-import br.com.collegesmaster.model.imp.Student;
+import br.com.collegesmaster.model.imp.User;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JUnitDeletes extends JUnitConfiguration {
@@ -48,23 +47,14 @@ public class JUnitDeletes extends JUnitConfiguration {
     }
 
     @Test
-    public void test04_deleteStudent() {
+    public void test04_deleteUser() {
 
-        final IStudent student = em.find(Student.class, 4);
+        final IUser student = em.find(User.class, 4);
         em.remove(student);
 
-        assertNull(em.find(Student.class, 4));
+        assertNull(em.find(User.class, 4));
     }
-
-    @Test
-    public void test05_deleteProfessor() {
-
-        final IProfessor professor = em.find(Professor.class, 1);
-        em.remove(professor);
-
-        assertNull(em.find(Professor.class, 1));
-    }
-
+    
     @Test
     public void test06_deleteChallenge() {
 

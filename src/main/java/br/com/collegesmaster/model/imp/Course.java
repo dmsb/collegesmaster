@@ -43,7 +43,7 @@ public class Course implements Serializable, ICourse {
 
 	@NotNull
 	@ManyToOne(targetEntity = Institute.class, optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "instituteId", referencedColumnName = "id")
+	@JoinColumn(name = "instituteFK", referencedColumnName = "id")
 	private IInstitute institute;
 
 	@OneToMany(targetEntity = Discipline.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY,

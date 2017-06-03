@@ -21,16 +21,15 @@ import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IInstitute;
-import br.com.collegesmaster.model.IProfessor;
-import br.com.collegesmaster.model.IStudent;
+import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.imp.Challenge;
 import br.com.collegesmaster.model.imp.Course;
 import br.com.collegesmaster.model.imp.Discipline;
 import br.com.collegesmaster.model.imp.GeneralInfo;
 import br.com.collegesmaster.model.imp.Institute;
 import br.com.collegesmaster.model.imp.Localization;
-import br.com.collegesmaster.model.imp.Professor;
-import br.com.collegesmaster.model.imp.Student;
+import br.com.collegesmaster.model.imp.Profile;
+import br.com.collegesmaster.model.imp.User;
 import br.com.collegesmaster.util.CryptoUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -100,7 +99,7 @@ public class JUnitInserts extends JUnitConfiguration {
         final List<IChallenge> challenges = new ArrayList<IChallenge>();
         challenges.add(em.find(Challenge.class, 1));
         
-        final IStudent student = new Student();
+        final IUser student = new User();
         student.setUsername("diogo.brito.teste");
         student.setSalt(CryptoUtils.generateSalt());
         student.setPassword(CryptoUtils.getHashedPassword("D10g0!", student.getSalt()));
@@ -113,7 +112,7 @@ public class JUnitInserts extends JUnitConfiguration {
         student.getGeneralInfo().setLocalization(local);
         student.setCompletedChallenges(challenges);
         student.setDisciplines(disciplines);
-        
+        student.setProfile(new Profile());
         validateConstraints(student);
         em.persist(student);
     }
@@ -140,7 +139,7 @@ public class JUnitInserts extends JUnitConfiguration {
         challenges.add(em.find(Challenge.class, 1));
         
         
-        final IProfessor professor = new Professor();
+        final IUser professor = new User();
         professor.setUsername("tainara.dantas.teste");
         professor.setSalt(CryptoUtils.generateSalt());
         professor.setPassword(CryptoUtils.getHashedPassword("T4inara#", professor.getSalt()));
@@ -152,7 +151,8 @@ public class JUnitInserts extends JUnitConfiguration {
         professor.getGeneralInfo().setLastName("TESTE");        
         professor.getGeneralInfo().setLocalization(local); 
         professor.setDisciplines(disciplines);
-        professor.setChallenges(challenges);
+        professor.setCompletedChallenges(challenges);
+        professor.setProfile(new Profile());
         
         validateConstraints(professor);
         em.persist(professor);
@@ -162,12 +162,12 @@ public class JUnitInserts extends JUnitConfiguration {
     public void test06_insertChallenge() {
 
         final IDiscipline discipline = em.find(Discipline.class, 1);
-        final IProfessor professor = em.find(Professor.class, 1);
+        final IUser professor = em.find(User.class, 1);
 
         final IChallenge challenge = new Challenge();
         challenge.setResponse(Alternative.D);
         challenge.setLevel(ChallengeLevel.EXPERT);
-        challenge.setProfessor(professor);
+        challenge.setUser(professor);
         challenge.setDiscipline(discipline);
         challenge.setPontuation(100);
         challenge.setFileName("teste.pdf");

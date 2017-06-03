@@ -36,8 +36,6 @@
 		<class>br.com.collegesmaster.model.imp.Discipline</class>
 		<class>br.com.collegesmaster.model.imp.Localization</class>
 		<class>br.com.collegesmaster.model.imp.GeneralInfo</class>
-		<class>br.com.collegesmaster.model.imp.Professor</class>
-		<class>br.com.collegesmaster.model.imp.Student</class>
 		<class>br.com.collegesmaster.model.imp.Challenge</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		

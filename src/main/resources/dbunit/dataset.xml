@@ -14,31 +14,31 @@
 	<institute name='universidade de são paulo' country='Brasil'
 		state='São Paulo' city='são paulo' />
 
-	<course instituteId='1' name='análise e desenvolvimento de sistemas' />
-	<course instituteId='1' name='engenharia ambiental' />
-	<course instituteId='1' name='eletronica' />
+	<course instituteFK='1' name='análise e desenvolvimento de sistemas' />
+	<course instituteFK='1' name='engenharia ambiental' />
+	<course instituteFK='1' name='eletronica' />
 
-	<course instituteId='2' name='análise e desenvolvimento de sistemas' />
-	<course instituteId='2' name='engenharia química' />
-	<course instituteId='2' name='engenharia eletrica' />
+	<course instituteFK='2' name='análise e desenvolvimento de sistemas' />
+	<course instituteFK='2' name='engenharia química' />
+	<course instituteFK='2' name='engenharia eletrica' />
 
-	<course instituteId='3' name='geografia' />
-	<course instituteId='3' name='engenharia química' />
-	<course instituteId='3' name='engenharia eletrica' />
+	<course instituteFK='3' name='geografia' />
+	<course instituteFK='3' name='engenharia química' />
+	<course instituteFK='3' name='engenharia eletrica' />
 
-	<course instituteId='4' name='geografia' />
-	<course instituteId='4' name='física' />
-	<course instituteId='4' name='história' />
+	<course instituteFK='4' name='geografia' />
+	<course instituteFK='4' name='física' />
+	<course instituteFK='4' name='história' />
 
-	<course instituteId='4' name='educação física' />
-	<course instituteId='4' name='física' />
-	<course instituteId='4' name='história' />
+	<course instituteFK='4' name='educação física' />
+	<course instituteFK='4' name='física' />
+	<course instituteFK='4' name='história' />
 
-	<course instituteId='5' name='análise e desenvolvimento de sistemas' />
-	<course instituteId='5' name='história' />
+	<course instituteFK='5' name='análise e desenvolvimento de sistemas' />
+	<course instituteFK='5' name='história' />
 
-	<course instituteId='6' name='análise e desenvolvimento de sistemas' />
-	<course instituteId='6' name='matemática' />
+	<course instituteFK='6' name='análise e desenvolvimento de sistemas' />
+	<course instituteFK='6' name='matemática' />
 
 	<discipline courseFK='1' name='software corporativo i' />
 	<discipline courseFK='1' name='redes' />
@@ -87,38 +87,44 @@
 	<user_general_info userFK='3' generalInfoFK='3' />
 	<user_general_info userFK='4' generalInfoFK='4' />
 		
-	<professor_discipline disciplineFK='1' professorFK='1' />
-	<professor_discipline disciplineFK='2' professorFK='1' />
-	<professor_discipline disciplineFK='3' professorFK='1' />
-	<professor_discipline disciplineFK='4' professorFK='2' />
-	<professor_discipline disciplineFK='5' professorFK='2' />
-	<professor_discipline disciplineFK='6' professorFK='2' />
+	<user_discipline disciplineFK='1' userFK='1' />
+	<user_discipline disciplineFK='2' userFK='1' />
+	<user_discipline disciplineFK='3' userFK='1' />
+	<user_discipline disciplineFK='4' userFK='2' />
+	<user_discipline disciplineFK='5' userFK='2' />
+	<user_discipline disciplineFK='6' userFK='2' />
 
-	<student_discipline disciplineFK='1' studentFK='1' />
-	<student_discipline disciplineFK='2' studentFK='1' />
-	<student_discipline disciplineFK='3' studentFK='1' />
-	<student_discipline disciplineFK='4' studentFK='2' />
-	<student_discipline disciplineFK='5' studentFK='2' />
-	<student_discipline disciplineFK='6' studentFK='2' />
-
+	<user_discipline disciplineFK='1' userFK='1' />
+	<user_discipline disciplineFK='2' userFK='1' />
+	<user_discipline disciplineFK='3' userFK='1' />
+	<user_discipline disciplineFK='4' userFK='2' />
+	<user_discipline disciplineFK='5' userFK='2' />
+	<user_discipline disciplineFK='6' userFK='2' />
+	
+	<!-- attachment: 12345 (64bytes) -->
 	<challenge level='1' attachment='MTIzNDU=' filename='teste1.pdf'
-		response='A' pontuation='100' disciplineFK='3' professorFK='1' />
-		
+		response='A' pontuation='100' disciplineFK='3' userFK='1' />
+	
+	<!-- attachment: 123456 (64bytes)-->	
 	<challenge level='2' attachment='MTIzNDU2' filename='teste2.pdf'
-		response='C' pontuation='80' disciplineFK='4' professorFK='2' />
-		
+		response='C' pontuation='80' disciplineFK='4' userFK='2' />
+	
+	<!-- attachment: 1234567 (64bytes) -->
 	<challenge level='3' attachment='MTIzNDU2Nw==' filename='teste3.pdf'
-		response='D' pontuation='150' disciplineFK='1' professorFK='1' />
-		
+		response='D' pontuation='150' disciplineFK='1' userFK='1' />
+	
+	<!-- attachment: 12345678 (64bytes)-->	
 	<challenge level='3' attachment='MTIzNDU2Nzg=' filename='teste4.pdf'
-		response='A' pontuation='85' disciplineFK='6' professorFK='2' />
-		
+		response='A' pontuation='85' disciplineFK='6' userFK='2' />
+	
+	<!-- attachment: 123456789 (64bytes)-->	
 	<challenge level='4' attachment='MTIzNDU2Nzg5' filename='teste5.pdf'
-		response='B' pontuation='100' disciplineFK='9' professorFK='2' />
+		response='B' pontuation='100' disciplineFK='9' userFK='2' />
 
-	<challenges_made studentFK='3' challengeFK='2' />
-	<challenges_made studentFK='3' challengeFK='1' />
-	<challenges_made studentFK='4' challengeFK='4' />
+	<!-- Desafios feitos por estudantes -->
+	<user_challenge userFK='3' challengeFK='2' />
+	<user_challenge userFK='3' challengeFK='1' />
+	<user_challenge userFK='4' challengeFK='4' />
 
 </dataset>
 

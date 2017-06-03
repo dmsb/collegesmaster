@@ -20,6 +20,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
+import br.com.collegesmaster.model.IGeneralInfo;
 import br.com.collegesmaster.model.IUser;
 
 @Entity
