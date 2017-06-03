@@ -21,7 +21,7 @@ import br.com.collegesmaster.model.imp.Challenge;
 public class ChallengeBusiness extends Business implements IChallengeBusiness {
 	
 	@PersistenceUnit(unitName = "collegesmasterPU")
-	protected static EntityManagerFactory entityManagerFactory;	
+	protected EntityManagerFactory entityManagerFactory;
 	
 	@Override
 	@PostConstruct

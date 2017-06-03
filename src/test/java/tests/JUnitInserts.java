@@ -15,8 +15,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.collegesmaster.enums.Alternative;
-import br.com.collegesmaster.enums.ChallengeLevel;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
@@ -165,17 +163,12 @@ public class JUnitInserts extends JUnitConfiguration {
         final IUser professor = em.find(User.class, 1);
 
         final IChallenge challenge = new Challenge();
-        challenge.setResponse(Alternative.D);
-        challenge.setLevel(ChallengeLevel.EXPERT);
         challenge.setUser(professor);
         challenge.setDiscipline(discipline);
-        challenge.setPontuation(100);
-        challenge.setFileName("teste.pdf");
 
         try {
             final Path path = FileSystems.getDefault().getPath("D:", "teste.pdf");
-            final byte[] fileBytes = Files.readAllBytes(path);
-            challenge.setAttachment(fileBytes);
+            final byte[] fileBytes = Files.readAllBytes(path);        
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Error to process archieve teste.pdf", e);
         }

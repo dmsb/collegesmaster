@@ -29,7 +29,6 @@ import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.imp.Challenge;
 import br.com.collegesmaster.model.imp.Discipline;
 import br.com.collegesmaster.model.imp.Institute;
-import br.com.collegesmaster.model.imp.Professor;
 import br.com.collegesmaster.model.imp.User;
 import br.com.collegesmaster.util.CryptoUtils;
 import br.com.collegesmaster.util.FunctionUtils;

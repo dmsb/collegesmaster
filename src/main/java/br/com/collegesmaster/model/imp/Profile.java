@@ -15,6 +15,8 @@ import br.com.collegesmaster.model.IProfile;
 @Table(name = "profile")
 public class Profile implements IProfile, Serializable {
 
+	private static final long serialVersionUID = -8835309684958820875L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

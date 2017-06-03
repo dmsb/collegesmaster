@@ -1,7 +1,6 @@
 package br.com.collegesmaster.model;
 
-import br.com.collegesmaster.enums.Alternative;
-import br.com.collegesmaster.enums.ChallengeLevel;
+import java.util.List;
 
 public interface IChallenge extends IModel {
 
@@ -13,24 +12,8 @@ public interface IChallenge extends IModel {
 
 	void setDiscipline(IDiscipline discipline);
 
-	Alternative getResponse();
+	void setQuestions(List<IQuestion> questions);
 
-	void setResponse(Alternative response);
-
-	ChallengeLevel getLevel();
-
-	void setLevel(ChallengeLevel level);
-
-	byte[] getAttachment();
-
-	void setAttachment(byte[] attachment);
-
-	String getFileName();
-
-	void setFileName(String fileName);
-
-	Integer getPontuation();
-
-	void setPontuation(Integer pontuation);
-
+	List<IQuestion> getQuestions();
+	
 }

@@ -1,29 +1,27 @@
 package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import br.com.collegesmaster.enums.Alternative;
-import br.com.collegesmaster.enums.ChallengeLevel;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IDiscipline;
+import br.com.collegesmaster.model.IQuestion;
 import br.com.collegesmaster.model.IUser;
 
 @Entity
@@ -48,28 +46,9 @@ public class Challenge implements Serializable, IChallenge {
 	private IDiscipline discipline;
 	
 	@NotNull
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-	@Column(name = "attachment", columnDefinition="MEDIUMBLOB")
-	private byte[] attachment;	
-	
-	@NotNull	
-	@Column(name = "fileName", nullable = false, length = 60)
-	private String fileName;
-
-	@NotNull
-	@Basic(optional = false)
-	@Enumerated(EnumType.STRING)	
-	private Alternative response;
-	
-	@NotNull
-	@Basic(optional = false)
-	@Enumerated(EnumType.ORDINAL)
-	private ChallengeLevel level;
-	
-	@NotNull
-	@Column(name = "pontuation", nullable = false)
-	private Integer pontuation;
+	@OneToMany(targetEntity = Question.class, cascade = CascadeType.ALL, 
+		fetch = FetchType.LAZY, orphanRemoval = true)
+	private List<IQuestion> questions;
 	
 	@Override
 	public Integer getId() {
@@ -100,55 +79,15 @@ public class Challenge implements Serializable, IChallenge {
 	public void setDiscipline(IDiscipline discipline) {
 		this.discipline = discipline;
 	}
-
-	@Override
-	public Alternative getResponse() {
-		return response;
-	}
-
-	@Override
-	public void setResponse(Alternative response) {
-		this.response = response;
-	}
 	
 	@Override
-	public ChallengeLevel getLevel() {
-		return ChallengeLevel.valueOf(level.getLevel());
+	public List<IQuestion> getQuestions() {
+		return questions;
 	}
 
 	@Override
-	public void setLevel(ChallengeLevel level) {
-		this.level = level;
-	}
-
-	@Override
-	public byte[] getAttachment() {
-		return attachment;
-	}
-
-	@Override
-	public void setAttachment(byte[] attachment) {
-		this.attachment = attachment;
-	}
-	
-	@Override
-	public String getFileName() {
-		return fileName;
-	}
-
-	@Override
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	@Override
-	public Integer getPontuation() {
-		return pontuation;
-	}
-
-	@Override
-	public void setPontuation(Integer pontuation) {
-		this.pontuation = pontuation;
+	public void setQuestions(List<IQuestion> questions) {
+		this.questions = questions;
 	}
 
 	@Override

@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -23,7 +22,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
-import br.com.collegesmaster.model.IUser;
 
 @Entity
 @Table(name = "discipline")
@@ -49,11 +47,12 @@ public class Discipline implements Serializable, IDiscipline {
     		orphanRemoval = true, mappedBy = "discipline")
     private List<IChallenge> challenges;
 
-	
+    @Override
     public Integer getId() {
 		return id;
 	}
-
+    
+    @Override
 	public void setId(Integer id) {
 		this.id = id;
 	}

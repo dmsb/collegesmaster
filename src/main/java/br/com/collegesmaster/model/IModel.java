@@ -6,8 +6,4 @@ public interface IModel {
 
 	void setId(Integer id);
 	
-	boolean equals(Object obj);
-
-	int hashCode();
-	
 }
