@@ -2,6 +2,7 @@ package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -35,12 +36,16 @@ public class Question implements IQuestion, Serializable {
 	@Column(name = "id")
 	private Integer id;
 	
+	@Column(name = "description", nullable = false, unique = false)
+	private String description;
+	
 	@NotNull
-	@Column(name = "pontuation", nullable = false)
+	@Column(name = "pontuation", nullable = false, length = 11)
 	private Integer pontuation;
 	
 	@NotNull
-	@OneToMany(targetEntity = Alternative.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(targetEntity = Alternative.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+		orphanRemoval = true, mappedBy = "question")
 	private List<IAlternative> response;
 	
 	@NotNull
@@ -48,8 +53,7 @@ public class Question implements IQuestion, Serializable {
 	@Enumerated(EnumType.ORDINAL)
 	private QuestionLevel level;
 	
-	@NotNull
-	@ManyToOne(targetEntity = Challenge.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Challenge.class, optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "challengeFK", referencedColumnName = "id")
 	private IChallenge challenge;
 	
@@ -79,6 +83,16 @@ public class Question implements IQuestion, Serializable {
 	}
 
 	@Override
+	public String getDescription() {
+		return description;
+	}
+
+	@Override
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Override
 	public void setResponse(List<IAlternative> response) {
 		this.response = response;
 	}
@@ -92,7 +106,7 @@ public class Question implements IQuestion, Serializable {
 	public void setLevel(QuestionLevel level) {
 		this.level = level;
 	}
-
+	
 	@Override
 	public IChallenge getChallenge() {
 		return challenge;
@@ -102,5 +116,19 @@ public class Question implements IQuestion, Serializable {
 	public void setChallenge(IChallenge challenge) {
 		this.challenge = challenge;
 	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if((obj instanceof Question) == false) {
+			return false;
+		}
+		final IQuestion other = (IQuestion) obj;		
+		return getId() != null && Objects.equals(getId(), other.getId());
+	}
+	
+	@Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
 
 }

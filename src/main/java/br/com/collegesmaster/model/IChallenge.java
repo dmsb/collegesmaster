@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface IChallenge extends IModel {
 
-	IUser getUser();
+	IUser getOwner();
 
-	void setUser(IUser user);
+	void setOwner(IUser user);
 
 	IDiscipline getDiscipline();
 
@@ -15,5 +15,9 @@ public interface IChallenge extends IModel {
 	void setQuestions(List<IQuestion> questions);
 
 	List<IQuestion> getQuestions();
+
+	void setTitle(String title);
+
+	String getTitle();
 	
 }

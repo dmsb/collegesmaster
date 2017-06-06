@@ -10,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -19,11 +17,11 @@ import br.com.collegesmaster.model.IPermission;
 import br.com.collegesmaster.model.IProfile;
 
 @Entity
-@Table(name = "profile")
-public class Profile implements IProfile, Serializable {
+@Table(name ="permission")
+public class Permission implements IPermission, Serializable {
 
-	private static final long serialVersionUID = -8835309684958820875L;
-
+	private static final long serialVersionUID = 2659147829263786669L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -32,11 +30,8 @@ public class Profile implements IProfile, Serializable {
 	@Column(name = "name", nullable = false, unique = true, length = 20)
 	private String name;
 	
-	@ManyToMany(targetEntity = Permission.class, fetch = FetchType.LAZY)
-	@JoinTable(name="profile_permission",
-	    joinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")},
-	    inverseJoinColumns={@JoinColumn(name="permissionFK", referencedColumnName = "id")})
-	private List<IPermission> permissions;
+	@ManyToMany(targetEntity = Profile.class,fetch = FetchType.LAZY, mappedBy = "permissions")
+	private List<IProfile> profiles;
 	
 	@Override
 	public Integer getId() {
@@ -59,21 +54,21 @@ public class Profile implements IProfile, Serializable {
 	}
 
 	@Override
-	public List<IPermission> getPermissions() {
-		return permissions;
+	public List<IProfile> getProfiles() {
+		return profiles;
 	}
 
 	@Override
-	public void setPermissions(List<IPermission> permissions) {
-		this.permissions = permissions;
+	public void setProfiles(List<IProfile> profiles) {
+		this.profiles = profiles;
 	}
 	
 	@Override
 	public boolean equals(final Object obj) {
-		if((obj instanceof Profile) == false) {
+		if((obj instanceof Permission) == false) {
 			return false;
 		}
-		final Profile other = (Profile) obj;		
+		final Permission other = (Permission) obj;		
 		return getId() != null && Objects.equals(getId(), other.getId());
 	}
 	
@@ -81,4 +76,5 @@ public class Profile implements IProfile, Serializable {
     public int hashCode() {
         return Objects.hashCode(getId());
     }
+	
 }

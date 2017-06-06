@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +24,6 @@ import br.com.collegesmaster.model.IUser;
 
 @Entity
 @Table(name = "challenge")
-@Access(AccessType.FIELD)
 public class Challenge implements Serializable, IChallenge {
 
 	private static final long serialVersionUID = 6314730845000580522L;
@@ -35,19 +32,22 @@ public class Challenge implements Serializable, IChallenge {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
-
+	
+	@NotNull
+	@Column(name= "title", unique = false, nullable = false, length = 30)
+	private String title;
+	
 	@NotNull
 	@ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "userFK", referencedColumnName = "id")
-	private IUser user;
+	private IUser owner;
 	
 	@ManyToOne(targetEntity = Discipline.class, optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "disciplineFK", referencedColumnName = "id")
 	private IDiscipline discipline;
 	
-	@NotNull
-	@OneToMany(targetEntity = Question.class, cascade = CascadeType.ALL, 
-		fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(targetEntity = Question.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, 
+		orphanRemoval = true, mappedBy="challenge")
 	private List<IQuestion> questions;
 	
 	@Override
@@ -61,13 +61,23 @@ public class Challenge implements Serializable, IChallenge {
 	}
 	
 	@Override
-	public IUser getUser() {
-		return user;
+	public IUser getOwner() {
+		return owner;
 	}
 	
 	@Override
-	public void setUser(IUser professor) {
-		this.user = professor;
+	public String getTitle() {
+		return title;
+	}
+
+	@Override
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	@Override
+	public void setOwner(IUser owner) {
+		this.owner = owner;
 	}
 	
 	@Override

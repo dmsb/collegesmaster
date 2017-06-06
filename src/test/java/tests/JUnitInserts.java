@@ -23,9 +23,9 @@ import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.imp.Challenge;
 import br.com.collegesmaster.model.imp.Course;
 import br.com.collegesmaster.model.imp.Discipline;
-import br.com.collegesmaster.model.imp.GeneralInfo;
 import br.com.collegesmaster.model.imp.Institute;
 import br.com.collegesmaster.model.imp.Localization;
+import br.com.collegesmaster.model.imp.Person;
 import br.com.collegesmaster.model.imp.Profile;
 import br.com.collegesmaster.model.imp.User;
 import br.com.collegesmaster.util.CryptoUtils;
@@ -37,12 +37,12 @@ public class JUnitInserts extends JUnitConfiguration {
     public void test01_insertInstitute() {
 
         final IInstitute institute = new Institute();
-        institute.setName("INSTITUTO FEDERAL DE PERNAMBUCO");
+        institute.setName("instituto federal de pernambuco");
 
         final Localization local = new Localization();
-        local.setCountry("BRASIL");
-        local.setState("PERNAMBUCO");
-        local.setCity("RECIFE");
+        local.setCountry("brasil");
+        local.setState("pernambuco");
+        local.setCity("recife");
         institute.setLocalization(local);
 
         validateConstraints(institute);
@@ -92,31 +92,26 @@ public class JUnitInserts extends JUnitConfiguration {
         local.setCity("RECIFE");
         
         final List<IDiscipline> disciplines = new ArrayList<IDiscipline>();
-        disciplines.add(em.find(Discipline.class, 1));
-        
-        final List<IChallenge> challenges = new ArrayList<IChallenge>();
-        challenges.add(em.find(Challenge.class, 1));
+        disciplines.add(em.find(Discipline.class, 1));               
         
         final IUser student = new User();
         student.setUsername("diogo.brito.teste");
         student.setSalt(CryptoUtils.generateSalt());
         student.setPassword(CryptoUtils.getHashedPassword("D10g0!", student.getSalt()));
-        student.setGeneralInfo(new GeneralInfo());
+        student.setGeneralInfo(new Person());
         student.getGeneralInfo().setCpf("50168636280");
         student.getGeneralInfo().setBirthdate(calendar.getTime());
         student.getGeneralInfo().setEmail("diogo1@diogo.com");
         student.getGeneralInfo().setFirstName("DIOGO");
         student.getGeneralInfo().setLastName("TESTE");
-        student.getGeneralInfo().setLocalization(local);
-        student.setCompletedChallenges(challenges);
-        student.setDisciplines(disciplines);
-        student.setProfile(new Profile());
+        student.getGeneralInfo().setLocalization(local);       
+        student.setProfile(em.find(Profile.class, 2));
         validateConstraints(student);
         em.persist(student);
     }
     
     @Test
-    public void test05_insertProfessor() {
+    public void test05_insertUser() {
 
         final Calendar calendar = new GregorianCalendar();
         calendar.setTime(new Date());
@@ -133,25 +128,18 @@ public class JUnitInserts extends JUnitConfiguration {
         disciplines.add(em.find(Discipline.class, 1));
         disciplines.add(em.find(Discipline.class, 2));
         
-        final List<IChallenge> challenges = new ArrayList<IChallenge>();
-        challenges.add(em.find(Challenge.class, 1));
-        
-        
         final IUser professor = new User();
         professor.setUsername("tainara.dantas.teste");
         professor.setSalt(CryptoUtils.generateSalt());
         professor.setPassword(CryptoUtils.getHashedPassword("T4inara#", professor.getSalt()));
-        professor.setGeneralInfo(new GeneralInfo());
+        professor.setGeneralInfo(new Person());
         professor.getGeneralInfo().setCpf("24185135998");
         professor.getGeneralInfo().setBirthdate(calendar.getTime());
         professor.getGeneralInfo().setEmail("dppg@dopgp.com");
         professor.getGeneralInfo().setFirstName("TAINARA");
         professor.getGeneralInfo().setLastName("TESTE");        
-        professor.getGeneralInfo().setLocalization(local); 
-        professor.setDisciplines(disciplines);
-        professor.setCompletedChallenges(challenges);
-        professor.setProfile(new Profile());
-        
+        professor.getGeneralInfo().setLocalization(local);        
+        professor.setProfile(em.find(Profile.class, 1));        
         validateConstraints(professor);
         em.persist(professor);
     }
@@ -163,7 +151,7 @@ public class JUnitInserts extends JUnitConfiguration {
         final IUser professor = em.find(User.class, 1);
 
         final IChallenge challenge = new Challenge();
-        challenge.setUser(professor);
+        challenge.setOwner(professor);
         challenge.setDiscipline(discipline);
 
         try {

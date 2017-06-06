@@ -9,10 +9,14 @@
 <!-- 		<class>br.com.collegesmaster.model.imp.Course</class> -->
 <!-- 		<class>br.com.collegesmaster.model.imp.Discipline</class> -->
 <!-- 		<class>br.com.collegesmaster.model.imp.Localization</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.GeneralInfo</class>		 -->
-<!-- 		<class>br.com.collegesmaster.model.imp.Professor</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.Student</class> -->
+<!-- 		<class>br.com.collegesmaster.model.imp.Person</class> -->
 <!-- 		<class>br.com.collegesmaster.model.imp.Challenge</class> -->
+<!-- 		<class>br.com.collegesmaster.model.imp.CompletedChallenge</class> -->
+<!-- 		<class>br.com.collegesmaster.model.imp.User</class> -->
+<!-- 		<class>br.com.collegesmaster.model.imp.Question</class> -->
+<!-- 		<class>br.com.collegesmaster.model.imp.Alternative</class> -->
+<!-- 		<class>br.com.collegesmaster.model.imp.Profile</class> -->
+<!-- 		<class>br.com.collegesmaster.model.imp.Permission</class> -->
 <!-- 		<exclude-unlisted-classes>false</exclude-unlisted-classes> -->
 		
 <!-- 		<properties> -->
@@ -35,8 +39,14 @@
 		<class>br.com.collegesmaster.model.imp.Course</class>
 		<class>br.com.collegesmaster.model.imp.Discipline</class>
 		<class>br.com.collegesmaster.model.imp.Localization</class>
-		<class>br.com.collegesmaster.model.imp.GeneralInfo</class>
+		<class>br.com.collegesmaster.model.imp.Person</class>
 		<class>br.com.collegesmaster.model.imp.Challenge</class>
+		<class>br.com.collegesmaster.model.imp.CompletedChallenge</class>
+		<class>br.com.collegesmaster.model.imp.User</class>
+		<class>br.com.collegesmaster.model.imp.Question</class>
+		<class>br.com.collegesmaster.model.imp.Alternative</class>
+		<class>br.com.collegesmaster.model.imp.Profile</class>
+		<class>br.com.collegesmaster.model.imp.Permission</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		
 		<properties>
@@ -49,6 +59,7 @@
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 			<property name="hibernate.transaction.flush_before_completion" value="true"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
 			
 		</properties>
 	</persistence-unit>	

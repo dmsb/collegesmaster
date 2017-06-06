@@ -142,7 +142,7 @@ public class JUnitSelects extends JUnitConfiguration {
         
         for (final IChallenge challenge : challenges) {
         	FunctionUtils.showInvalidColumnsValues(challenge);
-            assertTrue(cpf.equals(challenge.getUser().getGeneralInfo().getCpf()));
+            assertTrue(cpf.equals(challenge.getOwner().getGeneralInfo().getCpf()));
         }
 
         assertEquals(2, challenges.size());        

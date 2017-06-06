@@ -6,10 +6,6 @@ import br.com.collegesmaster.enums.QuestionLevel;
 
 public interface IQuestion extends IModel {
 
-	void setChallenge(IChallenge challenge);
-
-	IChallenge getChallenge();
-
 	void setLevel(QuestionLevel level);
 
 	QuestionLevel getLevel();
@@ -21,5 +17,13 @@ public interface IQuestion extends IModel {
 	void setPontuation(Integer pontuation);
 
 	Integer getPontuation();
+
+	void setDescription(String description);
+
+	String getDescription();
+
+	void setChallenge(IChallenge challenge);
+
+	IChallenge getChallenge();
 
 }

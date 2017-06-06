@@ -1,37 +1,39 @@
 package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import org.apache.commons.collections.CollectionUtils;
 
 import br.com.collegesmaster.annotations.Password;
 import br.com.collegesmaster.model.IChallenge;
+import br.com.collegesmaster.model.ICompletedChallenge;
 import br.com.collegesmaster.model.IDiscipline;
-import br.com.collegesmaster.model.IGeneralInfo;
+import br.com.collegesmaster.model.IPerson;
 import br.com.collegesmaster.model.IProfile;
 import br.com.collegesmaster.model.IUser;
 
-@Table(name = "user")
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "profileType")
+@Table(name = "user")
 public class User implements Serializable, IUser {
 
     private static final long serialVersionUID = -7809703915845045860L;
@@ -54,37 +56,63 @@ public class User implements Serializable, IUser {
 	@Column(name = "salt", unique = false, nullable = false, length = 88)
     private String salt;
 
-    @ManyToMany(targetEntity = Challenge.class, fetch = FetchType.LAZY)
-	@JoinTable(name="user_challenges_created",
-	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
-	    inverseJoinColumns={@JoinColumn(name="challengeFK", referencedColumnName = "id")})
+    @OneToMany(targetEntity = Challenge.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
 	private List<IChallenge> challengesCreated;
     
-    @ManyToMany(targetEntity = Challenge.class, fetch = FetchType.LAZY)
-	@JoinTable(name="user_completed_challenges",
-	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
-	    inverseJoinColumns={@JoinColumn(name="challengeFK", referencedColumnName = "id")})
-	private List<IChallenge> completedChallenges;
+    @OneToMany(targetEntity = CompletedChallenge.class, fetch = FetchType.LAZY, mappedBy = "owner")
+	private List<ICompletedChallenge> completedChallenges;
 	
-	@ManyToMany(targetEntity = Discipline.class, fetch = FetchType.LAZY)
-    @JoinTable(name="user_discipline",
-             joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
-             inverseJoinColumns={@JoinColumn(name="disciplineFK", referencedColumnName = "id")})
-    private List<IDiscipline> disciplines;
-	
-    @OneToOne(targetEntity = GeneralInfo.class, cascade = CascadeType.ALL, 
-    		fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
-    @JoinTable(name="user_general_info",
-	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
-	    inverseJoinColumns={@JoinColumn(name="generalInfoFK", referencedColumnName = "id")})
-	private IGeneralInfo generalInfo;
+    @ManyToOne(targetEntity = Person.class, fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "personFK", referencedColumnName = "id")
+	private IPerson person;
     
-    @OneToOne(targetEntity = Profile.class, optional = false)
+    @ManyToOne(targetEntity = Profile.class, optional = false)
     @JoinTable(name="user_profile",
 	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
 	    inverseJoinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")})
     private IProfile profile;
     
+    @Transient
+    private Map<IDiscipline, Integer> notePerDiscipline;
+    
+    @PostLoad
+    private void buildNotePerDiscipline() {
+    	if (CollectionUtils.isEmpty(completedChallenges)) {
+			notePerDiscipline = null;
+		} else {			
+			
+			notePerDiscipline = new HashMap<>();
+			completedChallenges.forEach(challengesCreated -> {
+				
+				final Integer note = challengesCreated.getNote();
+				final IDiscipline discipline = challengesCreated.getChallenge().getDiscipline();
+				
+				notePerDiscipline.put(discipline, note);
+				
+			});			
+		}
+    }
+    
+	@Override
+	public IPerson getPerson() {
+		return person;
+	}
+
+	@Override
+	public void setPerson(IPerson person) {
+		this.person = person;
+	}
+
+	@Override
+	public Map<IDiscipline, Integer> getNotePerDiscipline() {
+		return notePerDiscipline;
+	}
+
+	@Override
+	public void setNotePerDiscipline(Map<IDiscipline, Integer> notePerDiscipline) {
+		this.notePerDiscipline = notePerDiscipline;
+	}
+
 	@Override
 	public List<IChallenge> getChallengesCreated() {
 		return challengesCreated;
@@ -96,34 +124,25 @@ public class User implements Serializable, IUser {
 	}
 
 	@Override
-	public List<IChallenge> getCompletedChallenges() {
+	public List<ICompletedChallenge> getCompletedChallenges() {
 		return completedChallenges;
 	}
 
 	@Override
-	public void setCompletedChallenges(List<IChallenge> completedChallenges) {
+	public void setCompletedChallenges(List<ICompletedChallenge> completedChallenges) {
 		this.completedChallenges = completedChallenges;
 	}
 
 	@Override
-	public List<IDiscipline> getDisciplines() {
-		return disciplines;
+	public IPerson getGeneralInfo() {
+		return person;
 	}
 
 	@Override
-	public void setDisciplines(List<IDiscipline> disciplines) {
-		this.disciplines = disciplines;
+	public void setGeneralInfo(IPerson person) {
+		this.person = person;
 	}
-
-	@Override
-	public IGeneralInfo getGeneralInfo() {
-		return generalInfo;
-	}
-
-	@Override
-	public void setGeneralInfo(IGeneralInfo generalInfo) {
-		this.generalInfo = generalInfo;
-	}
+	
     @Override
 	public Integer getId() {
 		return id;

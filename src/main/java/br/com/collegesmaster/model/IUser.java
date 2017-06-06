@@ -1,39 +1,44 @@
 package br.com.collegesmaster.model;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IUser extends IModel {
 
-	String getSalt();
+	public String getSalt();
 
-	void setSalt(String salt);
+	public void setSalt(String salt);
 
-	String getUsername();
+	public String getUsername();
 
-	void setUsername(String username);
+	public void setUsername(String username);
 
-	String getPassword();
+	public String getPassword();
 
-	void setPassword(String password);
+	public void setPassword(String password);
 
-	IGeneralInfo getGeneralInfo();
+	public IPerson getGeneralInfo();
 
-	void setGeneralInfo(IGeneralInfo generalInfo);
+	public void setGeneralInfo(IPerson person);
 
-	public abstract void setDisciplines(List<IDiscipline> disciplines);
+	public void setCompletedChallenges(List<ICompletedChallenge> completedChallenges);
 
-	public abstract List<IDiscipline> getDisciplines();
+	public List<ICompletedChallenge> getCompletedChallenges();
 
-	public abstract void setCompletedChallenges(List<IChallenge> completedChallenges);
+	public void setProfile(IProfile profile);
 
-	public abstract List<IChallenge> getCompletedChallenges();
+	public IProfile getProfile();
 
-	public abstract void setProfile(IProfile profile);
+	public void setChallengesCreated(List<IChallenge> challengesCreated);
 
-	public abstract IProfile getProfile();
+	public List<IChallenge> getChallengesCreated();
 
-	public abstract void setChallengesCreated(List<IChallenge> challengesCreated);
+	void setNotePerDiscipline(Map<IDiscipline, Integer> notePerDiscipline);
 
-	public abstract List<IChallenge> getChallengesCreated();
+	Map<IDiscipline, Integer> getNotePerDiscipline();
+
+	void setPerson(IPerson person);
+
+	IPerson getPerson();
 
 }
