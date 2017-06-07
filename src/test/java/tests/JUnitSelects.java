@@ -4,11 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -23,6 +18,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.com.collegesmaster.model.IChallenge;
+import br.com.collegesmaster.model.ICompletedChallenge;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.IUser;
@@ -120,36 +116,7 @@ public class JUnitSelects extends JUnitConfiguration {
 	}
 	
 	@Test
-	public void test04_getAllProfessorChallenges() {
-		
-		final String cpf = "10719498457";
-		
-		queryBuilder = new StringBuilder();
-		queryBuilder
-				.append("SELECT challenge  ")
-				.append("FROM   Challenge challenge ")
-				.append("WHERE  challenge.professor.generalInfo.cpf = :cpf ");			
-		
-		final String selectAllProfessorChallenges = queryBuilder.toString();
-		logger.info("Proccessing test 04: " + selectAllProfessorChallenges);
-		
-		final TypedQuery<Challenge> query = em.createQuery(
-        		selectAllProfessorChallenges,
-        		Challenge.class);
-        query.setParameter("cpf", cpf);
-        
-        final List<Challenge> challenges = query.getResultList();
-        
-        for (final IChallenge challenge : challenges) {
-        	FunctionUtils.showInvalidColumnsValues(challenge);
-            assertTrue(cpf.equals(challenge.getOwner().getGeneralInfo().getCpf()));
-        }
-
-        assertEquals(2, challenges.size());        
-	}
-	
-	@Test
-	public void test05_getTotalOfChallenges() {
+	public void test04_getTotalOfChallenges() {
 		
 		queryBuilder = new StringBuilder();
 		queryBuilder
@@ -169,59 +136,45 @@ public class JUnitSelects extends JUnitConfiguration {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void test06_sortStudentFirstName() {
+	public void test05_sortUserFirstName() {
 		
 		queryBuilder = new StringBuilder();
 		queryBuilder
-				.append("SELECT   student.generalInfo.cpf, ")
-				.append("		  student.generalInfo.firstName ")
-				.append("FROM     Student student ")
-				.append("ORDER BY student.generalInfo.firstName");
+				.append("SELECT   user.person.cpf, ")
+				.append("		  user.person.firstName ")
+				.append("FROM     User user ")
+				.append("ORDER BY user.person.firstName");
 		
 		final String listByName = queryBuilder.toString();
 		logger.info("Proccessing test 05: " + listByName);
 		
 		final Query query = em.createQuery(queryBuilder.toString());
 		
-		final List<Object[]> students = query.getResultList();
+		final List<String[]> users = query.getResultList();
 		
-		assertEquals(2, students.size());
+		assertEquals(4, users.size());
 
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void test07_getChallenges() {
+	public void test06_getChallenges() {
 		
 		queryBuilder = new StringBuilder();
 		queryBuilder
-				.append("SELECT c.attachment ")
-				.append("FROM   Challenge c where c.attachment = :attachment");			
+				.append("FROM Challenge c");			
 		
 		final String totalAttachments = queryBuilder.toString();
 		logger.info("Proccessing test 07: " + totalAttachments);
 		
-		final Query query = em.createQuery(queryBuilder.toString());		
-        query.setParameter("attachment", "12345".getBytes());
+		final Query query = em.createQuery(queryBuilder.toString());		       
         
-		final List<byte[]> result = (List<byte[]>) query.getResultList();		
-		
-		try {			
-			for(final byte[] bytesFile : result) {				
-				assertTrue(Arrays.equals(bytesFile, "12345".getBytes()));
-				final Path path = FileSystems.getDefault().getPath("D:", "testeDownloaded.pdf");				
-				Files.write(path, bytesFile);				
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		assertEquals(1, result.size());
-		
+		final List<Challenge> result =  query.getResultList();
+		assertEquals(result.size(), 5);
 	}
 	
 	@Test
-	public void test08_login() {
+	public void test07_login() {
 
 		final String username = "diogo.brito";
 		final String password = "D10g0!";
@@ -229,11 +182,7 @@ public class JUnitSelects extends JUnitConfiguration {
 		final String salt = getUserSalt(username);        
 		final IUser user = buildLogin(username, password, salt);
 		
-		if(user.getClass().isAssignableFrom(User.class)) {
-			assertEquals("Professor logged!", username, user.getUsername());			
-		} else {
-			assertEquals("Student logged!", username, user.getUsername());
-		}		
+		assertEquals("User logged!", username, user.getUsername());		
 	}
 
 	private String getUserSalt(final String username) {
@@ -266,5 +215,6 @@ public class JUnitSelects extends JUnitConfiguration {
                 
         return user;
 	}
+	
 }
 

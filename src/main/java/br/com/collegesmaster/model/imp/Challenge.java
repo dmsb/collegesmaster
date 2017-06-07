@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import br.com.collegesmaster.enums.ChallengeType;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IQuestion;
@@ -32,6 +36,11 @@ public class Challenge implements Serializable, IChallenge {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
+	
+	@NotNull
+	@Enumerated(EnumType.ORDINAL)
+	@Basic(optional = false, fetch = FetchType.LAZY)
+	private ChallengeType challengeType;
 	
 	@NotNull
 	@Column(name= "title", unique = false, nullable = false, length = 30)
@@ -50,6 +59,14 @@ public class Challenge implements Serializable, IChallenge {
 		orphanRemoval = true, mappedBy="challenge")
 	private List<IQuestion> questions;
 	
+	public Challenge() {
+		
+	}
+	
+	public Challenge(Integer id) {
+		this.id = id;
+	}
+	
 	@Override
 	public Integer getId() {
 		return id;
@@ -59,7 +76,17 @@ public class Challenge implements Serializable, IChallenge {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
+	@Override
+	public ChallengeType getChallengeType() {
+		return challengeType;
+	}
+
+	@Override
+	public void setChallengeType(ChallengeType challengeType) {
+		this.challengeType = challengeType;
+	}
+
 	@Override
 	public IUser getOwner() {
 		return owner;

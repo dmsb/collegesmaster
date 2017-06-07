@@ -46,7 +46,7 @@ public class JUnitConfiguration {
 
     @Before
     public void setUp() {
-        em = emf.createEntityManager();
+        em = emf.createEntityManager();        
         beginTransaction();
     }
 

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -22,7 +22,6 @@ import br.com.collegesmaster.model.IAlternative;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.ICompletedChallenge;
 import br.com.collegesmaster.model.IQuestion;
-import br.com.collegesmaster.model.IUser;
 
 @Entity
 @Table(name = "completed_challenge")
@@ -38,20 +37,13 @@ public class CompletedChallenge implements ICompletedChallenge, Serializable {
 	@Column(name = "note", nullable = false, length = 11, unique = false)
 	private Integer note;
 	
-	@ManyToOne(targetEntity = Challenge.class, fetch = FetchType.LAZY)
-	@JoinTable(name="completed_challenge_response",
-	   joinColumns={@JoinColumn(name="completedChallengeFK", referencedColumnName = "id")},
-	   inverseJoinColumns={@JoinColumn(name="challengeFK", referencedColumnName = "id")})
+	@ManyToOne(targetEntity = Challenge.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "responseChallengeFK", referencedColumnName = "id")
 	private IChallenge response;
 	
 	@ManyToOne(targetEntity = Challenge.class, fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "challengeFK", referencedColumnName = "id")
 	private IChallenge challenge;
-	
-	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "userFK", referencedColumnName = "id")
-	private IUser owner;
-	
 	
 	@PrePersist
 	@PreUpdate
@@ -129,16 +121,4 @@ public class CompletedChallenge implements ICompletedChallenge, Serializable {
 	public void setResponse(IChallenge response) {
 		this.response = response;
 	}
-
-	@Override
-	public IUser getOwner() {
-		return owner;
-	}
-
-	@Override
-	public void setOwner(IUser owner) {
-		this.owner = owner;
-	}
-	
-	
 }

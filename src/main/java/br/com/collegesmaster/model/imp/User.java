@@ -59,7 +59,10 @@ public class User implements Serializable, IUser {
     @OneToMany(targetEntity = Challenge.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
 	private List<IChallenge> challengesCreated;
     
-    @OneToMany(targetEntity = CompletedChallenge.class, fetch = FetchType.LAZY, mappedBy = "owner")
+    @OneToMany(targetEntity = CompletedChallenge.class, fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinTable(name="user_completed_challenge",
+	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
+	    inverseJoinColumns={@JoinColumn(name="completedChallengeFK", referencedColumnName = "id")})
 	private List<ICompletedChallenge> completedChallenges;
 	
     @ManyToOne(targetEntity = Person.class, fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)

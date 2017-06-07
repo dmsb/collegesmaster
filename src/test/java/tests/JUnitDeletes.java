@@ -40,10 +40,10 @@ public class JUnitDeletes extends JUnitConfiguration {
     @Test
     public void test03_deleteDiscipline() {
 
-        final IDiscipline discipline = em.find(Discipline.class, 8);
+        final IDiscipline discipline = em.find(Discipline.class, 4);
         em.remove(discipline);
         
-        assertNull(em.find(Discipline.class, 8));
+        assertNull(em.find(Discipline.class, 4));
     }
 
     @Test
@@ -58,9 +58,9 @@ public class JUnitDeletes extends JUnitConfiguration {
     @Test
     public void test06_deleteChallenge() {
 
-        final IChallenge challenge = em.find(Challenge.class, 5);
+        final IChallenge challenge = em.find(Challenge.class, 4);
         em.remove(challenge);
 
-        assertNull(em.find(Challenge.class, 5));
+        assertNull(em.find(Challenge.class, 4));
     }
 }

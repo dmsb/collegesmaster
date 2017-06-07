@@ -10,10 +10,6 @@ public interface ICompletedChallenge extends IModel {
 
 	public Integer getNote();
 
-	void setOwner(IUser owner);
-
-	IUser getOwner();
-
 	void setResponse(IChallenge response);
 
 	IChallenge getResponse();

@@ -107,11 +107,12 @@
 	<profile_permission profileFK='3' permissionFK='2' />
 	<profile_permission profileFK='3' permissionFK='3' />
 		
-	<challenge title='Challenge 1' disciplineFK='4' userFK='2' />
-	<challenge title='Challenge 2' disciplineFK='2' userFK='3' />
-	<challenge title='Challenge 3' disciplineFK='2' userFK='2' />
-	<challenge title='Challenge 4' disciplineFK='1' userFK='4' />
-	<challenge title='Challenge 5' disciplineFK='3' userFK='2' />
+	<challenge title='Challenge 1' disciplineFK='4' userFK='2' challengeType='0' />
+	<challenge title='Challenge 2' disciplineFK='1' userFK='3' challengeType='0'/>
+	<challenge title='Challenge 3' disciplineFK='2' userFK='2' challengeType='0'/>
+	<challenge title='Challenge 3' disciplineFK='2' userFK='4' challengeType='1'/>
+	<challenge title='Challenge 3' disciplineFK='2' userFK='2' challengeType='1'/>
+	<challenge title='Challenge 2' disciplineFK='1' userFK='2' challengeType='1'/>
 	
 	<question description='Question about Internet Protocols' level='1' pontuation='100' challengeFK='1' />
 	<question description='Question about Math' level='1' pontuation='80' challengeFK='1' />
@@ -133,16 +134,15 @@
 	
 	<alternative definition='true' description="Response 1" letter='A' questionFK='3' />
 	<alternative definition='false' description="Response 2" letter='B' questionFK='3' />
-	<alternative definition='false' description="Response 3" letter='C' questionFK='3' />
+	<alternative definition='false' description="Response 3" letter='A' questionFK='4' />
 		
-	<completed_challenge note='220' challengeFK='1' userFK='1' />
-	<completed_challenge note='10' challengeFK='2' userFK='1' />
-	<completed_challenge note='400' challengeFK='2' userFK='2' />
+	<completed_challenge note='0' challengeFK='1' responseChallengeFK='4'/>
+	<completed_challenge note='0' challengeFK='2' responseChallengeFK='5' />
+	<completed_challenge note='0' challengeFK='2' responseChallengeFK='6'/>
 	
-	<completed_challenge_response completedChallengeFK='1' challengeFK='1' />
-	<completed_challenge_response completedChallengeFK='2' challengeFK='1' />
-	<completed_challenge_response completedChallengeFK='3' challengeFK='1' />
-	<completed_challenge_response completedChallengeFK='4' challengeFK='1' />
+	<user_completed_challenge userFK='1' completedChallengeFK='1' />
+	<user_completed_challenge userFK='1' completedChallengeFK='2' />
+	<user_completed_challenge userFK='2' completedChallengeFK='3' />
 	
 </dataset>
 
