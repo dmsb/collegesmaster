@@ -30,11 +30,12 @@
 						<p:commandButton value="#{text['label_login']}"
 							action="#{userMB.login}" process="@form" />
 					</f:facet>
+					<br />
 				</h:panelGrid>
 			</h:form>
 		</p:layoutUnit>
 
-		<p:layoutUnit position="center">
+		<p:layoutUnit position="center" header="#{text['label_create_an_account']}" >
 			<h:form id="register_form">
 				<h:panelGrid columns="2" cellpadding="5">
 					
