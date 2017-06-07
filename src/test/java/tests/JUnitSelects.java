@@ -17,8 +17,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.collegesmaster.model.IChallenge;
-import br.com.collegesmaster.model.ICompletedChallenge;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.IUser;
@@ -27,7 +25,6 @@ import br.com.collegesmaster.model.imp.Discipline;
 import br.com.collegesmaster.model.imp.Institute;
 import br.com.collegesmaster.model.imp.User;
 import br.com.collegesmaster.util.CryptoUtils;
-import br.com.collegesmaster.util.FunctionUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JUnitSelects extends JUnitConfiguration {
@@ -37,7 +34,7 @@ public class JUnitSelects extends JUnitConfiguration {
 
 	@Test
 	public void test01_getInstitutes() {
-		queryBuilder = new StringBuilder();
+		
 		queryBuilder
 				.append("SELECT institute  ")
 				.append("FROM   Institute institute ")
@@ -63,7 +60,6 @@ public class JUnitSelects extends JUnitConfiguration {
 	
 	@Test
 	public void test02_getDisciplines() {
-		queryBuilder = new StringBuilder();
 		queryBuilder
 				.append("SELECT discipline  ")
 				.append("FROM   Discipline discipline ")
@@ -89,7 +85,6 @@ public class JUnitSelects extends JUnitConfiguration {
 	
 	@Test
 	public void test03_getDisciplinesByName() {
-		queryBuilder = new StringBuilder();
 		queryBuilder
 				.append("SELECT discipline  ")
 				.append("FROM   Discipline discipline ")
@@ -117,8 +112,7 @@ public class JUnitSelects extends JUnitConfiguration {
 	
 	@Test
 	public void test04_getTotalOfChallenges() {
-		
-		queryBuilder = new StringBuilder();
+
 		queryBuilder
 				.append("SELECT COUNT(c) ")
 				.append("FROM   Challenge c");			
@@ -137,8 +131,7 @@ public class JUnitSelects extends JUnitConfiguration {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void test05_sortUserFirstName() {
-		
-		queryBuilder = new StringBuilder();
+
 		queryBuilder
 				.append("SELECT   user.person.cpf, ")
 				.append("		  user.person.firstName ")
@@ -159,8 +152,7 @@ public class JUnitSelects extends JUnitConfiguration {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void test06_getChallenges() {
-		
-		queryBuilder = new StringBuilder();
+
 		queryBuilder
 				.append("FROM Challenge c");			
 		
@@ -186,7 +178,7 @@ public class JUnitSelects extends JUnitConfiguration {
 	}
 
 	private String getUserSalt(final String username) {
-		queryBuilder = new StringBuilder();
+
 		queryBuilder
 				.append("SELECT user.salt ")
 				.append("FROM   User user where user.username = :username");				
@@ -214,7 +206,6 @@ public class JUnitSelects extends JUnitConfiguration {
 		final IUser user = query.getSingleResult();
                 
         return user;
-	}
-	
+	}	
 }
 

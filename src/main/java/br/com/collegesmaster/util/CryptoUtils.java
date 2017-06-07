@@ -13,22 +13,20 @@ public abstract class CryptoUtils {
 
 		try {
 			digest = MessageDigest.getInstance("SHA-512");
+			digest.reset();
+			digest.update(password.getBytes());
+			
+			String hashedPassword = Base64.getEncoder().encodeToString(digest.digest());
+			hashedPassword = hashedPassword.concat(salt);
+			digest.reset();
+			digest.update(hashedPassword.getBytes());
+			final String hashedPasswordWithSalt = Base64.getEncoder().encodeToString(digest.digest());
+			return hashedPasswordWithSalt;
+			
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
-		}
-
-		digest.reset();
-		digest.update(password.getBytes());
-		String hashedPassword = Base64.getEncoder().encodeToString(digest.digest());
-
-		hashedPassword = hashedPassword.concat(salt);
-
-		digest.reset();
-		digest.update(hashedPassword.getBytes());
-
-		final String hashedPasswordWithSalt = Base64.getEncoder().encodeToString(digest.digest());
-
-		return hashedPasswordWithSalt;
+		}		
+		return null;
 	}
 
 	public static String generateSalt() {
@@ -37,15 +35,17 @@ public abstract class CryptoUtils {
 		
 		try {
 			secureRandom = SecureRandom.getInstance("SHA1PRNG");
+			
+			final byte[] seed = secureRandom.generateSeed(64);
+			secureRandom.setSeed(seed);
+			secureRandom.nextBytes(seed);
+
+			final String generatedSalt = Base64.getEncoder().encodeToString(seed);
+			return generatedSalt;
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-
-		final byte[] seed = secureRandom.generateSeed(64);
-		secureRandom.setSeed(seed);
-		secureRandom.nextBytes(seed);
-
-		final String generatedSalt = Base64.getEncoder().encodeToString(seed);
-		return generatedSalt;
+		
+		return null;
 	}
 }

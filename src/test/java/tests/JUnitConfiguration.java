@@ -27,7 +27,7 @@ public class JUnitConfiguration {
     protected final static Logger logger = Logger.getGlobal();
     protected static EntityManager em;
     protected static EntityTransaction et;
-    protected static StringBuilder queryBuilder;
+    protected StringBuilder queryBuilder;
     protected static Validator validator;
     
     @BeforeClass
@@ -46,6 +46,7 @@ public class JUnitConfiguration {
 
     @Before
     public void setUp() {
+    	queryBuilder = new StringBuilder();
         em = emf.createEntityManager();        
         beginTransaction();
     }
