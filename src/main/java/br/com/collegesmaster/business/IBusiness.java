@@ -2,6 +2,8 @@ package br.com.collegesmaster.business;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
@@ -23,8 +25,10 @@ public interface IBusiness <T extends IModel> {
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<T> getList();
-
+	
+	@PostConstruct
 	public void init();
-
+	
+	@PreDestroy
 	public void cleanup();
 }

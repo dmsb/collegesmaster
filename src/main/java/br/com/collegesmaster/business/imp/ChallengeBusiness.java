@@ -3,11 +3,9 @@ package br.com.collegesmaster.business.imp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -18,25 +16,8 @@ import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.imp.Challenge;
 
 @Stateless
-public class ChallengeBusiness extends Business implements IChallengeBusiness {
-	
-	@PersistenceUnit(unitName = "collegesmasterPU")
-	protected EntityManagerFactory entityManagerFactory;
-	
-	@Override
-	@PostConstruct
-	public void init() {
-    	entityManager = entityManagerFactory.createEntityManager();
-    	criteriaBuilder = entityManager.getCriteriaBuilder();
-    }
-	
-	@Override
-	@PreDestroy
-	public void cleanup() {
-    	if(entityManager.isOpen()) {
-    		entityManager.close();
-    	}
-    }
+@TransactionManagement(TransactionManagementType.CONTAINER)
+public class ChallengeBusiness extends GenericBusiness implements IChallengeBusiness {	
 	
 	@Override
 	public void persist(final IChallenge challenge) {
