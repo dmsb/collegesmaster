@@ -14,14 +14,14 @@ import br.com.collegesmaster.enums.ChallengeType;
 import br.com.collegesmaster.enums.Letter;
 import br.com.collegesmaster.model.IAlternative;
 import br.com.collegesmaster.model.IChallenge;
-import br.com.collegesmaster.model.ICompletedChallenge;
+import br.com.collegesmaster.model.IChallengeResponse;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.IQuestion;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.imp.Challenge;
-import br.com.collegesmaster.model.imp.CompletedChallenge;
+import br.com.collegesmaster.model.imp.ChallengeResponse;
 import br.com.collegesmaster.model.imp.Course;
 import br.com.collegesmaster.model.imp.Discipline;
 import br.com.collegesmaster.model.imp.Institute;
@@ -168,15 +168,14 @@ public class JUnitInserts extends JUnitConfiguration {
         response.setQuestions(questions);        
         response.setChallengeType(ChallengeType.ANSWER);
         
-        final ICompletedChallenge completedChallenge = new CompletedChallenge();        
+        final IChallengeResponse challengeResponse = new ChallengeResponse();        
         
-        completedChallenge.setChallenge(challenge);                
-        completedChallenge.setResponse(response);
-        user.getCompletedChallenges().add(completedChallenge);
+        challengeResponse.setChallenge(challenge);                
+        challengeResponse.setResponse(response);
+        user.getChallengesResponse().add(challengeResponse);
         
-        validateConstraints(completedChallenge);      
-        em.persist(completedChallenge);
-        em.flush();
+        validateConstraints(challengeResponse);
+        em.merge(user);
     }
 
 }

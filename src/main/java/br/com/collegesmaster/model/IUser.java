@@ -21,24 +21,20 @@ public interface IUser extends IModel {
 
 	public void setGeneralInfo(IPerson person);
 
-	public void setCompletedChallenges(List<ICompletedChallenge> completedChallenges);
+	public void setChallengesResponse(List<IChallengeResponse> completedChallenges);
 
-	public List<ICompletedChallenge> getCompletedChallenges();
+	public List<IChallengeResponse> getChallengesResponse();
 
 	public void setProfile(IProfile profile);
 
 	public IProfile getProfile();
 
-	public void setChallengesCreated(List<IChallenge> challengesCreated);
+	public void setNotePerDiscipline(Map<IDiscipline, Integer> notePerDiscipline);
 
-	public List<IChallenge> getChallengesCreated();
+	public Map<IDiscipline, Integer> getNotePerDiscipline();
 
-	void setNotePerDiscipline(Map<IDiscipline, Integer> notePerDiscipline);
+	public void setPerson(IPerson person);
 
-	Map<IDiscipline, Integer> getNotePerDiscipline();
-
-	void setPerson(IPerson person);
-
-	IPerson getPerson();
+	public IPerson getPerson();
 
 }

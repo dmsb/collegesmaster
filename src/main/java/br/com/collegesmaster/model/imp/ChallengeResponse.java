@@ -20,12 +20,12 @@ import javax.persistence.Table;
 import br.com.collegesmaster.enums.Letter;
 import br.com.collegesmaster.model.IAlternative;
 import br.com.collegesmaster.model.IChallenge;
-import br.com.collegesmaster.model.ICompletedChallenge;
+import br.com.collegesmaster.model.IChallengeResponse;
 import br.com.collegesmaster.model.IQuestion;
 
 @Entity
-@Table(name = "completed_challenge")
-public class CompletedChallenge implements ICompletedChallenge, Serializable {
+@Table(name = "challenge_response")
+public class ChallengeResponse implements IChallengeResponse, Serializable {
 
 	private static final long serialVersionUID = -4223636598786128623L;
 	
@@ -49,6 +49,7 @@ public class CompletedChallenge implements ICompletedChallenge, Serializable {
 	@PreUpdate
 	private void buildNote() {
 		note = 0;
+		
 		challenge.getQuestions().forEach(question -> {
 			
 			final Integer pontuation = question.getPontuation();

@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import org.apache.commons.collections.CollectionUtils;
 
 import br.com.collegesmaster.business.IUserBusiness;
+import br.com.collegesmaster.model.IChallengeResponse;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.imp.User;
 
@@ -20,25 +21,25 @@ import br.com.collegesmaster.model.imp.User;
 public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	
 	@Override	
-	public void persist(IUser user) {
+	public void persist(final IUser user) {
 		entityManager.persist(user);
 		
 	}
 
 	@Override
-	public void merge(IUser user) {
+	public void merge(final IUser user) {
 		entityManager.merge(user);
 		
 	}
 
 	@Override
-	public void remove(IUser user) {
+	public void remove(final IUser user) {
 		entityManager.remove(user);
 		
 	}
 
 	@Override
-	public IUser findById(Integer id, Class<IUser> modelClass) {
+	public IUser findById(final Integer id, final Class<IUser> modelClass) {
 		return entityManager.find(modelClass, id);
 	}
 
@@ -56,5 +57,13 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 			return users;
 		}
 	}
-
+	
+	public void createChallengeResponse(final IChallengeResponse challengeResponse) {
+		
+		challengeResponse.getResponse()
+			.getOwner().getChallengesResponse()
+			.add(challengeResponse);
+		
+		entityManager.persist(challengeResponse);
+	}
 }

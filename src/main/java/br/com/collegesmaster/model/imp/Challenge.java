@@ -47,7 +47,8 @@ public class Challenge implements Serializable, IChallenge {
 	private String title;
 	
 	@NotNull
-	@ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.LAZY,
+		cascade = {CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinColumn(name = "userFK", referencedColumnName = "id")
 	private IUser owner;
 	

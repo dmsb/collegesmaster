@@ -25,8 +25,7 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.collections.CollectionUtils;
 
 import br.com.collegesmaster.annotations.Password;
-import br.com.collegesmaster.model.IChallenge;
-import br.com.collegesmaster.model.ICompletedChallenge;
+import br.com.collegesmaster.model.IChallengeResponse;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IPerson;
 import br.com.collegesmaster.model.IProfile;
@@ -55,15 +54,12 @@ public class User implements Serializable, IUser {
     @NotNull
 	@Column(name = "salt", unique = false, nullable = false, length = 88)
     private String salt;
-
-    @OneToMany(targetEntity = Challenge.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
-	private List<IChallenge> challengesCreated;
     
-    @OneToMany(targetEntity = CompletedChallenge.class, fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-    @JoinTable(name="user_completed_challenge",
+    @OneToMany(targetEntity = ChallengeResponse.class, fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinTable(name="user_challenge_response",
 	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
-	    inverseJoinColumns={@JoinColumn(name="completedChallengeFK", referencedColumnName = "id")})
-	private List<ICompletedChallenge> completedChallenges;
+	    inverseJoinColumns={@JoinColumn(name="challengeResponseFK", referencedColumnName = "id")})
+	private List<IChallengeResponse> challengesResponse;
 	
     @ManyToOne(targetEntity = Person.class, fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "personFK", referencedColumnName = "id")
@@ -80,12 +76,12 @@ public class User implements Serializable, IUser {
     
     @PostLoad
     private void buildNotePerDiscipline() {
-    	if (CollectionUtils.isEmpty(completedChallenges)) {
+    	if (CollectionUtils.isEmpty(challengesResponse)) {
 			notePerDiscipline = null;
 		} else {			
 			
 			notePerDiscipline = new HashMap<>();
-			completedChallenges.forEach(challengesCreated -> {
+			challengesResponse.forEach(challengesCreated -> {
 				
 				final Integer note = challengesCreated.getNote();
 				final IDiscipline discipline = challengesCreated.getChallenge().getDiscipline();
@@ -117,23 +113,13 @@ public class User implements Serializable, IUser {
 	}
 
 	@Override
-	public List<IChallenge> getChallengesCreated() {
-		return challengesCreated;
+	public List<IChallengeResponse> getChallengesResponse() {
+		return challengesResponse;
 	}
 
 	@Override
-	public void setChallengesCreated(List<IChallenge> challengesCreated) {
-		this.challengesCreated = challengesCreated;
-	}
-
-	@Override
-	public List<ICompletedChallenge> getCompletedChallenges() {
-		return completedChallenges;
-	}
-
-	@Override
-	public void setCompletedChallenges(List<ICompletedChallenge> completedChallenges) {
-		this.completedChallenges = completedChallenges;
+	public void setChallengesResponse(List<IChallengeResponse> challengesResponse) {
+		this.challengesResponse = challengesResponse;
 	}
 
 	@Override

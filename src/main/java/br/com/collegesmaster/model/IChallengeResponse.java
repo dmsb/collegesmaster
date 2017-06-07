@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model;
 
-public interface ICompletedChallenge extends IModel {
+public interface IChallengeResponse extends IModel {
 
 	public void setChallenge(IChallenge challenge);
 

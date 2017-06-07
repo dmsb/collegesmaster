@@ -136,13 +136,13 @@
 	<alternative definition='false' description="Response 2" letter='B' questionFK='3' />
 	<alternative definition='false' description="Response 3" letter='A' questionFK='4' />
 		
-	<completed_challenge note='0' challengeFK='1' responseChallengeFK='4'/>
-	<completed_challenge note='0' challengeFK='2' responseChallengeFK='5' />
-	<completed_challenge note='0' challengeFK='2' responseChallengeFK='6'/>
+	<challenge_response note='0' challengeFK='1' myChallengeFK='4'/>
+	<challenge_response note='0' challengeFK='2' myChallengeFK='5' />
+	<challenge_response note='0' challengeFK='2' myChallengeFK='6'/>
 	
-	<user_completed_challenge userFK='1' completedChallengeFK='1' />
-	<user_completed_challenge userFK='1' completedChallengeFK='2' />
-	<user_completed_challenge userFK='2' completedChallengeFK='3' />
+	<user_challenge_response userFK='1' challengeResponseFK='1' />
+	<user_challenge_response userFK='1' challengeResponseFK='2' />
+	<user_challenge_response userFK='2' challengeResponseFK='3' />
 	
 </dataset>
 
