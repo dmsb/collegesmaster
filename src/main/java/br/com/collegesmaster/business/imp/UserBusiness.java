@@ -60,7 +60,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	
 	public void createChallengeResponse(final IChallengeResponse challengeResponse) {
 		
-		challengeResponse.getResponse()
+		challengeResponse.getMyChallengeResolution()
 			.getOwner().getChallengesResponse()
 			.add(challengeResponse);
 		

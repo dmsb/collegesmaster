@@ -171,7 +171,7 @@ public class JUnitInserts extends JUnitConfiguration {
         final IChallengeResponse challengeResponse = new ChallengeResponse();        
         
         challengeResponse.setChallenge(challenge);                
-        challengeResponse.setResponse(response);
+        challengeResponse.setMyChallengeResolution(response);
         user.getChallengesResponse().add(challengeResponse);
         
         validateConstraints(challengeResponse);

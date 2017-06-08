@@ -39,48 +39,54 @@ public class ChallengeResponse implements IChallengeResponse, Serializable {
 	
 	@ManyToOne(targetEntity = Challenge.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "responseChallengeFK", referencedColumnName = "id")
-	private IChallenge response;
+	private IChallenge myChallengeResolution;
 	
 	@ManyToOne(targetEntity = Challenge.class, fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "challengeFK", referencedColumnName = "id")
-	private IChallenge challenge;
+	private IChallenge targetChallenge;
 	
 	@PrePersist
 	@PreUpdate
 	private void buildNote() {
 		note = 0;
 		
-		challenge.getQuestions().forEach(question -> {
+		targetChallenge.getQuestions().forEach(challengeQuestion -> {
 			
-			final Integer pontuation = question.getPontuation();
-			final Map<Letter, Boolean> challengeResponses = new LinkedHashMap<Letter, Boolean>();
-			final Map<Letter, Boolean> myResponses = new LinkedHashMap<Letter, Boolean>();
+			final Integer pontuation = challengeQuestion.getPontuation();
+			final Map<Letter, Boolean> challengeResolution = new LinkedHashMap<Letter, Boolean>();
+			final Map<Letter, Boolean> myResolution = new LinkedHashMap<Letter, Boolean>();
 			
-			final Integer indexOfCurrentQuestion = challenge.getQuestions().indexOf(question);
-			final IQuestion myQuestion = response.getQuestions().get(indexOfCurrentQuestion);
+			final Integer indexOfCurrentQuestion = targetChallenge.getQuestions().indexOf(challengeQuestion);
+			final IQuestion myQuestion = myChallengeResolution.getQuestions().get(indexOfCurrentQuestion);
 			
-			question.getResponse().forEach(response -> {
-				
-				final Integer indexOfCurrentResponse = question.getResponse().indexOf(response);
-				final IAlternative myResponse = myQuestion.getResponse().get(indexOfCurrentResponse);
-				
-				myResponses.put(myResponse.getLetter(), myResponse.getDefinition());
-				challengeResponses.put(response.getLetter(), response.getDefinition());
-				
-			});
+			buildResponses(challengeQuestion, challengeResolution, myResolution, myQuestion);
 			
-			for(final Map.Entry<Letter, Boolean> responseChecker : challengeResponses.entrySet()) {							
+			for(final Map.Entry<Letter, Boolean> responseChecker : challengeResolution.entrySet()) {							
 				
 				final Boolean responseDefinition = responseChecker.getValue();
 				
 				if(Boolean.TRUE.equals(responseDefinition)) {
 					final Letter responseLetter = responseChecker.getKey();
-					if(Boolean.TRUE.equals(myResponses.get(responseLetter))) {
+					if(Boolean.TRUE.equals(myResolution.get(responseLetter))) {
 						note = note + pontuation;
 					}
 				}
 			}
 		});	
+	}
+
+	private void buildResponses(IQuestion question, final Map<Letter, Boolean> challengeResponses,
+			final Map<Letter, Boolean> myResponses, final IQuestion myQuestion) {
+		
+		question.getResponse().forEach(response -> {
+			
+			final Integer indexOfCurrentResponse = question.getResponse().indexOf(response);
+			final IAlternative myResponse = myQuestion.getResponse().get(indexOfCurrentResponse);
+			
+			myResponses.put(myResponse.getLetter(), myResponse.getDefinition());
+			challengeResponses.put(response.getLetter(), response.getDefinition());
+			
+		});
 	}
 	
 	@Override
@@ -105,21 +111,21 @@ public class ChallengeResponse implements IChallengeResponse, Serializable {
 
 	@Override
 	public IChallenge getChallenge() {
-		return challenge;
+		return targetChallenge;
 	}
 
 	@Override
 	public void setChallenge(IChallenge challenge) {
-		this.challenge = challenge;
+		this.targetChallenge = challenge;
 	}
 
 	@Override
-	public IChallenge getResponse() {
-		return response;
+	public IChallenge getMyChallengeResolution() {
+		return myChallengeResolution;
 	}
 
 	@Override
-	public void setResponse(IChallenge response) {
-		this.response = response;
+	public void setMyChallengeResolution(IChallenge myChallengeResolution) {
+		this.myChallengeResolution = myChallengeResolution;
 	}
 }

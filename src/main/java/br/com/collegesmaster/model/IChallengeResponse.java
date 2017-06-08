@@ -10,8 +10,8 @@ public interface IChallengeResponse extends IModel {
 
 	public Integer getNote();
 
-	void setResponse(IChallenge response);
+	void setMyChallengeResolution(IChallenge myChallengeResolution);
 
-	IChallenge getResponse();
+	IChallenge getMyChallengeResolution();
 
 }
