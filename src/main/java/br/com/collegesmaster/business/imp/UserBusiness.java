@@ -12,7 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import org.apache.commons.collections.CollectionUtils;
 
 import br.com.collegesmaster.business.IUserBusiness;
-import br.com.collegesmaster.model.IChallengeResponse;
+import br.com.collegesmaster.model.IChallengeResolution;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.imp.User;
 
@@ -58,11 +58,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		}
 	}
 	
-	public void createChallengeResponse(final IChallengeResponse challengeResponse) {
-		
-		challengeResponse.getMyChallengeResolution()
-			.getOwner().getChallengesResponse()
-			.add(challengeResponse);
+	public void createChallengeResponse(final IChallengeResolution challengeResponse) {
 		
 		entityManager.persist(challengeResponse);
 	}

@@ -46,7 +46,7 @@ public class JUnitConfiguration {
 
     @Before
     public void setUp() {
-    	queryBuilder = new StringBuilder();
+    	queryBuilder = new StringBuilder();    	
         em = emf.createEntityManager();        
         beginTransaction();
     }
@@ -58,7 +58,7 @@ public class JUnitConfiguration {
     }
 
     public void beginTransaction() {
-        et = em.getTransaction();
+        et = em.getTransaction();        
         et.begin();
     }
 

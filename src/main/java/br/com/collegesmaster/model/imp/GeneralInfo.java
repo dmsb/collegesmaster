@@ -3,6 +3,7 @@ package br.com.collegesmaster.model.imp;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -22,12 +23,12 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
-import br.com.collegesmaster.model.IPerson;
+import br.com.collegesmaster.model.IGeneralInfo;
 import br.com.collegesmaster.model.IUser;
 
 @Entity
-@Table(name = "person")
-public class Person implements Serializable, IPerson {
+@Table(name = "general_info")
+public class GeneralInfo implements Serializable, IGeneralInfo {
 	
 	private static final long serialVersionUID = 1137972673979789034L;
 
@@ -59,7 +60,7 @@ public class Person implements Serializable, IPerson {
     @Temporal(TemporalType.DATE)
     private Date birthdate;
     
-    @OneToMany(targetEntity = User.class, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "person")
+    @OneToMany(targetEntity = User.class, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "generalInfo")
     private List<IUser> users;
     
     @Embedded
@@ -145,4 +146,28 @@ public class Person implements Serializable, IPerson {
 	public void setLocalization(Localization localization) {
 		this.localization = localization;
 	}
+	
+	@Override
+	public boolean equals(final Object objectToBeComparated) {
+		if(objectToBeComparated == null) {
+			return false;
+		}
+		
+		if((objectToBeComparated.getClass().isAssignableFrom(Challenge.class)) == false) {
+			return false;
+		}
+		
+		final IGeneralInfo objectComparatedInstance = (IGeneralInfo) objectToBeComparated;
+		
+		if(getId() != null && objectComparatedInstance.getId() != null) {
+			return false;
+		}
+		
+		return Objects.equals(getId(), objectComparatedInstance.getId());
+	}
+	
+	@Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
 }

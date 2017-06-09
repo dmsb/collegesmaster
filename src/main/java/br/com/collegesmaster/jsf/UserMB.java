@@ -8,9 +8,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 
 import br.com.collegesmaster.business.IUserBusiness;
+import br.com.collegesmaster.model.IGeneralInfo;
 import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.model.imp.Person;
-import br.com.collegesmaster.model.imp.Localization;
+import br.com.collegesmaster.model.imp.GeneralInfo;
 import br.com.collegesmaster.model.imp.User;
 import br.com.collegesmaster.util.CryptoUtils;
 
@@ -28,8 +28,6 @@ public class UserMB implements Serializable {
 	@PostConstruct
 	public void init() {
 		user = new User();
-		user.setGeneralInfo(new Person());
-		user.getGeneralInfo().setLocalization(new Localization());;
 	}
 	
 	public String login() {

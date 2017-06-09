@@ -91,12 +91,22 @@ public class Course implements Serializable, ICourse {
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
-		if ((obj instanceof Course) == false) {
+	public boolean equals(final Object objectToBeComparated) {
+		if(objectToBeComparated == null) {
 			return false;
 		}
-		final ICourse other = (ICourse) obj;
-		return getId() != null && Objects.equals(getId(), other.getId());
+		
+		if((objectToBeComparated.getClass().isAssignableFrom(Challenge.class)) == false) {
+			return false;
+		}
+		
+		final ICourse objectComparatedInstance = (ICourse) objectToBeComparated;
+		
+		if(getId() != null && objectComparatedInstance.getId() != null) {
+			return false;
+		}
+		
+		return Objects.equals(getId(), objectComparatedInstance.getId());
 	}
 	
 	@Override

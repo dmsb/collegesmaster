@@ -1,9 +1,6 @@
 package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -16,18 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.PostLoad;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import org.apache.commons.collections.CollectionUtils;
-
 import br.com.collegesmaster.annotations.Password;
-import br.com.collegesmaster.model.IChallengeResponse;
-import br.com.collegesmaster.model.IDiscipline;
-import br.com.collegesmaster.model.IPerson;
+import br.com.collegesmaster.model.IGeneralInfo;
 import br.com.collegesmaster.model.IProfile;
 import br.com.collegesmaster.model.IUser;
 
@@ -54,16 +44,10 @@ public class User implements Serializable, IUser {
     @NotNull
 	@Column(name = "salt", unique = false, nullable = false, length = 88)
     private String salt;
-    
-    @OneToMany(targetEntity = ChallengeResponse.class, fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-    @JoinTable(name="user_challenge_response",
-	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
-	    inverseJoinColumns={@JoinColumn(name="challengeResponseFK", referencedColumnName = "id")})
-	private List<IChallengeResponse> challengesResponse;
 	
-    @ManyToOne(targetEntity = Person.class, fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "personFK", referencedColumnName = "id")
-	private IPerson person;
+    @ManyToOne(targetEntity = GeneralInfo.class, fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "generalInfoFK", referencedColumnName = "id")
+	private IGeneralInfo generalInfo;
     
     @ManyToOne(targetEntity = Profile.class, optional = false)
     @JoinTable(name="user_profile",
@@ -71,65 +55,14 @@ public class User implements Serializable, IUser {
 	    inverseJoinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")})
     private IProfile profile;
     
-    @Transient
-    private Map<IDiscipline, Integer> notePerDiscipline;
-    
-    @PostLoad
-    private void buildNotePerDiscipline() {
-    	if (CollectionUtils.isEmpty(challengesResponse)) {
-			notePerDiscipline = null;
-		} else {			
-			
-			notePerDiscipline = new HashMap<>();
-			challengesResponse.forEach(challengesCreated -> {
-				
-				final Integer note = challengesCreated.getNote();
-				final IDiscipline discipline = challengesCreated.getChallenge().getDiscipline();
-				
-				notePerDiscipline.put(discipline, note);
-				
-			});			
-		}
-    }
-    
 	@Override
-	public IPerson getPerson() {
-		return person;
+	public IGeneralInfo getGeneralInfo() {
+		return generalInfo;
 	}
 
 	@Override
-	public void setPerson(IPerson person) {
-		this.person = person;
-	}
-
-	@Override
-	public Map<IDiscipline, Integer> getNotePerDiscipline() {
-		return notePerDiscipline;
-	}
-
-	@Override
-	public void setNotePerDiscipline(Map<IDiscipline, Integer> notePerDiscipline) {
-		this.notePerDiscipline = notePerDiscipline;
-	}
-
-	@Override
-	public List<IChallengeResponse> getChallengesResponse() {
-		return challengesResponse;
-	}
-
-	@Override
-	public void setChallengesResponse(List<IChallengeResponse> challengesResponse) {
-		this.challengesResponse = challengesResponse;
-	}
-
-	@Override
-	public IPerson getGeneralInfo() {
-		return person;
-	}
-
-	@Override
-	public void setGeneralInfo(IPerson person) {
-		this.person = person;
+	public void setGeneralInfo(IGeneralInfo generalInfo) {
+		this.generalInfo = generalInfo;
 	}
 	
     @Override
@@ -183,16 +116,21 @@ public class User implements Serializable, IUser {
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
-		if ((obj instanceof User) == false) {
+	public boolean equals(final Object objectToBeComparated) {
+		if(objectToBeComparated == null) {
 			return false;
 		}
-		final IUser other = (IUser) obj;
-		return getId() != null && Objects.equals(getId(), other.getId());
+		
+		if((objectToBeComparated.getClass().isAssignableFrom(Challenge.class)) == false) {
+			return false;
+		}
+		
+		final IUser objectComparatedInstance = (IUser) objectToBeComparated;
+		
+		if(getId() != null && objectComparatedInstance.getId() != null) {
+			return false;
+		}
+		
+		return Objects.equals(getId(), objectComparatedInstance.getId());
 	}
-	
-	@Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
 }

@@ -2,8 +2,6 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
-import br.com.collegesmaster.enums.ChallengeType;
-
 public interface IChallenge extends IModel {
 
 	IUser getOwner();
@@ -21,9 +19,5 @@ public interface IChallenge extends IModel {
 	void setTitle(String title);
 
 	String getTitle();
-
-	void setChallengeType(ChallengeType challengeType);
-
-	ChallengeType getChallengeType();
 	
 }

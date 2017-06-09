@@ -10,25 +10,27 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.collegesmaster.enums.ChallengeType;
-import br.com.collegesmaster.enums.Letter;
 import br.com.collegesmaster.model.IAlternative;
+import br.com.collegesmaster.model.IAlternativeResolution;
 import br.com.collegesmaster.model.IChallenge;
-import br.com.collegesmaster.model.IChallengeResponse;
+import br.com.collegesmaster.model.IChallengeResolution;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.IQuestion;
+import br.com.collegesmaster.model.IQuestionResolution;
 import br.com.collegesmaster.model.IUser;
+import br.com.collegesmaster.model.imp.AlternativeResolution;
 import br.com.collegesmaster.model.imp.Challenge;
-import br.com.collegesmaster.model.imp.ChallengeResponse;
+import br.com.collegesmaster.model.imp.ChallengeResolution;
 import br.com.collegesmaster.model.imp.Course;
 import br.com.collegesmaster.model.imp.Discipline;
+import br.com.collegesmaster.model.imp.GeneralInfo;
 import br.com.collegesmaster.model.imp.Institute;
 import br.com.collegesmaster.model.imp.Localization;
-import br.com.collegesmaster.model.imp.Person;
 import br.com.collegesmaster.model.imp.Profile;
 import br.com.collegesmaster.model.imp.Question;
+import br.com.collegesmaster.model.imp.QuestionResolution;
 import br.com.collegesmaster.model.imp.User;
 import br.com.collegesmaster.util.CryptoUtils;
 
@@ -97,7 +99,7 @@ public class JUnitInserts extends JUnitConfiguration {
         user.setUsername("diogo.brito.teste");
         user.setSalt(CryptoUtils.generateSalt());
         user.setPassword(CryptoUtils.getHashedPassword("D10g0!", user.getSalt()));
-        user.setGeneralInfo(new Person());
+        user.setGeneralInfo(new GeneralInfo());
         user.getGeneralInfo().setCpf("50168636280");
         user.getGeneralInfo().setBirthdate(calendar.getTime());
         user.getGeneralInfo().setEmail("diogo1@diogo.com");
@@ -124,58 +126,57 @@ public class JUnitInserts extends JUnitConfiguration {
         challenge.setDiscipline(discipline);        
         challenge.setQuestions(questions);
         challenge.setTitle("Test 1");
-        challenge.setChallengeType(ChallengeType.QUESTION);
         validateConstraints(challenge);
         em.persist(challenge);
     }
     
     @Test
-    public void test06_insertCompletedChallenge() {
+    public void test06_insertCompletedChallenge() {    	    
     	
-        final IChallenge challenge = em.find(Challenge.class, 2);
-        
-        final IChallenge response = new Challenge();
+        final IChallenge targetChallenge = em.find(Challenge.class, 1);              
         final IUser user = em.find(User.class, 1);
-        response.setOwner(user);
-        response.setDiscipline(challenge.getDiscipline());
-        response.setTitle(challenge.getTitle());
         
-        final List<IQuestion> questions = new ArrayList<IQuestion>(challenge.getQuestions());       
+        final IChallengeResolution challengeResponse = new ChallengeResolution();
+        challengeResponse.setOwner(user);        
+        challengeResponse.setTargetChallenge(targetChallenge);
+        challengeResponse.setQuestionsResolution(new ArrayList<IQuestionResolution>());
         
-        questions.forEach(myCurrentQuestion -> {
-        	
-        	final Integer indexOfQuestion = questions.indexOf(myCurrentQuestion);
-        	final IQuestion currentChallengeQuestion = questions.get(indexOfQuestion);
-        	
-        	myCurrentQuestion.setChallenge(response);        	        
-        	myCurrentQuestion.setDescription(currentChallengeQuestion.getDescription());
-        	myCurrentQuestion.setLevel(currentChallengeQuestion.getLevel());
-        	myCurrentQuestion.setPontuation(currentChallengeQuestion.getPontuation());      
-        	
-        	final List<IAlternative> questionAlternatives = myCurrentQuestion.getResponse();        	
-        	questionAlternatives.forEach(myCurrentAlternative -> {
-        		
-        		final Integer indexOfAlternative = questionAlternatives.indexOf(myCurrentAlternative);
-            	final IAlternative currentAlternative = questionAlternatives.get(indexOfAlternative);
-            	
-            	myCurrentAlternative.setDescription(currentAlternative.getDescription());
-            	myCurrentAlternative.setQuestion(currentAlternative.getQuestion());
-            	myCurrentAlternative.setLetter(Letter.A);
-            	myCurrentAlternative.setDefinition(Boolean.TRUE);
-        	});
-        });
-        
-        response.setQuestions(questions);        
-        response.setChallengeType(ChallengeType.ANSWER);
-        
-        final IChallengeResponse challengeResponse = new ChallengeResponse();        
-        
-        challengeResponse.setChallenge(challenge);                
-        challengeResponse.setMyChallengeResolution(response);
-        user.getChallengesResponse().add(challengeResponse);
+        buildQuestionsResolution(targetChallenge, challengeResponse);
         
         validateConstraints(challengeResponse);
-        em.merge(user);
+        em.persist(challengeResponse);
     }
 
+	private void buildQuestionsResolution(final IChallenge targetChallenge,
+			final IChallengeResolution challengeResponse) {
+		
+		final List<IQuestion> targetQuestions = targetChallenge.getQuestions();
+        
+		targetQuestions.forEach(currentTargetQuestion -> {
+        	
+        	final IQuestionResolution questionResolution = new QuestionResolution();
+        	questionResolution.setTargetQuestion(currentTargetQuestion);
+        	questionResolution.setChallengeResolution(challengeResponse);
+        	
+        	buildAlternativesResolution(currentTargetQuestion, questionResolution);
+        	
+        	challengeResponse.getQuestionsResolution().add(questionResolution);
+        });
+	}
+
+	private void buildAlternativesResolution(IQuestion currentTargetQuestion,
+			final IQuestionResolution questionResolution) {
+		
+		final List<IAlternative> targetAlternatives = currentTargetQuestion.getAlternatives();
+		questionResolution.setAlternativesResolution(new ArrayList<>());
+		
+		targetAlternatives.forEach(targetAlternative -> {
+			final IAlternativeResolution alternativeResolution = new AlternativeResolution();
+			alternativeResolution.setQuestionResolution(questionResolution);
+			alternativeResolution.setTargetAlternative(targetAlternative);
+			alternativeResolution.setLetter(targetAlternative.getLetter());
+			alternativeResolution.setDefinition(Boolean.TRUE);
+			questionResolution.getAlternativesResolution().add(alternativeResolution);
+		});
+	}
 }

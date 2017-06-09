@@ -46,7 +46,7 @@ public class Question implements IQuestion, Serializable {
 	@NotNull
 	@OneToMany(targetEntity = Alternative.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY,
 		orphanRemoval = true, mappedBy = "question")
-	private List<IAlternative> response;
+	private List<IAlternative> alternatives;
 	
 	@NotNull
 	@Basic(optional = false)
@@ -78,11 +78,6 @@ public class Question implements IQuestion, Serializable {
 	}
 
 	@Override
-	public List<IAlternative> getResponse() {
-		return response;
-	}
-
-	@Override
 	public String getDescription() {
 		return description;
 	}
@@ -90,11 +85,6 @@ public class Question implements IQuestion, Serializable {
 	@Override
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	@Override
-	public void setResponse(List<IAlternative> response) {
-		this.response = response;
 	}
 
 	@Override
@@ -116,19 +106,39 @@ public class Question implements IQuestion, Serializable {
 	public void setChallenge(IChallenge challenge) {
 		this.challenge = challenge;
 	}
+	
 
 	@Override
-	public boolean equals(final Object obj) {
-		if((obj instanceof Question) == false) {
+	public void setAlternatives(List<IAlternative> alternatives) {
+		this.alternatives = alternatives;
+	}
+
+	@Override
+	public List<IAlternative> getAlternatives() {
+		return alternatives;
+	}
+
+	@Override
+	public boolean equals(final Object objectToBeComparated) {
+		if(objectToBeComparated == null) {
 			return false;
 		}
-		final IQuestion other = (IQuestion) obj;		
-		return getId() != null && Objects.equals(getId(), other.getId());
+		
+		if((objectToBeComparated.getClass().isAssignableFrom(Challenge.class)) == false) {
+			return false;
+		}
+		
+		final IQuestion objectComparatedInstance = (IQuestion) objectToBeComparated;
+		
+		if(getId() != null && objectComparatedInstance.getId() != null) {
+			return false;
+		}
+		
+		return Objects.equals(getId(), objectComparatedInstance.getId());
 	}
 	
 	@Override
     public int hashCode() {
         return Objects.hashCode(getId());
     }
-
 }

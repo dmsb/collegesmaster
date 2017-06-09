@@ -10,9 +10,9 @@ public interface IQuestion extends IModel {
 
 	QuestionLevel getLevel();
 
-	void setResponse(List<IAlternative> response);
+	void setAlternatives(List<IAlternative> alternatives);
 
-	List<IAlternative> getResponse();
+	List<IAlternative> getAlternatives();
 
 	void setPontuation(Integer pontuation);
 

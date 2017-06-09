@@ -87,14 +87,24 @@ public class Discipline implements Serializable, IDiscipline {
 		this.challenges = challenges;
 	}
     
-    @Override
-    public boolean equals(final Object obj) {
-        if ((obj instanceof Discipline) == false) {
-            return false;
-        }
-        final Discipline other = (Discipline) obj;
-        return getId() != null && Objects.equals(getId(), other.getId());
-    }
+	@Override
+	public boolean equals(final Object objectToBeComparated) {
+		if(objectToBeComparated == null) {
+			return false;
+		}
+		
+		if((objectToBeComparated.getClass().isAssignableFrom(Challenge.class)) == false) {
+			return false;
+		}
+		
+		final IDiscipline objectComparatedInstance = (IDiscipline) objectToBeComparated;
+		
+		if(getId() != null && objectComparatedInstance.getId() != null) {
+			return false;
+		}
+		
+		return Objects.equals(getId(), objectComparatedInstance.getId());
+	}
     
 	@Override
     public int hashCode() {

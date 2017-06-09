@@ -69,12 +69,22 @@ public class Profile implements IProfile, Serializable {
 	}
 	
 	@Override
-	public boolean equals(final Object obj) {
-		if((obj instanceof Profile) == false) {
+	public boolean equals(final Object objectToBeComparated) {
+		if(objectToBeComparated == null) {
 			return false;
 		}
-		final Profile other = (Profile) obj;		
-		return getId() != null && Objects.equals(getId(), other.getId());
+		
+		if((objectToBeComparated.getClass().isAssignableFrom(Challenge.class)) == false) {
+			return false;
+		}
+		
+		final IProfile objectComparatedInstance = (IProfile) objectToBeComparated;
+		
+		if(getId() != null && objectComparatedInstance.getId() != null) {
+			return false;
+		}
+		
+		return Objects.equals(getId(), objectComparatedInstance.getId());
 	}
 	
 	@Override

@@ -5,7 +5,7 @@ import java.util.List;
 
 import br.com.collegesmaster.model.imp.Localization;
 
-public interface IPerson {
+public interface IGeneralInfo {
 
 	Integer getId();
 

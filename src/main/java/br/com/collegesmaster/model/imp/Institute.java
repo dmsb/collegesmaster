@@ -87,14 +87,23 @@ public class Institute implements Serializable, IInstitute {
         this.localization = localization;
     }
 
-    @Override
-    public boolean equals(final Object obj) {
-        if ((obj instanceof Institute) == false) {
-            return false;
-        }
-        final Institute other = (Institute) obj;
-        return getId() != null && Objects.equals(getId(), other.getId());
-    }
+    public boolean equals(final Object objectToBeComparated) {
+		if(objectToBeComparated == null) {
+			return false;
+		}
+		
+		if((objectToBeComparated.getClass().isAssignableFrom(Challenge.class)) == false) {
+			return false;
+		}
+		
+		final IInstitute objectComparatedInstance = (IInstitute) objectToBeComparated;
+		
+		if(getId() != null && objectComparatedInstance.getId() != null) {
+			return false;
+		}
+		
+		return Objects.equals(getId(), objectComparatedInstance.getId());
+	}
     
 	@Override
     public int hashCode() {
