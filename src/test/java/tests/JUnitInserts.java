@@ -170,13 +170,13 @@ public class JUnitInserts extends JUnitConfiguration {
 		final List<IAlternative> targetAlternatives = currentTargetQuestion.getAlternatives();
 		questionResolution.setAlternativesResolution(new ArrayList<>());
 		
-		targetAlternatives.forEach(targetAlternative -> {
+		for(final IAlternative targetAlternative : targetAlternatives) {
 			final IAlternativeResolution alternativeResolution = new AlternativeResolution();
 			alternativeResolution.setQuestionResolution(questionResolution);
 			alternativeResolution.setTargetAlternative(targetAlternative);
 			alternativeResolution.setLetter(targetAlternative.getLetter());
 			alternativeResolution.setDefinition(Boolean.TRUE);
 			questionResolution.getAlternativesResolution().add(alternativeResolution);
-		});
+		}
 	}
 }

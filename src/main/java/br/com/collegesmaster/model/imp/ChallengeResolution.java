@@ -68,17 +68,16 @@ public class ChallengeResolution implements IChallengeResolution, Serializable {
 		
 		if(!(CollectionUtils.isEmpty(targetQuestions) || CollectionUtils.isEmpty(questionsResolution))){
 			
-			targetQuestions.forEach(challengeQuestion -> {
-				
-				final Integer pontuation = challengeQuestion.getPontuation();
+			for(int i = 0; i < targetQuestions.size(); i++) {
 				final Map<Letter, Boolean> challengeResolution = new LinkedHashMap<Letter, Boolean>();
 				final Map<Letter, Boolean> myResolution = new LinkedHashMap<Letter, Boolean>();
 				
-				if(questionsResolution.listIterator().hasNext()) {				
-					final IQuestionResolution myQuestion = questionsResolution.listIterator().next();
-					buildResponses(pontuation, challengeQuestion, challengeResolution, myResolution, myQuestion);
-				}
-			});
+				final IQuestion targetQuestion = targetQuestions.get(i);
+				final Integer pontuation = targetQuestion.getPontuation();
+				final IQuestionResolution myQuestion = questionsResolution.get(i);
+				
+				buildResponses(pontuation, targetQuestion, challengeResolution, myResolution, myQuestion);
+			}		
 		}
 	}
 
@@ -88,13 +87,11 @@ public class ChallengeResolution implements IChallengeResolution, Serializable {
 		final List<IAlternative> targetAlternatives = question.getAlternatives();
 		final List<IAlternativeResolution> alternativesResolution = myQuestion.getAlternativesResolution();			
 		
-		for(final IAlternative targetAlternative : targetAlternatives) {
-			challengeResolution.put(targetAlternative.getLetter(), targetAlternative.getDefinition());
-		}
+		targetAlternatives.forEach(targetAlternative -> challengeResolution.put(targetAlternative.getLetter(), targetAlternative.getDefinition()));		
 		
-		for(final IAlternativeResolution alternativeResolution : alternativesResolution) {
+		alternativesResolution.forEach(alternativeResolution ->  {			
 			myResolution.put(alternativeResolution.getLetter(), alternativeResolution.getDefinition());
-		}
+		});			
 		
 		if(challengeResolution.equals(myResolution)) {
 			note = note + pontuation;
