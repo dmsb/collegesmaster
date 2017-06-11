@@ -1,6 +1,5 @@
 package br.com.collegesmaster.business.imp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -8,8 +7,6 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
-
-import org.apache.commons.collections.CollectionUtils;
 
 import br.com.collegesmaster.business.IInstituteBusiness;
 import br.com.collegesmaster.model.IInstitute;
@@ -38,23 +35,17 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 	}
 
 	@Override
-	public IInstitute findById(Integer id, Class<IInstitute> modelClass) {
+	public IInstitute findById(Integer id, Class<Institute> modelClass) {
 		return entityManager.find(modelClass, id);
 	}
 
 	@Override
-	public List<IInstitute> getList() {		
+	public List<Institute> getList() {		
 		
 		final CriteriaQuery<Institute> criteriaQuery = criteriaBuilder.createQuery(Institute.class);
 		final TypedQuery<Institute> typedQuery = entityManager.createQuery(criteriaQuery);
 		final List<Institute> result = typedQuery.getResultList(); 
 		
-		if(CollectionUtils.isEmpty(result)) {
-			return null;
-		} else {
-			final List<IInstitute> institutes = new ArrayList<IInstitute>();
-			result.forEach(institute -> institutes.add(institute));
-			return institutes;
-		}
+		return result;
 	}
 }

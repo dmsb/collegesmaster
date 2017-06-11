@@ -2,7 +2,6 @@ package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -12,15 +11,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.collegesmaster.model.IGeneralInfo;
@@ -38,30 +37,30 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
 	private Integer id;
 	
 	@Column(name = "cpf", unique = true, updatable = false, nullable = false)
-    @NotBlank
+	@NotNull
     @CPF
     private String cpf;
 	
 	@Column(name = "email", unique = true, nullable = false, updatable = true)
-    @NotBlank
+	@NotNull
     @Email
     private String email;
 
 	@Column(name = "firstName", unique = false, nullable = false, updatable = true)
-    @NotBlank
+	@NotNull
     @Size(max = 20)
     private String firstName;
 
+	@NotNull
     @Column(name = "lastName", unique = false, nullable = false, updatable = true)
-    @NotBlank
     private String lastName;
 
     @Column(name = "birthdate", updatable = true, nullable = false)
     @Temporal(TemporalType.DATE)
     private Date birthdate;
     
-    @OneToMany(targetEntity = User.class, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "generalInfo")
-    private List<IUser> users;
+    @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY, mappedBy = "generalInfo")
+    private IUser user;
     
     @Embedded
     @Valid
@@ -78,13 +77,13 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
 	}
 
 	@Override
-	public List<IUser> getUsers() {
-		return users;
+	public IUser getUser() {
+		return user;
 	}
 
 	@Override
-	public void setUser(List<IUser> users) {
-		this.users = users;
+	public void setUser(IUser user) {
+		this.user = user;
 	}
 
 	@Override

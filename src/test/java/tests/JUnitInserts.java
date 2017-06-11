@@ -106,7 +106,6 @@ public class JUnitInserts extends JUnitConfiguration {
         user.getGeneralInfo().setFirstName("DIOGO");
         user.getGeneralInfo().setLastName("TESTE");
         user.getGeneralInfo().setLocalization(local);       
-        user.setProfile(em.find(Profile.class, 3));  
         
         validateConstraints(user);
         em.persist(user);

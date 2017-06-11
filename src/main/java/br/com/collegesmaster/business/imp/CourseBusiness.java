@@ -1,6 +1,5 @@
 package br.com.collegesmaster.business.imp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -8,8 +7,6 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
-
-import org.apache.commons.collections.CollectionUtils;
 
 import br.com.collegesmaster.business.ICourseBusiness;
 import br.com.collegesmaster.model.ICourse;
@@ -35,24 +32,17 @@ public class CourseBusiness extends GenericBusiness implements ICourseBusiness {
 	}
 
 	@Override
-	public ICourse findById(Integer id, Class<ICourse> modelClass) {
+	public ICourse findById(Integer id, Class<Course> modelClass) {
 		return entityManager.find(modelClass, id);
 	}
 
 	@Override
-	public List<ICourse> getList() {
+	public List<Course> getList() {
 		
 		final CriteriaQuery<Course> criteriaQuery = criteriaBuilder.createQuery(Course.class);
 		final TypedQuery<Course> typedQuery = entityManager.createQuery(criteriaQuery);		
 		final List<Course> result = typedQuery.getResultList(); 
-		
-		if(CollectionUtils.isEmpty(result)) {
-			return null;
-		} else {
-			final List<ICourse> courses = new ArrayList<ICourse>();
-			result.forEach(course -> courses.add(course));
-			return courses;
-		}
+		return result;
 	}
 
 }

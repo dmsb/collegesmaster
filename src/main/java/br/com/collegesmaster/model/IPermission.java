@@ -4,12 +4,12 @@ import java.util.List;
 
 public interface IPermission extends IModel {
 
-	public void setName(String name);
+	void setName(String name);
 
-	public String getName();
+	String getName();
 
-	public void setProfiles(List<IProfile> profiles);
+	void setProfiles(List<IProfile> profiles);
 
-	public List<IProfile> getProfiles();
+	List<IProfile> getProfiles();
 
 }

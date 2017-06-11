@@ -1,6 +1,7 @@
 package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -12,8 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import br.com.collegesmaster.annotations.Password;
@@ -45,15 +48,17 @@ public class User implements Serializable, IUser {
 	@Column(name = "salt", unique = false, nullable = false, length = 88)
     private String salt;
 	
-    @ManyToOne(targetEntity = GeneralInfo.class, fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @Valid
+    @OneToOne(targetEntity = GeneralInfo.class, fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "generalInfoFK", referencedColumnName = "id")
 	private IGeneralInfo generalInfo;
     
-    @ManyToOne(targetEntity = Profile.class, optional = false)
+    @NotNull(message = "")
+    @ManyToMany(targetEntity = Profile.class, fetch = FetchType.LAZY)
     @JoinTable(name="user_profile",
 	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
 	    inverseJoinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")})
-    private IProfile profile;
+    private List<IProfile> profiles;
     
 	@Override
 	public IGeneralInfo getGeneralInfo() {
@@ -106,13 +111,13 @@ public class User implements Serializable, IUser {
     }
 
 	@Override
-	public IProfile getProfile() {
-		return profile;
+	public List<IProfile> getProfiles() {
+		return profiles;
 	}
 
 	@Override
-	public void setProfile(IProfile profile) {
-		this.profile = profile;
+	public void setProfiles(List<IProfile> profiles) {
+		this.profiles = profiles;
 	}
 
 	@Override

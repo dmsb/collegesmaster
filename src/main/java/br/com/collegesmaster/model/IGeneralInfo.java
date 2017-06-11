@@ -1,19 +1,18 @@
 package br.com.collegesmaster.model;
 
 import java.util.Date;
-import java.util.List;
 
 import br.com.collegesmaster.model.imp.Localization;
 
-public interface IGeneralInfo {
+public interface IGeneralInfo extends IModel {
 
 	Integer getId();
 
 	void setId(Integer id);
 
-	List<IUser> getUsers();
+	IUser getUser();
 
-	void setUser( List<IUser> user);
+	void setUser(IUser user);
 
 	String getCpf();
 

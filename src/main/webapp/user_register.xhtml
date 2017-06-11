@@ -36,59 +36,68 @@
 		</p:layoutUnit>
 
 		<p:layoutUnit position="center" header="#{text['label_create_an_account']}" >
+			
+			<p:growl id="growl" showDetail="true" sticky="true" />
+			
 			<h:form id="register_form">
 				<h:panelGrid columns="2" cellpadding="5">
 					
 					<p:inputText id="cpf" value="#{userMB.user.generalInfo.cpf}"
-						required="true" placeholder="#{text['label_cpf']}">
+						required="true" placeholder="#{text['label_cpf']}" validatorMessage="#{text['msg_invalid_cpf']}">						
+					</p:inputText>
+					
+					<p:inputText id="email" value="#{userMB.user.generalInfo.email}"
+						required="true" placeholder="#{text['label_email']}" validatorMessage="#{text['msg_invalid_email']}">
 					</p:inputText>
 					
 					<p:inputText id="firstName"
 						value="#{userMB.user.generalInfo.firstName}" required="true"
-						placeholder="#{text['label_first_name']}">
+						placeholder="#{text['label_first_name']}" validatorMessage="#{text['msg_invalid_first_name']}">
+							
 					</p:inputText>
 
 					<p:inputText id="lastName"
 						value="#{userMB.user.generalInfo.lastName}" required="true"
-						placeholder="#{text['label_last_name']}">
+						placeholder="#{text['label_last_name']}" validatorMessage="#{text['msg_invalid_last_name']}">
 					</p:inputText>
 
 					<p:calendar id="birthdate"
 						value="#{userMB.user.generalInfo.birthdate}" required="false"
 						placeholder="#{text['label_birthdate']}" pattern="dd-MM-yyyy"
-						mask="true" />
+						mask="true" validatorMessage="#{text['msg_invalid_birthdate']}"/>
 
 					<p:inputText id="country"
 						value="#{userMB.user.generalInfo.localization.country}"
-						required="true" placeholder="#{text['label_country']}">
+						required="true" placeholder="#{text['label_country']}" validatorMessage="#{text['msg_invalid_country']}">
 					</p:inputText>
 
 					<p:inputText id="state"
 						value="#{userMB.user.generalInfo.localization.state}"
-						required="true" placeholder="#{text['label_state']}">
+						required="true" placeholder="#{text['label_state']}" validatorMessage="#{text['msg_invalid_state']}">
 					</p:inputText>
 
 					<p:inputText id="city"
 						value="#{userMB.user.generalInfo.localization.city}"
-						required="true" placeholder="#{text['label_city']}">
-					</p:inputText>
-
-					<p:inputText id="email" value="#{userMB.user.generalInfo.email}"
-						required="true" placeholder="#{text['label_email']}">
+						required="true" placeholder="#{text['label_city']}" validatorMessage="#{text['msg_invalid_city']}">
 					</p:inputText>
 
 					<p:inputText id="username" value="#{userMB.user.username}" 
-						required="true" placeholder="#{text['label_username']}">
+						required="true" placeholder="#{text['label_username']}" validatorMessage="#{text['msg_invalid_username']}">
 					</p:inputText>
 
 					<p:password id="password" value="#{userMB.user.password}"
-						required="true" placeholder="#{text['label_password']}">
+						required="true" placeholder="#{text['label_password']}" validatorMessage="#{text['msg_invalid_password']}">
 					</p:password>
-
+					
+					<p:selectOneRadio id="profile" value="#{userMB.userProfile.id}">
+			            <f:selectItems value="#{userMB.allProfiles()}" var="profile" itemLabel="#{profile.name}" 
+			            	itemValue="#{profile.id}"/>
+			        </p:selectOneRadio>
+			        
 					<f:facet name="footer">
-						<p:commandButton id="registerBtn" process="@form" ajax="false"
-							value="#{text['label_register']}" action="#{userMB.persistUser}" />
-					</f:facet>
+						<p:commandButton id="registerBtn" process="@form" ajax="true"
+							value="#{text['label_register']}" action="#{userMB.persistUser()}" />
+					</f:facet>					
 					<br />
 				</h:panelGrid>
 			</h:form>

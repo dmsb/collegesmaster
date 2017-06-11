@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 
 import br.com.collegesmaster.business.IInstituteBusiness;
 import br.com.collegesmaster.model.IInstitute;
+import br.com.collegesmaster.model.imp.Institute;
 
 @ManagedBean(name = "instituteMB")
 public class InstituteMB {
@@ -17,7 +18,7 @@ public class InstituteMB {
 	private IInstitute institute;
 	private List<IInstitute> institutes;
 	
-	public List<IInstitute> buildInstituteList() {
+	public List<Institute> buildInstituteList() {
 		return instituteBusiness.getList();
 	}
 	

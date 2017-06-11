@@ -4,17 +4,17 @@ import java.util.List;
 
 public interface IChallengeResolution extends IModel {
 
-	public void setTargetChallenge(IChallenge targetChallenge);
+	void setTargetChallenge(IChallenge targetChallenge);
 
-	public IChallenge getTargetChallenge();
+	IChallenge getTargetChallenge();
 
-	public void setNote(Integer note);
+	void setNote(Integer note);
 
-	public Integer getNote();
+	Integer getNote();
 
-	public void setQuestionsResolution(List<IQuestionResolution> myQuestionsResolution);
+	void setQuestionsResolution(List<IQuestionResolution> myQuestionsResolution);
 
-	public List<IQuestionResolution> getQuestionsResolution();
+	List<IQuestionResolution> getQuestionsResolution();
 
 	void setOwner(IUser owner);
 

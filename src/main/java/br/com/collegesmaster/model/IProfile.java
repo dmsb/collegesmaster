@@ -4,12 +4,12 @@ import java.util.List;
 
 public interface IProfile extends IModel {
 
-	public void setName(String name);
+	void setName(String name);
 
-	public String getName();
+	String getName();
 
-	public void setPermissions(List<IPermission> permissions);
+	void setPermissions(List<IPermission> permissions);
 
-	public List<IPermission> getPermissions();
+	List<IPermission> getPermissions();
 
 }

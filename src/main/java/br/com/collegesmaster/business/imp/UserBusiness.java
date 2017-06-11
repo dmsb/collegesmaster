@@ -1,6 +1,5 @@
 package br.com.collegesmaster.business.imp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -9,10 +8,7 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
-import org.apache.commons.collections.CollectionUtils;
-
 import br.com.collegesmaster.business.IUserBusiness;
-import br.com.collegesmaster.model.IChallengeResolution;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.imp.User;
 
@@ -21,7 +17,7 @@ import br.com.collegesmaster.model.imp.User;
 public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	
 	@Override	
-	public void persist(final IUser user) {
+	public void persist(final IUser user) {		
 		entityManager.persist(user);
 		
 	}
@@ -39,27 +35,18 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	}
 
 	@Override
-	public IUser findById(final Integer id, final Class<IUser> modelClass) {
+	public IUser findById(final Integer id, final Class<User> modelClass) {
 		return entityManager.find(modelClass, id);
 	}
 
 	@Override
-	public List<IUser> getList() {
+	public List<User> getList() {
 		final CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+		criteriaQuery.from(User.class);
 		final TypedQuery<User> typedQuery = entityManager.createQuery(criteriaQuery);
 		final List<User> result = typedQuery.getResultList(); 
 		
-		if(CollectionUtils.isEmpty(result)) {
-			return null;
-		} else {
-			final List<IUser> users = new ArrayList<IUser>();
-			result.forEach(user -> users.add(user));
-			return users;
-		}
+		return result;
 	}
 	
-	public void createChallengeResponse(final IChallengeResolution challengeResponse) {
-		
-		entityManager.persist(challengeResponse);
-	}
 }

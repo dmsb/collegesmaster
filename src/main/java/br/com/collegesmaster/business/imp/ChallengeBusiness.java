@@ -1,6 +1,5 @@
 package br.com.collegesmaster.business.imp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -8,8 +7,6 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
-
-import org.apache.commons.collections.CollectionUtils;
 
 import br.com.collegesmaster.business.IChallengeBusiness;
 import br.com.collegesmaster.model.IChallenge;
@@ -35,23 +32,16 @@ public class ChallengeBusiness extends GenericBusiness implements IChallengeBusi
 	}
 
 	@Override
-	public IChallenge findById(Integer id, Class<IChallenge> modelClass) {
+	public IChallenge findById(Integer id, Class<Challenge> modelClass) {
 		return entityManager.find(modelClass, id);
 	}
 
 	@Override
-	public List<IChallenge> getList() {
+	public List<Challenge> getList() {
 		
 		final CriteriaQuery<Challenge> criteriaQuery = criteriaBuilder.createQuery(Challenge.class);
 		final TypedQuery<Challenge> typedQuery = entityManager.createQuery(criteriaQuery);		
 		final List<Challenge> result = typedQuery.getResultList(); 
-		
-		if(CollectionUtils.isEmpty(result)) {
-			return null;
-		} else {
-			final List<IChallenge> challenges = new ArrayList<IChallenge>();
-			result.forEach(challenge -> challenges.add(challenge));
-			return challenges;
-		}
+		return result;
 	}
 }
