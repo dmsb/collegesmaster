@@ -18,10 +18,10 @@
 
 		<p:layoutUnit position="west" header="#{text['label_access']}">
 			<h:form id="login_form">
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="3">
 
 					<p:inputText id="username" value="#{userMB.user.username}"
-						size="15" placeholder="#{text['label_username']}" required="true" />
+						size="15" placeholder="#{text['label_username']}" required="true" />					
 
 					<p:password id="password" value="#{userMB.user.password}" size="15"
 						placeholder="#{text['label_password']}" required="true" />
@@ -40,62 +40,72 @@
 			<p:growl id="growl" showDetail="true" sticky="true" />
 			
 			<h:form id="register_form">
-				<h:panelGrid columns="2" cellpadding="5">
+				<h:panelGrid columns="4" cellpadding="5">
 					
+					<h:outputLabel for="cpf" value="#{text['label_cpf']}" />
 					<p:inputText id="cpf" value="#{userMB.user.generalInfo.cpf}"
-						required="true" placeholder="#{text['label_cpf']}" validatorMessage="#{text['msg_invalid_cpf']}">						
+						required="true" validatorMessage="#{text['msg_invalid_cpf']}">
+						<p:clientValidator />
 					</p:inputText>
 					
+					<h:outputLabel for="email" value="#{text['label_email']}" />
 					<p:inputText id="email" value="#{userMB.user.generalInfo.email}"
-						required="true" placeholder="#{text['label_email']}" validatorMessage="#{text['msg_invalid_email']}">
+						required="true" validatorMessage="#{text['msg_invalid_email']}">
 					</p:inputText>
 					
+					<h:outputLabel for="firstName" value="#{text['label_first_name']}" />
 					<p:inputText id="firstName"
 						value="#{userMB.user.generalInfo.firstName}" required="true"
-						placeholder="#{text['label_first_name']}" validatorMessage="#{text['msg_invalid_first_name']}">
-							
-					</p:inputText>
-
+						validatorMessage="#{text['msg_invalid_first_name']}" />
+					
+					<h:outputLabel for="lastName" value="#{text['label_last_name']}" />
 					<p:inputText id="lastName"
 						value="#{userMB.user.generalInfo.lastName}" required="true"
-						placeholder="#{text['label_last_name']}" validatorMessage="#{text['msg_invalid_last_name']}">
+						validatorMessage="#{text['msg_invalid_last_name']}">
 					</p:inputText>
-
+					
+					<h:outputLabel for="birthdate" value="#{text['label_birthdate']}" />
 					<p:calendar id="birthdate"
 						value="#{userMB.user.generalInfo.birthdate}" required="false"
-						placeholder="#{text['label_birthdate']}" pattern="dd-MM-yyyy"
+						pattern="dd-MM-yyyy"
 						mask="true" validatorMessage="#{text['msg_invalid_birthdate']}"/>
-
+					
+					<h:outputLabel for="country" value="#{text['label_country']}" />
 					<p:inputText id="country"
 						value="#{userMB.user.generalInfo.localization.country}"
-						required="true" placeholder="#{text['label_country']}" validatorMessage="#{text['msg_invalid_country']}">
+						required="true" validatorMessage="#{text['msg_invalid_country']}">
 					</p:inputText>
-
+					
+					<h:outputLabel for="state" value="#{text['label_state']}" />
 					<p:inputText id="state"
 						value="#{userMB.user.generalInfo.localization.state}"
-						required="true" placeholder="#{text['label_state']}" validatorMessage="#{text['msg_invalid_state']}">
+						required="true" validatorMessage="#{text['msg_invalid_state']}">
 					</p:inputText>
-
+					
+					<h:outputLabel for="city" value="#{text['label_city']}" />
 					<p:inputText id="city"
 						value="#{userMB.user.generalInfo.localization.city}"
-						required="true" placeholder="#{text['label_city']}" validatorMessage="#{text['msg_invalid_city']}">
+						required="true" validatorMessage="#{text['msg_invalid_city']}">
 					</p:inputText>
-
-					<p:inputText id="username" value="#{userMB.user.username}" 
-						required="true" placeholder="#{text['label_username']}" validatorMessage="#{text['msg_invalid_username']}">
-					</p:inputText>
-
-					<p:password id="password" value="#{userMB.user.password}"
-						required="true" placeholder="#{text['label_password']}" validatorMessage="#{text['msg_invalid_password']}">
-					</p:password>
 					
-					<p:selectOneRadio id="profile" value="#{userMB.userProfile.id}">
-			            <f:selectItems value="#{userMB.allProfiles()}" var="profile" itemLabel="#{profile.name}" 
-			            	itemValue="#{profile.id}"/>
-			        </p:selectOneRadio>
+					<h:outputLabel for="username" value="#{text['label_username']}" />
+					<p:inputText id="username" value="#{userMB.user.username}" 
+						required="true" validatorMessage="#{text['msg_invalid_username']}">
+					</p:inputText>
+					
+					<h:outputLabel for="password" value="#{text['label_password']}" />
+					<p:password id="password" value="#{userMB.user.password}"
+						required="true" validatorMessage="#{text['msg_invalid_password']}">
+					</p:password>									
+					
+					<h:outputLabel for="profile" value="#{text['label_profile']}" />
+					<h:selectOneMenu id="profile" value="#{userMB.userProfile.id}">
+			            <f:selectItems value="#{userMB.allProfiles()}" var="profile" itemLabel="#{text['label_' += profile.name]}" 
+			            	itemValue="#{profile.id}" />			            
+			        </h:selectOneMenu>
 			        
 					<f:facet name="footer">
-						<p:commandButton id="registerBtn" process="@form" ajax="true"
+						<p:commandButton id="registerBtn" process="@form" ajax="false"
 							value="#{text['label_register']}" action="#{userMB.persistUser()}" />
 					</f:facet>					
 					<br />

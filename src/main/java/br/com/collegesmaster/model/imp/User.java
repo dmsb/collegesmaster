@@ -38,10 +38,10 @@ public class User implements Serializable, IUser {
     @NotNull
     @Column(name = "username", unique= true, length = 25)
     private String username;
-
+    
     @NotNull
 	@Column(name = "password", unique = false, nullable = false, length = 88)
-    @Password    
+    @Password
     private String password;
     
     @NotNull
@@ -53,7 +53,7 @@ public class User implements Serializable, IUser {
     @JoinColumn(name = "generalInfoFK", referencedColumnName = "id")
 	private IGeneralInfo generalInfo;
     
-    @NotNull(message = "")
+    @NotNull
     @ManyToMany(targetEntity = Profile.class, fetch = FetchType.LAZY)
     @JoinTable(name="user_profile",
 	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},

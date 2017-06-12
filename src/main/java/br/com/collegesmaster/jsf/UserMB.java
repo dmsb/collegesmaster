@@ -56,7 +56,7 @@ public class UserMB implements Serializable {
 	}
 	
 	public void persistUser() {
-		final String salt = CryptoUtils.generateSalt();
+		final String salt = CryptoUtils.generateSalt();	
 		user.setSalt(salt);
 		user.setPassword(CryptoUtils.getHashedPassword(user.getPassword(), salt));
 		
