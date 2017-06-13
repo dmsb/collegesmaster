@@ -1,7 +1,7 @@
 package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -13,8 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,7 +34,8 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
 	@Column(name = "id")
 	private Integer id;
 	
-	@Column(name = "cpf", unique = true, updatable = false, nullable = false)
+	@Column(name = "cpf", unique = true, updatable = true, nullable = false, length = 14)
+	@Size(min = 14, max = 14)
 	@NotNull
     @CPF
     private String cpf;
@@ -46,9 +45,10 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
     @Email
     private String email;
 
-	@Column(name = "firstName", unique = false, nullable = false, updatable = true)
+	@Column(name = "firstName", unique = false, nullable = false, updatable = true,
+			length = 25)
 	@NotNull
-    @Size(max = 20)
+    @Size(max = 25)
     private String firstName;
 
 	@NotNull
@@ -56,8 +56,7 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
     private String lastName;
 
     @Column(name = "birthdate", updatable = true, nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date birthdate;
+    private LocalDate birthdate;
     
     @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY, mappedBy = "generalInfo")
     private IUser user;
@@ -127,12 +126,12 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
 	}
 	
 	@Override
-	public Date getBirthdate() {
+	public LocalDate getBirthdate() {
 		return birthdate;
 	}
 
 	@Override
-	public void setBirthdate(Date birthdate) {
+	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
 	}
 

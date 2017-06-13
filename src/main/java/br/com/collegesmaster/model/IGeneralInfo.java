@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import br.com.collegesmaster.model.imp.Localization;
 
@@ -30,9 +30,9 @@ public interface IGeneralInfo extends IModel {
 
 	void setLastName(String lastName);
 
-	Date getBirthdate();
+	LocalDate getBirthdate();
 
-	void setBirthdate(Date birthdate);
+	void setBirthdate(LocalDate birthdate);
 
 	Localization getLocalization();
 

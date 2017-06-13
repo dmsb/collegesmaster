@@ -18,6 +18,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import br.com.collegesmaster.annotations.Password;
 import br.com.collegesmaster.model.IGeneralInfo;
@@ -36,11 +37,13 @@ public class User implements Serializable, IUser {
 	private Integer id;
 	
     @NotNull
+    @Size(min = 2, max = 25)
     @Column(name = "username", unique= true, length = 25)
     private String username;
     
     @NotNull
 	@Column(name = "password", unique = false, nullable = false, length = 88)
+    @Size(min = 6)
     @Password
     private String password;
     

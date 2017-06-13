@@ -68,7 +68,7 @@
 		email='juca1@gmail.com' firstname='lucas' lastname='muniz' city='bahia'
 		country='brasil' state='pernambuco'/>
 		
-	<!-- password = d10g0! -->
+	<!-- password = D10g0! -->
 	<user username='diogo.brito'
 		password='faqmeJFuy0DtqYz4mt0fVI3inV4AOwHMKjo6tJXG3fFkFEzW7n6TaQ03GltUFGZ+1fetQdYmCTVhE5js4RF83A=='
 		salt='qeyt59i2y8gqnj8q72l3bcu9owrdoikih4wa7btgoqm=' generalInfoFK='1' />

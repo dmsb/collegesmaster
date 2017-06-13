@@ -14,10 +14,10 @@ public abstract class GenericBusiness {
 	
 	protected CriteriaBuilder criteriaBuilder;
     protected StringBuilder queryBuilder;   
-    protected final static Logger logger = Logger.getGlobal();
+    protected final static Logger LOGGER = Logger.getGlobal();
     
     @PostConstruct
 	public void init() {
-    	criteriaBuilder = entityManager.getCriteriaBuilder();
+    	criteriaBuilder = entityManager.getCriteriaBuilder();    	
     }
 }

@@ -1,5 +1,6 @@
 package tests;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,7 +29,6 @@ import br.com.collegesmaster.model.imp.Discipline;
 import br.com.collegesmaster.model.imp.GeneralInfo;
 import br.com.collegesmaster.model.imp.Institute;
 import br.com.collegesmaster.model.imp.Localization;
-import br.com.collegesmaster.model.imp.Profile;
 import br.com.collegesmaster.model.imp.Question;
 import br.com.collegesmaster.model.imp.QuestionResolution;
 import br.com.collegesmaster.model.imp.User;
@@ -101,7 +101,7 @@ public class JUnitInserts extends JUnitConfiguration {
         user.setPassword(CryptoUtils.getHashedPassword("D10g0!", user.getSalt()));
         user.setGeneralInfo(new GeneralInfo());
         user.getGeneralInfo().setCpf("50168636280");
-        user.getGeneralInfo().setBirthdate(calendar.getTime());
+        user.getGeneralInfo().setBirthdate(LocalDate.now());
         user.getGeneralInfo().setEmail("diogo1@diogo.com");
         user.getGeneralInfo().setFirstName("DIOGO");
         user.getGeneralInfo().setLastName("TESTE");

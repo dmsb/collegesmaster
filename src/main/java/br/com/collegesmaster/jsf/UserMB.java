@@ -50,11 +50,6 @@ public class UserMB implements Serializable {
 		return profileBusiness.getList();
 	}
 	
-	public String login() {
-		System.out.println("Login");
-		return "login";
-	}
-	
 	public void persistUser() {
 		final String salt = CryptoUtils.generateSalt();	
 		user.setSalt(salt);
