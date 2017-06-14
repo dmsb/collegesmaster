@@ -50,6 +50,15 @@ public class Course implements Serializable, ICourse {
 			orphanRemoval = true, mappedBy = "course")
 	private List<IDiscipline> disciplines;
 	
+	public Course() {
+    	
+	}
+    
+    public Course(Integer id, String name) {
+    	this.id = id;
+    	this.name = name;
+    }
+    
 	@Override
 	public Integer getId() {
 		return id;

@@ -10,10 +10,6 @@ public interface IGeneralInfo extends IModel {
 
 	void setId(Integer id);
 
-	IUser getUser();
-
-	void setUser(IUser user);
-
 	String getCpf();
 
 	void setCpf(String cpf);
@@ -37,5 +33,9 @@ public interface IGeneralInfo extends IModel {
 	Localization getLocalization();
 
 	void setLocalization(Localization localization);
+
+	void setCourse(ICourse course);
+
+	ICourse getCourse();
 
 }

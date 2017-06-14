@@ -62,20 +62,23 @@
 					
 					<h:outputLabel for="birthdate" value="#{text['label_birthdate']}" />
 					<p:calendar id="birthdate" value="#{userMB.user.generalInfo.birthdate}"
-						pattern="dd-MM-yyyy" mask="true" required="true"
+						pattern="dd-MM-yyyy" mask="true" required="true" converter="localDateTimeConverter"
 						requiredMessage="#{text['msg_required_birthdate']}" />
 					
 					<h:outputLabel for="country" value="#{text['label_country']}" />
 					<p:inputText id="country" value="#{userMB.user.generalInfo.localization.country}"
-						required="true" requiredMessage="#{text['msg_required_country']}" />
+						required="true" requiredMessage="#{text['msg_required_country']}"
+						validatorMessage="#{text['msg_required_country']}" />
 					
 					<h:outputLabel for="state" value="#{text['label_state']}" />
 					<p:inputText id="state" value="#{userMB.user.generalInfo.localization.state}"
-						required="true" requiredMessage="#{text['msg_required_state']}" />
+						required="true" requiredMessage="#{text['msg_required_state']}"
+						validatorMessage="#{text['msg_required_state']}" />
 					
 					<h:outputLabel for="city" value="#{text['label_city']}" />
 					<p:inputText id="city" value="#{userMB.user.generalInfo.localization.city}"
-						required="true" requiredMessage="#{text['msg_required_city']}" />
+						required="true" requiredMessage="#{text['msg_required_city']}"
+						validatorMessage="#{text['msg_required_city']}" />
 					
 					<h:outputLabel for="username" value="#{text['label_username']}" />
 					<p:inputText id="username" value="#{userMB.user.username}" 
@@ -93,6 +96,19 @@
 			            	itemValue="#{profile.id}" />			            
 			        </h:selectOneMenu>
 			        
+			        <h:outputLabel for="institute" value="#{text['label_institute']}" />
+					<h:selectOneMenu id="institute" value="#{userMB.userInstitute.id}">
+						<p:ajax event="change" listener="#{userMB.changeInstitute()}" update=":register_form:course"/>						
+			            <f:selectItems value="#{userMB.institutes}" var="institute" itemLabel="#{institute.name}" 
+			            	itemValue="#{institute.id}" />			            
+			        </h:selectOneMenu>
+			        
+			        <h:outputLabel for="course" value="#{text['label_course']}" />
+					<h:selectOneMenu id="course" value="#{userMB.user.generalInfo.course.id}">
+					<p:ajax event="change" listener="#{userMB.changeCourse()}" />
+			            <f:selectItems value="#{userMB.allCoursesByInstitute()}" var="course" itemLabel="#{course.name}" 
+			            	itemValue="#{course.id}" />			            
+			        </h:selectOneMenu>
 					<f:facet name="footer">
 						<p:commandButton id="registerBtn" process="@form" ajax="false"
 							value="#{text['label_register']}" action="#{userMB.persistUser()}" />

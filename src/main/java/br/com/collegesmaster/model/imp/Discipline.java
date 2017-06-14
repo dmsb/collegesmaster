@@ -47,6 +47,15 @@ public class Discipline implements Serializable, IDiscipline {
     		orphanRemoval = true, mappedBy = "discipline")
     private List<IChallenge> challenges;
 
+    public Discipline() {
+    	
+	}
+    
+    public Discipline(Integer id, String name) {
+    	this.id = id;
+    	this.name = name;
+    }
+    
     @Override
     public Integer getId() {
 		return id;

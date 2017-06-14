@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -20,8 +21,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.br.CPF;
 
+import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IGeneralInfo;
-import br.com.collegesmaster.model.IUser;
 
 @Entity
 @Table(name = "general_info")
@@ -48,21 +49,23 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
 	@Column(name = "firstName", unique = false, nullable = false, updatable = true,
 			length = 25)
 	@NotNull
-    @Size(max = 25)
+    @Size(max = 40)
     private String firstName;
 
 	@NotNull
+	@Size(max = 80)
     @Column(name = "lastName", unique = false, nullable = false, updatable = true)
     private String lastName;
-
+		
     @Column(name = "birthdate", updatable = true, nullable = false)
     private LocalDate birthdate;
     
-    @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY, mappedBy = "generalInfo")
-    private IUser user;
+    @OneToOne(targetEntity = Course.class, fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    private ICourse course;
     
-    @Embedded
     @Valid
+    @Embedded
     private Localization localization;
     
 	@Override
@@ -73,16 +76,6 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
 	@Override
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@Override
-	public IUser getUser() {
-		return user;
-	}
-
-	@Override
-	public void setUser(IUser user) {
-		this.user = user;
 	}
 
 	@Override
@@ -145,6 +138,16 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
 		this.localization = localization;
 	}
 	
+	@Override
+	public ICourse getCourse() {
+		return course;
+	}
+
+	@Override
+	public void setCourse(ICourse course) {
+		this.course = course;
+	}
+
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 		if(objectToBeComparated == null) {

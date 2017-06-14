@@ -47,6 +47,15 @@ public class Institute implements Serializable, IInstitute {
 	@Embedded
     private Localization localization;
 	
+	public Institute() {
+    	
+	}
+    
+    public Institute(Integer id, String name) {
+    	this.id = id;
+    	this.name = name;
+    }
+    
 	@Override
     public Integer getId() {
 		return id;
