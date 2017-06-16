@@ -42,7 +42,7 @@ public class CourseBusiness extends GenericBusiness implements ICourseBusiness {
 	}
 
 	@Override
-	public List<Course> getList() {
+	public List<Course> findAll() {
 		
 		final CriteriaQuery<Course> criteriaQuery = criteriaBuilder.createQuery(Course.class);		
 		criteriaQuery.from(Course.class);

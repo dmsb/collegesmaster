@@ -17,6 +17,7 @@ import com.google.common.base.Strings;
 import br.com.collegesmaster.business.IUserBusiness;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.imp.User;
+import br.com.collegesmaster.model.imp.User_;
 import br.com.collegesmaster.util.CryptoUtils;
 
 @Stateless
@@ -47,7 +48,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	}
 
 	@Override
-	public List<User> getList() {
+	public List<User> findAll() {
 		final CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
 		criteriaQuery.from(User.class);
 		final TypedQuery<User> typedQuery = entityManager.createQuery(criteriaQuery);
@@ -98,10 +99,13 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 
 		final CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
 		final Root<User> userRoot = criteriaQuery.from(User.class);
-
-		final Predicate usernamePredicate = criteriaBuilder.equal(userRoot.get("username"), username);
-		final Predicate passwordPredicate = criteriaBuilder.equal(userRoot.get("password"), hashedPassword);
-		criteriaQuery.where(usernamePredicate, passwordPredicate);
+		userRoot.fetch(User_.generalInfo);
+		
+		final Predicate usernamePredicate = criteriaBuilder.equal(userRoot.get(User_.username), username);
+		final Predicate passwordPredicate = criteriaBuilder.equal(userRoot.get(User_.password), hashedPassword);
+		
+		criteriaQuery.select(userRoot).where(usernamePredicate, passwordPredicate);		
+		
 		final TypedQuery<User> query = entityManager.createQuery(criteriaQuery);
 		
 		try {

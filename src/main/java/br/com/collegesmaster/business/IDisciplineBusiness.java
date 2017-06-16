@@ -8,6 +8,8 @@ import br.com.collegesmaster.model.imp.Discipline;
 
 public interface IDisciplineBusiness extends IBusiness<IDiscipline, Discipline> {
 
-	List<Discipline> getDisciplinesNameByCourse(final ICourse course);
+	List<Discipline> findDisciplineNamesByCourse(final ICourse course);
+
+	List<Discipline> findByCourse(final ICourse course);
 
 }

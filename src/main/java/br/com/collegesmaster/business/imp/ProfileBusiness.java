@@ -33,7 +33,7 @@ public class ProfileBusiness extends GenericBusiness implements IProfileBusiness
 	}
 
 	@Override
-	public List<Profile> getList() {		
+	public List<Profile> findAll() {		
 		final CriteriaQuery<Profile> criteriaQuery = criteriaBuilder.createQuery(Profile.class);
 		criteriaQuery.from(Profile.class);
 		final TypedQuery<Profile> typedQuery = entityManager.createQuery(criteriaQuery);		

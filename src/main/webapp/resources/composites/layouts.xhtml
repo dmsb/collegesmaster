@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="disciplineMB" required="true"
+		type="br.com.collegesmaster.jsf.DisciplineMB"
+		shortDescription="Managed bean for Discipline" />
+	<composite:attribute name="userSessionMB" required="true"
+		type="br.com.collegesmaster.jsf.UserSessionMB"
+		shortDescription="Managed bean for User session" />
+</composite:interface>
+
+<composite:implementation>
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north"
+			header="#{text['label_application_title']}"
+			style="text-align: center;" />
+
+		<p:layoutUnit position="west"
+			header="#{text['label_welcome']} #{cc.attrs.userSessionMB.user.generalInfo.firstName} "
+			size="30%">
+			<h:form id="menu_form">
+				<p:menu>
+					<p:submenu label="#{text['label_user_menu']}">
+						<p:menuitem value="#{text['label_show_disciplines']}"
+							actionListener="#{cc.attrs.disciplineMB.loadUserDisciplines()}"
+							icon="ui-icon-disk" />
+						<p:menuitem value="#{text['label_logout']}"
+							action="#{cc.attrs.userSessionMB.logout()}"
+							icon="ui-icon-arrowrefresh-1-w" />
+					</p:submenu>
+				</p:menu>
+			</h:form>
+		</p:layoutUnit>
+		<p:layoutUnit position="south" footer="version 0.1 | Copyright 2017"
+			style="text-align: center;" />
+		<composite:insertChildren />
+	</p:layout>
+</composite:implementation>
+</html>

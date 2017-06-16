@@ -22,18 +22,24 @@ public class UserSessionMB implements Serializable {
 	
 	private IUser user;
 	private String username;
-	private String password;
+	private String password;	
 	
 	public String login() {
 		user = userBusiness.login(username, password);
+		password = null;
 		if(user == null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 	        context.addMessage(null, new FacesMessage("Credenciais incorretas",  "login e/ou senha incorretos"));
 	        return null;
-		} else {
-			return "login";
+		} else {			
+			return "/pages/user_main.xhtml?faces-redirect=true";
 		}
-		
+
+	}
+	
+	public String logout() {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/pages/home.xhtml?faces-redirect=true";
 	}
 	
 	public IUser getUser() {

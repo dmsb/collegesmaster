@@ -44,7 +44,7 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 	}
 	
 	@Override
-	public List<Institute> getList() {
+	public List<Institute> findAll() {
 		final CriteriaQuery<Institute> criteriaQuery = criteriaBuilder.createQuery(Institute.class);		
 		criteriaQuery.from(Institute.class);
 		
@@ -73,7 +73,7 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 	}
 	
 	@Override
-	public List<Institute> getInstituteFetchingCourses() {
+	public List<Institute> getInstitutesFetchingCourses() {
 		final CriteriaQuery<Institute> criteriaQuery = criteriaBuilder.createQuery(Institute.class);
 		final Root<Institute> instituteRoot = criteriaQuery.from(Institute.class);
 				

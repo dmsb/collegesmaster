@@ -56,6 +56,12 @@ public class Discipline implements Serializable, IDiscipline {
     	this.name = name;
     }
     
+    public Discipline(Integer id, String name, List<IChallenge> challenges) {
+    	this.id = id;
+    	this.name = name;    	
+    	this.challenges = challenges;
+    }
+    
     @Override
     public Integer getId() {
 		return id;

@@ -9,6 +9,6 @@ public interface IInstituteBusiness extends IBusiness<IInstitute, Institute> {
 
 	List<Institute> getInstituteNames();
 
-	List<Institute> getInstituteFetchingCourses();
+	List<Institute> getInstitutesFetchingCourses();
 
 }

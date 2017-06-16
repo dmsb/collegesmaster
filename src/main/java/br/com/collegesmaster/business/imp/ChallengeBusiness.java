@@ -37,7 +37,7 @@ public class ChallengeBusiness extends GenericBusiness implements IChallengeBusi
 	}
 
 	@Override
-	public List<Challenge> getList() {
+	public List<Challenge> findAll() {
 		
 		final CriteriaQuery<Challenge> criteriaQuery = criteriaBuilder.createQuery(Challenge.class);
 		final TypedQuery<Challenge> typedQuery = entityManager.createQuery(criteriaQuery);		

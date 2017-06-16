@@ -16,14 +16,14 @@
 			header="#{text['label_application_title']}"
 			style="text-align: center;" />
 
-		<p:layoutUnit position="west" header="#{text['label_access']}">
+		<p:layoutUnit position="west" header="#{text['label_access']}" size="30%">
 			<h:form id="login_form">
 				<h:panelGrid columns="3">
 
-					<p:inputText id="username" value="#{userSessionMB.username}"
+					<p:inputText id="username" value="#{userSessionMB.username}" size="15"
 						placeholder="#{text['label_username']}" required="true" />					
 
-					<p:password id="password" value="#{userSessionMB.password}"
+					<p:password id="password" value="#{userSessionMB.password}" size="15"
 						placeholder="#{text['label_password']}" required="true" />
 
 					<f:facet name="footer">
@@ -43,75 +43,61 @@
 				<h:panelGrid columns="4" cellpadding="5">
 					
 					<h:outputLabel for="cpf" value="#{text['label_cpf']}" />
-					<p:inputMask id="cpf" value="#{userMB.user.generalInfo.cpf}"
+					<p:inputMask id="cpf" value="#{homeMB.user.generalInfo.cpf}" size="15"
 						mask="999.999.999-99" required="true" requiredMessage="#{text['msg_required_cpf']}">
 						<f:validateLength for="cpf" minimum="14" maximum="14" />
 					</p:inputMask>
 					
 					<h:outputLabel for="email" value="#{text['label_email']}" />
-					<p:inputText id="email" value="#{userMB.user.generalInfo.email}"
+					<p:inputText id="email" value="#{homeMB.user.generalInfo.email}" size="15"
 						required="true" requiredMessage="#{text['msg_required_email']}" />					
 					
 					<h:outputLabel for="firstName" value="#{text['label_first_name']}" />
-					<p:inputText id="firstName" value="#{userMB.user.generalInfo.firstName}"
+					<p:inputText id="firstName" value="#{homeMB.user.generalInfo.firstName}" size="15"
 						required="true" requiredMessage="#{text['msg_required_first_name']}" />
 
 					<h:outputLabel for="lastName" value="#{text['label_last_name']}" />
-					<p:inputText id="lastName" value="#{userMB.user.generalInfo.lastName}"
+					<p:inputText id="lastName" value="#{homeMB.user.generalInfo.lastName}" size="15"
 						required="true" requiredMessage="#{text['msg_required_last_name']}"/>
 					
 					<h:outputLabel for="birthdate" value="#{text['label_birthdate']}" />
-					<p:calendar id="birthdate" value="#{userMB.user.generalInfo.birthdate}"
+					<p:calendar id="birthdate" value="#{homeMB.user.generalInfo.birthdate}" size="15"
 						pattern="dd-MM-yyyy" mask="true" required="true" converter="localDateTimeConverter"
-						requiredMessage="#{text['msg_required_birthdate']}" />
-					
-					<h:outputLabel for="country" value="#{text['label_country']}" />
-					<p:inputText id="country" value="#{userMB.user.generalInfo.localization.country}"
-						required="true" requiredMessage="#{text['msg_required_country']}"
-						validatorMessage="#{text['msg_required_country']}" />
-					
-					<h:outputLabel for="state" value="#{text['label_state']}" />
-					<p:inputText id="state" value="#{userMB.user.generalInfo.localization.state}"
-						required="true" requiredMessage="#{text['msg_required_state']}"
-						validatorMessage="#{text['msg_required_state']}" />
-					
-					<h:outputLabel for="city" value="#{text['label_city']}" />
-					<p:inputText id="city" value="#{userMB.user.generalInfo.localization.city}"
-						required="true" requiredMessage="#{text['msg_required_city']}"
-						validatorMessage="#{text['msg_required_city']}" />
+						requiredMessage="#{text['msg_required_birthdate']}" />				
 					
 					<h:outputLabel for="username" value="#{text['label_username']}" />
-					<p:inputText id="username" value="#{userMB.user.username}" 
+					<p:inputText id="username" value="#{homeMB.user.username}" size="15" 
 						required="true" requiredMessage="#{text['msg_required_username']}"
 						validatorMessage="#{text['msg_invalid_username_length']}" />
 					
 					<h:outputLabel for="password" value="#{text['label_password']}" />
-					<p:password id="password" value="#{userMB.user.password}"
+					<p:password id="password" value="#{homeMB.user.password}" size="15"
 						required="true" requiredMessage="#{text['msg_required_password']}"
 						validatorMessage="#{text['msg_invalid_password_length']}" />
 					
 					<h:outputLabel for="profile" value="#{text['label_profile']}" />
-					<h:selectOneMenu id="profile" value="#{userMB.userProfile.id}">
-			            <f:selectItems value="#{userMB.allProfiles()}" var="profile" itemLabel="#{text['label_' += profile.name]}" 
+					<h:selectOneMenu id="profile" value="#{homeMB.userProfile.id}">
+			            <f:selectItems value="#{homeMB.allProfiles()}" var="profile" itemLabel="#{text['label_' += profile.name]}" 
 			            	itemValue="#{profile.id}" />			            
 			        </h:selectOneMenu>
 			        
 			        <h:outputLabel for="institute" value="#{text['label_institute']}" />
-					<h:selectOneMenu id="institute" value="#{userMB.userInstitute.id}">
-						<p:ajax event="change" listener="#{userMB.changeInstitute()}" update=":register_form:course"/>						
-			            <f:selectItems value="#{userMB.institutes}" var="institute" itemLabel="#{institute.name}" 
+					<h:selectOneMenu id="institute" value="#{instituteMB.institute.id}">
+						<p:ajax event="change" listener="#{instituteMB.changeInstitute()}" update=":register_form:course"/>						
+			            <f:selectItems value="#{instituteMB.institutes}" var="institute" itemLabel="#{institute.name}" 
 			            	itemValue="#{institute.id}" />			            
 			        </h:selectOneMenu>
 			        
 			        <h:outputLabel for="course" value="#{text['label_course']}" />
-					<h:selectOneMenu id="course" value="#{userMB.user.generalInfo.course.id}">
-					<p:ajax event="change" listener="#{userMB.changeCourse()}" />
-			            <f:selectItems value="#{userMB.allCoursesByInstitute()}" var="course" itemLabel="#{course.name}" 
+					<h:selectOneMenu id="course" value="#{homeMB.user.generalInfo.course.id}">
+					<p:ajax event="change" listener="#{instituteMB.changeCourse()}" />
+			            <f:selectItems value="#{instituteMB.allCoursesByInstitute()}" var="course" itemLabel="#{course.name}" 
 			            	itemValue="#{course.id}" />			            
 			        </h:selectOneMenu>
+			        
 					<f:facet name="footer">
 						<p:commandButton id="registerBtn" process="@form" ajax="false"
-							value="#{text['label_register']}" action="#{userMB.persistUser()}" />
+							value="#{text['label_register']}" action="#{homeMB.persistUser()}" />
 					</f:facet>	
 					<br />
 				</h:panelGrid>

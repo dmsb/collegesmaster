@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composites="http://java.sun.com/jsf/composite/composites">
+
+<h:head>
+	<title>#{text['label_application_title']}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</h:head>
+<h:body>
+	<composites:layouts disciplineMB="#{disciplineMB}"
+		userSessionMB="#{userSessionMB}">
+		<p:layoutUnit position="center">
+			<h:form>
+				<p:dataTable id="disciplinesDataTable" var="discipline" value="#{disciplineMB.userDisciplines}"
+					selectionMode="single" selection="#{disciplineMB.selectedDiscipline}" rowKey="#{discipline.name}">
+					
+					<f:facet name="header">
+			            #{text['label_disciplines']}
+			        </f:facet>								
+					
+					<p:column headerText="#{text['label_discipline']}">
+						<h:outputText value="#{discipline.name}" />
+					</p:column>
+					
+					<p:column headerText="#{text['label_total_challenges']}">
+						<h:outputText value="#{discipline.challenges.size()}" />					
+					</p:column>
+					
+					<p:ajax event="rowSelect" listener="#{disciplineMB.changeSelectedDiscipline()}" />
+				
+				</p:dataTable>
+			</h:form>
+		</p:layoutUnit>
+	</composites:layouts>
+</h:body>
+</html>

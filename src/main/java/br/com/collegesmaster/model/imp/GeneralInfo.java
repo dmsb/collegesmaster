@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -60,13 +58,9 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
     @Column(name = "birthdate", updatable = true, nullable = false)
     private LocalDate birthdate;
     
-    @OneToOne(targetEntity = Course.class, fetch = FetchType.LAZY, optional = false)
+    @OneToOne(targetEntity = Course.class, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     private ICourse course;
-    
-    @Valid
-    @Embedded
-    private Localization localization;
     
 	@Override
 	public Integer getId() {
@@ -126,16 +120,6 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
 	@Override
 	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
-	}
-
-	@Override
-	public Localization getLocalization() {
-		return localization;
-	}
-
-	@Override
-	public void setLocalization(Localization localization) {
-		this.localization = localization;
 	}
 	
 	@Override

@@ -22,5 +22,5 @@ public interface IBusiness <T extends IModel, K> {
 	public T findById(Integer id, Class<K> modelClass);
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<K> getList();
+	public List<K> findAll();
 }

@@ -88,12 +88,7 @@ public class JUnitInserts extends JUnitConfiguration {
         calendar.setTime(new Date());
         calendar.add(Calendar.YEAR, 1993);
         calendar.add(Calendar.MONTH, 10);
-        calendar.add(Calendar.DAY_OF_MONTH, 17);
-
-        final Localization local = new Localization();
-        local.setCountry("BRASIL");
-        local.setState("pernambuco");
-        local.setCity("RECIFE");
+        calendar.add(Calendar.DAY_OF_MONTH, 17);        
         
         final IUser user = new User();
         user.setUsername("diogo.brito.teste");
@@ -104,8 +99,7 @@ public class JUnitInserts extends JUnitConfiguration {
         user.getGeneralInfo().setBirthdate(LocalDate.now());
         user.getGeneralInfo().setEmail("diogo1@diogo.com");
         user.getGeneralInfo().setFirstName("DIOGO");
-        user.getGeneralInfo().setLastName("TESTE");
-        user.getGeneralInfo().setLocalization(local);       
+        user.getGeneralInfo().setLastName("TESTE");       
         
         validateConstraints(user);
         em.persist(user);
