@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composites="http://java.sun.com/jsf/composite/composites">
+
+<h:head>
+	<title>#{text['label_application_title']}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</h:head>
+<h:body>
+	<composites:layouts mainMB="#{mainMB}"
+		userSessionMB="#{userSessionMB}">
+		<p:layoutUnit position="center"  header="#{text['label_create_challenge']}" style="text-align:center">
+			<h:form id="registerChallengeForm">
+				<h:panelGrid columns="3" cellpadding="10">					
+					<h:outputLabel for="title" value="#{text['label_title']}" />					
+					<p:inputTextarea id="title" rows="2" cols="20"  maxlength="50" 
+						value="#{challengeMB.challenge.title}" required="true"
+						requiredMessage="#{text['msg_required_title']}"/>
+						
+			        <p:commandButton id="createQuestionBtn" value="#{text['label_create_question']}"
+			        	ajax="true" onclick="PF('createQuestionWV').show();" />
+					
+					<f:facet name="footer">
+						<p:commandButton id="registerChallengeBtn" process="@form" ajax="false"
+							value="#{text['label_register_challenge']}" action="#{challengeMB.persistChallenge()}" />
+					</f:facet>						
+				</h:panelGrid>	
+			</h:form>
+			
+			<h:form>
+				<p:dialog header="#{text['label_question']}" id="createQuestionDialogId" widgetVar="createQuestionWV" closeOnEscape="true" closable="true" resizable="false"
+					responsive="true" hideEffect="puff" showEffect="puff" height="500" width="800">
+					<h:panelGrid>
+						<p:row>
+							<p:column colspan="7">
+								<p:inputTextarea placeholder="#{text['label_description']}" id="description"
+									rows="7" cols="60"  maxlength="1000" autoResize="false"
+									value="#{challengeMB.currentQuestion.description}" required="true"
+									requiredMessage="#{text['msg_required_description']}" />
+							</p:column>				
+						</p:row>
+						<hr/>			
+				        <p:row>
+				        	<p:column>
+						        <h:panelGrid>
+									<ui:repeat var="letter" value="#{challengeMB.letters}" varStatus="status"  >
+										<p:row>
+											<p:column>
+												<h:outputText value="#{text['label_letter']} #{letter}: " />											
+											</p:column>
+											<p:column>
+												<p:inputTextarea placeholder="#{text['label_description']}" id="description"
+												rows="5" cols="60"  maxlength="1000" autoResize="false"
+												value="#{challengeMB.alternatives.get(status.index).description}" required="true"
+												requiredMessage="#{text['msg_required_description']}" />												
+											</p:column>
+										</p:row>
+										<p:row>											
+											<p:column>												
+												<p:selectOneRadio id="definition" value="#{challengeMB.alternatives.get(status.index).definition}">
+										            <f:selectItem itemLabel="#{text['label_true']}" itemValue="true" />
+										            <f:selectItem itemLabel="#{text['label_false']}" itemValue="false" />			            
+										        </p:selectOneRadio>
+											</p:column>
+										</p:row>
+										<hr/>
+							        </ui:repeat>
+						        </h:panelGrid>
+					        </p:column>
+				        </p:row>
+				        <p:row>
+							<p:column>
+								<h:outputLabel for="pontuation" value="#{text['label_pontuation']}" />
+		        				<p:spinner id="pontuation" value="#{challengeMB.currentQuestion.pontuation}"
+		        					stepFactor="10" min="0" max="100" size="5" required="true" 
+									requiredMessage="#{text['msg_required_pontuation']}" />
+							</p:column>
+							<p:column>
+								<h:outputLabel for="level" value="#{text['label_level']}" />
+								<h:selectOneMenu id="level" value="#{challengeMB.currentQuestion.level}">						
+						            <f:selectItems value="#{challengeMB.levels}" var="level" itemLabel="#{level}" 
+						            	itemValue="#{level}" />
+						        </h:selectOneMenu>
+							</p:column>
+						</p:row>						
+						<f:facet name="footer">
+							<p:commandButton id="registerBtn" process="@form" ajax="true"
+								value="#{text['label_register']}" action="#{challengeMB.addQuestionToChallenge()}" />
+						</f:facet>	
+						<br />
+					</h:panelGrid>
+				</p:dialog>	
+			</h:form>
+			
+		</p:layoutUnit>
+	</composites:layouts>
+</h:body>
+</html>

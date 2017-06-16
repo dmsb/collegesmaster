@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import br.com.collegesmaster.business.IDisciplineBusiness;
+import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.imp.Discipline;
@@ -25,27 +26,28 @@ public class DisciplineMB implements Serializable {
 	
 	@ManagedProperty(value="#{userSessionMB}")
 	private UserSessionMB userSessionMB;
-	
-	@ManagedProperty(value="#{mainMB}")
-	private MainMB mainMB;
 
 	private List<Discipline> userDisciplines;
 	
 	private IDiscipline selectedDiscipline;
+	
+	private IChallenge selectedChallenge;
 	
 	@PostConstruct
 	public void init() {
 		loadUserDisciplines();
 	}
 		
-	public void loadUserDisciplines() {
-		
+	public void loadUserDisciplines() {		
 		final ICourse course = userSessionMB.getUser().getGeneralInfo().getCourse();
-		userDisciplines = disciplineBusiness.findByCourse(course);		
-		mainMB.setSelectedOption(MenuOption.LOAD_DISCIPLINES);
+		userDisciplines = disciplineBusiness.findByCourse(course);
 	}
 	
-	public void changeSelectedDiscipline() {
+	public void selectDiscipline() {
+		
+	}
+	
+	public void selectChallenge() {
 		
 	}
 	
@@ -65,14 +67,6 @@ public class DisciplineMB implements Serializable {
 		this.userSessionMB = userSessionMB;
 	}
 
-	public MainMB getMainMB() {
-		return mainMB;
-	}
-
-	public void setMainMB(MainMB mainMB) {
-		this.mainMB = mainMB;
-	}
-
 	public List<Discipline> getUserDisciplines() {
 		return userDisciplines;
 	}
@@ -88,6 +82,12 @@ public class DisciplineMB implements Serializable {
 	public void setSelectedDiscipline(IDiscipline selectedDiscipline) {
 		this.selectedDiscipline = selectedDiscipline;
 	}
-	
 
+	public IChallenge getSelectedChallenge() {
+		return selectedChallenge;
+	}
+
+	public void setSelectedChallenge(IChallenge selectedChallenge) {
+		this.selectedChallenge = selectedChallenge;
+	}
 }

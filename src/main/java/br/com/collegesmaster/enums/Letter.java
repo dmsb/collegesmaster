@@ -4,8 +4,7 @@ public enum Letter {
 	A('A'), 
 	B('B'),
 	C('C'),
-	D('D'),
-	E('E');
+	D('D');
 	
 	private final Character letter;
 	

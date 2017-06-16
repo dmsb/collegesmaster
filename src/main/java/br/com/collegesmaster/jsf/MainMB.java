@@ -23,6 +23,22 @@ public class MainMB implements Serializable {
 		selectedOption = MenuOption.LOAD_DISCIPLINES;	
 	}
 	
+	public String disciplinesSelected() {
+		return "/pages/disciplines.xhtml?faces-redirect=true"; 
+	}
+	
+	public String createChallengeSelected() {
+		return "/pages/create_challenge.xhtml?faces-redirect=true"; 
+	}
+	
+	public String completedsChallengeSelected() {
+		return "/pages/completed_challenges.xhtml?faces-redirect=true"; 
+	}
+	
+	public String createdChallengeSelected() {
+		return "/pages/challenges.xhtml?faces-redirect=true"; 
+	}
+	
 	public UserSessionMB getUserSessionMB() {
 		return userSessionMB;
 	}

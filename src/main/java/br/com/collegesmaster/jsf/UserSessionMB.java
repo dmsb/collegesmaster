@@ -32,7 +32,7 @@ public class UserSessionMB implements Serializable {
 	        context.addMessage(null, new FacesMessage("Credenciais incorretas",  "login e/ou senha incorretos"));
 	        return null;
 		} else {			
-			return "/pages/user_main.xhtml?faces-redirect=true";
+			return "/pages/disciplines.xhtml?faces-redirect=true";
 		}
 
 	}

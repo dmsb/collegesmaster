@@ -6,13 +6,13 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 
-<composite:interface>
-	<composite:attribute name="disciplineMB" required="true"
-		type="br.com.collegesmaster.jsf.DisciplineMB"
-		shortDescription="Managed bean for Discipline" />
+<composite:interface>	
 	<composite:attribute name="userSessionMB" required="true"
 		type="br.com.collegesmaster.jsf.UserSessionMB"
 		shortDescription="Managed bean for User session" />
+	<composite:attribute name="mainMB" required="true"
+		type="br.com.collegesmaster.jsf.MainMB"
+		shortDescription="Managed bean for main menu" />
 </composite:interface>
 
 <composite:implementation>
@@ -27,12 +27,21 @@
 			<h:form id="menu_form">
 				<p:menu>
 					<p:submenu label="#{text['label_user_menu']}">
-						<p:menuitem value="#{text['label_show_disciplines']}"
-							actionListener="#{cc.attrs.disciplineMB.loadUserDisciplines()}"
+						<p:menuitem value="#{text['label_disciplines']}"
+							action="#{cc.attrs.mainMB.disciplinesSelected()}"							
 							icon="ui-icon-disk" />
+						<p:menuitem value="#{text['label_create_challenge']}"
+							action="#{cc.attrs.mainMB.createChallengeSelected()}"
+							icon="ui-icon-arrowrefresh-1-w" />
+						<p:menuitem value="#{text['label_completed_challenges']}"
+							action="#{cc.attrs.mainMB.completedsChallengeSelected()}"
+							icon="ui-icon-arrowrefresh-1-w" />
+						<p:menuitem value="#{text['label_created_challenges']}"
+							action="#{cc.attrs.mainMB.createdChallengeSelected()}"
+							icon="ui-icon-arrowrefresh-1-w" />
 						<p:menuitem value="#{text['label_logout']}"
 							action="#{cc.attrs.userSessionMB.logout()}"
-							icon="ui-icon-arrowrefresh-1-w" />
+							icon="ui-icon-arrowrefresh-1-w" />							
 					</p:submenu>
 				</p:menu>
 			</h:form>
