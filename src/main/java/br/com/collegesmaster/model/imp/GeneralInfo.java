@@ -11,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -33,8 +33,7 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
 	@Column(name = "id")
 	private Integer id;
 	
-	@Column(name = "cpf", unique = true, updatable = true, nullable = false, length = 14)
-	@Size(min = 14, max = 14)
+	@Column(name = "cpf", unique = true,  nullable = false, length = 11)	
 	@NotNull
     @CPF
     private String cpf;
@@ -58,7 +57,7 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
     @Column(name = "birthdate", updatable = true, nullable = false)
     private LocalDate birthdate;
     
-    @OneToOne(targetEntity = Course.class, fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(targetEntity = Course.class, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     private ICourse course;
     

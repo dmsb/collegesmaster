@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model;
 
-import java.util.List;
+import java.util.Set;
 
 import br.com.collegesmaster.enums.QuestionLevel;
 
@@ -10,9 +10,9 @@ public interface IQuestion extends IModel {
 
 	QuestionLevel getLevel();
 
-	void setAlternatives(List<IAlternative> alternatives);
+	void setAlternatives(Set<IAlternative> alternatives);
 
-	List<IAlternative> getAlternatives();
+	Set<IAlternative> getAlternatives();
 
 	void setPontuation(Integer pontuation);
 

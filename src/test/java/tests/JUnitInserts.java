@@ -1,11 +1,11 @@
 package tests;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -111,7 +111,7 @@ public class JUnitInserts extends JUnitConfiguration {
         final IDiscipline discipline = em.find(Discipline.class, 1);
         final IUser user = em.find(User.class, 1);
         
-        final List<IQuestion> questions = new ArrayList<>();
+        final Set<IQuestion> questions = new LinkedHashSet<IQuestion>();
         questions.add(em.find(Question.class, 1));
         
         final IChallenge challenge = new Challenge();
@@ -132,7 +132,7 @@ public class JUnitInserts extends JUnitConfiguration {
         final IChallengeResolution challengeResponse = new ChallengeResolution();
         challengeResponse.setOwner(user);        
         challengeResponse.setTargetChallenge(targetChallenge);
-        challengeResponse.setQuestionsResolution(new ArrayList<IQuestionResolution>());
+        challengeResponse.setQuestionsResolution(new LinkedHashSet<IQuestionResolution>());
         
         buildQuestionsResolution(targetChallenge, challengeResponse);
         
@@ -143,7 +143,7 @@ public class JUnitInserts extends JUnitConfiguration {
 	private void buildQuestionsResolution(final IChallenge targetChallenge,
 			final IChallengeResolution challengeResponse) {
 		
-		final List<IQuestion> targetQuestions = targetChallenge.getQuestions();
+		final Set<IQuestion> targetQuestions = targetChallenge.getQuestions();
         
 		targetQuestions.forEach(currentTargetQuestion -> {
         	
@@ -160,8 +160,8 @@ public class JUnitInserts extends JUnitConfiguration {
 	private void buildAlternativesResolution(IQuestion currentTargetQuestion,
 			final IQuestionResolution questionResolution) {
 		
-		final List<IAlternative> targetAlternatives = currentTargetQuestion.getAlternatives();
-		questionResolution.setAlternativesResolution(new ArrayList<>());
+		final Set<IAlternative> targetAlternatives = currentTargetQuestion.getAlternatives();
+		questionResolution.setAlternativesResolution(new LinkedHashSet<IAlternativeResolution>());
 		
 		for(final IAlternative targetAlternative : targetAlternatives) {
 			final IAlternativeResolution alternativeResolution = new AlternativeResolution();

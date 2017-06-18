@@ -1,5 +1,9 @@
 package br.com.collegesmaster.business.imp;
 
+import static br.com.collegesmaster.model.imp.Institute_.courses;
+import static br.com.collegesmaster.model.imp.Institute_.id;
+import static br.com.collegesmaster.model.imp.Institute_.name;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +18,6 @@ import javax.persistence.criteria.Selection;
 import br.com.collegesmaster.business.IInstituteBusiness;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.imp.Institute;
-import br.com.collegesmaster.model.imp.Institute_;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -61,8 +64,8 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 		final Root<Institute> rootInstitute = criteriaQuery.from(Institute.class);
 		
 		final List<Selection<?>> idAndNameSelections = new ArrayList<Selection<?>>();
-		idAndNameSelections.add(rootInstitute.get(Institute_.id));
-		idAndNameSelections.add(rootInstitute.get(Institute_.name));
+		idAndNameSelections.add(rootInstitute.get(id));
+		idAndNameSelections.add(rootInstitute.get(name));
 		
 		criteriaQuery.multiselect(idAndNameSelections);
 
@@ -77,7 +80,7 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 		final CriteriaQuery<Institute> criteriaQuery = criteriaBuilder.createQuery(Institute.class);
 		final Root<Institute> instituteRoot = criteriaQuery.from(Institute.class);
 				
-		instituteRoot.fetch(Institute_.courses);
+		instituteRoot.fetch(courses);
 		criteriaQuery.select(instituteRoot).distinct(true);
 		//"If DISTINCT is not specified, duplicate values are not eliminated." (section 4.8 of JPA v2.0)
 		

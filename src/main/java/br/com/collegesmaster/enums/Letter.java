@@ -12,7 +12,7 @@ public enum Letter {
 		this.letter = letter;
 	}
 	
-	public Character getLevel() {
+	public Character getLetter() {
 		return letter;
 	}
 }

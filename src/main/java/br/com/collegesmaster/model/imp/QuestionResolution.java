@@ -1,8 +1,8 @@
 package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,7 +38,7 @@ public class QuestionResolution implements IQuestionResolution, Serializable {
 	
 	@OneToMany(targetEntity = AlternativeResolution.class, cascade = CascadeType.ALL,
 		fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "questionResolution")
-	private List<IAlternativeResolution> alternativesResolution;
+	private Set<IAlternativeResolution> alternativesResolution;
 	
 	@ManyToOne(targetEntity = Question.class, fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "targetQuestionFK", referencedColumnName = "id")
@@ -65,12 +65,12 @@ public class QuestionResolution implements IQuestionResolution, Serializable {
 	}
 
 	@Override
-	public List<IAlternativeResolution> getAlternativesResolution() {
+	public Set<IAlternativeResolution> getAlternativesResolution() {
 		return alternativesResolution;
 	}
 
 	@Override
-	public void setAlternativesResolution(List<IAlternativeResolution> alternativesResolution) {
+	public void setAlternativesResolution(Set<IAlternativeResolution> alternativesResolution) {
 		this.alternativesResolution = alternativesResolution;
 	}
 

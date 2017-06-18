@@ -6,11 +6,11 @@
 		<locale-config>
 			<default-locale>pt_BR</default-locale>
 			<supported-locale>pt_BR</supported-locale>
-			<supported-locale>en</supported-locale>
+		<supported-locale>en</supported-locale>
 		</locale-config>
 		<resource-bundle>
 			<base-name>languages.text</base-name>
 			<var>text</var>
-		</resource-bundle>
+		</resource-bundle>		
 	</application>
 </faces-config>

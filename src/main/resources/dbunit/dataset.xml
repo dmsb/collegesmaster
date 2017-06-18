@@ -53,20 +53,16 @@
 	<discipline courseFK='6' name='fisica iv' />
 
 	<general_info birthdate='1993-10-17 00:00:00' cpf='10719498457'
-		email='diogomsb1@gmail.com' firstname='diogo' lastname='brito' city='recife'
-		country='brasil' state='pernambuco' courseId='1' />
+		email='diogomsb1@gmail.com' firstname='diogo' lastname='brito' courseId='1' />
 
 	<general_info birthdate='1998-10-17 00:00:00' cpf='42518426507'
-		email='tainaramsb1@gmail.com' firstname='tainara' lastname='dantas'
-		city='recife' country='brasil' state='pernambuco' courseId='1' />
+		email='tainaramsb1@gmail.com' firstname='tainara' lastname='dantas' courseId='1' />
 
 	<general_info birthdate='1998-10-17 00:00:00' cpf='44046156201'
-		email='transoc@gmail.com' firstname='fernando' lastname='ribeiro'
-		city='são paulo' country='brasil' state='pernambuco' courseId='1' />
+		email='transoc@gmail.com' firstname='fernando' lastname='ribeiro' courseId='1' />
 
 	<general_info birthdate='1998-10-17 00:00:00' cpf='34796683305'
-		email='juca1@gmail.com' firstname='lucas' lastname='muniz' city='bahia'
-		country='brasil' state='pernambuco' courseId='2' />
+		email='juca1@gmail.com' firstname='lucas' lastname='muniz' courseId='2' />
 
 	<!-- password = D10g0! -->
 	<user username='diogo.brito'

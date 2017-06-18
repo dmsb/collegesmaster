@@ -1,8 +1,8 @@
 package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -46,7 +46,7 @@ public class Question implements IQuestion, Serializable {
 	@NotNull
 	@OneToMany(targetEntity = Alternative.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY,
 		orphanRemoval = true, mappedBy = "question")
-	private List<IAlternative> alternatives;
+	private Set<IAlternative> alternatives;
 	
 	@NotNull
 	@Basic(optional = false)
@@ -109,12 +109,12 @@ public class Question implements IQuestion, Serializable {
 	
 
 	@Override
-	public void setAlternatives(List<IAlternative> alternatives) {
+	public void setAlternatives(Set<IAlternative> alternatives) {
 		this.alternatives = alternatives;
 	}
 
 	@Override
-	public List<IAlternative> getAlternatives() {
+	public Set<IAlternative> getAlternatives() {
 		return alternatives;
 	}
 

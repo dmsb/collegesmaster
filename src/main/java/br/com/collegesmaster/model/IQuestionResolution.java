@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model;
 
-import java.util.List;
+import java.util.Set;
 
 public interface IQuestionResolution extends IModel {
 
@@ -8,9 +8,9 @@ public interface IQuestionResolution extends IModel {
 
 	IQuestion getTargetQuestion();
 
-	void setAlternativesResolution(List<IAlternativeResolution> alternativesResolution);
+	void setAlternativesResolution(Set<IAlternativeResolution> alternativesResolution);
 
-	List<IAlternativeResolution> getAlternativesResolution();
+	Set<IAlternativeResolution> getAlternativesResolution();
 
 	void setChallengeResolution(IChallengeResolution challengeResolution);
 

@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -24,6 +25,7 @@ import br.com.collegesmaster.annotations.Password;
 import br.com.collegesmaster.model.IGeneralInfo;
 import br.com.collegesmaster.model.IProfile;
 import br.com.collegesmaster.model.IUser;
+import br.com.collegesmaster.util.CryptoUtils;
 
 @Entity
 @Table(name = "user")
@@ -46,7 +48,17 @@ public class User implements Serializable, IUser {
     @Size(min = 6)
     @Password
     private String password;
-    
+
+//    private Set<IAlternative> responsedAlternatves;
+//    
+//     {
+//    	 Map<IQuestion, List<IAlternative>> map = responsedAlternatves.stream()
+//    			 .collect(groupingBy(IAlternative::getQuestion));
+//
+//    	 Map<IChallenge, List<Entry<IQuestion, List<IAlternative>>>> responsedChallenges = map.entrySet()
+//    			 .stream().collect(groupingBy(entry -> entry.getKey().getChallenge()));
+//    }
+     
     @NotNull
 	@Column(name = "salt", unique = false, nullable = false, length = 88)
     private String salt;
@@ -62,6 +74,16 @@ public class User implements Serializable, IUser {
 	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
 	    inverseJoinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")})
     private List<IProfile> profiles;
+    
+    @PrePersist
+    private void buildPassword() {
+    	final String salt = CryptoUtils.generateSalt();	
+		setSalt(salt);
+		setPassword(CryptoUtils.getHashedPassword(getPassword(), salt));
+				
+		final String crudeCpf = getGeneralInfo().getCpf().replace(".", "").replace("-", "");
+		getGeneralInfo().setCpf(crudeCpf);
+    }
     
 	@Override
 	public IGeneralInfo getGeneralInfo() {
@@ -141,4 +163,9 @@ public class User implements Serializable, IUser {
 		
 		return Objects.equals(getId(), objectComparatedInstance.getId());
 	}
+	
+	@Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
 }

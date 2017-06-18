@@ -1,8 +1,8 @@
 package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -48,7 +48,7 @@ public class Challenge implements Serializable, IChallenge {
 	
 	@OneToMany(targetEntity = Question.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, 
 		orphanRemoval = true, mappedBy="challenge")
-	private List<IQuestion> questions;
+	private Set<IQuestion> questions;
 	
 	public Challenge() {
 		
@@ -99,12 +99,12 @@ public class Challenge implements Serializable, IChallenge {
 	}
 	
 	@Override
-	public List<IQuestion> getQuestions() {
+	public Set<IQuestion> getQuestions() {
 		return questions;
 	}
 
 	@Override
-	public void setQuestions(List<IQuestion> questions) {
+	public void setQuestions(Set<IQuestion> questions) {
 		this.questions = questions;
 	}
 

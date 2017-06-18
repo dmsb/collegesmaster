@@ -12,11 +12,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </h:head>
 <h:body>
-	<composites:layouts mainMB="#{mainMB}"
-		userSessionMB="#{userSessionMB}">
-		<p:layoutUnit position="center"  header="#{text['label_disciplines']}" style="text-align:center">
-			<h:form id="disciplinesForm">
-				<p:dataTable id="disciplinesDataTable" var="discipline" value="#{disciplineMB.userDisciplines}"
+	<composites:layouts main_mb="#{mainMB}"
+		user_session_mb="#{userSessionMB}">
+		<p:layoutUnit id="layout_center" position="center" header="#{text['label_disciplines']}" style="text-align:center">
+			<h:form id="disciplines_form">
+				<p:dataTable id="disciplines_data_table" var="discipline" value="#{disciplineMB.userDisciplines}"
 					selectionMode="single" selection="#{disciplineMB.selectedDiscipline}" rowKey="#{discipline.id}">							
 					
 					<p:column headerText="#{text['label_title']}">
@@ -27,15 +27,15 @@
 						<h:outputText value="#{discipline.challenges.size()}" />					
 					</p:column>
 					
-					<p:ajax event="rowSelect"  listener="#{disciplineMB.selectDiscipline()}"
-						oncomplete="PF('challengesWV').show()" />					
+					<p:ajax event="rowSelect" listener="#{disciplineMB.selectDiscipline()}" 
+						oncomplete="PF('challenges_wv').show()" />					
 				</p:dataTable>					
 			</h:form>
 			
-			<h:form id="challengesForm">
-				<p:dialog id="challengesDialogId" widgetVar="challengesWV" closeOnEscape="true" closable="true" resizable="false"
+			<h:form id="challenges_form">
+				<p:dialog id="challenges_dialog" widgetVar="challenges_wv" closeOnEscape="true" closable="true" resizable="false"
 					responsive="true" hideEffect="puff" showEffect="puff" height="500" width="500">
-					<p:dataTable id="challengesDataTable" var="challenge" value="#{disciplineMB.selectedDiscipline.challenges}"
+					<p:dataTable id="challenges_data_table" var="challenge" value="#{disciplineMB.selectedDiscipline.challenges}"
 						selectionMode="single" selection="#{disciplineMB.selectedChallenge}" rowKey="#{challenge.id}">
 						
 						<f:facet name="header">

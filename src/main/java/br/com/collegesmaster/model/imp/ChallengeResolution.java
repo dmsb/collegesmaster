@@ -1,11 +1,11 @@
 package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -52,7 +52,7 @@ public class ChallengeResolution implements IChallengeResolution, Serializable {
 	
 	@OneToMany(targetEntity = QuestionResolution.class, cascade = CascadeType.ALL, 
 		fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "challengeResolution")
-	private List<IQuestionResolution> questionsResolution;
+	private Set<IQuestionResolution> questionsResolution;
 	
 	@ManyToOne(targetEntity = Challenge.class, fetch = FetchType.LAZY, optional = false, 
 			cascade = {CascadeType.DETACH, CascadeType.REFRESH})
@@ -64,28 +64,32 @@ public class ChallengeResolution implements IChallengeResolution, Serializable {
 	private void calculateNote() {
 		note = 0;			
 		
-		final List<IQuestion> targetQuestions = new ArrayList<IQuestion>(targetChallenge.getQuestions());
+		final Set<IQuestion> targetQuestions = targetChallenge.getQuestions();
 		
-		if(!(CollectionUtils.isEmpty(targetQuestions) || CollectionUtils.isEmpty(questionsResolution))){
+		if(!(CollectionUtils.isEmpty(targetQuestions) || CollectionUtils.isEmpty(questionsResolution))) {
 			
-			for(int i = 0; i < targetQuestions.size(); i++) {
+			final Iterator<IQuestion> targetQuestionIterator = targetQuestions.iterator();
+			final Iterator<IQuestionResolution> questionResolutionIterator = questionsResolution.iterator();
+			
+			while(targetQuestionIterator.hasNext() && questionResolutionIterator.hasNext()) {
+				
 				final Map<Letter, Boolean> challengeResolution = new LinkedHashMap<Letter, Boolean>();
 				final Map<Letter, Boolean> myResolution = new LinkedHashMap<Letter, Boolean>();
 				
-				final IQuestion targetQuestion = targetQuestions.get(i);
+				final IQuestion targetQuestion = targetQuestionIterator.next();
 				final Integer pontuation = targetQuestion.getPontuation();
-				final IQuestionResolution myQuestion = questionsResolution.get(i);
+				final IQuestionResolution myQuestion = questionResolutionIterator.next();
 				
 				buildResponses(pontuation, targetQuestion, challengeResolution, myResolution, myQuestion);
-			}		
+			}						
 		}
 	}
 
 	private void buildResponses(final Integer pontuation, final IQuestion question, final Map<Letter, Boolean> challengeResolution,
 			final Map<Letter, Boolean> myResolution, final IQuestionResolution myQuestion) {
 		
-		final List<IAlternative> targetAlternatives = question.getAlternatives();
-		final List<IAlternativeResolution> alternativesResolution = myQuestion.getAlternativesResolution();			
+		final Set<IAlternative> targetAlternatives = question.getAlternatives();
+		final Set<IAlternativeResolution> alternativesResolution = myQuestion.getAlternativesResolution();			
 		
 		targetAlternatives.forEach(targetAlternative -> challengeResolution.put(targetAlternative.getLetter(), targetAlternative.getDefinition()));		
 		
@@ -139,12 +143,12 @@ public class ChallengeResolution implements IChallengeResolution, Serializable {
 	}
 
 	@Override
-	public List<IQuestionResolution> getQuestionsResolution() {
+	public Set<IQuestionResolution> getQuestionsResolution() {
 		return questionsResolution;
 	}
 
 	@Override
-	public void setQuestionsResolution(List<IQuestionResolution> questionsResolution) {
+	public void setQuestionsResolution(Set<IQuestionResolution> questionsResolution) {
 		this.questionsResolution = questionsResolution;
 	}
 	

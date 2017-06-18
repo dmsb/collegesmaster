@@ -2,7 +2,9 @@ package br.com.collegesmaster.jsf;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -15,8 +17,11 @@ import br.com.collegesmaster.enums.Letter;
 import br.com.collegesmaster.enums.QuestionLevel;
 import br.com.collegesmaster.model.IAlternative;
 import br.com.collegesmaster.model.IChallenge;
+import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IQuestion;
+import br.com.collegesmaster.model.imp.Alternative;
 import br.com.collegesmaster.model.imp.Challenge;
+import br.com.collegesmaster.model.imp.Discipline;
 import br.com.collegesmaster.model.imp.Question;
 
 @ManagedBean(name = "challengeMB")
@@ -31,6 +36,9 @@ public class ChallengeMB implements Serializable {
 	@ManagedProperty(value="#{userSessionMB}")
 	private UserSessionMB userSessionMB;
 	
+	@ManagedProperty(value="#{disciplineMB}")
+	private DisciplineMB disciplineMB;
+	
 	private IChallenge challenge;
 	
 	private IQuestion currentQuestion;
@@ -41,26 +49,72 @@ public class ChallengeMB implements Serializable {
 	
 	private QuestionLevel[] levels;
 	
+	private Letter trueAlternative;
+	
 	@PostConstruct
 	public void init() {
-		challenge = new Challenge();
-		challenge.setOwner(userSessionMB.getUser());
-		challenge.setQuestions(new ArrayList<IQuestion>());
+		if(challenge == null) {
+			challenge = new Challenge();
+			challenge.setDiscipline(new Discipline());
+			challenge.setOwner(userSessionMB.getUser());
+			challenge.setQuestions(new LinkedHashSet<IQuestion>());			
+		}
 		
 		currentQuestion = new Question();
-		currentQuestion.setAlternatives(new ArrayList<IAlternative>());
+		currentQuestion.setAlternatives(new LinkedHashSet<IAlternative>());
 		
-		alternatives = new ArrayList<>(5);		
 		letters = Letter.values();
 		levels = QuestionLevel.values();
+		
+		alternatives = new ArrayList<>(4);
+		alternatives.add(new Alternative());
+		alternatives.add(new Alternative());
+		alternatives.add(new Alternative());
+		alternatives.add(new Alternative());
+		
+		trueAlternative = Letter.A;
+		
+	}	
+	
+	public void persistChallenge() {
+		
+		final Integer disciplineId = challenge.getDiscipline().getId();		
+		final IDiscipline discipline = disciplineMB.getDisciplineBusiness().findById(disciplineId, Discipline.class);		
+		challenge.setDiscipline(discipline);
+		
+		challengeBusiness.persist(challenge);
 	}
 	
 	public void addQuestionToChallenge() {
-		alternatives.forEach(alternative -> alternative.setQuestion(currentQuestion));
-		currentQuestion.setAlternatives(alternatives);
+		
+		Integer count = 0;
+		
+		for(IAlternative alternative : alternatives) {
+			alternative.setQuestion(currentQuestion);
+			alternative.setLetter(letters[count]);
+			
+			if(trueAlternative.equals(alternative.getLetter())) {
+				alternative.setDefinition(Boolean.TRUE);
+			} else {
+				alternative.setDefinition(Boolean.FALSE);
+			}			
+			count++;
+		}
+		
+		final Set<IAlternative> alternativeSet = new LinkedHashSet<IAlternative>();
+		alternatives.forEach(alternative -> alternativeSet.add(alternative));
+		
+		currentQuestion.setAlternatives(alternativeSet);
 		currentQuestion.setChallenge(challenge);
 		challenge.getQuestions().add(currentQuestion);
+		
+		init();
 	}
+	
+	public void removeQuestion() {
+        challenge.getQuestions().remove(currentQuestion);
+        currentQuestion = null;
+    }
 	
 	public UserSessionMB getUserSessionMB() {
 		return userSessionMB;
@@ -108,6 +162,22 @@ public class ChallengeMB implements Serializable {
 
 	public void setLevels(QuestionLevel[] levels) {
 		this.levels = levels;
+	}
+
+	public Letter getTrueAlternative() {
+		return trueAlternative;
+	}
+
+	public void setTrueAlternative(Letter trueAlternative) {
+		this.trueAlternative = trueAlternative;
+	}
+
+	public DisciplineMB getDisciplineMB() {
+		return disciplineMB;
+	}
+
+	public void setDisciplineMB(DisciplineMB disciplineMB) {
+		this.disciplineMB = disciplineMB;
 	}
 	
 }

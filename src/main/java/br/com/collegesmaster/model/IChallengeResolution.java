@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model;
 
-import java.util.List;
+import java.util.Set;
 
 public interface IChallengeResolution extends IModel {
 
@@ -12,9 +12,9 @@ public interface IChallengeResolution extends IModel {
 
 	Integer getNote();
 
-	void setQuestionsResolution(List<IQuestionResolution> myQuestionsResolution);
+	void setQuestionsResolution(Set<IQuestionResolution> myQuestionsResolution);
 
-	List<IQuestionResolution> getQuestionsResolution();
+	Set<IQuestionResolution> getQuestionsResolution();
 
 	void setOwner(IUser owner);
 

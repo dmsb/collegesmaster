@@ -1,5 +1,9 @@
 package br.com.collegesmaster.business.imp;
 
+import static br.com.collegesmaster.model.imp.User_.generalInfo;
+import static br.com.collegesmaster.model.imp.User_.password;
+import static br.com.collegesmaster.model.imp.User_.username;
+
 import java.util.List;
 import java.util.logging.Level;
 
@@ -17,29 +21,25 @@ import com.google.common.base.Strings;
 import br.com.collegesmaster.business.IUserBusiness;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.imp.User;
-import br.com.collegesmaster.model.imp.User_;
 import br.com.collegesmaster.util.CryptoUtils;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class UserBusiness extends GenericBusiness implements IUserBusiness {	
+public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	
 	@Override
 	public void persist(final IUser user) {
 		entityManager.persist(user);
-
 	}
 
 	@Override
 	public void merge(final IUser user) {
 		entityManager.merge(user);
-
 	}
 
 	@Override
 	public void remove(final IUser user) {
 		entityManager.remove(user);
-
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		
 		queryBuilder
 			.append("SELECT user.salt ")
-			.append("FROM   User user where user.username = :username");
+			.append("FROM   User user WHERE user.username = :username");
 
 		final Query query = entityManager.createQuery(queryBuilder.toString());
 		query.setParameter("username", username);
@@ -93,16 +93,16 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		return null;
 	}
 
-	private IUser buildLogin(final String username, final String password, final String salt) {
+	private IUser buildLogin(final String usernameSubmited, final String passwordSubmited, final String salt) {
 
-		final String hashedPassword = CryptoUtils.getHashedPassword(password, salt);
+		final String hashedPassword = CryptoUtils.getHashedPassword(passwordSubmited, salt);
 
 		final CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
 		final Root<User> userRoot = criteriaQuery.from(User.class);
-		userRoot.fetch(User_.generalInfo);
+		userRoot.fetch(generalInfo);
 		
-		final Predicate usernamePredicate = criteriaBuilder.equal(userRoot.get(User_.username), username);
-		final Predicate passwordPredicate = criteriaBuilder.equal(userRoot.get(User_.password), hashedPassword);
+		final Predicate usernamePredicate = criteriaBuilder.equal(userRoot.get(username), usernameSubmited);
+		final Predicate passwordPredicate = criteriaBuilder.equal(userRoot.get(password), hashedPassword);
 		
 		criteriaQuery.select(userRoot).where(usernamePredicate, passwordPredicate);		
 		

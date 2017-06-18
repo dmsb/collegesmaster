@@ -7,46 +7,46 @@
 	xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>	
-	<composite:attribute name="userSessionMB" required="true"
+	<composite:attribute name="user_session_mb" required="true"
 		type="br.com.collegesmaster.jsf.UserSessionMB"
 		shortDescription="Managed bean for User session" />
-	<composite:attribute name="mainMB" required="true"
+	<composite:attribute name="main_mb" required="true"
 		type="br.com.collegesmaster.jsf.MainMB"
 		shortDescription="Managed bean for main menu" />
 </composite:interface>
 
 <composite:implementation>
-	<p:layout fullPage="true">
-		<p:layoutUnit position="north"
+	<p:layout id="layout" fullPage="true">
+		<p:layoutUnit id="layout_north" position="north"
 			header="#{text['label_application_title']}"
 			style="text-align: center;" />
 
-		<p:layoutUnit position="west"
+		<p:layoutUnit id="layout_west" position="west"
 			header="#{text['label_welcome']} #{cc.attrs.userSessionMB.user.generalInfo.firstName} "
 			size="30%">
 			<h:form id="menu_form">
 				<p:menu>
 					<p:submenu label="#{text['label_user_menu']}">
 						<p:menuitem value="#{text['label_disciplines']}"
-							action="#{cc.attrs.mainMB.disciplinesSelected()}"							
+							action="#{cc.attrs.main_mb.disciplinesSelected()}"							
 							icon="ui-icon-disk" />
 						<p:menuitem value="#{text['label_create_challenge']}"
-							action="#{cc.attrs.mainMB.createChallengeSelected()}"
+							action="#{cc.attrs.main_mb.createChallengeSelected()}"
 							icon="ui-icon-arrowrefresh-1-w" />
 						<p:menuitem value="#{text['label_completed_challenges']}"
-							action="#{cc.attrs.mainMB.completedsChallengeSelected()}"
+							action="#{cc.attrs.main_mb.completedsChallengeSelected()}"
 							icon="ui-icon-arrowrefresh-1-w" />
 						<p:menuitem value="#{text['label_created_challenges']}"
-							action="#{cc.attrs.mainMB.createdChallengeSelected()}"
+							action="#{cc.attrs.main_mb.createdChallengeSelected()}"
 							icon="ui-icon-arrowrefresh-1-w" />
 						<p:menuitem value="#{text['label_logout']}"
-							action="#{cc.attrs.userSessionMB.logout()}"
+							action="#{cc.attrs.user_session_mb.logout()}"
 							icon="ui-icon-arrowrefresh-1-w" />							
 					</p:submenu>
 				</p:menu>
 			</h:form>
 		</p:layoutUnit>
-		<p:layoutUnit position="south" footer="version 0.1 | Copyright 2017"
+		<p:layoutUnit id="layout_south" position="south" footer="version 0.1 | Copyright 2017"
 			style="text-align: center;" />
 		<composite:insertChildren />
 	</p:layout>

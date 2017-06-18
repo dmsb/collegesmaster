@@ -33,15 +33,17 @@ public class InstituteMB {
 		institutes = new ArrayList<Institute>();
 	}
 	
-	public List<ICourse> allCoursesByInstitute() {
+	public List<ICourse> findCoursesByInstitute() {
 		if(institute != null) {
-			return institute.getCourses();			
+			final ICourse currentCourse = institute.getCourses().get(0);
+			homeMB.getUser().getGeneralInfo().setCourse(currentCourse);
+			return institute.getCourses();
 		} else {
 			return null;
 		}
 	}
 	
-	public void changeInstitute() {
+	public void changeInstituteEvent() {
 		
 		final Integer currentUserInstituteId = institute.getId();
 		
@@ -54,7 +56,7 @@ public class InstituteMB {
 		});
 	}
 	
-	public void changeCourse() {
+	public void changeCourseEvent() {
 		final Integer currentUserCourseId = homeMB.getUser().getGeneralInfo().getCourse().getId();
 		
 		institute.getCourses().forEach(currentCourse -> {

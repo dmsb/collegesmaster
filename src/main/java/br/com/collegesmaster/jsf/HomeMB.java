@@ -19,7 +19,6 @@ import br.com.collegesmaster.model.imp.Course;
 import br.com.collegesmaster.model.imp.GeneralInfo;
 import br.com.collegesmaster.model.imp.Profile;
 import br.com.collegesmaster.model.imp.User;
-import br.com.collegesmaster.util.CryptoUtils;
 
 @ManagedBean(name = "homeMB")
 @ViewScoped
@@ -52,17 +51,16 @@ public class HomeMB implements Serializable {
 	}
 	
 	public void persistUser() {
-		final String salt = CryptoUtils.generateSalt();	
-		user.setSalt(salt);
-		user.setPassword(CryptoUtils.getHashedPassword(user.getPassword(), salt));
 		
 		final IProfile completeProfile = profileBusiness.findById(userProfile.getId(), Profile.class);
-		
 		user.getProfiles().add(completeProfile);
+		
 		userBusiness.persist(user);
 		
 		FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Parabéns!",  "Usuário registrado com sucesso"));
+        context.addMessage(null, new FacesMessage("Sucesso!",  "Usuário registrado."));
+        init();
+        
 	}
 		
 	public IUser getUser() {
