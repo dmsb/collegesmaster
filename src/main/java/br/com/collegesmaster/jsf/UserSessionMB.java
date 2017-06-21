@@ -18,7 +18,7 @@ public class UserSessionMB implements Serializable {
 	private static final long serialVersionUID = 4684060370406574773L;
 
 	@EJB
-	private IUserBusiness userBusiness;
+	private transient IUserBusiness userBusiness;
 	
 	private IUser user;
 	private String username;
@@ -32,7 +32,7 @@ public class UserSessionMB implements Serializable {
 	        context.addMessage(null, new FacesMessage("Credenciais incorretas",  "login e/ou senha incorretos"));
 	        return null;
 		} else {			
-			return "/pages/disciplines.xhtml?faces-redirect=true";
+			return "/pages/challenge_response.xhtml?faces-redirect=true";
 		}
 
 	}

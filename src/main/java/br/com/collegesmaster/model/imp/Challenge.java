@@ -1,21 +1,27 @@
 package br.com.collegesmaster.model.imp;
 
-import java.io.Serializable;
+import static javax.persistence.AccessType.FIELD;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IDiscipline;
@@ -24,29 +30,33 @@ import br.com.collegesmaster.model.IUser;
 
 @Entity
 @Table(name = "challenge")
-public class Challenge implements Serializable, IChallenge {
+@Access(FIELD)
+@Audited
+public class Challenge implements IChallenge {
 
 	private static final long serialVersionUID = 6314730845000580522L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 	
-	@NotNull
+	@NotBlank
 	@Column(name= "title", unique = false, nullable = false, length = 30)
 	private String title;
 	
+	@NotAudited
 	@NotNull
-	@ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "userFK", referencedColumnName = "id")
+	@ManyToOne(targetEntity = User.class, optional = false, fetch = LAZY)
+	@JoinColumn(name = "userFK", referencedColumnName = "id", updatable = false)
 	private IUser owner;
 	
-	@ManyToOne(targetEntity = Discipline.class, optional = false, fetch = FetchType.LAZY)
+	@NotNull
+	@ManyToOne(targetEntity = Discipline.class, optional = false, fetch = LAZY)
 	@JoinColumn(name = "disciplineFK", referencedColumnName = "id")
 	private IDiscipline discipline;
 	
-	@OneToMany(targetEntity = Question.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, 
+	@OneToMany(targetEntity = Question.class, cascade = ALL, fetch = LAZY, 
 		orphanRemoval = true, mappedBy="challenge")
 	private Set<IQuestion> questions;
 	
@@ -110,25 +120,23 @@ public class Challenge implements Serializable, IChallenge {
 
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
-		if(objectToBeComparated == null) {
+		
+		if(objectToBeComparated == this) {
+			return true;
+		}
+		
+		if(!(objectToBeComparated instanceof Challenge)) {
 			return false;
 		}
 		
-		if((objectToBeComparated.getClass().isAssignableFrom(Challenge.class)) == false) {
-			return false;
-		}
+		final Challenge objectComparatedInstance = (Challenge) objectToBeComparated;
 		
-		final IChallenge objectComparatedInstance = (IChallenge) objectToBeComparated;
-		
-		if(getId() != null && objectComparatedInstance.getId() != null) {
-			return false;
-		}
-		
-		return Objects.equals(getId(), objectComparatedInstance.getId());
+		return id == objectComparatedInstance.id && 
+			    Objects.equals(title, objectComparatedInstance.title);
 	}
 	
 	@Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return Objects.hash(id, title);
     }
 }

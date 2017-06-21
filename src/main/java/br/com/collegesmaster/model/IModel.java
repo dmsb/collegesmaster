@@ -1,6 +1,8 @@
 package br.com.collegesmaster.model;
 
-public interface IModel {
+import java.io.Serializable;
+
+public interface IModel extends Serializable {
 	
 	Integer getId();
 

@@ -2,7 +2,6 @@ package br.com.collegesmaster.jsf;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -11,32 +10,33 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class MainMB implements Serializable {
 
+	private static final String CHALLENGE_RESPONSE = "/pages/challenge_response.xhtml?faces-redirect=true";
+
+	private static final String CHALLENGES = "/pages/challenges.xhtml?faces-redirect=true";
+
+	private static final String COMPLETED_CHALLENGES = "/pages/completed_challenges.xhtml?faces-redirect=true";
+
+	private static final String CREATE_CHALLENGE = "/pages/create_challenge.xhtml?faces-redirect=true";
+
 	private static final long serialVersionUID = 344294436330653003L;
 	
 	@ManagedProperty(value="#{userSessionMB}")
 	private UserSessionMB userSessionMB;
 	
-	private MenuOption selectedOption;
-	
-	@PostConstruct
-	public void init() {
-		selectedOption = MenuOption.LOAD_DISCIPLINES;	
-	}
-	
 	public String disciplinesSelected() {
-		return "/pages/disciplines.xhtml?faces-redirect=true"; 
+		return CHALLENGE_RESPONSE; 
 	}
 	
 	public String createChallengeSelected() {
-		return "/pages/create_challenge.xhtml?faces-redirect=true"; 
+		return CREATE_CHALLENGE; 
 	}
 	
 	public String completedsChallengeSelected() {
-		return "/pages/completed_challenges.xhtml?faces-redirect=true"; 
+		return COMPLETED_CHALLENGES; 
 	}
 	
 	public String createdChallengeSelected() {
-		return "/pages/challenges.xhtml?faces-redirect=true"; 
+		return CHALLENGES; 
 	}
 	
 	public UserSessionMB getUserSessionMB() {
@@ -45,15 +45,6 @@ public class MainMB implements Serializable {
 
 	public void setUserSessionMB(UserSessionMB userSessionMB) {
 		this.userSessionMB = userSessionMB;
-	}
-
-
-	public String getSelectedOption() {
-		return selectedOption.getDescription();
-	}
-
-	public void setSelectedOption(MenuOption selectedOption) {
-		this.selectedOption = selectedOption;
 	}
 	
 }

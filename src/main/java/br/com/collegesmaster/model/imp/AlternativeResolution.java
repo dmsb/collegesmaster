@@ -1,8 +1,12 @@
 package br.com.collegesmaster.model.imp;
 
-import java.io.Serializable;
+import static javax.persistence.AccessType.FIELD;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Objects;
 
+import javax.persistence.Access;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +14,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,12 +26,13 @@ import br.com.collegesmaster.model.IQuestionResolution;
 
 @Entity
 @Table(name = "alternative_resolution")
-public class AlternativeResolution implements IAlternativeResolution, Serializable {
+@Access(FIELD)
+public class AlternativeResolution implements IAlternativeResolution {
 
 	private static final long serialVersionUID = -8281078857129961287L;
 	
 	@Id
-	@GeneratedValue(strategy =GenerationType.IDENTITY)
+	@GeneratedValue(strategy =IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 	
@@ -40,11 +44,11 @@ public class AlternativeResolution implements IAlternativeResolution, Serializab
 	@Column(name = "definition", unique = false, nullable = false)
 	private Boolean definition;
 	
-	@ManyToOne(targetEntity = QuestionResolution.class, optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = QuestionResolution.class, optional = false, fetch = LAZY)
 	@JoinColumn(name = "questionResolutionFK", referencedColumnName = "id")
 	private IQuestionResolution questionResolution;
 	
-	@ManyToOne(targetEntity = Alternative.class, fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(targetEntity = Alternative.class, fetch = LAZY, optional = false)
 	@JoinColumn(name = "targetAlternativeFK", referencedColumnName = "id")
 	private IAlternative targetAlternative;
 	
@@ -100,26 +104,25 @@ public class AlternativeResolution implements IAlternativeResolution, Serializab
 	
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
-		if(objectToBeComparated == null) {
+
+		if(objectToBeComparated == this) {
+			return true;
+		}
+		
+		if(!(objectToBeComparated instanceof AlternativeResolution)) {
 			return false;
 		}
 		
-		if((objectToBeComparated.getClass().isAssignableFrom(Challenge.class)) == false) {
-			return false;
-		}
+		final AlternativeResolution objectComparatedInstance = (AlternativeResolution) objectToBeComparated;
 		
-		final IAlternativeResolution objectComparatedInstance = (IAlternativeResolution) objectToBeComparated;
-		
-		if(getId() != null && objectComparatedInstance.getId() != null) {
-			return false;
-		}
-		
-		return Objects.equals(getId(), objectComparatedInstance.getId());
+		return id == objectComparatedInstance.id && 
+			    Objects.equals(letter, objectComparatedInstance.letter) &&
+			    Objects.equals(definition, objectComparatedInstance.definition);
 	}
 	
 	@Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return Objects.hash(id, letter, definition);
     }
 	
 }

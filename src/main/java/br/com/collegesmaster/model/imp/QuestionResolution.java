@@ -1,15 +1,17 @@
 package br.com.collegesmaster.model.imp;
 
-import java.io.Serializable;
+import static javax.persistence.AccessType.FIELD;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,24 +25,25 @@ import br.com.collegesmaster.model.IQuestionResolution;
 
 @Entity
 @Table(name = "question_resolution")
-public class QuestionResolution implements IQuestionResolution, Serializable {
+@Access(FIELD)
+public class QuestionResolution implements IQuestionResolution {
 	
 	private static final long serialVersionUID = 693650150648888820L;
 
 	@Id
-	@GeneratedValue(strategy =GenerationType.IDENTITY)
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 	
-	@ManyToOne(targetEntity = ChallengeResolution.class, optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = ChallengeResolution.class, optional = false, fetch = LAZY)
 	@JoinColumn(name = "challengeResolutionFK", referencedColumnName = "id")
 	private IChallengeResolution challengeResolution;
 	
-	@OneToMany(targetEntity = AlternativeResolution.class, cascade = CascadeType.ALL,
-		fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "questionResolution")
+	@OneToMany(targetEntity = AlternativeResolution.class, cascade = ALL,
+		fetch = LAZY, orphanRemoval = true, mappedBy = "questionResolution")
 	private Set<IAlternativeResolution> alternativesResolution;
 	
-	@ManyToOne(targetEntity = Question.class, fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(targetEntity = Question.class, fetch = LAZY, optional = false)
 	@JoinColumn(name = "targetQuestionFK", referencedColumnName = "id")
 	private IQuestion targetQuestion;
 	
@@ -86,25 +89,22 @@ public class QuestionResolution implements IQuestionResolution, Serializable {
 	
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
-		if(objectToBeComparated == null) {
+		
+		if(objectToBeComparated == this) {
+			return true;
+		}
+		
+		if(!(objectToBeComparated instanceof Question)) {
 			return false;
 		}
 		
-		if((objectToBeComparated.getClass().isAssignableFrom(Challenge.class)) == false) {
-			return false;
-		}
+		final QuestionResolution objectComparatedInstance = (QuestionResolution) objectToBeComparated;
 		
-		final IQuestionResolution objectComparatedInstance = (IQuestionResolution) objectToBeComparated;
-		
-		if(getId() != null && objectComparatedInstance.getId() != null) {
-			return false;
-		}
-		
-		return Objects.equals(getId(), objectComparatedInstance.getId());
+		return id == objectComparatedInstance.id;
 	}
 	
 	@Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return Objects.hash(getId());
     }
 }

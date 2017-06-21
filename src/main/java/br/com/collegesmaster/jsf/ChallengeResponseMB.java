@@ -17,12 +17,12 @@ import br.com.collegesmaster.model.imp.Discipline;
 
 @ManagedBean
 @ViewScoped
-public class DisciplineMB implements Serializable {
+public class ChallengeResponseMB implements Serializable {
 
 	private static final long serialVersionUID = -6656488708325792261L;
 	
 	@EJB
-	private IDisciplineBusiness disciplineBusiness;
+	private transient IDisciplineBusiness disciplineBusiness;
 	
 	@ManagedProperty(value="#{userSessionMB}")
 	private UserSessionMB userSessionMB;
@@ -41,14 +41,6 @@ public class DisciplineMB implements Serializable {
 	public void loadUserDisciplines() {		
 		final ICourse course = userSessionMB.getUser().getGeneralInfo().getCourse();
 		userDisciplines = disciplineBusiness.findByCourse(course);
-	}
-	
-	public void selectDiscipline() {
-		
-	}
-	
-	public void selectChallenge() {
-		
 	}
 	
 	public IDisciplineBusiness getDisciplineBusiness() {

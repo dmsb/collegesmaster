@@ -31,13 +31,13 @@ public class ChallengeMB implements Serializable {
 	private static final long serialVersionUID = 6075067137564460555L;
 	
 	@EJB
-	private IChallengeBusiness challengeBusiness;
+	private transient IChallengeBusiness challengeBusiness;
 	
 	@ManagedProperty(value="#{userSessionMB}")
 	private UserSessionMB userSessionMB;
 	
-	@ManagedProperty(value="#{disciplineMB}")
-	private DisciplineMB disciplineMB;
+	@ManagedProperty(value="#{challengeResponseMB}")
+	private ChallengeResponseMB challengeResponseMB;
 	
 	private IChallenge challenge;
 	
@@ -79,10 +79,12 @@ public class ChallengeMB implements Serializable {
 	public void persistChallenge() {
 		
 		final Integer disciplineId = challenge.getDiscipline().getId();		
-		final IDiscipline discipline = disciplineMB.getDisciplineBusiness().findById(disciplineId, Discipline.class);		
+		final IDiscipline discipline = challengeResponseMB.getDisciplineBusiness().findById(disciplineId, Discipline.class);		
 		challenge.setDiscipline(discipline);
 		
 		challengeBusiness.persist(challenge);
+		
+		init();
 	}
 	
 	public void addQuestionToChallenge() {
@@ -101,8 +103,8 @@ public class ChallengeMB implements Serializable {
 			count++;
 		}
 		
-		final Set<IAlternative> alternativeSet = new LinkedHashSet<IAlternative>();
-		alternatives.forEach(alternative -> alternativeSet.add(alternative));
+		final Set<IAlternative> alternativeSet = new LinkedHashSet<>();		
+		alternatives.forEach(alternativeSet::add);
 		
 		currentQuestion.setAlternatives(alternativeSet);
 		currentQuestion.setChallenge(challenge);
@@ -172,12 +174,12 @@ public class ChallengeMB implements Serializable {
 		this.trueAlternative = trueAlternative;
 	}
 
-	public DisciplineMB getDisciplineMB() {
-		return disciplineMB;
+	public ChallengeResponseMB getChallengeResponseMB() {
+		return challengeResponseMB;
 	}
 
-	public void setDisciplineMB(DisciplineMB disciplineMB) {
-		this.disciplineMB = disciplineMB;
+	public void setChallengeResponseMB(ChallengeResponseMB challengeResponseMB) {
+		this.challengeResponseMB = challengeResponseMB;
 	}
 	
 }

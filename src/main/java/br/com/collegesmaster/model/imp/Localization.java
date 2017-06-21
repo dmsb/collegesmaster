@@ -1,6 +1,7 @@
 package br.com.collegesmaster.model.imp;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -45,4 +46,27 @@ public class Localization implements Serializable {
 	public void setCity(String city) {
 		this.city = city;
 	}
+	
+	@Override
+    public boolean equals(final Object objectToBeComparated) {
+    	
+    	if(objectToBeComparated == this) {
+			return true;
+		}
+		
+		if(!(objectToBeComparated instanceof Localization)) {
+			return false;
+		}
+		
+		final Localization objectComparatedInstance = (Localization) objectToBeComparated;
+		
+		return Objects.equals(country, objectComparatedInstance.country) &&
+				Objects.equals(state, objectComparatedInstance.state) &&
+				Objects.equals(city, objectComparatedInstance.city);
+	}
+    
+	@Override
+    public int hashCode() {
+        return Objects.hash(country, state, city);
+    }
 }

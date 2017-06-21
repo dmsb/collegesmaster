@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <dataset>
 
-	<institute name='instituto federal de pernambuco' country='Brasil'
-		state='Pernambuco' city='recife' />
-	<institute name='instituto federal de pernambuco' country='Brasil'
-		state='Pernambuco' city='jaboatão' />
-	<institute name='instituto federal de pernambuco' country='Brasil'
-		state='Pernambuco' city='garanhuns' />
-	<institute name='universidade federal de pernambuco' country='Brasil'
-		state='Pernambuco' city='recife' />
-	<institute name='instituto federal da bahia' country='Brasil'
-		state='Bahia' city='salvador' />
-	<institute name='universidade de são paulo' country='Brasil'
-		state='São Paulo' city='são paulo' />
+	<institute name='instituto federal de pernambuco' country='brasil'
+		state='pernambuco' city='recife' />
+	<institute name='instituto federal de santa catarina' country='brasil'
+		state='santa catarina' city='jaboatão' />
+	<institute name='instituto federal de são paulo' country='brasil'
+		state='são paulo' city='santos' />
+	<institute name='universidade federal de pernambuco' country='brasil'
+		state='pernambuco' city='recife' />
+	<institute name='instituto federal da bahia' country='brasil'
+		state='bahia' city='salvador' />
+	<institute name='universidade de são paulo' country='brasil'
+		state='são paulo' city='são paulo' />
 
 	<course instituteFK='1' name='análise e desenvolvimento de sistemas' />
 	<course instituteFK='1' name='engenharia ambiental' />
@@ -111,20 +111,20 @@
 	<challenge title='Challenge 2' disciplineFK='1' userFK='2' />
 
 	<question description='Question about Internet Protocols'
-		level='1' pontuation='100' challengeFK='1' />
-	<question description='Question about Math' level='1'
+		pontuation='100' challengeFK='1' />
+	<question description='Question about Math'
 		pontuation='80' challengeFK='1' />
 
-	<question description='Question about Physic' level='1'
+	<question description='Question about Physic'
 		pontuation='223' challengeFK='2' />
-	<question description='Question about maintenance' level='1'
+	<question description='Question about maintenance'
 		pontuation='100' challengeFK='2' />
 
-	<question description='Question about TDD' level='1'
+	<question description='Question about TDD'
 		pontuation='100' challengeFK='3' />
-	<question description='Question about BDD' level='1'
+	<question description='Question about BDD'
 		pontuation='89' challengeFK='3' />
-	<question description='Question about DDD' level='1'
+	<question description='Question about DDD'
 		pontuation='200' challengeFK='4' />
 
 	<alternative definition='true' description="Response 1"

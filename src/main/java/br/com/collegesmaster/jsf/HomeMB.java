@@ -11,12 +11,16 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import br.com.collegesmaster.business.IInstituteBusiness;
 import br.com.collegesmaster.business.IProfileBusiness;
 import br.com.collegesmaster.business.IUserBusiness;
+import br.com.collegesmaster.model.ICourse;
+import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.IProfile;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.imp.Course;
 import br.com.collegesmaster.model.imp.GeneralInfo;
+import br.com.collegesmaster.model.imp.Institute;
 import br.com.collegesmaster.model.imp.Profile;
 import br.com.collegesmaster.model.imp.User;
 
@@ -27,13 +31,18 @@ public class HomeMB implements Serializable {
 	private static final long serialVersionUID = 7422462580072371882L;
 
 	@EJB
-	private IUserBusiness userBusiness;
+	private transient IUserBusiness userBusiness;
 	
 	@EJB
-	private IProfileBusiness profileBusiness;
-
+	private transient IProfileBusiness profileBusiness;
+	
+	@EJB
+	private transient IInstituteBusiness instituteBusiness;
+	
 	private IUser user;
 	private IProfile userProfile;
+	private IInstitute institute;	
+	private List<Institute> institutes;
 	
 	@PostConstruct
 	public void init() {
@@ -43,6 +52,9 @@ public class HomeMB implements Serializable {
 		user.getGeneralInfo().setCourse(new Course());
 		
 		userProfile = new Profile();
+		
+		institutes = instituteBusiness.getInstitutesFetchingCourses();
+		institute = institutes.get(0);
 		
 	}
 	
@@ -62,7 +74,38 @@ public class HomeMB implements Serializable {
         init();
         
 	}
+	
+	public void findCoursesByInstitute() {
+		if(institute != null) {
+			final ICourse currentCourse = institute.getCourses().get(0);
+			user.getGeneralInfo().setCourse(currentCourse);			
+		}
+	}
+	
+	public void changeInstituteEvent() {
 		
+		final Integer currentUserInstituteId = institute.getId();
+		
+		institutes.forEach(currentInstitute -> {
+			if(currentUserInstituteId.equals(currentInstitute.getId())) {				
+				institute = currentInstitute;
+				final ICourse updatedCourse = currentInstitute.getCourses().get(0);
+				user.getGeneralInfo().setCourse(updatedCourse);
+			}
+		});
+	}
+	
+	public void changeCourseEvent() {
+		
+		final Integer currentUserCourseId = user.getGeneralInfo().getCourse().getId();
+		
+		institute.getCourses().forEach(currentCourse -> {
+			if(currentUserCourseId.equals(currentCourse.getId())) {
+				user.getGeneralInfo().setCourse(currentCourse);
+			}
+		});
+	}
+	
 	public IUser getUser() {
 		return user;
 	}
@@ -77,5 +120,21 @@ public class HomeMB implements Serializable {
 
 	public void setUserProfile(IProfile userProfile) {
 		this.userProfile = userProfile;
+	}
+
+	public IInstitute getInstitute() {
+		return institute;
+	}
+
+	public void setInstitute(IInstitute institute) {
+		this.institute = institute;
+	}
+
+	public List<Institute> getInstitutes() {
+		return institutes;
+	}
+
+	public void setInstitutes(List<Institute> institutes) {
+		this.institutes = institutes;
 	}
 }

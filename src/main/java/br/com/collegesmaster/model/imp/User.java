@@ -1,15 +1,17 @@
 package br.com.collegesmaster.model.imp;
 
-import java.io.Serializable;
+import static javax.persistence.AccessType.FIELD;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -21,6 +23,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.envers.Audited;
+
 import br.com.collegesmaster.annotations.Password;
 import br.com.collegesmaster.model.IGeneralInfo;
 import br.com.collegesmaster.model.IProfile;
@@ -29,12 +33,14 @@ import br.com.collegesmaster.util.CryptoUtils;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable, IUser {
+@Access(FIELD)
+@Audited
+public class User implements IUser {
 
     private static final long serialVersionUID = -7809703915845045860L;
     
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 	
@@ -64,19 +70,19 @@ public class User implements Serializable, IUser {
     private String salt;
 	
     @Valid
-    @OneToOne(targetEntity = GeneralInfo.class, fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = GeneralInfo.class, fetch = LAZY, optional = false, cascade = ALL)
     @JoinColumn(name = "generalInfoFK", referencedColumnName = "id")
 	private IGeneralInfo generalInfo;
     
     @NotNull
-    @ManyToMany(targetEntity = Profile.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = Profile.class, fetch = LAZY)
     @JoinTable(name="user_profile",
 	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
 	    inverseJoinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")})
     private List<IProfile> profiles;
     
     @PrePersist
-    private void buildPassword() {
+    private void buildPasswordAndCpf() {
     	final String salt = CryptoUtils.generateSalt();	
 		setSalt(salt);
 		setPassword(CryptoUtils.getHashedPassword(getPassword(), salt));
@@ -147,25 +153,23 @@ public class User implements Serializable, IUser {
 
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
-		if(objectToBeComparated == null) {
+
+		if(objectToBeComparated == this) {
+			return true;
+		}
+		
+		if(!(objectToBeComparated instanceof User)) {
 			return false;
 		}
 		
-		if((objectToBeComparated.getClass().isAssignableFrom(Challenge.class)) == false) {
-			return false;
-		}
+		final User objectComparatedInstance = (User) objectToBeComparated;
 		
-		final IUser objectComparatedInstance = (IUser) objectToBeComparated;
-		
-		if(getId() != null && objectComparatedInstance.getId() != null) {
-			return false;
-		}
-		
-		return Objects.equals(getId(), objectComparatedInstance.getId());
+		return id == objectComparatedInstance.id && 
+				Objects.equals(username, objectComparatedInstance.username);
 	}
 	
 	@Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return Objects.hash(id, username);
     }
 }

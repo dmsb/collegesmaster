@@ -6,7 +6,11 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Colleges Master</name>
-
+	
+	<properties>
+		<hibernate.version>5.2.10.Final</hibernate.version>
+	</properties>
+	
 	<repositories>
 		<repository>
 			<id>prime-repo</id>
@@ -17,7 +21,24 @@
 	</repositories>
 
 	<dependencies>
-
+		
+		<!-- API for JavaEE, provided by Wildfly 10 -->		
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<version>7.0</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- dom4j is an open source Java library for working with XML, XPath and XSLT, 
+			provided by Wildfly 10 -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+			<scope>provided</scope>
+		</dependency>
+		
 		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -27,9 +48,14 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.2.10.Final</version>
+			<version>${hibernate.version}</version>
 		</dependency>
-
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-envers</artifactId>
+		    <version>${hibernate.version}</version>
+		</dependency>
+		
 		<!-- Primefaces -->
 		<dependency>
 			<groupId>org.primefaces</groupId>
@@ -38,65 +64,50 @@
 		</dependency>
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
-			<artifactId>start</artifactId>
+			<artifactId>dot-luv</artifactId>
 			<version>1.0.10</version>
 		</dependency>
-
-		<dependency>
-			<groupId>dom4j</groupId>
-			<artifactId>dom4j</artifactId>
-			<version>1.6.1</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-web-api</artifactId>
-			<version>7.0</version>
-			<scope>provided</scope>
-		</dependency>
-
+		
+		<!-- JSF -->
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.faces</artifactId>
 			<version>2.2.13</version>
 		</dependency>
-
+		
+		<!-- Database -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>6.0.5</version>
 		</dependency>
-
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-
+		
+		<!-- Logger -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<version>1.7.21</version>
 		</dependency>
-
+		
+		<!-- Expression Language -->
 		<dependency>
 			<groupId>javax.el</groupId>
 			<artifactId>javax.el-api</artifactId>
 			<version>3.0.0</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.glassfish.web</groupId>
-			<artifactId>javax.el</artifactId>
-			<version>2.2.6</version>
-		</dependency>
-
+	
+		<!-- JUnit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
+		<!-- Used for tests with JUnit and Hibernate validators -->
+<!-- 		<dependency> -->
+<!-- 		   <groupId>org.glassfish.web</groupId> -->
+<!-- 		   <artifactId>javax.el</artifactId> -->
+<!-- 		   <version>2.2.4</version> -->
+<!-- 		</dependency> -->
 
 		<!-- DBUnit for populate the database (usefull for tests) -->
 		<dependency>

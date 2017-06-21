@@ -1,18 +1,22 @@
 package br.com.collegesmaster.model.imp;
 
-import java.io.Serializable;
+import static javax.persistence.AccessType.FIELD;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.CascadeType.REFRESH;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.util.EnumMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -34,28 +38,29 @@ import br.com.collegesmaster.model.IUser;
 
 @Entity
 @Table(name = "challenge_resolution")
-public class ChallengeResolution implements IChallengeResolution, Serializable {
+@Access(FIELD)
+public class ChallengeResolution implements IChallengeResolution {
 
 	private static final long serialVersionUID = -4223636598786128623L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 	
-	@ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = User.class, optional = false, fetch = LAZY)
 	@JoinColumn(name = "userFK", referencedColumnName = "id")
 	private IUser owner;
 	
 	@Column(name = "note", nullable = false, length = 11, unique = false)
 	private Integer note;
 	
-	@OneToMany(targetEntity = QuestionResolution.class, cascade = CascadeType.ALL, 
-		fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "challengeResolution")
+	@OneToMany(targetEntity = QuestionResolution.class, cascade = ALL, 
+		fetch = LAZY, orphanRemoval = true, mappedBy = "challengeResolution")
 	private Set<IQuestionResolution> questionsResolution;
 	
-	@ManyToOne(targetEntity = Challenge.class, fetch = FetchType.LAZY, optional = false, 
-			cascade = {CascadeType.DETACH, CascadeType.REFRESH})
+	@ManyToOne(targetEntity = Challenge.class, fetch = LAZY, optional = false, 
+			cascade = {DETACH, REFRESH})
 	@JoinColumn(name = "targetChallengeFK", referencedColumnName = "id")
 	private IChallenge targetChallenge;
 	
@@ -73,8 +78,8 @@ public class ChallengeResolution implements IChallengeResolution, Serializable {
 			
 			while(targetQuestionIterator.hasNext() && questionResolutionIterator.hasNext()) {
 				
-				final Map<Letter, Boolean> challengeResolution = new LinkedHashMap<Letter, Boolean>();
-				final Map<Letter, Boolean> myResolution = new LinkedHashMap<Letter, Boolean>();
+				final Map<Letter, Boolean> challengeResolution = new EnumMap<>(Letter.class);
+				final Map<Letter, Boolean> myResolution = new EnumMap<>(Letter.class);
 				
 				final IQuestion targetQuestion = targetQuestionIterator.next();
 				final Integer pontuation = targetQuestion.getPontuation();
@@ -93,9 +98,8 @@ public class ChallengeResolution implements IChallengeResolution, Serializable {
 		
 		targetAlternatives.forEach(targetAlternative -> challengeResolution.put(targetAlternative.getLetter(), targetAlternative.getDefinition()));		
 		
-		alternativesResolution.forEach(alternativeResolution ->  {			
-			myResolution.put(alternativeResolution.getLetter(), alternativeResolution.getDefinition());
-		});			
+		alternativesResolution.forEach(alternativeResolution ->			
+			myResolution.put(alternativeResolution.getLetter(), alternativeResolution.getDefinition()));
 		
 		if(challengeResolution.equals(myResolution)) {
 			note = note + pontuation;
@@ -154,26 +158,24 @@ public class ChallengeResolution implements IChallengeResolution, Serializable {
 	
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
-		if(objectToBeComparated == null) {
+
+		if(objectToBeComparated == this) {
+			return true;
+		}
+		
+		if(!(objectToBeComparated instanceof AlternativeResolution)) {
 			return false;
 		}
 		
-		if((objectToBeComparated.getClass().isAssignableFrom(Challenge.class)) == false) {
-			return false;
-		}
+		final ChallengeResolution objectComparatedInstance = (ChallengeResolution) objectToBeComparated;
 		
-		final IChallengeResolution objectComparatedInstance = (IChallengeResolution) objectToBeComparated;
-		
-		if(getId() != null && objectComparatedInstance.getId() != null) {
-			return false;
-		}
-		
-		return Objects.equals(getId(), objectComparatedInstance.getId());
+		return id == objectComparatedInstance.id && 
+				note == objectComparatedInstance.note;
 	}
 	
 	@Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return Objects.hash(id, note);
     }
 	
 }

@@ -1,14 +1,16 @@
 package br.com.collegesmaster.model.imp;
 
-import java.io.Serializable;
+import static javax.persistence.AccessType.FIELD;
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
+import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,6 +18,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -24,12 +27,14 @@ import br.com.collegesmaster.model.IGeneralInfo;
 
 @Entity
 @Table(name = "general_info")
-public class GeneralInfo implements Serializable, IGeneralInfo {
+@Access(FIELD)
+@Audited
+public class GeneralInfo implements IGeneralInfo {
 	
 	private static final long serialVersionUID = 1137972673979789034L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 	
@@ -37,7 +42,7 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
 	@NotNull
     @CPF
     private String cpf;
-	
+		
 	@Column(name = "email", unique = true, nullable = false, updatable = true)
 	@NotNull
     @Email
@@ -57,7 +62,7 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
     @Column(name = "birthdate", updatable = true, nullable = false)
     private LocalDate birthdate;
     
-    @ManyToOne(targetEntity = Course.class, fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(targetEntity = Course.class, fetch = EAGER, optional = false)
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     private ICourse course;
     
@@ -133,25 +138,24 @@ public class GeneralInfo implements Serializable, IGeneralInfo {
 
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
-		if(objectToBeComparated == null) {
+
+		if(objectToBeComparated == this) {
+			return true;
+		}
+		
+		if(!(objectToBeComparated instanceof AlternativeResolution)) {
 			return false;
 		}
 		
-		if((objectToBeComparated.getClass().isAssignableFrom(Challenge.class)) == false) {
-			return false;
-		}
+		final GeneralInfo objectComparatedInstance = (GeneralInfo) objectToBeComparated;
 		
-		final IGeneralInfo objectComparatedInstance = (IGeneralInfo) objectToBeComparated;
-		
-		if(getId() != null && objectComparatedInstance.getId() != null) {
-			return false;
-		}
-		
-		return Objects.equals(getId(), objectComparatedInstance.getId());
+		return id == objectComparatedInstance.id && 
+				Objects.equals(cpf, objectComparatedInstance.cpf) &&
+				Objects.equals(email, objectComparatedInstance.email);
 	}
 	
 	@Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return Objects.hash(id, cpf, email);
     }
 }
