@@ -2,11 +2,12 @@ package br.com.collegesmaster.model.imp;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Access;
 import javax.persistence.Column;
@@ -25,7 +26,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 
-import br.com.collegesmaster.model.IAlternative;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IQuestion;
 
@@ -54,9 +54,9 @@ public class Question implements IQuestion {
 	private Integer pontuation;
 	
 	@NotNull
-	@OneToMany(targetEntity = Alternative.class, cascade = ALL, fetch = LAZY,
+	@OneToMany(targetEntity = Alternative.class, cascade = ALL, fetch = EAGER,
 		orphanRemoval = true, mappedBy = "question")
-	private Set<IAlternative> alternatives;
+	private List<Alternative> alternatives;
 	
 	@NotNull
 	@ManyToOne(targetEntity = Challenge.class, optional = false, fetch = LAZY)
@@ -103,14 +103,13 @@ public class Question implements IQuestion {
 		this.challenge = challenge;
 	}
 	
-
 	@Override
-	public void setAlternatives(Set<IAlternative> alternatives) {
+	public void setAlternatives(List<Alternative> alternatives) {
 		this.alternatives = alternatives;
 	}
 
 	@Override
-	public Set<IAlternative> getAlternatives() {
+	public List<Alternative> getAlternatives() {
 		return alternatives;
 	}
 

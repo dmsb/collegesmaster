@@ -2,14 +2,16 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
+import br.com.collegesmaster.model.imp.Permission;
+
 public interface IProfile extends IModel {
 
 	void setName(String name);
 
 	String getName();
 
-	void setPermissions(List<IPermission> permissions);
+	void setPermissions(List<Permission> permissions);
 
-	List<IPermission> getPermissions();
+	List<Permission> getPermissions();
 
 }

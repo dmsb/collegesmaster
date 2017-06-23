@@ -2,12 +2,16 @@ package br.com.collegesmaster.business;
 
 import java.util.List;
 
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.imp.Course;
 
 public interface ICourseBusiness extends IBusiness<ICourse, Course> {
-
-	List<Course> getCoursesNameByInstitute(final IInstitute institute);
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	List<Course> findNamesByInstitute(final IInstitute institute);
 
 }

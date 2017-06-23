@@ -1,24 +1,25 @@
 package br.com.collegesmaster.model.imp;
 
 import static javax.persistence.AccessType.FIELD;
-import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Access;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import br.com.collegesmaster.model.IAlternativeResolution;
+import br.com.collegesmaster.enums.Letter;
 import br.com.collegesmaster.model.IChallengeResolution;
 import br.com.collegesmaster.model.IQuestion;
 import br.com.collegesmaster.model.IQuestionResolution;
@@ -39,13 +40,14 @@ public class QuestionResolution implements IQuestionResolution {
 	@JoinColumn(name = "challengeResolutionFK", referencedColumnName = "id")
 	private IChallengeResolution challengeResolution;
 	
-	@OneToMany(targetEntity = AlternativeResolution.class, cascade = ALL,
-		fetch = LAZY, orphanRemoval = true, mappedBy = "questionResolution")
-	private Set<IAlternativeResolution> alternativesResolution;
-	
 	@ManyToOne(targetEntity = Question.class, fetch = LAZY, optional = false)
 	@JoinColumn(name = "targetQuestionFK", referencedColumnName = "id")
 	private IQuestion targetQuestion;
+	
+	@Enumerated(EnumType.STRING)
+	@Basic(fetch = FetchType.LAZY, optional = false)
+	@Column(name = "letter", unique = false, length = 1)
+	private Letter letter;
 	
 	@Override
 	public Integer getId() {
@@ -68,16 +70,6 @@ public class QuestionResolution implements IQuestionResolution {
 	}
 
 	@Override
-	public Set<IAlternativeResolution> getAlternativesResolution() {
-		return alternativesResolution;
-	}
-
-	@Override
-	public void setAlternativesResolution(Set<IAlternativeResolution> alternativesResolution) {
-		this.alternativesResolution = alternativesResolution;
-	}
-
-	@Override
 	public IQuestion getTargetQuestion() {
 		return targetQuestion;
 	}
@@ -87,6 +79,16 @@ public class QuestionResolution implements IQuestionResolution {
 		this.targetQuestion = targetQuestion;
 	}
 	
+	@Override
+	public Letter getLetter() {
+		return letter;
+	}
+
+	@Override
+	public void setLetter(Letter letter) {
+		this.letter = letter;
+	}
+
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 		

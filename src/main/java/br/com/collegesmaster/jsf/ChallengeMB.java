@@ -2,9 +2,7 @@ package br.com.collegesmaster.jsf;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -14,11 +12,9 @@ import javax.faces.bean.ViewScoped;
 
 import br.com.collegesmaster.business.IChallengeBusiness;
 import br.com.collegesmaster.enums.Letter;
-import br.com.collegesmaster.enums.QuestionLevel;
 import br.com.collegesmaster.model.IAlternative;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IDiscipline;
-import br.com.collegesmaster.model.IQuestion;
 import br.com.collegesmaster.model.imp.Alternative;
 import br.com.collegesmaster.model.imp.Challenge;
 import br.com.collegesmaster.model.imp.Discipline;
@@ -36,18 +32,14 @@ public class ChallengeMB implements Serializable {
 	@ManagedProperty(value="#{userSessionMB}")
 	private UserSessionMB userSessionMB;
 	
-	@ManagedProperty(value="#{challengeResponseMB}")
-	private ChallengeResponseMB challengeResponseMB;
+	@ManagedProperty(value="#{challengeResolutionMB}")
+	private ChallengeResolutionMB challengeResolutionMB;
 	
 	private IChallenge challenge;
 	
-	private IQuestion currentQuestion;
+	private Question currentQuestion;
 	
-	private List<IAlternative> alternatives;	
-	
-	private Letter[] letters;
-	
-	private QuestionLevel[] levels;
+	private List<Alternative> alternatives;
 	
 	private Letter trueAlternative;
 	
@@ -57,21 +49,24 @@ public class ChallengeMB implements Serializable {
 			challenge = new Challenge();
 			challenge.setDiscipline(new Discipline());
 			challenge.setOwner(userSessionMB.getUser());
-			challenge.setQuestions(new LinkedHashSet<IQuestion>());			
+			challenge.setQuestions(new ArrayList<Question>());			
 		}
 		
 		currentQuestion = new Question();
-		currentQuestion.setAlternatives(new LinkedHashSet<IAlternative>());
-		
-		letters = Letter.values();
-		levels = QuestionLevel.values();
+		currentQuestion.setAlternatives(new ArrayList<Alternative>());
 		
 		alternatives = new ArrayList<>(4);
 		alternatives.add(new Alternative());
 		alternatives.add(new Alternative());
 		alternatives.add(new Alternative());
-		alternatives.add(new Alternative());
+		alternatives.add(new Alternative());		
 		
+		final Letter[] letters = Letter.values();
+		
+		for(int i = 0; i < letters.length; i++) {
+			alternatives.get(i).setLetter(letters[i]);
+		}
+
 		trueAlternative = Letter.A;
 		
 	}	
@@ -79,7 +74,7 @@ public class ChallengeMB implements Serializable {
 	public void persistChallenge() {
 		
 		final Integer disciplineId = challenge.getDiscipline().getId();		
-		final IDiscipline discipline = challengeResponseMB.getDisciplineBusiness().findById(disciplineId, Discipline.class);		
+		final IDiscipline discipline = challengeResolutionMB.getDisciplineBusiness().findById(disciplineId, Discipline.class);		
 		challenge.setDiscipline(discipline);
 		
 		challengeBusiness.persist(challenge);
@@ -89,28 +84,25 @@ public class ChallengeMB implements Serializable {
 	
 	public void addQuestionToChallenge() {
 		
-		Integer count = 0;
-		
 		for(IAlternative alternative : alternatives) {
 			alternative.setQuestion(currentQuestion);
-			alternative.setLetter(letters[count]);
 			
 			if(trueAlternative.equals(alternative.getLetter())) {
 				alternative.setDefinition(Boolean.TRUE);
 			} else {
 				alternative.setDefinition(Boolean.FALSE);
-			}			
-			count++;
+			}
 		}
-		
-		final Set<IAlternative> alternativeSet = new LinkedHashSet<>();		
-		alternatives.forEach(alternativeSet::add);
-		
-		currentQuestion.setAlternatives(alternativeSet);
+
+		currentQuestion.setAlternatives(alternatives);
 		currentQuestion.setChallenge(challenge);
 		challenge.getQuestions().add(currentQuestion);
 		
 		init();
+	}
+	
+	public Letter[] loadlAllLetters() {
+		return Letter.values();
 	}
 	
 	public void removeQuestion() {
@@ -134,36 +126,20 @@ public class ChallengeMB implements Serializable {
 		this.challenge = challenge;
 	}
 
-	public IQuestion getCurrentQuestion() {
+	public Question getCurrentQuestion() {
 		return currentQuestion;
 	}
 
-	public void setCurrentQuestion(IQuestion currentQuestion) {
+	public void setCurrentQuestion(Question currentQuestion) {
 		this.currentQuestion = currentQuestion;
 	}
 	
-	public List<IAlternative> getAlternatives() {
+	public List<Alternative> getAlternatives() {
 		return alternatives;
 	}
 
-	public void setAlternatives(List<IAlternative> alternatives) {
+	public void setAlternatives(List<Alternative> alternatives) {
 		this.alternatives = alternatives;
-	}
-
-	public Letter[] getLetters() {
-		return letters;
-	}
-
-	public void setLetters(Letter[] letters) {
-		this.letters = letters;
-	}
-
-	public QuestionLevel[] getLevels() {
-		return levels;
-	}
-
-	public void setLevels(QuestionLevel[] levels) {
-		this.levels = levels;
 	}
 
 	public Letter getTrueAlternative() {
@@ -174,12 +150,12 @@ public class ChallengeMB implements Serializable {
 		this.trueAlternative = trueAlternative;
 	}
 
-	public ChallengeResponseMB getChallengeResponseMB() {
-		return challengeResponseMB;
+	public ChallengeResolutionMB getChallengeResolutionMB() {
+		return challengeResolutionMB;
 	}
 
-	public void setChallengeResponseMB(ChallengeResponseMB challengeResponseMB) {
-		this.challengeResponseMB = challengeResponseMB;
+	public void setChallengeResolutionMB(ChallengeResolutionMB challengeResolutionMB) {
+		this.challengeResolutionMB = challengeResolutionMB;
 	}
 	
 }

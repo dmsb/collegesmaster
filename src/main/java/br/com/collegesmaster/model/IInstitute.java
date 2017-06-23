@@ -2,6 +2,7 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
+import br.com.collegesmaster.model.imp.Course;
 import br.com.collegesmaster.model.imp.Localization;
 
 public interface IInstitute extends IModel {
@@ -10,9 +11,9 @@ public interface IInstitute extends IModel {
 
 	void setName(String name);
 
-	List<ICourse> getCourses();
+	List<Course> getCourses();
 
-	void setCourses(List<ICourse> courses);
+	void setCourses(List<Course> courses);
 
 	Localization getLocalization();
 

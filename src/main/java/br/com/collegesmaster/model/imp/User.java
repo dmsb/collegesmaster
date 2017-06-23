@@ -79,7 +79,7 @@ public class User implements IUser {
     @JoinTable(name="user_profile",
 	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
 	    inverseJoinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")})
-    private List<IProfile> profiles;
+    private List<Profile> profiles;
     
     @PrePersist
     private void buildPasswordAndCpf() {
@@ -142,12 +142,12 @@ public class User implements IUser {
     }
 
 	@Override
-	public List<IProfile> getProfiles() {
+	public List<Profile> getProfiles() {
 		return profiles;
 	}
 
 	@Override
-	public void setProfiles(List<IProfile> profiles) {
+	public void setProfiles(List<Profile> profiles) {
 		this.profiles = profiles;
 	}
 

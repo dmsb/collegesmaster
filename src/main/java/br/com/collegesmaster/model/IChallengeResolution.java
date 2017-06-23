@@ -1,20 +1,16 @@
 package br.com.collegesmaster.model;
 
-import java.util.Set;
+import java.util.List;
 
 public interface IChallengeResolution extends IModel {
-
-	void setTargetChallenge(IChallenge targetChallenge);
-
-	IChallenge getTargetChallenge();
 
 	void setNote(Integer note);
 
 	Integer getNote();
 
-	void setQuestionsResolution(Set<IQuestionResolution> myQuestionsResolution);
+	void setQuestionsResolution(List<IQuestionResolution> myQuestionsResolution);
 
-	Set<IQuestionResolution> getQuestionsResolution();
+	List<IQuestionResolution> getQuestionsResolution();
 
 	void setOwner(IUser owner);
 

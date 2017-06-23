@@ -143,7 +143,7 @@ public class GeneralInfo implements IGeneralInfo {
 			return true;
 		}
 		
-		if(!(objectToBeComparated instanceof AlternativeResolution)) {
+		if(!(objectToBeComparated instanceof GeneralInfo)) {
 			return false;
 		}
 		

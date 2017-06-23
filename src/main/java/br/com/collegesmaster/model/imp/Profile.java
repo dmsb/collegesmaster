@@ -42,7 +42,7 @@ public class Profile implements IProfile {
 	@JoinTable(name="profile_permission",
 	    joinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")},
 	    inverseJoinColumns={@JoinColumn(name="permissionFK", referencedColumnName = "id")})
-	private List<IPermission> permissions;
+	private List<Permission> permissions;
 	
 	@Override
 	public Integer getId() {
@@ -65,12 +65,12 @@ public class Profile implements IProfile {
 	}
 
 	@Override
-	public List<IPermission> getPermissions() {
+	public List<Permission> getPermissions() {
 		return permissions;
 	}
 
 	@Override
-	public void setPermissions(List<IPermission> permissions) {
+	public void setPermissions(List<Permission> permissions) {
 		this.permissions = permissions;
 	}
 	

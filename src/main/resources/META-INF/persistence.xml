@@ -16,7 +16,6 @@
 <!-- 		<class>br.com.collegesmaster.model.imp.Alternative</class> -->
 <!-- 		<class>br.com.collegesmaster.model.imp.ChallengeResolution</class> -->
 <!-- 		<class>br.com.collegesmaster.model.imp.QuestionResolution</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.AlternativeResolution</class>		 -->
 <!-- 		<class>br.com.collegesmaster.model.imp.Profile</class> -->
 <!-- 		<class>br.com.collegesmaster.model.imp.Permission</class> -->
 <!-- 		<exclude-unlisted-classes>false</exclude-unlisted-classes> -->
@@ -47,8 +46,7 @@
 		<class>br.com.collegesmaster.model.imp.Question</class>
 		<class>br.com.collegesmaster.model.imp.Alternative</class>
 		<class>br.com.collegesmaster.model.imp.ChallengeResolution</class>
-		<class>br.com.collegesmaster.model.imp.QuestionResolution</class>
-		<class>br.com.collegesmaster.model.imp.AlternativeResolution</class>		
+		<class>br.com.collegesmaster.model.imp.QuestionResolution</class>		
 		<class>br.com.collegesmaster.model.imp.Profile</class>
 		<class>br.com.collegesmaster.model.imp.Permission</class>
 		

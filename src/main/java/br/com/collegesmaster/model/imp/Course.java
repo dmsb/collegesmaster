@@ -24,7 +24,6 @@ import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.collegesmaster.model.ICourse;
-import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IInstitute;
 
 @Entity
@@ -52,7 +51,7 @@ public class Course implements ICourse {
 	
 	@OneToMany(targetEntity = Discipline.class, cascade = ALL, fetch = LAZY,
 			orphanRemoval = true, mappedBy = "course")
-	private List<IDiscipline> disciplines;
+	private List<Discipline> disciplines;
 	
 	public Course() {
     	
@@ -94,12 +93,12 @@ public class Course implements ICourse {
 	}
 
 	@Override
-	public List<IDiscipline> getDisciplines() {
+	public List<Discipline> getDisciplines() {
 		return disciplines;
 	}
 
 	@Override
-	public void setDisciplines(List<IDiscipline> disciplines) {
+	public void setDisciplines(List<Discipline> disciplines) {
 		this.disciplines = disciplines;
 	}
 

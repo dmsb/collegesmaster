@@ -73,7 +73,7 @@ public class DisciplineBusiness extends GenericBusiness implements IDisciplineBu
 	}
 	
 	@Override
-	public List<Discipline> findDisciplineNamesByCourse(final ICourse course) {
+	public List<Discipline> findNamesByCourse(final ICourse course) {
 		
 		final CriteriaQuery<Discipline> criteriaQuery = criteriaBuilder.createQuery(Discipline.class);
 		final Root<Discipline> rootDiscipline = criteriaQuery.from(Discipline.class);

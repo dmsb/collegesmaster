@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model;
 
-import java.util.Set;
+import br.com.collegesmaster.enums.Letter;
 
 public interface IQuestionResolution extends IModel {
 
@@ -8,12 +8,12 @@ public interface IQuestionResolution extends IModel {
 
 	IQuestion getTargetQuestion();
 
-	void setAlternativesResolution(Set<IAlternativeResolution> alternativesResolution);
-
-	Set<IAlternativeResolution> getAlternativesResolution();
-
 	void setChallengeResolution(IChallengeResolution challengeResolution);
 
 	IChallengeResolution getChallengeResolution();
+
+	void setLetter(Letter letter);
+
+	Letter getLetter();
 
 }

@@ -28,7 +28,7 @@
 						<p:column >											
 							<h:outputLabel for="discipline" value="#{text['label_discipline']}" />
 							<h:selectOneMenu id="discipline" value="#{challengeMB.challenge.discipline.id}">
-					            <f:selectItems value="#{challengeResponseMB.userDisciplines}" var="discipline" itemLabel="#{discipline.name}"
+					            <f:selectItems value="#{challengeResolutionMB.userDisciplines}" var="discipline" itemLabel="#{discipline.name}"
 					            	itemValue="#{discipline.id}" />
 					        </h:selectOneMenu>							
 						</p:column>						
@@ -71,7 +71,7 @@
 									requiredMessage="#{text['msg_required_description']}" />
 							</p:column>				
 						</p:row>						
-						<ui:repeat var="letter" value="#{challengeMB.letters}" varStatus="status">
+						<ui:repeat var="letter" value="#{challengeMB.loadlAllLetters()}" varStatus="status">
 							<p:row>
 								<p:column>
 									<h:outputText value="#{text['label_letter']} #{letter}" />											
@@ -94,7 +94,7 @@
     
 								<h:outputLabel for="true_alternative" value="#{text['label_true_alternative']}" />
 								<h:selectOneMenu id="true_alternative" value="#{challengeMB.trueAlternative}">						
-						            <f:selectItems value="#{challengeMB.letters}" var="letter" itemLabel="#{letter}" 
+						            <f:selectItems value="#{challengeMB.loadlAllLetters()}" var="letter" itemLabel="#{letter}" 
 						            	itemValue="#{letter}" />
 						        </h:selectOneMenu>
 							</p:column>							

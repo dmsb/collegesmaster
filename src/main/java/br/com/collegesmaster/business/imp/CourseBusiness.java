@@ -54,7 +54,7 @@ public class CourseBusiness extends GenericBusiness implements ICourseBusiness {
 	}
 		
 	@Override
-	public List<Course> getCoursesNameByInstitute(final IInstitute institute) {
+	public List<Course> findNamesByInstitute(final IInstitute institute) {
 		
 		final CriteriaQuery<Course> criteriaQuery = criteriaBuilder.createQuery(Course.class);
 		final Root<Course> rootCourse = criteriaQuery.from(Course.class);

@@ -148,28 +148,5 @@
 	<alternative definition='false' description="Response 3"
 		letter='A' questionFK='4' />
 
-	<challenge_resolution targetChallengeFK='1'
-		userFK='1' note='0' />
-	<challenge_resolution targetChallengeFK='2'
-		userFK='1' note='0' />
-	<challenge_resolution targetChallengeFK='2'
-		userFK='2' note='0' />
-
-	<question_resolution targetQuestionFK='1'
-		challengeResolutionFK='1' />
-	<question_resolution targetQuestionFK='2'
-		challengeResolutionFK='1' />
-	<question_resolution targetQuestionFK='3'
-		challengeResolutionFK='1' />
-
-	<alternative_resolution targetAlternativeFK='1'
-		definition='true' letter='A' questionResolutionFK='1' />
-	<alternative_resolution targetAlternativeFK='2'
-		definition='true' letter='B' questionResolutionFK='1' />
-	<alternative_resolution targetAlternativeFK='3'
-		definition='true' letter='C' questionResolutionFK='1' />
-	<alternative_resolution targetAlternativeFK='4'
-		definition='true' letter='D' questionResolutionFK='1' />
-
 </dataset>
 

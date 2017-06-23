@@ -47,13 +47,13 @@ public class HomeMB implements Serializable {
 	@PostConstruct
 	public void init() {
 		user = new User();
-		user.setProfiles(new ArrayList<IProfile>());
+		user.setProfiles(new ArrayList<Profile>());
 		user.setGeneralInfo(new GeneralInfo());		
 		user.getGeneralInfo().setCourse(new Course());
 		
 		userProfile = new Profile();
 		
-		institutes = instituteBusiness.getInstitutesFetchingCourses();
+		institutes = instituteBusiness.findFetchingCourses();
 		institute = institutes.get(0);
 		
 	}
@@ -64,7 +64,7 @@ public class HomeMB implements Serializable {
 	
 	public void persistUser() {
 		
-		final IProfile completeProfile = profileBusiness.findById(userProfile.getId(), Profile.class);
+		final Profile completeProfile = (Profile) profileBusiness.findById(userProfile.getId(), Profile.class);
 		user.getProfiles().add(completeProfile);
 		
 		userBusiness.persist(user);

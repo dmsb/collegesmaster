@@ -21,7 +21,6 @@ import javax.validation.constraints.Size;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
 
-import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IInstitute;
 
 @Entity
@@ -44,7 +43,7 @@ public class Institute implements IInstitute {
         
     @OneToMany(targetEntity = Course.class, cascade = ALL, 
     		fetch = LAZY, orphanRemoval = true, mappedBy = "institute")
-    private List<ICourse> courses;
+    private List<Course> courses;
 
 	@Embedded
     private Localization localization;
@@ -79,12 +78,12 @@ public class Institute implements IInstitute {
     }
     
     @Override
-	public List<ICourse> getCourses() {
+	public List<Course> getCourses() {
 		return courses;
 	}
 
 	@Override
-	public void setCourses(List<ICourse> courses) {
+	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
 
@@ -105,7 +104,7 @@ public class Institute implements IInstitute {
 			return true;
 		}
 		
-		if(!(objectToBeComparated instanceof AlternativeResolution)) {
+		if(!(objectToBeComparated instanceof Institute)) {
 			return false;
 		}
 		

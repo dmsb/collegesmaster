@@ -1,12 +1,14 @@
 package br.com.collegesmaster.model;
 
-import java.util.Set;
+import java.util.List;
+
+import br.com.collegesmaster.model.imp.Alternative;
 
 public interface IQuestion extends IModel {
 
-	void setAlternatives(Set<IAlternative> alternatives);
+	void setAlternatives(List<Alternative> alternatives);
 
-	Set<IAlternative> getAlternatives();
+	List<Alternative> getAlternatives();
 
 	void setPontuation(Integer pontuation);
 

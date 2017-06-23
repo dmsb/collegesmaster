@@ -23,7 +23,6 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
-import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
 
@@ -53,7 +52,7 @@ public class Discipline implements IDiscipline {
 	@NotAudited
     @OneToMany(targetEntity = Challenge.class, cascade = ALL, fetch = LAZY,
     		orphanRemoval = true, mappedBy = "discipline")
-    private List<IChallenge> challenges;
+    private List<Challenge> challenges;
 
     public Discipline() {
     	
@@ -64,7 +63,7 @@ public class Discipline implements IDiscipline {
     	this.name = name;
     }
     
-    public Discipline(Integer id, String name, List<IChallenge> challenges) {
+    public Discipline(Integer id, String name, List<Challenge> challenges) {
     	this.id = id;
     	this.name = name;    	
     	this.challenges = challenges;
@@ -101,12 +100,12 @@ public class Discipline implements IDiscipline {
     }
     
     @Override
-	public List<IChallenge> getChallenges() {
+	public List<Challenge> getChallenges() {
 		return challenges;
 	}
 
 	@Override
-	public void setChallenges(List<IChallenge> challenges) {
+	public void setChallenges(List<Challenge> challenges) {
 		this.challenges = challenges;
 	}
     

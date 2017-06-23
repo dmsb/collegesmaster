@@ -5,8 +5,8 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Access;
 import javax.persistence.Column;
@@ -25,7 +25,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IDiscipline;
-import br.com.collegesmaster.model.IQuestion;
 import br.com.collegesmaster.model.IUser;
 
 @Entity
@@ -58,7 +57,7 @@ public class Challenge implements IChallenge {
 	
 	@OneToMany(targetEntity = Question.class, cascade = ALL, fetch = LAZY, 
 		orphanRemoval = true, mappedBy="challenge")
-	private Set<IQuestion> questions;
+	private List<Question> questions;
 	
 	public Challenge() {
 		
@@ -109,12 +108,12 @@ public class Challenge implements IChallenge {
 	}
 	
 	@Override
-	public Set<IQuestion> getQuestions() {
+	public List<Question> getQuestions() {
 		return questions;
 	}
 
 	@Override
-	public void setQuestions(Set<IQuestion> questions) {
+	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
 

@@ -51,32 +51,30 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 		final CriteriaQuery<Institute> criteriaQuery = criteriaBuilder.createQuery(Institute.class);		
 		criteriaQuery.from(Institute.class);
 		
-		final TypedQuery<Institute> typedQuery = entityManager.createQuery(criteriaQuery);
-		final List<Institute> result = typedQuery.getResultList(); 
+		final TypedQuery<Institute> typedQuery = entityManager.createQuery(criteriaQuery);		
 		
-		return result;
+		return typedQuery.getResultList();
 	}
 	
 	@Override
-	public List<Institute> getInstituteNames() {
+	public List<Institute> findIdsAndNames() {
 		final CriteriaQuery<Institute> criteriaQuery = criteriaBuilder.createQuery(Institute.class);
 		
 		final Root<Institute> rootInstitute = criteriaQuery.from(Institute.class);
 		
-		final List<Selection<?>> idAndNameSelections = new ArrayList<Selection<?>>();
+		final List<Selection<?>> idAndNameSelections = new ArrayList<>();
 		idAndNameSelections.add(rootInstitute.get(id));
 		idAndNameSelections.add(rootInstitute.get(name));
 		
 		criteriaQuery.multiselect(idAndNameSelections);
 
-		final TypedQuery<Institute> typedQuery = entityManager.createQuery(criteriaQuery);
-		final List<Institute> result = typedQuery.getResultList(); 
+		final TypedQuery<Institute> typedQuery = entityManager.createQuery(criteriaQuery); 
 		
-		return result;
+		return typedQuery.getResultList();
 	}
 	
 	@Override
-	public List<Institute> getInstitutesFetchingCourses() {
+	public List<Institute> findFetchingCourses() {
 		final CriteriaQuery<Institute> criteriaQuery = criteriaBuilder.createQuery(Institute.class);
 		final Root<Institute> instituteRoot = criteriaQuery.from(Institute.class);
 				
@@ -84,10 +82,9 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 		criteriaQuery.select(instituteRoot).distinct(true);
 		//"If DISTINCT is not specified, duplicate values are not eliminated." (section 4.8 of JPA v2.0)
 		
-		final TypedQuery<Institute> typedQuery = entityManager.createQuery(criteriaQuery);
-		final List<Institute> result = typedQuery.getResultList(); 
+		final TypedQuery<Institute> typedQuery = entityManager.createQuery(criteriaQuery);		
 		
-		return result;
+		return typedQuery.getResultList();
 	}
 	
 }

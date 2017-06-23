@@ -2,16 +2,11 @@ package br.com.collegesmaster.model.imp;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.CascadeType.DETACH;
-import static javax.persistence.CascadeType.REFRESH;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.util.EnumMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Access;
 import javax.persistence.Column;
@@ -25,14 +20,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import org.apache.commons.collections.CollectionUtils;
-
-import br.com.collegesmaster.enums.Letter;
-import br.com.collegesmaster.model.IAlternative;
-import br.com.collegesmaster.model.IAlternativeResolution;
-import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IChallengeResolution;
-import br.com.collegesmaster.model.IQuestion;
 import br.com.collegesmaster.model.IQuestionResolution;
 import br.com.collegesmaster.model.IUser;
 
@@ -57,52 +45,22 @@ public class ChallengeResolution implements IChallengeResolution {
 	
 	@OneToMany(targetEntity = QuestionResolution.class, cascade = ALL, 
 		fetch = LAZY, orphanRemoval = true, mappedBy = "challengeResolution")
-	private Set<IQuestionResolution> questionsResolution;
-	
-	@ManyToOne(targetEntity = Challenge.class, fetch = LAZY, optional = false, 
-			cascade = {DETACH, REFRESH})
-	@JoinColumn(name = "targetChallengeFK", referencedColumnName = "id")
-	private IChallenge targetChallenge;
+	private List<IQuestionResolution> questionsResolution;
 	
 	@PrePersist
 	@PreUpdate
 	private void calculateNote() {
 		note = 0;			
 		
-		final Set<IQuestion> targetQuestions = targetChallenge.getQuestions();
-		
-		if(!(CollectionUtils.isEmpty(targetQuestions) || CollectionUtils.isEmpty(questionsResolution))) {
-			
-			final Iterator<IQuestion> targetQuestionIterator = targetQuestions.iterator();
-			final Iterator<IQuestionResolution> questionResolutionIterator = questionsResolution.iterator();
-			
-			while(targetQuestionIterator.hasNext() && questionResolutionIterator.hasNext()) {
-				
-				final Map<Letter, Boolean> challengeResolution = new EnumMap<>(Letter.class);
-				final Map<Letter, Boolean> myResolution = new EnumMap<>(Letter.class);
-				
-				final IQuestion targetQuestion = targetQuestionIterator.next();
-				final Integer pontuation = targetQuestion.getPontuation();
-				final IQuestionResolution myQuestion = questionResolutionIterator.next();
-				
-				buildResponses(pontuation, targetQuestion, challengeResolution, myResolution, myQuestion);
-			}						
-		}
-	}
-
-	private void buildResponses(final Integer pontuation, final IQuestion question, final Map<Letter, Boolean> challengeResolution,
-			final Map<Letter, Boolean> myResolution, final IQuestionResolution myQuestion) {
-		
-		final Set<IAlternative> targetAlternatives = question.getAlternatives();
-		final Set<IAlternativeResolution> alternativesResolution = myQuestion.getAlternativesResolution();			
-		
-		targetAlternatives.forEach(targetAlternative -> challengeResolution.put(targetAlternative.getLetter(), targetAlternative.getDefinition()));		
-		
-		alternativesResolution.forEach(alternativeResolution ->			
-			myResolution.put(alternativeResolution.getLetter(), alternativeResolution.getDefinition()));
-		
-		if(challengeResolution.equals(myResolution)) {
-			note = note + pontuation;
+		for(final IQuestionResolution response : questionsResolution) {
+			response.getTargetQuestion()
+				.getAlternatives()
+				.forEach(alternative -> {					
+					if(alternative.getDefinition() && 
+							alternative.getLetter().equals(response.getLetter())) {
+						note = note + response.getTargetQuestion().getPontuation();
+					}
+				});
 		}
 	}
 	
@@ -137,22 +95,12 @@ public class ChallengeResolution implements IChallengeResolution {
 	}
 
 	@Override
-	public IChallenge getTargetChallenge() {
-		return targetChallenge;
-	}
-
-	@Override
-	public void setTargetChallenge(IChallenge targetChallenge) {
-		this.targetChallenge = targetChallenge;
-	}
-
-	@Override
-	public Set<IQuestionResolution> getQuestionsResolution() {
+	public List<IQuestionResolution> getQuestionsResolution() {
 		return questionsResolution;
 	}
 
 	@Override
-	public void setQuestionsResolution(Set<IQuestionResolution> questionsResolution) {
+	public void setQuestionsResolution(List<IQuestionResolution> questionsResolution) {
 		this.questionsResolution = questionsResolution;
 	}
 	
@@ -163,7 +111,7 @@ public class ChallengeResolution implements IChallengeResolution {
 			return true;
 		}
 		
-		if(!(objectToBeComparated instanceof AlternativeResolution)) {
+		if(!(objectToBeComparated instanceof ChallengeResolution)) {
 			return false;
 		}
 		

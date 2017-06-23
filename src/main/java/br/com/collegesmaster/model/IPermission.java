@@ -2,14 +2,16 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
+import br.com.collegesmaster.model.imp.Profile;
+
 public interface IPermission extends IModel {
 
 	void setName(String name);
 
 	String getName();
 
-	void setProfiles(List<IProfile> profiles);
+	void setProfiles(List<Profile> profiles);
 
-	List<IProfile> getProfiles();
+	List<Profile> getProfiles();
 
 }

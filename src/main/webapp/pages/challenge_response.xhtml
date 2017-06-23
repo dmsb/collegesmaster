@@ -17,8 +17,8 @@
 		<p:layoutUnit id="layout_center" position="center" header="#{text['label_disciplines']}" style="text-align:center">
 			
 			<h:form id="disciplines_form">
-				<p:dataTable id="disciplines_data_table" var="discipline" value="#{challengeResponseMB.userDisciplines}"
-					selectionMode="single" selection="#{challengeResponseMB.selectedDiscipline}" rowKey="#{discipline.id}">							
+				<p:dataTable id="disciplines_data_table" var="discipline" value="#{challengeResolutionMB.userDisciplines}"
+					selectionMode="single" selection="#{challengeResolutionMB.selectedDiscipline}" rowKey="#{discipline.id}">							
 					
 					<p:column headerText="#{text['label_title']}">
 						<h:outputText value="#{discipline.name}" />
@@ -28,29 +28,94 @@
 						<h:outputText value="#{discipline.challenges.size()}" />					
 					</p:column>
 					
-					<p:ajax event="rowSelect" listener="#{challengeResponseMB.selectDiscipline()}" 
-						update="j_idt5:challenges_form" oncomplete="PF('challenges_wv').show()" />					
+					<p:ajax event="rowSelect" process="@parent"
+						update="j_idt5:challenges_form:challenges_data_table" oncomplete="PF('challenges_wv').show()" />					
 				</p:dataTable>					
 			</h:form>
 			
 			<h:form id="challenges_form">
 				<p:dialog id="challenges_dialog" widgetVar="challenges_wv" closeOnEscape="true" closable="true" resizable="false"
 					responsive="true" hideEffect="puff" showEffect="puff" height="500" width="500">
-					<p:dataTable id="challenges_data_table" var="challenge" value="#{challengeResponseMB.selectedDiscipline.challenges}"
-						selectionMode="single" selection="#{challengeResponseMB.selectedChallenge}" rowKey="#{challenge.id}">
-						
-						<f:facet name="header">
-				            #{text['label_challenges']}
-				        </f:facet>								
-						
-						<p:column headerText="#{text['label_title']}">
-							<h:outputText value="#{challenge.title}" />
-						</p:column>
-						
-						<p:ajax event="rowSelect" listener="#{challengeResponseMB.selectChallenge()}" />
-						
-					</p:dataTable>							
+					<p:panelGrid id="challenges_pn">
+						<p:row>
+							<p:column>
+						        <h:outputText value=" #{text['label_challenges']}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:dataTable id="challenges_data_table" var="challenge" value="#{challengeResolutionMB.selectedDiscipline.challenges}"
+									selectionMode="single" selection="#{challengeResolutionMB.selectedChallenge}" rowKey="#{challenge.id}">														
+									
+									<p:column headerText="#{text['label_title']}">
+										<h:outputText value="#{challenge.title}" />
+									</p:column>
+									
+									<p:ajax event="rowSelect" process="@parent" listener="#{challengeResolutionMB.loadChallengeQuestions()}"
+										update="j_idt5:challenges_form:questions_data_table" oncomplete="PF('questions_wv').show()" />
+									
+								</p:dataTable>	
+							</p:column>
+						</p:row>
+					</p:panelGrid>										
 				</p:dialog>	
+				
+				<p:dialog id="questions_dialog" widgetVar="questions_wv" closeOnEscape="true" closable="true" resizable="false"
+					responsive="true" hideEffect="puff" showEffect="puff" height="500" width="500">
+					<p:panelGrid id="questions_pn">
+						<p:row>
+							<p:column>
+						        <h:outputText value="#{challengeResolutionMB.selectedChallenge.title}" rendered="true" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+						        <h:outputText value="#{text['label_questions']}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:dataTable id="questions_data_table" var="question" value="#{challengeResolutionMB.selectedChallenge.questions}"
+									selectionMode="single" selection="#{challengeResolutionMB.selectedQuestion}" rowKey="#{question.id}">							
+									
+									<p:column headerText="#{text['label_description']}">
+										<h:outputText value="#{question.description}" />
+									</p:column>
+									
+									<p:ajax event="rowSelect" process="@parent"
+										update="j_idt5:challenges_form:questions_data_table" oncomplete="PF('questions_wv').show()" />								
+								</p:dataTable>
+							</p:column>
+						</p:row>
+					</p:panelGrid>					
+				</p:dialog>
+				
+				<p:dialog id="responses_dialog" widgetVar="responses_wv" closeOnEscape="true" closable="true" resizable="false"
+					responsive="true" hideEffect="puff" showEffect="puff" height="500" width="500">
+					<p:panelGrid id="responses_pg">
+						<p:row>
+							<p:column>
+								<h:outputText value="#{challengeResolutionMB.selectedQuestion.description}" />
+							</p:column>
+						</p:row>						
+						<ui:repeat value="#{challengeResolutionMB.selectedQuestion.alternatives}" 
+							var="alternative" varStatus="status">
+							<p:row>
+								<p:column>
+									<h:outputText value="#{alternative.letter}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{alternative.description}" />
+								</p:column>
+								<p:column>
+									<p:commandButton oncomplete="PF('responses_wv').hide()" process="@parent"
+										actionListener="#{ChallengeResolution.selectAlternative(alternative)}"
+										update="j_idt5:challenges_form:questions_data_table" />
+								</p:column>
+							</p:row>
+						</ui:repeat>
+					</p:panelGrid>
+				</p:dialog>		
 			</h:form>
 		</p:layoutUnit>
 	</composites:layouts>

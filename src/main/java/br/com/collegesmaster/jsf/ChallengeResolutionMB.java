@@ -1,6 +1,7 @@
 package br.com.collegesmaster.jsf;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,20 +10,27 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import br.com.collegesmaster.business.IChallengeBusiness;
 import br.com.collegesmaster.business.IDisciplineBusiness;
 import br.com.collegesmaster.model.IChallenge;
+import br.com.collegesmaster.model.IChallengeResolution;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
+import br.com.collegesmaster.model.IQuestion;
+import br.com.collegesmaster.model.imp.ChallengeResolution;
 import br.com.collegesmaster.model.imp.Discipline;
 
-@ManagedBean
+@ManagedBean(name = "challengeResolutionMB")
 @ViewScoped
-public class ChallengeResponseMB implements Serializable {
+public class ChallengeResolutionMB implements Serializable {
 
 	private static final long serialVersionUID = -6656488708325792261L;
 	
 	@EJB
 	private transient IDisciplineBusiness disciplineBusiness;
+	
+	@EJB
+	private transient IChallengeBusiness challengeBusiness;
 	
 	@ManagedProperty(value="#{userSessionMB}")
 	private UserSessionMB userSessionMB;
@@ -33,8 +41,16 @@ public class ChallengeResponseMB implements Serializable {
 	
 	private IChallenge selectedChallenge;
 	
+	private IQuestion selectedQuestion;
+	
+	private IChallengeResolution challengeResolution;
+	
 	@PostConstruct
 	public void init() {
+		challengeResolution = new ChallengeResolution();
+		challengeResolution.setOwner(userSessionMB.getUser());
+		challengeResolution.setQuestionsResolution(new ArrayList<>());
+		
 		loadUserDisciplines();
 	}
 		
@@ -43,14 +59,11 @@ public class ChallengeResponseMB implements Serializable {
 		userDisciplines = disciplineBusiness.findByCourse(course);
 	}
 	
-	public IDisciplineBusiness getDisciplineBusiness() {
-		return disciplineBusiness;
+	public void loadChallengeQuestions() {		
+		selectedChallenge
+			.setQuestions(challengeBusiness.findQuestionsByChallenge(selectedChallenge));
 	}
-
-	public void setDisciplineBusiness(IDisciplineBusiness disciplineBusiness) {
-		this.disciplineBusiness = disciplineBusiness;
-	}
-
+	
 	public UserSessionMB getUserSessionMB() {
 		return userSessionMB;
 	}
@@ -82,4 +95,25 @@ public class ChallengeResponseMB implements Serializable {
 	public void setSelectedChallenge(IChallenge selectedChallenge) {
 		this.selectedChallenge = selectedChallenge;
 	}
+
+	public IQuestion getSelectedQuestion() {
+		return selectedQuestion;
+	}
+
+	public void setSelectedQuestion(IQuestion selectedQuestion) {
+		this.selectedQuestion = selectedQuestion;
+	}
+	
+	public IDisciplineBusiness getDisciplineBusiness() {
+		return disciplineBusiness;
+	}
+
+	public IChallengeResolution getChallengeResolution() {
+		return challengeResolution;
+	}
+
+	public void setChallengeResolution(IChallengeResolution challengeResolution) {
+		this.challengeResolution = challengeResolution;
+	}
+	
 }

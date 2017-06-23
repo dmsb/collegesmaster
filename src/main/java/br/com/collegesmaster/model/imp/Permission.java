@@ -18,7 +18,6 @@ import javax.persistence.Table;
 import org.hibernate.envers.Audited;
 
 import br.com.collegesmaster.model.IPermission;
-import br.com.collegesmaster.model.IProfile;
 
 @Entity
 @Table(name ="permission")
@@ -37,7 +36,7 @@ public class Permission implements IPermission {
 	private String name;
 	
 	@ManyToMany(targetEntity = Profile.class, fetch = LAZY, mappedBy = "permissions")
-	private List<IProfile> profiles;
+	private List<Profile> profiles;
 	
 	@Override
 	public Integer getId() {
@@ -60,12 +59,12 @@ public class Permission implements IPermission {
 	}
 
 	@Override
-	public List<IProfile> getProfiles() {
+	public List<Profile> getProfiles() {
 		return profiles;
 	}
 
 	@Override
-	public void setProfiles(List<IProfile> profiles) {
+	public void setProfiles(List<Profile> profiles) {
 		this.profiles = profiles;
 	}
 	

@@ -1,36 +1,28 @@
 package tests;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.collegesmaster.model.IAlternative;
-import br.com.collegesmaster.model.IAlternativeResolution;
 import br.com.collegesmaster.model.IChallenge;
-import br.com.collegesmaster.model.IChallengeResolution;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IInstitute;
-import br.com.collegesmaster.model.IQuestion;
-import br.com.collegesmaster.model.IQuestionResolution;
 import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.model.imp.AlternativeResolution;
 import br.com.collegesmaster.model.imp.Challenge;
-import br.com.collegesmaster.model.imp.ChallengeResolution;
 import br.com.collegesmaster.model.imp.Course;
 import br.com.collegesmaster.model.imp.Discipline;
 import br.com.collegesmaster.model.imp.GeneralInfo;
 import br.com.collegesmaster.model.imp.Institute;
 import br.com.collegesmaster.model.imp.Localization;
 import br.com.collegesmaster.model.imp.Question;
-import br.com.collegesmaster.model.imp.QuestionResolution;
 import br.com.collegesmaster.model.imp.User;
 import br.com.collegesmaster.util.CryptoUtils;
 
@@ -111,7 +103,7 @@ public class JUnitInserts extends JUnitConfiguration {
         final IDiscipline discipline = em.find(Discipline.class, 1);
         final IUser user = em.find(User.class, 1);
         
-        final Set<IQuestion> questions = new LinkedHashSet<IQuestion>();
+        final List<Question> questions = new ArrayList<>();
         questions.add(em.find(Question.class, 1));
         
         final IChallenge challenge = new Challenge();
@@ -122,54 +114,4 @@ public class JUnitInserts extends JUnitConfiguration {
         validateConstraints(challenge);
         em.persist(challenge);
     }
-    
-    @Test
-    public void test06_insertCompletedChallenge() {    	    
-    	
-        final IChallenge targetChallenge = em.find(Challenge.class, 1);              
-        final IUser user = em.find(User.class, 1);
-        
-        final IChallengeResolution challengeResponse = new ChallengeResolution();
-        challengeResponse.setOwner(user);        
-        challengeResponse.setTargetChallenge(targetChallenge);
-        challengeResponse.setQuestionsResolution(new LinkedHashSet<IQuestionResolution>());
-        
-        buildQuestionsResolution(targetChallenge, challengeResponse);
-        
-        validateConstraints(challengeResponse);
-        em.persist(challengeResponse);
-    }
-
-	private void buildQuestionsResolution(final IChallenge targetChallenge,
-			final IChallengeResolution challengeResponse) {
-		
-		final Set<IQuestion> targetQuestions = targetChallenge.getQuestions();
-        
-		targetQuestions.forEach(currentTargetQuestion -> {
-        	
-        	final IQuestionResolution questionResolution = new QuestionResolution();
-        	questionResolution.setTargetQuestion(currentTargetQuestion);
-        	questionResolution.setChallengeResolution(challengeResponse);
-        	
-        	buildAlternativesResolution(currentTargetQuestion, questionResolution);
-        	
-        	challengeResponse.getQuestionsResolution().add(questionResolution);
-        });
-	}
-
-	private void buildAlternativesResolution(IQuestion currentTargetQuestion,
-			final IQuestionResolution questionResolution) {
-		
-		final Set<IAlternative> targetAlternatives = currentTargetQuestion.getAlternatives();
-		questionResolution.setAlternativesResolution(new LinkedHashSet<IAlternativeResolution>());
-		
-		for(final IAlternative targetAlternative : targetAlternatives) {
-			final IAlternativeResolution alternativeResolution = new AlternativeResolution();
-			alternativeResolution.setQuestionResolution(questionResolution);
-			alternativeResolution.setTargetAlternative(targetAlternative);
-			alternativeResolution.setLetter(targetAlternative.getLetter());
-			alternativeResolution.setDefinition(Boolean.TRUE);
-			questionResolution.getAlternativesResolution().add(alternativeResolution);
-		}
-	}
 }
