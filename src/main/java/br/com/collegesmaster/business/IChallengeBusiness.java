@@ -9,9 +9,11 @@ import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.imp.Challenge;
 import br.com.collegesmaster.model.imp.Question;
 
-public interface IChallengeBusiness extends IBusiness<IChallenge, Challenge> {
+public interface IChallengeBusiness extends IBusiness<IChallenge> {
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	List<Question> findQuestionsByChallenge(IChallenge selectedChallenge);
-
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Challenge> findAll();
 }

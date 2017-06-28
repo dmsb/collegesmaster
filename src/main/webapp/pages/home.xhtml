@@ -49,52 +49,52 @@
 					
 					<h:outputLabel for="cpf" value="#{text['label_cpf']}" />
 					<p:inputMask id="cpf" value="#{homeMB.user.generalInfo.cpf}" size="15"
-						mask="999.999.999-99" required="true" requiredMessage="#{text['msg_required_cpf']}">
+						mask="999.999.999-99" required="true" label="#{text['label_cpf']}" >
 						<f:validateLength for="cpf" minimum="14" maximum="14" />
 					</p:inputMask>
 					
 					<h:outputLabel for="email" value="#{text['label_email']}" />
 					<p:inputText id="email" value="#{homeMB.user.generalInfo.email}" size="15"
-						required="true" requiredMessage="#{text['msg_required_email']}" />					
+						required="true" label="#{text['label_email']}" />					
 					
 					<h:outputLabel for="firstName" value="#{text['label_first_name']}" />
 					<p:inputText id="firstName" value="#{homeMB.user.generalInfo.firstName}" size="15"
-						required="true" requiredMessage="#{text['msg_required_first_name']}" />
+						required="true" label="#{text['label_first_name']}" />
 
 					<h:outputLabel for="lastName" value="#{text['label_last_name']}" />
 					<p:inputText id="lastName" value="#{homeMB.user.generalInfo.lastName}" size="15"
-						required="true" requiredMessage="#{text['msg_required_last_name']}"/>
+						required="true" label="#{text['label_last_name']}" />
 					
 					<h:outputLabel for="birthdate" value="#{text['label_birthdate']}" />
 					<p:calendar id="birthdate" value="#{homeMB.user.generalInfo.birthdate}" size="15"
 						pattern="dd-MM-yyyy" mask="true" required="true" converter="localDateTimeConverter"
-						requiredMessage="#{text['msg_required_birthdate']}" />				
+						label="#{text['label_birthdate']}" />				
 					
 					<h:outputLabel for="username" value="#{text['label_username']}" />
 					<p:inputText id="username" value="#{homeMB.user.username}" size="15" 
-						required="true" requiredMessage="#{text['msg_required_username']}"
+						required="true" label="#{text['label_username']}"
 						validatorMessage="#{text['msg_invalid_username_length']}" />
 					
 					<h:outputLabel for="password" value="#{text['label_password']}" />
 					<p:password id="password" value="#{homeMB.user.password}" size="15"
-						required="true" requiredMessage="#{text['msg_required_password']}"
+						required="true" label="#{text['label_password']}"
 						validatorMessage="#{text['msg_invalid_password_format']}" />
 					
 					<h:outputLabel for="profile" value="#{text['label_profile']}" />
-					<h:selectOneMenu id="profile" value="#{homeMB.userProfile.id}">
+					<h:selectOneMenu id="profile" value="#{homeMB.userProfile.id}" label="#{text['label_profile']}">
 			            <f:selectItems value="#{homeMB.allProfiles()}" var="profile" itemLabel="#{text['label_' += profile.name]}" 
 			            	itemValue="#{profile.id}" />			            
 			        </h:selectOneMenu>
 			        
 			        <h:outputLabel for="institute" value="#{text['label_institute']}" />
-					<h:selectOneMenu id="institute" value="#{homeMB.institute.id}">
+					<h:selectOneMenu id="institute" value="#{homeMB.institute.id}" label="#{text['label_institute']}">
 						<p:ajax event="change" listener="#{homeMB.changeInstituteEvent()}" update=":register_form:course"/>						
 			            <f:selectItems value="#{homeMB.institutes}" var="institute" itemLabel="#{institute.name}" 
 			            	itemValue="#{institute.id}" />			            
 			        </h:selectOneMenu>
 			        
 			        <h:outputLabel for="course" value="#{text['label_course']}" />
-					<h:selectOneMenu id="course" value="#{homeMB.user.generalInfo.course.id}">
+					<h:selectOneMenu id="course" value="#{homeMB.user.generalInfo.course.id}" label="#{text['label_course']}">
 						<p:ajax event="change" listener="#{homeMB.changeCourseEvent()}" />
 			            <f:selectItems value="#{homeMB.institute.courses}" var="course" itemLabel="#{course.name}" 
 			            	itemValue="#{course.id}" />			            

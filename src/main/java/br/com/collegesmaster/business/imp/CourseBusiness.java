@@ -27,8 +27,8 @@ public class CourseBusiness extends GenericBusiness implements ICourseBusiness {
 	}
 
 	@Override
-	public void merge(ICourse course) {
-		entityManager.merge(course);	
+	public ICourse merge(ICourse course) {
+		return entityManager.merge(course);	
 	}
 
 	@Override
@@ -37,14 +37,14 @@ public class CourseBusiness extends GenericBusiness implements ICourseBusiness {
 	}
 
 	@Override
-	public ICourse findById(Integer id, Class<Course> modelClass) {
-		return entityManager.find(modelClass, id);
+	public ICourse findById(Integer id) {
+		return entityManager.find(Course.class, id);
 	}
 
 	@Override
 	public List<Course> findAll() {
 		
-		final CriteriaQuery<Course> criteriaQuery = criteriaBuilder.createQuery(Course.class);		
+		final CriteriaQuery<Course> criteriaQuery = builder.createQuery(Course.class);		
 		criteriaQuery.from(Course.class);
 		
 		final TypedQuery<Course> typedQuery = entityManager.createQuery(criteriaQuery);
@@ -56,7 +56,7 @@ public class CourseBusiness extends GenericBusiness implements ICourseBusiness {
 	@Override
 	public List<Course> findNamesByInstitute(final IInstitute institute) {
 		
-		final CriteriaQuery<Course> criteriaQuery = criteriaBuilder.createQuery(Course.class);
+		final CriteriaQuery<Course> criteriaQuery = builder.createQuery(Course.class);
 		final Root<Course> rootCourse = criteriaQuery.from(Course.class);
 		
 		final List<Selection<?>> idAndNameSelections = new ArrayList<Selection<?>>();
@@ -65,7 +65,7 @@ public class CourseBusiness extends GenericBusiness implements ICourseBusiness {
 		
 		criteriaQuery.multiselect(idAndNameSelections);
 		
-		final Predicate institutePredicate = criteriaBuilder.equal(rootCourse.get("institute"), institute);
+		final Predicate institutePredicate = builder.equal(rootCourse.get("institute"), institute);
 		criteriaQuery.where(institutePredicate);
 		
 		final TypedQuery<Course> typedQuery = entityManager.createQuery(criteriaQuery);		

@@ -9,12 +9,14 @@ import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.imp.Discipline;
 
-public interface IDisciplineBusiness extends IBusiness<IDiscipline, Discipline> {
+public interface IDisciplineBusiness extends IBusiness<IDiscipline> {
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	List<Discipline> findNamesByCourse(final ICourse course);
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	List<Discipline> findByCourse(final ICourse course);
-
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Discipline> findAll();
 }

@@ -6,9 +6,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import br.com.collegesmaster.business.IChallengeBusiness;
 import br.com.collegesmaster.enums.Letter;
@@ -32,8 +34,8 @@ public class ChallengeMB implements Serializable {
 	@ManagedProperty(value="#{userSessionMB}")
 	private UserSessionMB userSessionMB;
 	
-	@ManagedProperty(value="#{challengeResolutionMB}")
-	private ChallengeResolutionMB challengeResolutionMB;
+	@ManagedProperty(value="#{challengeResponseMB}")
+	private ChallengeResponseMB challengeResponseMB;
 	
 	private IChallenge challenge;
 	
@@ -45,17 +47,22 @@ public class ChallengeMB implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		if(challenge == null) {
-			challenge = new Challenge();
-			challenge.setDiscipline(new Discipline());
-			challenge.setOwner(userSessionMB.getUser());
-			challenge.setQuestions(new ArrayList<Question>());			
-		}
+		challenge = new Challenge();
+		challenge.setDiscipline(new Discipline());
+		challenge.setOwner(userSessionMB.getUser());
+		challenge.setQuestions(new ArrayList<Question>());
 		
+		resetCurrentQuestion();
+	}
+
+	private void resetCurrentQuestion() {
 		currentQuestion = new Question();
 		currentQuestion.setAlternatives(new ArrayList<Alternative>());
-		
-		alternatives = new ArrayList<>(4);
+		resetAlternatives();
+	}
+
+	private void resetAlternatives() {
+		alternatives = new ArrayList<>(4);		
 		alternatives.add(new Alternative());
 		alternatives.add(new Alternative());
 		alternatives.add(new Alternative());
@@ -68,23 +75,30 @@ public class ChallengeMB implements Serializable {
 		}
 
 		trueAlternative = Letter.A;
-		
 	}	
 	
 	public void persistChallenge() {
 		
 		final Integer disciplineId = challenge.getDiscipline().getId();		
-		final IDiscipline discipline = challengeResolutionMB.getDisciplineBusiness().findById(disciplineId, Discipline.class);		
+		
+		final IDiscipline discipline = challengeResponseMB
+			.getDisciplineBusiness()
+			.findById(disciplineId);
+		
 		challenge.setDiscipline(discipline);
 		
 		challengeBusiness.persist(challenge);
 		
+		final FacesContext context = FacesContext.getCurrentInstance();
+        	context.addMessage(null, new FacesMessage("#{text['msg_success']}",
+        			"#{text['msg_challenge_registred_with_success']}"));
+        	
 		init();
 	}
 	
 	public void addQuestionToChallenge() {
 		
-		for(IAlternative alternative : alternatives) {
+		for(final IAlternative alternative : alternatives) {
 			alternative.setQuestion(currentQuestion);
 			
 			if(trueAlternative.equals(alternative.getLetter())) {
@@ -98,17 +112,12 @@ public class ChallengeMB implements Serializable {
 		currentQuestion.setChallenge(challenge);
 		challenge.getQuestions().add(currentQuestion);
 		
-		init();
+		resetCurrentQuestion();
 	}
 	
 	public Letter[] loadlAllLetters() {
 		return Letter.values();
 	}
-	
-	public void removeQuestion() {
-        challenge.getQuestions().remove(currentQuestion);
-        currentQuestion = null;
-    }
 	
 	public UserSessionMB getUserSessionMB() {
 		return userSessionMB;
@@ -150,12 +159,12 @@ public class ChallengeMB implements Serializable {
 		this.trueAlternative = trueAlternative;
 	}
 
-	public ChallengeResolutionMB getChallengeResolutionMB() {
-		return challengeResolutionMB;
+	public ChallengeResponseMB getchallengeResponseMB() {
+		return challengeResponseMB;
 	}
 
-	public void setChallengeResolutionMB(ChallengeResolutionMB challengeResolutionMB) {
-		this.challengeResolutionMB = challengeResolutionMB;
+	public void setchallengeResponseMB(ChallengeResponseMB challengeResponseMB) {
+		this.challengeResponseMB = challengeResponseMB;
 	}
 	
 }

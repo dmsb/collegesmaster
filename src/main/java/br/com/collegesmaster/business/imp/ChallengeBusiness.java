@@ -27,8 +27,8 @@ public class ChallengeBusiness extends GenericBusiness implements IChallengeBusi
 	}
 	
 	@Override
-	public void merge(final IChallenge challenge) {
-		entityManager.merge(challenge);
+	public IChallenge merge(final IChallenge challenge) {
+		return entityManager.merge(challenge);
 	}
 
 	@Override
@@ -37,14 +37,14 @@ public class ChallengeBusiness extends GenericBusiness implements IChallengeBusi
 	}
 
 	@Override
-	public IChallenge findById(Integer id, Class<Challenge> modelClass) {
-		return entityManager.find(modelClass, id);
+	public IChallenge findById(Integer id) {
+		return entityManager.find(Challenge.class, id);
 	}
 
 	@Override
 	public List<Challenge> findAll() {
 		
-		final CriteriaQuery<Challenge> criteriaQuery = criteriaBuilder.createQuery(Challenge.class);
+		final CriteriaQuery<Challenge> criteriaQuery = builder.createQuery(Challenge.class);
 		final TypedQuery<Challenge> typedQuery = entityManager.createQuery(criteriaQuery);		
 		return typedQuery.getResultList(); 		
 	}
@@ -52,11 +52,11 @@ public class ChallengeBusiness extends GenericBusiness implements IChallengeBusi
 	@Override
 	public List<Question> findQuestionsByChallenge(final IChallenge selectedChallenge) {
 		
-		final CriteriaQuery<Question> criteriaQuery = criteriaBuilder.createQuery(Question.class);
+		final CriteriaQuery<Question> criteriaQuery = builder.createQuery(Question.class);
 		final Root<Question> questionRoot = criteriaQuery.from(Question.class);
 		
 		final Predicate challengeCondition = 
-				criteriaBuilder.equal(questionRoot.get(challenge), selectedChallenge);
+				builder.equal(questionRoot.get(challenge), selectedChallenge);
 		
 		criteriaQuery.where(challengeCondition);
 		

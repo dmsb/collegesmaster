@@ -30,8 +30,8 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 	}
 
 	@Override
-	public void merge(IInstitute institute) {
-		entityManager.merge(institute);
+	public IInstitute merge(IInstitute institute) {
+		return entityManager.merge(institute);
 		
 	}
 
@@ -42,13 +42,13 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 	}
 
 	@Override
-	public IInstitute findById(Integer id, Class<Institute> modelClass) {
-		return entityManager.find(modelClass, id);
+	public IInstitute findById(Integer id) {
+		return entityManager.find(Institute.class, id);
 	}
 	
 	@Override
 	public List<Institute> findAll() {
-		final CriteriaQuery<Institute> criteriaQuery = criteriaBuilder.createQuery(Institute.class);		
+		final CriteriaQuery<Institute> criteriaQuery = builder.createQuery(Institute.class);		
 		criteriaQuery.from(Institute.class);
 		
 		final TypedQuery<Institute> typedQuery = entityManager.createQuery(criteriaQuery);		
@@ -58,7 +58,7 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 	
 	@Override
 	public List<Institute> findIdsAndNames() {
-		final CriteriaQuery<Institute> criteriaQuery = criteriaBuilder.createQuery(Institute.class);
+		final CriteriaQuery<Institute> criteriaQuery = builder.createQuery(Institute.class);
 		
 		final Root<Institute> rootInstitute = criteriaQuery.from(Institute.class);
 		
@@ -75,7 +75,7 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 	
 	@Override
 	public List<Institute> findFetchingCourses() {
-		final CriteriaQuery<Institute> criteriaQuery = criteriaBuilder.createQuery(Institute.class);
+		final CriteriaQuery<Institute> criteriaQuery = builder.createQuery(Institute.class);
 		final Root<Institute> instituteRoot = criteriaQuery.from(Institute.class);
 				
 		instituteRoot.fetch(courses);

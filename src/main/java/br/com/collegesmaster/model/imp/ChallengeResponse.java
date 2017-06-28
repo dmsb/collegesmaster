@@ -20,14 +20,14 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import br.com.collegesmaster.model.IChallengeResolution;
-import br.com.collegesmaster.model.IQuestionResolution;
+import br.com.collegesmaster.model.IChallengeResponse;
+import br.com.collegesmaster.model.IQuestionResponse;
 import br.com.collegesmaster.model.IUser;
 
 @Entity
-@Table(name = "challenge_resolution")
+@Table(name = "challenge_response")
 @Access(FIELD)
-public class ChallengeResolution implements IChallengeResolution {
+public class ChallengeResponse implements IChallengeResponse {
 
 	private static final long serialVersionUID = -4223636598786128623L;
 	
@@ -43,16 +43,16 @@ public class ChallengeResolution implements IChallengeResolution {
 	@Column(name = "note", nullable = false, length = 11, unique = false)
 	private Integer note;
 	
-	@OneToMany(targetEntity = QuestionResolution.class, cascade = ALL, 
-		fetch = LAZY, orphanRemoval = true, mappedBy = "challengeResolution")
-	private List<IQuestionResolution> questionsResolution;
+	@OneToMany(targetEntity = QuestionResponse.class, cascade = ALL, 
+		fetch = LAZY, orphanRemoval = true, mappedBy = "challengeResponse")
+	private List<IQuestionResponse> questionsResponse;
 	
 	@PrePersist
 	@PreUpdate
 	private void calculateNote() {
 		note = 0;			
 		
-		for(final IQuestionResolution response : questionsResolution) {
+		for(final IQuestionResponse response : questionsResponse) {
 			response.getTargetQuestion()
 				.getAlternatives()
 				.forEach(alternative -> {					
@@ -95,13 +95,13 @@ public class ChallengeResolution implements IChallengeResolution {
 	}
 
 	@Override
-	public List<IQuestionResolution> getQuestionsResolution() {
-		return questionsResolution;
+	public List<IQuestionResponse> getQuestionsResponse() {
+		return questionsResponse;
 	}
 
 	@Override
-	public void setQuestionsResolution(List<IQuestionResolution> questionsResolution) {
-		this.questionsResolution = questionsResolution;
+	public void setQuestionsResponse(List<IQuestionResponse> questionsResponse) {
+		this.questionsResponse = questionsResponse;
 	}
 	
 	@Override
@@ -111,11 +111,11 @@ public class ChallengeResolution implements IChallengeResolution {
 			return true;
 		}
 		
-		if(!(objectToBeComparated instanceof ChallengeResolution)) {
+		if(!(objectToBeComparated instanceof ChallengeResponse)) {
 			return false;
 		}
 		
-		final ChallengeResolution objectComparatedInstance = (ChallengeResolution) objectToBeComparated;
+		final ChallengeResponse objectComparatedInstance = (ChallengeResponse) objectToBeComparated;
 		
 		return id == objectComparatedInstance.id && 
 				note == objectComparatedInstance.note;

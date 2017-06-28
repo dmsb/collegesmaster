@@ -8,9 +8,9 @@ public interface IAlternativeResolution extends IModel {
 
 	IAlternative getTargetAlternative();
 
-	void setQuestionResolution(IQuestionResolution questionResolution);
+	void setQuestionResolution(IQuestionResponse questionResolution);
 
-	IQuestionResolution getQuestionResolution();
+	IQuestionResponse getQuestionResolution();
 
 	void setDefinition(Boolean definition);
 

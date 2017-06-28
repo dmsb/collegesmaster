@@ -9,8 +9,9 @@
 		<supported-locale>en</supported-locale>
 		</locale-config>
 		<resource-bundle>
-			<base-name>languages.text</base-name>
+			<base-name>i18n.texts.text</base-name>
 			<var>text</var>
-		</resource-bundle>		
+		</resource-bundle>
+		<message-bundle>i18n.messages.message</message-bundle>		
 	</application>
 </faces-config>

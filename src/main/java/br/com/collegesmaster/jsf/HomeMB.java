@@ -1,5 +1,8 @@
 package br.com.collegesmaster.jsf;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,15 +67,46 @@ public class HomeMB implements Serializable {
 	
 	public void persistUser() {
 		
-		final Profile completeProfile = (Profile) profileBusiness.findById(userProfile.getId(), Profile.class);
+		final Profile completeProfile = (Profile) profileBusiness.findById(userProfile.getId());
 		user.getProfiles().add(completeProfile);
 		
-		userBusiness.persist(user);
 		
-		FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Sucesso!",  "Usuário registrado."));
-        init();
-        
+		if(FALSE.equals(isValidUniqueProperties())) {
+			return;
+		} else {
+			userBusiness.persist(user);
+			
+			final FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage("#{text['msg_success']}",
+					"#{text['msg_user_registred_with_success']}"));
+			init();			
+		}	
+	}
+
+	private Boolean isValidUniqueProperties() {
+		
+		final Boolean existsUsername = userBusiness.existsUsername(user.getUsername());
+		
+		final Boolean existsCpf = userBusiness.existsCpf(user.getGeneralInfo().getCpf());
+		
+		final Boolean existsEmail = userBusiness.existsEmail(user.getGeneralInfo().getEmail());
+		
+		if(TRUE.equals(existsUsername)) {
+			final FacesContext context = FacesContext.getCurrentInstance();
+	    	context.addMessage(null, new FacesMessage("#{text['msg_exists_username']}",
+	    			"#{text['exists_username']}"));	    	
+		}
+		if(TRUE.equals(existsCpf)) {			
+			final FacesContext context = FacesContext.getCurrentInstance();
+	    	context.addMessage(null, new FacesMessage("#{text['msg_exists_cpf']}",
+	    			"#{text['exists_username']}"));	
+		}
+		if(TRUE.equals(existsEmail)) {
+			final FacesContext context = FacesContext.getCurrentInstance();
+	    	context.addMessage(null, new FacesMessage("#{text['msg_exists_email']}",
+	    			"#{text['exists_username']}"));	
+		}
+		return !(existsCpf || existsEmail || existsUsername);
 	}
 	
 	public void findCoursesByInstitute() {

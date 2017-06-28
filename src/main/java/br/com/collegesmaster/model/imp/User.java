@@ -27,7 +27,6 @@ import org.hibernate.envers.Audited;
 
 import br.com.collegesmaster.annotations.Password;
 import br.com.collegesmaster.model.IGeneralInfo;
-import br.com.collegesmaster.model.IProfile;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.util.CryptoUtils;
 
@@ -54,16 +53,6 @@ public class User implements IUser {
     @Size(min = 6)
     @Password
     private String password;
-
-//    private Set<IAlternative> responsedAlternatves;
-//    
-//     {
-//    	 Map<IQuestion, List<IAlternative>> map = responsedAlternatves.stream()
-//    			 .collect(groupingBy(IAlternative::getQuestion));
-//
-//    	 Map<IChallenge, List<Entry<IQuestion, List<IAlternative>>>> responsedChallenges = map.entrySet()
-//    			 .stream().collect(groupingBy(entry -> entry.getKey().getChallenge()));
-//    }
      
     @NotNull
 	@Column(name = "salt", unique = false, nullable = false, length = 88)

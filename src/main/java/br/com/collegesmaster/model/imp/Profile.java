@@ -19,7 +19,6 @@ import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
 
-import br.com.collegesmaster.model.IPermission;
 import br.com.collegesmaster.model.IProfile;
 
 @Entity

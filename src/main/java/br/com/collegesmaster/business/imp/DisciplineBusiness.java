@@ -28,8 +28,8 @@ public class DisciplineBusiness extends GenericBusiness implements IDisciplineBu
 	}
 
 	@Override
-	public void merge(IDiscipline discipline) {
-		entityManager.merge(discipline);
+	public IDiscipline merge(IDiscipline discipline) {
+		return entityManager.merge(discipline);
 	}
 
 	@Override
@@ -38,14 +38,14 @@ public class DisciplineBusiness extends GenericBusiness implements IDisciplineBu
 	}
 
 	@Override
-	public IDiscipline findById(Integer id, Class<Discipline> modelClass) {
-		return entityManager.find(modelClass, id);
+	public IDiscipline findById(Integer id) {
+		return entityManager.find(Discipline.class, id);
 	}
 
 	@Override
 	public List<Discipline> findAll() {
 		
-		final CriteriaQuery<Discipline> criteriaQuery = criteriaBuilder.createQuery(Discipline.class);
+		final CriteriaQuery<Discipline> criteriaQuery = builder.createQuery(Discipline.class);
 		criteriaQuery.from(Discipline.class);
 		final TypedQuery<Discipline> typedQuery = entityManager.createQuery(criteriaQuery);		
 		final List<Discipline> result = typedQuery.getResultList(); 
@@ -56,10 +56,10 @@ public class DisciplineBusiness extends GenericBusiness implements IDisciplineBu
 	@Override
 	public List<Discipline> findByCourse(final ICourse course) {
 		
-		final CriteriaQuery<Discipline> criteriaQuery = criteriaBuilder.createQuery(Discipline.class);
+		final CriteriaQuery<Discipline> criteriaQuery = builder.createQuery(Discipline.class);
 		final Root<Discipline> rootDiscipline = criteriaQuery.from(Discipline.class);
 		
-		final Predicate coursePredicate = criteriaBuilder.equal(rootDiscipline.get(Discipline_.course), course);
+		final Predicate coursePredicate = builder.equal(rootDiscipline.get(Discipline_.course), course);
 		rootDiscipline.fetch(Discipline_.challenges);
 		
 		criteriaQuery.select(rootDiscipline)
@@ -75,7 +75,7 @@ public class DisciplineBusiness extends GenericBusiness implements IDisciplineBu
 	@Override
 	public List<Discipline> findNamesByCourse(final ICourse course) {
 		
-		final CriteriaQuery<Discipline> criteriaQuery = criteriaBuilder.createQuery(Discipline.class);
+		final CriteriaQuery<Discipline> criteriaQuery = builder.createQuery(Discipline.class);
 		final Root<Discipline> rootDiscipline = criteriaQuery.from(Discipline.class);
 		
 		final List<Selection<?>> idAndNameSelections = new ArrayList<Selection<?>>();
@@ -84,7 +84,7 @@ public class DisciplineBusiness extends GenericBusiness implements IDisciplineBu
 		
 		criteriaQuery.multiselect(idAndNameSelections);
 		
-		final Predicate coursePredicate = criteriaBuilder.equal(rootDiscipline.get(Discipline_.course), course);
+		final Predicate coursePredicate = builder.equal(rootDiscipline.get(Discipline_.course), course);
 		criteriaQuery.where(coursePredicate);
 		
 		final TypedQuery<Discipline> typedQuery = entityManager.createQuery(criteriaQuery);		

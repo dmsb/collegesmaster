@@ -2,15 +2,15 @@ package br.com.collegesmaster.model;
 
 import br.com.collegesmaster.enums.Letter;
 
-public interface IQuestionResolution extends IModel {
+public interface IQuestionResponse extends IModel {
 
 	void setTargetQuestion(IQuestion targetQuestion);
 
 	IQuestion getTargetQuestion();
 
-	void setChallengeResolution(IChallengeResolution challengeResolution);
+	void setChallengeResponse(IChallengeResponse challengeResolution);
 
-	IChallengeResolution getChallengeResolution();
+	IChallengeResponse getChallengeResponse();
 
 	void setLetter(Letter letter);
 

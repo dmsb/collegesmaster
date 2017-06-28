@@ -23,18 +23,23 @@ public class ProfileBusiness extends GenericBusiness implements IProfileBusiness
 	}
 
 	@Override
-	public void merge(IProfile profile) {
-		entityManager.merge(profile);
+	public IProfile merge(IProfile profile) {
+		return entityManager.merge(profile);
 	}
 
 	@Override
 	public void remove(IProfile profile) {
 		entityManager.remove(profile);
 	}
-
+	
+	@Override
+	public IProfile findById(Integer id) {
+		return entityManager.find(Profile.class, id);
+	}
+	
 	@Override
 	public List<Profile> findAll() {		
-		final CriteriaQuery<Profile> criteriaQuery = criteriaBuilder.createQuery(Profile.class);
+		final CriteriaQuery<Profile> criteriaQuery = builder.createQuery(Profile.class);
 		criteriaQuery.from(Profile.class);
 		final TypedQuery<Profile> typedQuery = entityManager.createQuery(criteriaQuery);		
 		final List<Profile> result = typedQuery.getResultList(); 
@@ -42,8 +47,4 @@ public class ProfileBusiness extends GenericBusiness implements IProfileBusiness
 		return result;
 	}
 
-	@Override
-	public IProfile findById(Integer id, Class<Profile> modelClass) {
-		return entityManager.find(modelClass, id);
-	}
 }

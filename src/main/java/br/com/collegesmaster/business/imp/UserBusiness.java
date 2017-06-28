@@ -1,5 +1,7 @@
 package br.com.collegesmaster.business.imp;
 
+import static br.com.collegesmaster.model.imp.GeneralInfo_.cpf;
+import static br.com.collegesmaster.model.imp.GeneralInfo_.email;
 import static br.com.collegesmaster.model.imp.User_.generalInfo;
 import static br.com.collegesmaster.model.imp.User_.password;
 import static br.com.collegesmaster.model.imp.User_.username;
@@ -15,6 +17,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 
 import com.google.common.base.Strings;
 
@@ -33,8 +36,8 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	}
 
 	@Override
-	public void merge(final IUser user) {
-		entityManager.merge(user);
+	public IUser merge(final IUser user) {
+		return entityManager.merge(user);
 	}
 
 	@Override
@@ -43,13 +46,13 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	}
 
 	@Override
-	public IUser findById(final Integer id, final Class<User> modelClass) {
-		return entityManager.find(modelClass, id);
+	public IUser findById(final Integer id) {
+		return entityManager.find(User.class, id);
 	}
 
 	@Override
 	public List<User> findAll() {
-		final CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+		final CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
 		criteriaQuery.from(User.class);
 		final TypedQuery<User> typedQuery = entityManager.createQuery(criteriaQuery);
 		final List<User> result = typedQuery.getResultList();
@@ -58,23 +61,25 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	}
 
 	@Override
-	public IUser login(final String username, final String password) {
-		if (!(Strings.isNullOrEmpty(username) || Strings.isNullOrEmpty(password))) {
+	public IUser login(final String usernameToBeComparated, final String passwordToBeComparated) {
+		if (!(Strings.isNullOrEmpty(usernameToBeComparated) || Strings.isNullOrEmpty(passwordToBeComparated))) {
 
-			final String salt = getUserSalt(username);
+			final String salt = getUserSalt(usernameToBeComparated);
 
 			if(Strings.isNullOrEmpty(salt) == false) {
-				final IUser user = buildLogin(username, password, salt);
+				final IUser user = buildLogin(usernameToBeComparated, passwordToBeComparated, salt);
 				return user;
 			}
+			LOGGER.log(Level.WARNING, "Fail to proccess login: salt is null or empty");
 			return null;
 		} else {
+			LOGGER.log(Level.WARNING, "Fail to proccess login: username or password is null or empty");
 			return null;
 		}
 
 	}
 
-	private String getUserSalt(final String username) {
+	private String getUserSalt(final String usernameToBeComparated) {
 		
 		queryBuilder = new StringBuilder();
 		
@@ -83,7 +88,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 			.append("FROM   User user WHERE user.username = :username");
 
 		final Query query = entityManager.createQuery(queryBuilder.toString());
-		query.setParameter("username", username);
+		query.setParameter("username", usernameToBeComparated);
 		try {
 			final String salt = (String) query.getSingleResult();
 			return salt;
@@ -93,29 +98,70 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		return null;
 	}
 
-	private IUser buildLogin(final String usernameSubmited, final String passwordSubmited, final String salt) {
+	private IUser buildLogin(final String usernameToBeComparated,
+			final String passwordToBeComparated, final String saltToBeComparated) {
 
-		final String hashedPassword = CryptoUtils.getHashedPassword(passwordSubmited, salt);
+		final String hashedPassword = CryptoUtils.getHashedPassword(passwordToBeComparated, saltToBeComparated);
 
-		final CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-		final Root<User> userRoot = criteriaQuery.from(User.class);
+		final CriteriaQuery<User> query = builder.createQuery(User.class);
+		final Root<User> userRoot = query.from(User.class);
 		userRoot.fetch(generalInfo);
 		
-		final Predicate usernamePredicate = criteriaBuilder.equal(userRoot.get(username), usernameSubmited);
-		final Predicate passwordPredicate = criteriaBuilder.equal(userRoot.get(password), hashedPassword);
+		final Predicate usernamePredicate = builder.equal(userRoot.get(username), usernameToBeComparated);
+		final Predicate passwordPredicate = builder.equal(userRoot.get(password), hashedPassword);
 		
-		criteriaQuery.select(userRoot).where(usernamePredicate, passwordPredicate);		
+		query.select(userRoot).where(usernamePredicate, passwordPredicate);		
 		
-		final TypedQuery<User> query = entityManager.createQuery(criteriaQuery);
+		final TypedQuery<User> typedQuery = entityManager.createQuery(query);
 		
 		try {
-			final IUser user = query.getSingleResult();
-			return user;
+			return typedQuery.getSingleResult();			
 			
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, "Fail to login", e);
+			LOGGER.log(Level.SEVERE, "Fail to execute query in method buildLogin()", e);
 		}
 		return null;
 	}
 
+	@Override
+	public Boolean existsCpf(final String cpfToBeComparated) {
+		
+		final CriteriaQuery<Boolean> query = buildBooleanReturnQuery(User.class);
+		
+		final Subquery<User> subquery = query.subquery(User.class);
+		final Root<User> userRoot = subquery.from(User.class);
+		subquery.select(userRoot);
+		
+		final String crudeCpfToBeComparated = cpfToBeComparated.replace(".", "").replace("-", "");		
+		
+		final Predicate containsCpf = builder.equal(userRoot.join(generalInfo).get(cpf), crudeCpfToBeComparated);
+		return executeExists(query, subquery, containsCpf);
+	}
+
+	@Override
+	public Boolean existsUsername(final String usernameToBeComparated) {
+		
+		final CriteriaQuery<Boolean> query = buildBooleanReturnQuery(User.class);
+		
+		final Subquery<User> subquery = query.subquery(User.class);
+		final Root<User> userRoot = subquery.from(User.class);
+		subquery.select(userRoot);
+		
+		final Predicate containsUsername = builder.equal(userRoot.get(username), usernameToBeComparated);
+		return executeExists(query, subquery, containsUsername);
+	
+	}
+
+	@Override
+	public Boolean existsEmail(final String emailToBeComparated) {
+		
+		final CriteriaQuery<Boolean> query = buildBooleanReturnQuery(User.class);
+		
+		final Subquery<User> subquery = query.subquery(User.class);
+		final Root<User> userRoot = subquery.from(User.class);
+		subquery.select(userRoot);
+		
+		final Predicate containsEmail = builder.equal(userRoot.join(generalInfo).get(email), emailToBeComparated);
+		return executeExists(query, subquery, containsEmail);
+	}
 }

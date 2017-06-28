@@ -9,9 +9,11 @@ import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.imp.Course;
 
-public interface ICourseBusiness extends IBusiness<ICourse, Course> {
+public interface ICourseBusiness extends IBusiness<ICourse> {
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	List<Course> findNamesByInstitute(final IInstitute institute);
-
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Course> findAll();
 }

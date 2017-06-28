@@ -45,8 +45,9 @@
 					</p:row>
 					<p:row>
 						<p:column colspan="2">
-							<p:dataTable id="challenge_questions_dt" var="question" value="#{challengeMB.challenge.questions}" rowKey="#{question.hashCode()}"
-					                  selection="#{challengeMB.currentQuestion}" selectionMode="single">
+							<p:dataTable id="challenge_questions_dt" var="question" value="#{challengeMB.challenge.questions}"
+								rowKey="#{question.hashCode()}" selection="#{challengeMB.currentQuestion}"
+								selectionMode="single" emptyMessage="#{text['msg_no_records_found']}">
 				                 <f:facet name="header">
 				            		#{text['label_questions']}
 						        </f:facet>

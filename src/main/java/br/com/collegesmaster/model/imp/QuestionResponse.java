@@ -20,14 +20,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.collegesmaster.enums.Letter;
-import br.com.collegesmaster.model.IChallengeResolution;
+import br.com.collegesmaster.model.IChallengeResponse;
 import br.com.collegesmaster.model.IQuestion;
-import br.com.collegesmaster.model.IQuestionResolution;
+import br.com.collegesmaster.model.IQuestionResponse;
 
 @Entity
-@Table(name = "question_resolution")
+@Table(name = "question_response")
 @Access(FIELD)
-public class QuestionResolution implements IQuestionResolution {
+public class QuestionResponse implements IQuestionResponse {
 	
 	private static final long serialVersionUID = 693650150648888820L;
 
@@ -36,9 +36,9 @@ public class QuestionResolution implements IQuestionResolution {
 	@Column(name = "id")
 	private Integer id;
 	
-	@ManyToOne(targetEntity = ChallengeResolution.class, optional = false, fetch = LAZY)
-	@JoinColumn(name = "challengeResolutionFK", referencedColumnName = "id")
-	private IChallengeResolution challengeResolution;
+	@ManyToOne(targetEntity = ChallengeResponse.class, optional = false, fetch = LAZY)
+	@JoinColumn(name = "challengeResponseFK", referencedColumnName = "id")
+	private IChallengeResponse challengeResponse;
 	
 	@ManyToOne(targetEntity = Question.class, fetch = LAZY, optional = false)
 	@JoinColumn(name = "targetQuestionFK", referencedColumnName = "id")
@@ -60,13 +60,13 @@ public class QuestionResolution implements IQuestionResolution {
 	}
 
 	@Override
-	public IChallengeResolution getChallengeResolution() {
-		return challengeResolution;
+	public IChallengeResponse getChallengeResponse() {
+		return challengeResponse;
 	}
 
 	@Override
-	public void setChallengeResolution(IChallengeResolution challengeResolution) {
-		this.challengeResolution = challengeResolution;
+	public void setChallengeResponse(IChallengeResponse challengeResponse) {
+		this.challengeResponse = challengeResponse;
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class QuestionResolution implements IQuestionResolution {
 			return false;
 		}
 		
-		final QuestionResolution objectComparatedInstance = (QuestionResolution) objectToBeComparated;
+		final QuestionResponse objectComparatedInstance = (QuestionResponse) objectToBeComparated;
 		
 		return id == objectComparatedInstance.id;
 	}
