@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
@@ -24,6 +24,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.collegesmaster.model.IChallenge;
@@ -53,14 +54,15 @@ public class Question implements IQuestion {
 	@Column(name = "pontuation", nullable = false, length = 11)
 	private Integer pontuation;
 	
-	@NotNull
+	@NotAudited
 	@OneToMany(targetEntity = Alternative.class, cascade = ALL, fetch = EAGER,
 		orphanRemoval = true, mappedBy = "question")
 	private List<Alternative> alternatives;
 	
+	@NotAudited
 	@NotNull
 	@ManyToOne(targetEntity = Challenge.class, optional = false, fetch = LAZY)
-	@JoinColumn(name = "challengeFK", referencedColumnName = "id")
+	@JoinColumn(name = "challengeFK", referencedColumnName = "id", updatable = false)
 	private IChallenge challenge;
 	
 	@Override

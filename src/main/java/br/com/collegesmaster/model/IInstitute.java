@@ -2,8 +2,8 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
-import br.com.collegesmaster.model.imp.Course;
-import br.com.collegesmaster.model.imp.Localization;
+import br.com.collegesmaster.model.impl.Course;
+import br.com.collegesmaster.model.impl.Localization;
 
 public interface IInstitute extends IModel {
 

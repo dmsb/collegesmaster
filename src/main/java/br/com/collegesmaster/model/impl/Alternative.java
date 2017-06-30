@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.EnumType.STRING;

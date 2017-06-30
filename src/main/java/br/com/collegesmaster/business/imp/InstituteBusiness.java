@@ -1,8 +1,8 @@
 package br.com.collegesmaster.business.imp;
 
-import static br.com.collegesmaster.model.imp.Institute_.courses;
-import static br.com.collegesmaster.model.imp.Institute_.id;
-import static br.com.collegesmaster.model.imp.Institute_.name;
+import static br.com.collegesmaster.model.impl.Institute_.name;
+import static br.com.collegesmaster.model.impl.Institute_.courses;
+import static br.com.collegesmaster.model.impl.Institute_.id;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,20 +17,20 @@ import javax.persistence.criteria.Selection;
 
 import br.com.collegesmaster.business.IInstituteBusiness;
 import br.com.collegesmaster.model.IInstitute;
-import br.com.collegesmaster.model.imp.Institute;
+import br.com.collegesmaster.model.impl.Institute;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class InstituteBusiness extends GenericBusiness implements IInstituteBusiness {
 
 	@Override
-	public void persist(IInstitute institute) {
+	public void save(IInstitute institute) {
 		entityManager.persist(institute);
 		
 	}
 
 	@Override
-	public IInstitute merge(IInstitute institute) {
+	public IInstitute update(IInstitute institute) {
 		return entityManager.merge(institute);
 		
 	}

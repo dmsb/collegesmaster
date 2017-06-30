@@ -6,8 +6,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import br.com.collegesmaster.model.IChallenge;
-import br.com.collegesmaster.model.imp.Challenge;
-import br.com.collegesmaster.model.imp.Question;
+import br.com.collegesmaster.model.impl.Challenge;
+import br.com.collegesmaster.model.impl.Question;
 
 public interface IChallengeBusiness extends IBusiness<IChallenge> {
 	

@@ -16,7 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Subquery;
 
-import br.com.collegesmaster.model.imp.User;
+import br.com.collegesmaster.model.impl.User;
 
 public abstract class GenericBusiness {
 	
@@ -25,7 +25,7 @@ public abstract class GenericBusiness {
 	
 	protected CriteriaBuilder builder;
     protected StringBuilder queryBuilder;   
-    protected final static Logger LOGGER = Logger.getGlobal();
+    protected final static Logger logger = Logger.getGlobal();
     
     @PostConstruct
 	protected void init() {
@@ -60,9 +60,9 @@ public abstract class GenericBusiness {
 		try {
 			return typedQuery.getSingleResult();
 		} catch (NoResultException e) {
-			LOGGER.log(Level.INFO, "No results", e);
+			logger.log(Level.INFO, "No results", e);
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, "Fail to execute query!", e);
+			logger.log(Level.SEVERE, "Fail to execute query!", e);
 		}
 		return null;
 	}

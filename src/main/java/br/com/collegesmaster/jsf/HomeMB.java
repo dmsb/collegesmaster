@@ -21,11 +21,11 @@ import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.IProfile;
 import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.model.imp.Course;
-import br.com.collegesmaster.model.imp.GeneralInfo;
-import br.com.collegesmaster.model.imp.Institute;
-import br.com.collegesmaster.model.imp.Profile;
-import br.com.collegesmaster.model.imp.User;
+import br.com.collegesmaster.model.impl.Course;
+import br.com.collegesmaster.model.impl.GeneralInfo;
+import br.com.collegesmaster.model.impl.Institute;
+import br.com.collegesmaster.model.impl.Profile;
+import br.com.collegesmaster.model.impl.User;
 
 @ManagedBean(name = "homeMB")
 @ViewScoped
@@ -74,7 +74,7 @@ public class HomeMB implements Serializable {
 		if(FALSE.equals(isValidUniqueProperties())) {
 			return;
 		} else {
-			userBusiness.persist(user);
+			userBusiness.save(user);
 			
 			final FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage("#{text['msg_success']}",

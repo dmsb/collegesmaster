@@ -2,7 +2,7 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
-import br.com.collegesmaster.model.imp.Alternative;
+import br.com.collegesmaster.model.impl.Alternative;
 
 public interface IQuestion extends IModel {
 

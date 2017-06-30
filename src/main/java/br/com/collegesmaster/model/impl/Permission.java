@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.FetchType.LAZY;
@@ -12,36 +12,35 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
-import br.com.collegesmaster.model.IProfile;
+import br.com.collegesmaster.model.IPermission;
 
 @Entity
-@Table(name = "profile")
+@Table(name ="permission")
 @Access(FIELD)
 @Audited
-public class Profile implements IProfile {
+public class Permission implements IPermission {
 
-	private static final long serialVersionUID = -8835309684958820875L;
-
+	private static final long serialVersionUID = 2659147829263786669L;
+	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 	
+	@NotNull
 	@Column(name = "name", nullable = false, unique = true, length = 20)
 	private String name;
 	
-	@ManyToMany(targetEntity = Permission.class, fetch = LAZY)
-	@JoinTable(name="profile_permission",
-	    joinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")},
-	    inverseJoinColumns={@JoinColumn(name="permissionFK", referencedColumnName = "id")})
-	private List<Permission> permissions;
+	@NotAudited
+	@ManyToMany(targetEntity = Profile.class, fetch = LAZY, mappedBy = "permissions")
+	private List<Profile> profiles;
 	
 	@Override
 	public Integer getId() {
@@ -64,13 +63,13 @@ public class Profile implements IProfile {
 	}
 
 	@Override
-	public List<Permission> getPermissions() {
-		return permissions;
+	public List<Profile> getProfiles() {
+		return profiles;
 	}
 
 	@Override
-	public void setPermissions(List<Permission> permissions) {
-		this.permissions = permissions;
+	public void setProfiles(List<Profile> profiles) {
+		this.profiles = profiles;
 	}
 	
 	@Override
@@ -80,11 +79,11 @@ public class Profile implements IProfile {
 			return true;
 		}
 		
-		if(!(objectToBeComparated instanceof Profile)) {
+		if(!(objectToBeComparated instanceof Permission)) {
 			return false;
 		}
 		
-		final Profile objectComparatedInstance = (Profile) objectToBeComparated;
+		final Permission objectComparatedInstance = (Permission) objectToBeComparated;
 		
 		return id == objectComparatedInstance.id &&
 				Objects.equals(name, objectComparatedInstance.name);
@@ -94,4 +93,5 @@ public class Profile implements IProfile {
     public int hashCode() {
         return Objects.hash(id, name);
     }
+	
 }

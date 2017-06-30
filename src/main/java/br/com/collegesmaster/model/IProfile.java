@@ -2,7 +2,7 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
-import br.com.collegesmaster.model.imp.Permission;
+import br.com.collegesmaster.model.impl.Permission;
 
 public interface IProfile extends IModel {
 

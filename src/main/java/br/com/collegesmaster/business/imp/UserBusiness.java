@@ -1,10 +1,10 @@
 package br.com.collegesmaster.business.imp;
 
-import static br.com.collegesmaster.model.imp.GeneralInfo_.cpf;
-import static br.com.collegesmaster.model.imp.GeneralInfo_.email;
-import static br.com.collegesmaster.model.imp.User_.generalInfo;
-import static br.com.collegesmaster.model.imp.User_.password;
-import static br.com.collegesmaster.model.imp.User_.username;
+import static br.com.collegesmaster.model.impl.GeneralInfo_.cpf;
+import static br.com.collegesmaster.model.impl.GeneralInfo_.email;
+import static br.com.collegesmaster.model.impl.User_.generalInfo;
+import static br.com.collegesmaster.model.impl.User_.password;
+import static br.com.collegesmaster.model.impl.User_.username;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -23,7 +23,7 @@ import com.google.common.base.Strings;
 
 import br.com.collegesmaster.business.IUserBusiness;
 import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.model.imp.User;
+import br.com.collegesmaster.model.impl.User;
 import br.com.collegesmaster.util.CryptoUtils;
 
 @Stateless
@@ -31,12 +31,12 @@ import br.com.collegesmaster.util.CryptoUtils;
 public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	
 	@Override
-	public void persist(final IUser user) {
+	public void save(final IUser user) {		
 		entityManager.persist(user);
 	}
 
 	@Override
-	public IUser merge(final IUser user) {
+	public IUser update(final IUser user) {
 		return entityManager.merge(user);
 	}
 
@@ -70,10 +70,10 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 				final IUser user = buildLogin(usernameToBeComparated, passwordToBeComparated, salt);
 				return user;
 			}
-			LOGGER.log(Level.WARNING, "Fail to proccess login: salt is null or empty");
+			logger.log(Level.WARNING, "Fail to proccess login: salt is null or empty");
 			return null;
 		} else {
-			LOGGER.log(Level.WARNING, "Fail to proccess login: username or password is null or empty");
+			logger.log(Level.WARNING, "Fail to proccess login: username or password is null or empty");
 			return null;
 		}
 
@@ -85,7 +85,8 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		
 		queryBuilder
 			.append("SELECT user.salt ")
-			.append("FROM   User user WHERE user.username = :username");
+			.append("FROM   User user ")
+			.append("WHERE  user.username = :username");
 
 		final Query query = entityManager.createQuery(queryBuilder.toString());
 		query.setParameter("username", usernameToBeComparated);
@@ -93,7 +94,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 			final String salt = (String) query.getSingleResult();
 			return salt;
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, "Fail to get user salt", e);
+			logger.log(Level.SEVERE, "Fail to get user salt", e);
 		}
 		return null;
 	}
@@ -118,7 +119,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 			return typedQuery.getSingleResult();			
 			
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, "Fail to execute query in method buildLogin()", e);
+			logger.log(Level.SEVERE, "Fail to execute query in method buildLogin()", e);
 		}
 		return null;
 	}
@@ -132,7 +133,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		final Root<User> userRoot = subquery.from(User.class);
 		subquery.select(userRoot);
 		
-		final String crudeCpfToBeComparated = cpfToBeComparated.replace(".", "").replace("-", "");		
+		final String crudeCpfToBeComparated = cpfToBeComparated.replaceAll("[^0-9]", "");		
 		
 		final Predicate containsCpf = builder.equal(userRoot.join(generalInfo).get(cpf), crudeCpfToBeComparated);
 		return executeExists(query, subquery, containsCpf);

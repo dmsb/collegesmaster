@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.FetchType.LAZY;
@@ -19,6 +19,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+
 import br.com.collegesmaster.enums.Letter;
 import br.com.collegesmaster.model.IChallengeResponse;
 import br.com.collegesmaster.model.IQuestion;
@@ -27,6 +30,7 @@ import br.com.collegesmaster.model.IQuestionResponse;
 @Entity
 @Table(name = "question_response")
 @Access(FIELD)
+@Audited
 public class QuestionResponse implements IQuestionResponse {
 	
 	private static final long serialVersionUID = 693650150648888820L;
@@ -36,12 +40,14 @@ public class QuestionResponse implements IQuestionResponse {
 	@Column(name = "id")
 	private Integer id;
 	
+	@NotAudited
 	@ManyToOne(targetEntity = ChallengeResponse.class, optional = false, fetch = LAZY)
-	@JoinColumn(name = "challengeResponseFK", referencedColumnName = "id")
+	@JoinColumn(name = "challengeResponseFK", referencedColumnName = "id", updatable = false)
 	private IChallengeResponse challengeResponse;
 	
+	@NotAudited
 	@ManyToOne(targetEntity = Question.class, fetch = LAZY, optional = false)
-	@JoinColumn(name = "targetQuestionFK", referencedColumnName = "id")
+	@JoinColumn(name = "targetQuestionFK", referencedColumnName = "id", updatable = false)
 	private IQuestion targetQuestion;
 	
 	@Enumerated(EnumType.STRING)

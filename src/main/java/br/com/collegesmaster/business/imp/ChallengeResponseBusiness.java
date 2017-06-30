@@ -10,19 +10,19 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import br.com.collegesmaster.business.IChallengeResponseBusiness;
 import br.com.collegesmaster.model.IChallengeResponse;
-import br.com.collegesmaster.model.imp.ChallengeResponse;
+import br.com.collegesmaster.model.impl.ChallengeResponse;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class ChallengeResponseBusiness extends GenericBusiness implements IChallengeResponseBusiness {
 
 	@Override
-	public void persist(IChallengeResponse response) {
+	public void save(IChallengeResponse response) {
 		entityManager.persist(response);
 	}
 
 	@Override
-	public IChallengeResponse merge(IChallengeResponse response) {
+	public IChallengeResponse update(IChallengeResponse response) {
 		return entityManager.merge(response);
 	}
 

@@ -90,11 +90,11 @@
 		</dependency>
 		
 		<!-- Expression Language -->
-		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
-			<version>3.0.0</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>javax.el</groupId> -->
+<!-- 			<artifactId>javax.el-api</artifactId> -->
+<!-- 			<version>3.0.0</version> -->
+<!-- 		</dependency> -->
 	
 		<!-- JUnit -->
 		<dependency>
@@ -103,11 +103,11 @@
 			<version>4.12</version>
 		</dependency>
 		<!-- Used for tests with JUnit and Hibernate validators -->
-<!-- 		<dependency> -->
-<!-- 		   <groupId>org.glassfish.web</groupId> -->
-<!-- 		   <artifactId>javax.el</artifactId> -->
-<!-- 		   <version>2.2.4</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+		   <groupId>org.glassfish.web</groupId>
+		   <artifactId>javax.el</artifactId>
+		   <version>2.2.4</version>
+		</dependency>
 
 		<!-- DBUnit for populate the database (usefull for tests) -->
 		<dependency>

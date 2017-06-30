@@ -8,10 +8,10 @@ import br.com.collegesmaster.model.IModel;
 public interface IBusiness <T extends IModel> {
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void persist(T imodel);
+	public void save(T imodel);
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public T merge(T imodel) ;
+	public T update(T imodel) ;
 	 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void remove(T imodel);

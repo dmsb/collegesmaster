@@ -2,7 +2,7 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
-import br.com.collegesmaster.model.imp.Discipline;
+import br.com.collegesmaster.model.impl.Discipline;
 
 public interface ICourse extends IModel{
 

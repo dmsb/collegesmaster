@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
@@ -40,10 +40,9 @@ public class Discipline implements IDiscipline {
 	private Integer id;
 	
 	@NotBlank
-    @Column(name = "name")
+    @Column(name = "name", length = 30, nullable = false)
     private String name;
 	
-	@NotAudited
     @NotNull
     @ManyToOne(targetEntity = Course.class, optional = false, fetch = LAZY)
     @JoinColumn(name = "courseFK", referencedColumnName = "id")

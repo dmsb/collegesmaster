@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.FetchType.EAGER;
@@ -38,32 +38,32 @@ public class GeneralInfo implements IGeneralInfo {
 	@Column(name = "id")
 	private Integer id;
 	
-	@Column(name = "cpf", unique = true,  nullable = false, length = 11)	
 	@NotNull
-    @CPF
+	@CPF
+	@Column(name = "cpf", unique = true,  nullable = false, length = 11)	
     private String cpf;
 		
-	@Column(name = "email", unique = true, nullable = false, updatable = true)
 	@NotNull
-    @Email
+	@Email
+	@Column(name = "email", unique = true, nullable = false, length = 50)
     private String email;
 
-	@Column(name = "firstName", unique = false, nullable = false, updatable = true,
-			length = 25)
 	@NotNull
-    @Size(max = 40)
+	@Size(max = 25)
+	@Column(name = "firstName", nullable = false, length = 25)
     private String firstName;
 
 	@NotNull
 	@Size(max = 80)
-    @Column(name = "lastName", unique = false, nullable = false, updatable = true)
+    @Column(name = "lastName", nullable = false, length = 80)
     private String lastName;
 		
-    @Column(name = "birthdate", updatable = true, nullable = false)
+    @Column(name = "birthdate")
     private LocalDate birthdate;
     
+    @NotNull
     @ManyToOne(targetEntity = Course.class, fetch = EAGER, optional = false)
-    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @JoinColumn(name = "courseId", referencedColumnName = "id", updatable = false)
     private ICourse course;
     
 	@Override

@@ -2,7 +2,7 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
-import br.com.collegesmaster.model.imp.Challenge;
+import br.com.collegesmaster.model.impl.Challenge;
 
 public interface IDiscipline extends IModel {
 

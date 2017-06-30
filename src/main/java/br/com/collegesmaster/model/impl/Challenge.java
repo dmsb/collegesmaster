@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
@@ -41,7 +41,7 @@ public class Challenge implements IChallenge {
 	private Integer id;
 	
 	@NotBlank
-	@Column(name= "title", unique = false, nullable = false, length = 30)
+	@Column(name= "title", nullable = false, length = 30)
 	private String title;
 	
 	@NotAudited
@@ -55,17 +55,10 @@ public class Challenge implements IChallenge {
 	@JoinColumn(name = "disciplineFK", referencedColumnName = "id")
 	private IDiscipline discipline;
 	
+	@NotAudited
 	@OneToMany(targetEntity = Question.class, cascade = ALL, fetch = LAZY, 
 		orphanRemoval = true, mappedBy="challenge")
 	private List<Question> questions;
-	
-	public Challenge() {
-		
-	}
-	
-	public Challenge(Integer id) {
-		this.id = id;
-	}
 	
 	@Override
 	public Integer getId() {

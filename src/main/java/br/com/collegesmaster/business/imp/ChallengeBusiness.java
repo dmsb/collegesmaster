@@ -1,6 +1,6 @@
 package br.com.collegesmaster.business.imp;
 
-import static br.com.collegesmaster.model.imp.Question_.challenge;
+import static br.com.collegesmaster.model.impl.Question_.challenge;
 
 import java.util.List;
 
@@ -14,20 +14,20 @@ import javax.persistence.criteria.Root;
 
 import br.com.collegesmaster.business.IChallengeBusiness;
 import br.com.collegesmaster.model.IChallenge;
-import br.com.collegesmaster.model.imp.Challenge;
-import br.com.collegesmaster.model.imp.Question;
+import br.com.collegesmaster.model.impl.Challenge;
+import br.com.collegesmaster.model.impl.Question;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class ChallengeBusiness extends GenericBusiness implements IChallengeBusiness {	
 	
 	@Override
-	public void persist(final IChallenge challenge) {
+	public void save(final IChallenge challenge) {
 		entityManager.persist(challenge);		
 	}
 	
 	@Override
-	public IChallenge merge(final IChallenge challenge) {
+	public IChallenge update(final IChallenge challenge) {
 		return entityManager.merge(challenge);
 	}
 

@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model.impl;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,14 +13,14 @@ public class Localization implements Serializable {
 	
 	private static final long serialVersionUID = -8555407559997206124L;
 	
-	@Column(name = "country")
+	@Column(name = "country", nullable = false, length = 50)
 	private String country;
 	
 	@State
-	@Column(name = "state")
+	@Column(name = "state", nullable = false, length = 30)
 	private String state;
 	
-	@Column(name = "city")
+	@Column(name = "city", nullable = false, length = 50)
 	private String city;
 
 	public String getCountry() {

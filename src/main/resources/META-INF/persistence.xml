@@ -5,19 +5,21 @@
 	
 <!-- 	<persistence-unit name="collegesmasterPU" transaction-type="RESOURCE_LOCAL"> -->
 <!-- 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.Institute</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.Course</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.Discipline</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.Localization</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.User</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.GeneralInfo</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.Challenge</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.Question</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.Alternative</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.ChallengeResponse</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.QuestionResponse</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.Profile</class> -->
-<!-- 		<class>br.com.collegesmaster.model.imp.Permission</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.Institute</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.Course</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.Discipline</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.Localization</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.User</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.GeneralInfo</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.Challenge</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.Question</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.Alternative</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.ChallengeResponse</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.QuestionResponse</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.Profile</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.Permission</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.AuditInfo</class> -->
+<!-- 		<class>org.hibernate.envers.DefaultRevisionEntity</class> -->
 <!-- 		<exclude-unlisted-classes>false</exclude-unlisted-classes> -->
 		
 <!-- 		<properties> -->
@@ -36,19 +38,21 @@
 	<persistence-unit name="collegesmasterPU" transaction-type="JTA">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<jta-data-source>java:/collegesmasterDS</jta-data-source>
-		<class>br.com.collegesmaster.model.imp.Institute</class>
-		<class>br.com.collegesmaster.model.imp.Course</class>
-		<class>br.com.collegesmaster.model.imp.Discipline</class>
-		<class>br.com.collegesmaster.model.imp.Localization</class>
-		<class>br.com.collegesmaster.model.imp.User</class>
-		<class>br.com.collegesmaster.model.imp.GeneralInfo</class>
-		<class>br.com.collegesmaster.model.imp.Challenge</class>
-		<class>br.com.collegesmaster.model.imp.Question</class>
-		<class>br.com.collegesmaster.model.imp.Alternative</class>
-		<class>br.com.collegesmaster.model.imp.ChallengeResponse</class>
-		<class>br.com.collegesmaster.model.imp.QuestionResponse</class>		
-		<class>br.com.collegesmaster.model.imp.Profile</class>
-		<class>br.com.collegesmaster.model.imp.Permission</class>
+		<class>br.com.collegesmaster.model.impl.Institute</class>
+		<class>br.com.collegesmaster.model.impl.Course</class>
+		<class>br.com.collegesmaster.model.impl.Discipline</class>
+		<class>br.com.collegesmaster.model.impl.Localization</class>
+		<class>br.com.collegesmaster.model.impl.User</class>
+		<class>br.com.collegesmaster.model.impl.GeneralInfo</class>
+		<class>br.com.collegesmaster.model.impl.Challenge</class>
+		<class>br.com.collegesmaster.model.impl.Question</class>
+		<class>br.com.collegesmaster.model.impl.Alternative</class>
+		<class>br.com.collegesmaster.model.impl.ChallengeResponse</class>
+		<class>br.com.collegesmaster.model.impl.QuestionResponse</class>		
+		<class>br.com.collegesmaster.model.impl.Profile</class>
+		<class>br.com.collegesmaster.model.impl.Permission</class>
+		<class>br.com.collegesmaster.model.impl.AuditInfo</class>
+		<class>org.hibernate.envers.DefaultRevisionEntity</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.url"

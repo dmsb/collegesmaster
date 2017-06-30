@@ -6,12 +6,9 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 
-<composite:interface>	
-	<composite:attribute name="user_session_mb" required="true"
-		type="br.com.collegesmaster.jsf.UserSessionMB"
-		shortDescription="Managed bean for User session" />
-	<composite:attribute name="main_mb" required="true"
-		type="br.com.collegesmaster.jsf.MainMB"
+<composite:interface>
+	<composite:attribute name="main_menu_mb" required="true"
+		type="br.com.collegesmaster.jsf.MainMenuMB"
 		shortDescription="Managed bean for main menu" />
 </composite:interface>
 
@@ -22,25 +19,25 @@
 			style="text-align: center;" />
 
 		<p:layoutUnit id="layout_west" position="west"
-			header="#{text['label_welcome']} #{cc.attrs.userSessionMB.user.generalInfo.firstName} "
+			header="#{text['label_welcome']} #{cc.attrs.main_menu_mb.userSessionMB.user.generalInfo.firstName} "
 			size="30%">
 			<h:form id="menu_form">
 				<p:menu>
 					<p:submenu label="#{text['label_user_menu']}">
 						<p:menuitem value="#{text['label_disciplines']}"
-							action="#{cc.attrs.main_mb.disciplinesSelected()}"							
+							action="#{cc.attrs.main_menu_mb.disciplinesSelected()}"							
 							icon="ui-icon-disk" />
 						<p:menuitem value="#{text['label_create_challenge']}"
-							action="#{cc.attrs.main_mb.createChallengeSelected()}"
+							action="#{cc.attrs.main_menu_mb.createChallengeSelected()}"
 							icon="ui-icon-arrowrefresh-1-w" />
 						<p:menuitem value="#{text['label_completed_challenges']}"
-							action="#{cc.attrs.main_mb.completedsChallengeSelected()}"
+							action="#{cc.attrs.main_menu_mb.completedsChallengeSelected()}"
 							icon="ui-icon-arrowrefresh-1-w" />
 						<p:menuitem value="#{text['label_created_challenges']}"
-							action="#{cc.attrs.main_mb.createdChallengeSelected()}"
+							action="#{cc.attrs.main_menu_mb.createdChallengeSelected()}"
 							icon="ui-icon-arrowrefresh-1-w" />
 						<p:menuitem value="#{text['label_logout']}"
-							action="#{cc.attrs.user_session_mb.logout()}"
+							action="#{cc.attrs.main_menu_mb.userSessionMB.logout()}"
 							icon="ui-icon-arrowrefresh-1-w" />							
 					</p:submenu>
 				</p:menu>

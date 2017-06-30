@@ -15,20 +15,20 @@ import javax.persistence.criteria.Selection;
 import br.com.collegesmaster.business.IDisciplineBusiness;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
-import br.com.collegesmaster.model.imp.Discipline;
-import br.com.collegesmaster.model.imp.Discipline_;
+import br.com.collegesmaster.model.impl.Discipline_;
+import br.com.collegesmaster.model.impl.Discipline;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class DisciplineBusiness extends GenericBusiness implements IDisciplineBusiness {
 	
 	@Override
-	public void persist(IDiscipline discipline) {
+	public void save(IDiscipline discipline) {
 		entityManager.persist(discipline);
 	}
 
 	@Override
-	public IDiscipline merge(IDiscipline discipline) {
+	public IDiscipline update(IDiscipline discipline) {
 		return entityManager.merge(discipline);
 	}
 

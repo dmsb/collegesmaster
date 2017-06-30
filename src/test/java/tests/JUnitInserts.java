@@ -16,14 +16,14 @@ import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.model.imp.Challenge;
-import br.com.collegesmaster.model.imp.Course;
-import br.com.collegesmaster.model.imp.Discipline;
-import br.com.collegesmaster.model.imp.GeneralInfo;
-import br.com.collegesmaster.model.imp.Institute;
-import br.com.collegesmaster.model.imp.Localization;
-import br.com.collegesmaster.model.imp.Question;
-import br.com.collegesmaster.model.imp.User;
+import br.com.collegesmaster.model.impl.Challenge;
+import br.com.collegesmaster.model.impl.Course;
+import br.com.collegesmaster.model.impl.Discipline;
+import br.com.collegesmaster.model.impl.GeneralInfo;
+import br.com.collegesmaster.model.impl.Institute;
+import br.com.collegesmaster.model.impl.Localization;
+import br.com.collegesmaster.model.impl.Question;
+import br.com.collegesmaster.model.impl.User;
 import br.com.collegesmaster.util.CryptoUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

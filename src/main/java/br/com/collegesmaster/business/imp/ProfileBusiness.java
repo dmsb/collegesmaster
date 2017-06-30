@@ -10,20 +10,20 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import br.com.collegesmaster.business.IProfileBusiness;
 import br.com.collegesmaster.model.IProfile;
-import br.com.collegesmaster.model.imp.Profile;
+import br.com.collegesmaster.model.impl.Profile;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class ProfileBusiness extends GenericBusiness implements IProfileBusiness {
 	
 	@Override
-	public void persist(IProfile profile) {
+	public void save(IProfile profile) {
 		entityManager.persist(profile);
 
 	}
 
 	@Override
-	public IProfile merge(IProfile profile) {
+	public IProfile update(IProfile profile) {
 		return entityManager.merge(profile);
 	}
 

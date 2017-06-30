@@ -6,7 +6,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import br.com.collegesmaster.model.IProfile;
-import br.com.collegesmaster.model.imp.Profile;
+import br.com.collegesmaster.model.impl.Profile;
 
 public interface IProfileBusiness extends IBusiness<IProfile> {
 	

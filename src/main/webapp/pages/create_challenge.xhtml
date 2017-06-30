@@ -12,8 +12,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </h:head>
 <h:body>
-	<composites:layouts main_mb="#{mainMB}"
-		user_session_mb="#{userSessionMB}">
+	<composites:layouts main_menu_mb="#{mainMenuMB}" >
 		<p:layoutUnit position="center"  header="#{text['label_create_challenge']}" style="text-align:center">
 			
 			<h:form id="challenge_form">
@@ -22,8 +21,7 @@
 						<p:column>											
 							<p:inputTextarea id="title" rows="1" cols="40"  maxlength="50" 
 								value="#{challengeMB.challenge.title}" required="true"
-								requiredMessage="#{text['msg_required_title']}" placeholder="#{text['label_title']}"
-								validatorMessage="#{text['msg_required_title']}" />							
+								placeholder="#{text['label_title']}" />							
 						</p:column>
 						<p:column >											
 							<h:outputLabel for="discipline" value="#{text['label_discipline']}" />
@@ -68,11 +66,10 @@
 							<p:column colspan="2">
 								<p:inputTextarea placeholder="#{text['label_description']}" id="description"
 									rows="7" cols="60"  maxlength="1000" autoResize="false"
-									value="#{challengeMB.currentQuestion.description}" required="true"
-									requiredMessage="#{text['msg_required_description']}" />
+									value="#{challengeMB.currentQuestion.description}"/>
 							</p:column>				
 						</p:row>						
-						<ui:repeat var="letter" value="#{challengeMB.loadlAllLetters()}" varStatus="status">
+						<ui:repeat var="letter" value="#{challengeMB.loadAllLetters()}" varStatus="status">
 							<p:row>
 								<p:column>
 									<h:outputText value="#{text['label_letter']} #{letter}" />											
@@ -80,8 +77,7 @@
 								<p:column>
 									<p:inputTextarea placeholder="#{text['label_description']}" id="description"
 									rows="5" cols="50" maxlength="1000" autoResize="false"
-									value="#{challengeMB.alternatives.get(status.index).description}" required="true"
-									requiredMessage="#{text['msg_required_description']}" validatorMessage="#{text['msg_required_description']}" />												
+									value="#{challengeMB.alternatives.get(status.index).description}" required="true" />												
 								</p:column>
 							</p:row>										
 				        </ui:repeat>
@@ -89,13 +85,12 @@
 							<p:column colspan="2" >
 								<h:outputLabel for="pontuation" value="#{text['label_pontuation']}" />
 		        				<p:spinner id="pontuation" value="#{challengeMB.currentQuestion.pontuation}"
-		        					stepFactor="10" min="0" max="100" size="5" required="true" 
-									requiredMessage="#{text['msg_required_pontuation']}" validatorMessage="#{text['msg_required_pontuation']}"
+		        					stepFactor="10" min="0" max="100" size="5" required="true"
 									style="margin-right: 10px"/>
     
 								<h:outputLabel for="true_alternative" value="#{text['label_true_alternative']}" />
 								<h:selectOneMenu id="true_alternative" value="#{challengeMB.trueAlternative}">						
-						            <f:selectItems value="#{challengeMB.loadlAllLetters()}" var="letter" itemLabel="#{letter}" 
+						            <f:selectItems value="#{challengeMB.loadAllLetters()}" var="letter" itemLabel="#{letter}" 
 						            	itemValue="#{letter}" />
 						        </h:selectOneMenu>
 							</p:column>							

@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.FetchType.LAZY;
@@ -12,31 +12,38 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
 
-import br.com.collegesmaster.model.IPermission;
+import br.com.collegesmaster.model.IProfile;
 
 @Entity
-@Table(name ="permission")
+@Table(name = "profile")
 @Access(FIELD)
 @Audited
-public class Permission implements IPermission {
+public class Profile implements IProfile {
 
-	private static final long serialVersionUID = 2659147829263786669L;
-	
+	private static final long serialVersionUID = -8835309684958820875L;
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 	
+	@NotNull
 	@Column(name = "name", nullable = false, unique = true, length = 20)
 	private String name;
 	
-	@ManyToMany(targetEntity = Profile.class, fetch = LAZY, mappedBy = "permissions")
-	private List<Profile> profiles;
+	@ManyToMany(targetEntity = Permission.class, fetch = LAZY)
+	@JoinTable(name="profile_permission",
+	    joinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")},
+	    inverseJoinColumns={@JoinColumn(name="permissionFK", referencedColumnName = "id")})
+	private List<Permission> permissions;
 	
 	@Override
 	public Integer getId() {
@@ -59,13 +66,13 @@ public class Permission implements IPermission {
 	}
 
 	@Override
-	public List<Profile> getProfiles() {
-		return profiles;
+	public List<Permission> getPermissions() {
+		return permissions;
 	}
 
 	@Override
-	public void setProfiles(List<Profile> profiles) {
-		this.profiles = profiles;
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
 	}
 	
 	@Override
@@ -75,11 +82,11 @@ public class Permission implements IPermission {
 			return true;
 		}
 		
-		if(!(objectToBeComparated instanceof Permission)) {
+		if(!(objectToBeComparated instanceof Profile)) {
 			return false;
 		}
 		
-		final Permission objectComparatedInstance = (Permission) objectToBeComparated;
+		final Profile objectComparatedInstance = (Profile) objectToBeComparated;
 		
 		return id == objectComparatedInstance.id &&
 				Objects.equals(name, objectComparatedInstance.name);
@@ -89,5 +96,4 @@ public class Permission implements IPermission {
     public int hashCode() {
         return Objects.hash(id, name);
     }
-	
 }

@@ -17,10 +17,10 @@ import br.com.collegesmaster.enums.Letter;
 import br.com.collegesmaster.model.IAlternative;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IDiscipline;
-import br.com.collegesmaster.model.imp.Alternative;
-import br.com.collegesmaster.model.imp.Challenge;
-import br.com.collegesmaster.model.imp.Discipline;
-import br.com.collegesmaster.model.imp.Question;
+import br.com.collegesmaster.model.impl.Alternative;
+import br.com.collegesmaster.model.impl.Challenge;
+import br.com.collegesmaster.model.impl.Discipline;
+import br.com.collegesmaster.model.impl.Question;
 
 @ManagedBean(name = "challengeMB")
 @ViewScoped
@@ -87,7 +87,7 @@ public class ChallengeMB implements Serializable {
 		
 		challenge.setDiscipline(discipline);
 		
-		challengeBusiness.persist(challenge);
+		challengeBusiness.save(challenge);
 		
 		final FacesContext context = FacesContext.getCurrentInstance();
         	context.addMessage(null, new FacesMessage("#{text['msg_success']}",
@@ -115,7 +115,7 @@ public class ChallengeMB implements Serializable {
 		resetCurrentQuestion();
 	}
 	
-	public Letter[] loadlAllLetters() {
+	public Letter[] loadAllLetters() {
 		return Letter.values();
 	}
 	

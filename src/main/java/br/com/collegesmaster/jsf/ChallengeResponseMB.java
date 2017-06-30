@@ -24,11 +24,11 @@ import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IQuestion;
 import br.com.collegesmaster.model.IQuestionResponse;
-import br.com.collegesmaster.model.imp.Alternative;
-import br.com.collegesmaster.model.imp.ChallengeResponse;
-import br.com.collegesmaster.model.imp.Discipline;
-import br.com.collegesmaster.model.imp.Question;
-import br.com.collegesmaster.model.imp.QuestionResponse;
+import br.com.collegesmaster.model.impl.Alternative;
+import br.com.collegesmaster.model.impl.ChallengeResponse;
+import br.com.collegesmaster.model.impl.Discipline;
+import br.com.collegesmaster.model.impl.Question;
+import br.com.collegesmaster.model.impl.QuestionResponse;
 
 @ManagedBean(name = "challengeResponseMB")
 @ViewScoped
@@ -121,7 +121,7 @@ public class ChallengeResponseMB implements Serializable {
 	}
 	
 	public void persistResponse() {
-		challengeResponseBusiness.persist(challengeResponse);
+		challengeResponseBusiness.save(challengeResponse);
 	}
 	
 	public UserSessionMB getUserSessionMB() {

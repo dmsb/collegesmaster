@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
@@ -19,6 +19,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import br.com.collegesmaster.model.IChallengeResponse;
 import br.com.collegesmaster.model.IQuestionResponse;
@@ -27,6 +31,7 @@ import br.com.collegesmaster.model.IUser;
 @Entity
 @Table(name = "challenge_response")
 @Access(FIELD)
+@Audited
 public class ChallengeResponse implements IChallengeResponse {
 
 	private static final long serialVersionUID = -4223636598786128623L;
@@ -36,13 +41,17 @@ public class ChallengeResponse implements IChallengeResponse {
 	@Column(name = "id")
 	private Integer id;
 	
+	@NotAudited
+	@NotNull
 	@ManyToOne(targetEntity = User.class, optional = false, fetch = LAZY)
-	@JoinColumn(name = "userFK", referencedColumnName = "id")
+	@JoinColumn(name = "userFK", referencedColumnName = "id", updatable = false, nullable = false)
 	private IUser owner;
 	
-	@Column(name = "note", nullable = false, length = 11, unique = false)
+	@NotNull
+	@Column(name = "note", nullable = false, length = 11)
 	private Integer note;
 	
+	@NotAudited
 	@OneToMany(targetEntity = QuestionResponse.class, cascade = ALL, 
 		fetch = LAZY, orphanRemoval = true, mappedBy = "challengeResponse")
 	private List<IQuestionResponse> questionsResponse;

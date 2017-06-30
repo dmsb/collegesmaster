@@ -15,19 +15,19 @@ import javax.persistence.criteria.Selection;
 import br.com.collegesmaster.business.ICourseBusiness;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IInstitute;
-import br.com.collegesmaster.model.imp.Course;
+import br.com.collegesmaster.model.impl.Course;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class CourseBusiness extends GenericBusiness implements ICourseBusiness {
 	
 	@Override
-	public void persist(ICourse course) {
+	public void save(ICourse course) {
 		entityManager.persist(course);
 	}
 
 	@Override
-	public ICourse merge(ICourse course) {
+	public ICourse update(ICourse course) {
 		return entityManager.merge(course);	
 	}
 

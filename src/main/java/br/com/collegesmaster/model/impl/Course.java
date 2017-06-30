@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
@@ -40,15 +40,15 @@ public class Course implements ICourse {
 	private Integer id;
 
 	@NotBlank
-	@Column(name = "name")
+	@Column(name = "name", length = 50, nullable = false)
 	private String name;
 	
-	@NotAudited
-	@NotNull
+	@NotNull	
 	@ManyToOne(targetEntity = Institute.class, optional = false, fetch = LAZY)
 	@JoinColumn(name = "instituteFK", referencedColumnName = "id")
 	private IInstitute institute;
 	
+	@NotAudited
 	@OneToMany(targetEntity = Discipline.class, cascade = ALL, fetch = LAZY,
 			orphanRemoval = true, mappedBy = "course")
 	private List<Discipline> disciplines;

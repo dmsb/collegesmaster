@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.collegesmaster.model.IInstitute;
@@ -37,10 +38,11 @@ public class Institute implements IInstitute {
 	private Integer id;
 	
     @NotBlank
-    @Column(name = "name")
-    @Size(min = 5)
+    @Column(name = "name",  nullable = false, length = 50)
+    @Size(min = 3)
     private String name;
-        
+    
+    @NotAudited
     @OneToMany(targetEntity = Course.class, cascade = ALL, 
     		fetch = LAZY, orphanRemoval = true, mappedBy = "institute")
     private List<Course> courses;

@@ -15,8 +15,13 @@ import org.dbunit.ext.mysql.MySqlMetadataHandler;
 import org.dbunit.operation.DatabaseOperation;
 
 public class DBUnitUtil {
+	
+	public static void main(String[] args) {
+		inserirDados();
+	}
+	
 	private static final String XML_FILE = "/dbunit/dataset.xml";
-        
+	
 	public static void inserirDados() {
         Connection conn = null;
         IDatabaseConnection db_conn = null;

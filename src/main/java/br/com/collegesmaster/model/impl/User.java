@@ -1,4 +1,4 @@
-package br.com.collegesmaster.model.imp;
+package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
@@ -18,12 +18,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import br.com.collegesmaster.annotations.Password;
 import br.com.collegesmaster.model.IGeneralInfo;
@@ -45,17 +47,17 @@ public class User implements IUser {
 	
     @NotNull
     @Size(min = 2, max = 25)
-    @Column(name = "username", unique= true, length = 25)
+    @Column(name = "username", unique= true, length = 25, nullable = false)
     private String username;
     
     @NotNull
-	@Column(name = "password", unique = false, nullable = false, length = 88)
     @Size(min = 6)
     @Password
+	@Column(name = "password", nullable = false, length = 88)
     private String password;
      
     @NotNull
-	@Column(name = "salt", unique = false, nullable = false, length = 88)
+	@Column(name = "salt", nullable = false, length = 88)
     private String salt;
 	
     @Valid
@@ -63,6 +65,7 @@ public class User implements IUser {
     @JoinColumn(name = "generalInfoFK", referencedColumnName = "id")
 	private IGeneralInfo generalInfo;
     
+    @NotAudited
     @NotNull
     @ManyToMany(targetEntity = Profile.class, fetch = LAZY)
     @JoinTable(name="user_profile",
@@ -71,12 +74,21 @@ public class User implements IUser {
     private List<Profile> profiles;
     
     @PrePersist
-    private void buildPasswordAndCpf() {
+    @PreUpdate
+    private void prePersistUser() {
+    	encriptyPassword();
+    	buildCpf();
+    }
+    
+    private void encriptyPassword() {
     	final String salt = CryptoUtils.generateSalt();	
 		setSalt(salt);
 		setPassword(CryptoUtils.getHashedPassword(getPassword(), salt));
-				
-		final String crudeCpf = getGeneralInfo().getCpf().replace(".", "").replace("-", "");
+    }
+    
+    
+    private void buildCpf() {
+		final String crudeCpf = getGeneralInfo().getCpf().replaceAll("[^0-9]", "");
 		getGeneralInfo().setCpf(crudeCpf);
     }
     
