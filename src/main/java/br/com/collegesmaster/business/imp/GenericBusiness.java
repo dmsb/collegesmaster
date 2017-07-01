@@ -25,7 +25,7 @@ public abstract class GenericBusiness {
 	
 	protected CriteriaBuilder builder;
     protected StringBuilder queryBuilder;   
-    protected final static Logger logger = Logger.getGlobal();
+    protected final static Logger logger = Logger.getLogger(GenericBusiness.class.getName());
     
     @PostConstruct
 	protected void init() {
@@ -57,12 +57,10 @@ public abstract class GenericBusiness {
 	
 	@SuppressWarnings("rawtypes")
 	protected Object singleResult(final TypedQuery typedQuery) {
-		try {
+		try {			
 			return typedQuery.getSingleResult();
 		} catch (NoResultException e) {
-			logger.log(Level.INFO, "No results", e);
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Fail to execute query!", e);
+			logger.log(Level.INFO, "No results");
 		}
 		return null;
 	}

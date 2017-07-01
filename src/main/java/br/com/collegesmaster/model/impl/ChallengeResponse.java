@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -55,6 +56,9 @@ public class ChallengeResponse implements IChallengeResponse {
 	@OneToMany(targetEntity = QuestionResponse.class, cascade = ALL, 
 		fetch = LAZY, orphanRemoval = true, mappedBy = "challengeResponse")
 	private List<IQuestionResponse> questionsResponse;
+	
+	@Version
+	private Long version;
 	
 	@PrePersist
 	@PreUpdate
@@ -111,6 +115,16 @@ public class ChallengeResponse implements IChallengeResponse {
 	@Override
 	public void setQuestionsResponse(List<IQuestionResponse> questionsResponse) {
 		this.questionsResponse = questionsResponse;
+	}
+	
+	@Override
+	public Long getVersion() {
+		return version;
+	}
+	
+	@Override
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 	
 	@Override

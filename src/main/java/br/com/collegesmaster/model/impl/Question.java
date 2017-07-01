@@ -19,6 +19,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -64,6 +65,9 @@ public class Question implements IQuestion {
 	@ManyToOne(targetEntity = Challenge.class, optional = false, fetch = LAZY)
 	@JoinColumn(name = "challengeFK", referencedColumnName = "id", updatable = false)
 	private IChallenge challenge;
+	
+	@Version
+	private Long version;
 	
 	@Override
 	public Integer getId() {
@@ -114,7 +118,17 @@ public class Question implements IQuestion {
 	public List<Alternative> getAlternatives() {
 		return alternatives;
 	}
-
+	
+	@Override
+	public Long getVersion() {
+		return version;
+	}
+	
+	@Override
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 		

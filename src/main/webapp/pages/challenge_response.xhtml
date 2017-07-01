@@ -7,6 +7,8 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:composites="http://java.sun.com/jsf/composite/composites">
 
+<f:view locale="#{localeBean.locale}" />
+
 <h:head>
 	<title>#{text['label_application_title']}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -36,7 +38,8 @@
 				</p:dataTable>				
 			</h:form>
 			
-			<h:form id="challenges_form">
+			
+			<h:form id="challenges_form">				
 				<p:dialog id="challenges_dialog" widgetVar="challenges_wv" closeOnEscape="true" closable="true" resizable="false"
 					responsive="true" hideEffect="puff" showEffect="puff" height="350" width="400" header="#{text['label_challenges']}">
 					<p:panelGrid id="challenges_pg">
@@ -58,11 +61,12 @@
 								</p:dataTable>	
 							</p:column>
 						</p:row>
-					</p:panelGrid>										
+					</p:panelGrid>
 				</p:dialog>	
 				
 				<p:dialog id="questions_dialog" widgetVar="questions_wv" closeOnEscape="true" closable="true" resizable="false"
 					responsive="true" hideEffect="puff" showEffect="puff" height="500" width="500" header="#{text['label_questions']}">
+					<p:messages id="messages" autoUpdate="true" closable="true" />
 					<p:panelGrid id="questions_pg">
 						<p:row>
 							<p:column>
@@ -92,7 +96,7 @@
 						</p:row>
 						<p:row>
 							<p:column>
-								<p:commandButton value="#{text['label_submit_response']}" 
+								<p:commandButton value="#{text['label_submit_response']}" update="j_idt5:challenges_form"
 									oncomplete="PF('alternatives_wv').hide(); PF('questions_wv').hide();"
 									actionListener="#{challengeResponseMB.persistResponse()}" />
 							</p:column>
@@ -131,7 +135,7 @@
 							<p:column>
 								<p:commandButton value="#{text['label_answer']}" oncomplete="PF('alternatives_wv').hide()"
 									actionListener="#{challengeResponseMB.selectAlternative()}"
-									process="@parent" update="j_idt5:challenges_form:questions_data_table" />
+									process="@parent" update="j_idt5:challenges_form:questions_data_table j_idt5:challenges_form:messages" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>

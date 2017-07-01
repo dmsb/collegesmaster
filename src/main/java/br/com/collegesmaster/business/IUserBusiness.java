@@ -24,5 +24,4 @@ public interface IUserBusiness extends IBusiness<IUser> {
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<User> findAll();
-
 }

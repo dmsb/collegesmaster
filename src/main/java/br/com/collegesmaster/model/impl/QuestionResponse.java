@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -54,6 +55,9 @@ public class QuestionResponse implements IQuestionResponse {
 	@Basic(fetch = FetchType.LAZY, optional = false)
 	@Column(name = "letter", unique = false, length = 1)
 	private Letter letter;
+	
+	@Version
+	private Long version;
 	
 	@Override
 	public Integer getId() {
@@ -94,7 +98,17 @@ public class QuestionResponse implements IQuestionResponse {
 	public void setLetter(Letter letter) {
 		this.letter = letter;
 	}
-
+	
+	@Override
+	public Long getVersion() {
+		return version;
+	}
+	
+	@Override
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 		

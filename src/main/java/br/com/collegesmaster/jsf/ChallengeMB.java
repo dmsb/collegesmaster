@@ -1,16 +1,18 @@
 package br.com.collegesmaster.jsf;
 
+import static br.com.collegesmaster.util.JSFUtils.addMessage;
+import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
+import static javax.faces.application.FacesMessage.SEVERITY_INFO;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.collegesmaster.business.IChallengeBusiness;
 import br.com.collegesmaster.enums.Letter;
@@ -89,14 +91,14 @@ public class ChallengeMB implements Serializable {
 		
 		challengeBusiness.save(challenge);
 		
-		final FacesContext context = FacesContext.getCurrentInstance();
-        	context.addMessage(null, new FacesMessage("#{text['msg_success']}",
-        			"#{text['msg_challenge_registred_with_success']}"));
-        	
+		addMessageWithDetails(SEVERITY_INFO, "msg_success", "msg_challenge_registred_with_success");
+
 		init();
 	}
 	
 	public void addQuestionToChallenge() {
+		
+		currentQuestion.setChallenge(challenge);
 		
 		for(final IAlternative alternative : alternatives) {
 			alternative.setQuestion(currentQuestion);
@@ -109,10 +111,12 @@ public class ChallengeMB implements Serializable {
 		}
 
 		currentQuestion.setAlternatives(alternatives);
-		currentQuestion.setChallenge(challenge);
+		
 		challenge.getQuestions().add(currentQuestion);
 		
 		resetCurrentQuestion();
+
+		addMessage(SEVERITY_INFO, "msg_questiond_added");
 	}
 	
 	public Letter[] loadAllLetters() {

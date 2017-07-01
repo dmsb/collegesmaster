@@ -8,4 +8,8 @@ public interface IModel extends Serializable {
 
 	void setId(Integer id);
 	
+	Long getVersion();
+	
+	void setVersion(Long version);
+	
 }

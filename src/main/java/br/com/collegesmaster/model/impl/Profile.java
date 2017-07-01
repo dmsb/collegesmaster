@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -45,6 +46,9 @@ public class Profile implements IProfile {
 	    inverseJoinColumns={@JoinColumn(name="permissionFK", referencedColumnName = "id")})
 	private List<Permission> permissions;
 	
+	@Version
+	private Long version;
+	
 	@Override
 	public Integer getId() {
 		return id;
@@ -73,6 +77,16 @@ public class Profile implements IProfile {
 	@Override
 	public void setPermissions(List<Permission> permissions) {
 		this.permissions = permissions;
+	}
+	
+	@Override
+	public Long getVersion() {
+		return version;
+	}
+	
+	@Override
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 	
 	@Override

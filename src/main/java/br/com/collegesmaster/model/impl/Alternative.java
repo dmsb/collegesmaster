@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -59,6 +60,9 @@ public class Alternative implements IAlternative {
 	@ManyToOne(targetEntity = Question.class, optional = false, fetch = LAZY)
 	@JoinColumn(name = "questionFK", referencedColumnName = "id")
 	private IQuestion question;
+	
+	@Version
+	private Long version;
 	
     @Override
 	public Integer getId() {
@@ -109,7 +113,17 @@ public class Alternative implements IAlternative {
 	public void setQuestion(IQuestion question) {
 		this.question = question;
 	}
-
+	
+	@Override
+	public Long getVersion() {
+		return version;
+	}
+	
+	@Override
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 		

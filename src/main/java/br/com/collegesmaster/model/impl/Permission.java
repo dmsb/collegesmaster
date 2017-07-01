@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -41,6 +42,9 @@ public class Permission implements IPermission {
 	@NotAudited
 	@ManyToMany(targetEntity = Profile.class, fetch = LAZY, mappedBy = "permissions")
 	private List<Profile> profiles;
+	
+	@Version
+	private Long version;
 	
 	@Override
 	public Integer getId() {
@@ -70,6 +74,16 @@ public class Permission implements IPermission {
 	@Override
 	public void setProfiles(List<Profile> profiles) {
 		this.profiles = profiles;
+	}
+	
+	@Override
+	public Long getVersion() {
+		return version;
+	}
+	
+	@Override
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 	
 	@Override

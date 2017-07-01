@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
@@ -69,11 +70,9 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 			if(Strings.isNullOrEmpty(salt) == false) {
 				final IUser user = buildLogin(usernameToBeComparated, passwordToBeComparated, salt);
 				return user;
-			}
-			logger.log(Level.WARNING, "Fail to proccess login: salt is null or empty");
+			}			
 			return null;
-		} else {
-			logger.log(Level.WARNING, "Fail to proccess login: username or password is null or empty");
+		} else {			
 			return null;
 		}
 
@@ -93,8 +92,8 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		try {
 			final String salt = (String) query.getSingleResult();
 			return salt;
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Fail to get user salt", e);
+		} catch (NoResultException e) {
+			logger.log(Level.INFO, "No salt founded.");
 		}
 		return null;
 	}
@@ -118,12 +117,12 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		try {
 			return typedQuery.getSingleResult();			
 			
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Fail to execute query in method buildLogin()", e);
+		} catch (NoResultException e) {
+			logger.log(Level.SEVERE, "Bad credentials");
 		}
 		return null;
 	}
-
+	
 	@Override
 	public Boolean existsCpf(final String cpfToBeComparated) {
 		

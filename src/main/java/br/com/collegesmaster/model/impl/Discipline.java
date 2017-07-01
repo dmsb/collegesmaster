@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -52,7 +53,10 @@ public class Discipline implements IDiscipline {
     @OneToMany(targetEntity = Challenge.class, cascade = ALL, fetch = LAZY,
     		orphanRemoval = true, mappedBy = "discipline")
     private List<Challenge> challenges;
-
+	
+	@Version
+	private Long version;
+	
     public Discipline() {
     	
 	}
@@ -108,6 +112,16 @@ public class Discipline implements IDiscipline {
 		this.challenges = challenges;
 	}
     
+	@Override
+	public Long getVersion() {
+		return version;
+	}
+	
+	@Override
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	
 	@Override
 	public boolean equals(final Object objectToBeComparated) {			
 		

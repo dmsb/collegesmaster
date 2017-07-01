@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
@@ -49,6 +50,9 @@ public class Institute implements IInstitute {
 
 	@Embedded
     private Localization localization;
+	
+	@Version
+	private Long version;
 	
 	public Institute() {
     	
@@ -98,7 +102,17 @@ public class Institute implements IInstitute {
 	public void setLocalization(Localization localization) {
         this.localization = localization;
     }
-
+    
+    @Override
+	public Long getVersion() {
+		return version;
+	}
+	
+	@Override
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	
     @Override
     public boolean equals(final Object objectToBeComparated) {
     	

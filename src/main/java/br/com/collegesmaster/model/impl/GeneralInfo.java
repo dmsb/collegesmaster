@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -65,6 +66,9 @@ public class GeneralInfo implements IGeneralInfo {
     @ManyToOne(targetEntity = Course.class, fetch = EAGER, optional = false)
     @JoinColumn(name = "courseId", referencedColumnName = "id", updatable = false)
     private ICourse course;
+    
+    @Version
+	private Long version;
     
 	@Override
 	public Integer getId() {
@@ -135,7 +139,17 @@ public class GeneralInfo implements IGeneralInfo {
 	public void setCourse(ICourse course) {
 		this.course = course;
 	}
-
+	
+	@Override
+	public Long getVersion() {
+		return version;
+	}
+	
+	@Override
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 

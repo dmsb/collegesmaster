@@ -1,7 +1,10 @@
 package br.com.collegesmaster.jsf;
 
+import static br.com.collegesmaster.util.JSFUtils.addMessage;
+import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -88,13 +91,16 @@ public class ChallengeResponseMB implements Serializable {
 		
 		final IQuestionResponse questionResponse = buildQuestionResponse();
 		
-		final Boolean existsAResponse = existsAResponseForThisQuestion(questionResponse);
+		final Boolean existsAResponse = existsAResponseForThisQuestion(questionResponse);		
+		
+		addMessage(SEVERITY_INFO, "msg_picked_alternative");
 		
 		if(existsAResponse) {
 			return;
 		} else {
 			challengeResponse.getQuestionsResponse().add(questionResponse);			
 		}
+				
 	}
 
 	private Boolean existsAResponseForThisQuestion(final IQuestionResponse questionResponse) {
@@ -122,6 +128,7 @@ public class ChallengeResponseMB implements Serializable {
 	
 	public void persistResponse() {
 		challengeResponseBusiness.save(challengeResponse);
+		addMessageWithDetails(SEVERITY_INFO, "msg_success", "msg_response_registred_with_success");
 	}
 	
 	public UserSessionMB getUserSessionMB() {

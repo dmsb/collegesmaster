@@ -1,7 +1,11 @@
 package br.com.collegesmaster.jsf;
 
+import static br.com.collegesmaster.util.JSFUtils.addMessage;
+import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static javax.faces.application.FacesMessage.SEVERITY_INFO;
+import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,10 +13,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.collegesmaster.business.IInstituteBusiness;
 import br.com.collegesmaster.business.IProfileBusiness;
@@ -21,7 +23,6 @@ import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.IProfile;
 import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.model.impl.Course;
 import br.com.collegesmaster.model.impl.GeneralInfo;
 import br.com.collegesmaster.model.impl.Institute;
 import br.com.collegesmaster.model.impl.Profile;
@@ -52,13 +53,13 @@ public class HomeMB implements Serializable {
 		user = new User();
 		user.setProfiles(new ArrayList<Profile>());
 		user.setGeneralInfo(new GeneralInfo());		
-		user.getGeneralInfo().setCourse(new Course());
+		
 		
 		userProfile = new Profile();
 		
 		institutes = instituteBusiness.findFetchingCourses();
 		institute = institutes.get(0);
-		
+		user.getGeneralInfo().setCourse(institute.getCourses().get(0));
 	}
 	
 	public List<Profile> allProfiles() {
@@ -70,43 +71,32 @@ public class HomeMB implements Serializable {
 		final Profile completeProfile = (Profile) profileBusiness.findById(userProfile.getId());
 		user.getProfiles().add(completeProfile);
 		
+		final Boolean existsUsername = userBusiness.existsUsername(user.getUsername());
+		final Boolean existsEmail = userBusiness.existsEmail(user.getGeneralInfo().getEmail());
+		final Boolean existsCpf = userBusiness.existsCpf(user.getGeneralInfo().getCpf());
 		
-		if(FALSE.equals(isValidUniqueProperties())) {
+		if(TRUE.equals(existsCpf)) {
+			addMessage(SEVERITY_WARN, "msg_exists_cpf");
+		}
+		
+		if(TRUE.equals(existsUsername)) {
+			addMessage(SEVERITY_WARN, "msg_exists_username");
+		}
+		
+		if(TRUE.equals(existsEmail)) {	
+			addMessage(SEVERITY_WARN, "msg_exists_email");
+		}
+
+		final Boolean isValid = !(existsCpf || existsEmail || existsUsername);
+		
+		if(FALSE.equals(isValid)) {
 			return;
 		} else {
 			userBusiness.save(user);
+			addMessageWithDetails(SEVERITY_INFO, "msg_success", "msg_user_registred_with_success");
 			
-			final FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage("#{text['msg_success']}",
-					"#{text['msg_user_registred_with_success']}"));
 			init();			
 		}	
-	}
-
-	private Boolean isValidUniqueProperties() {
-		
-		final Boolean existsUsername = userBusiness.existsUsername(user.getUsername());
-		
-		final Boolean existsCpf = userBusiness.existsCpf(user.getGeneralInfo().getCpf());
-		
-		final Boolean existsEmail = userBusiness.existsEmail(user.getGeneralInfo().getEmail());
-		
-		if(TRUE.equals(existsUsername)) {
-			final FacesContext context = FacesContext.getCurrentInstance();
-	    	context.addMessage(null, new FacesMessage("#{text['msg_exists_username']}",
-	    			"#{text['exists_username']}"));	    	
-		}
-		if(TRUE.equals(existsCpf)) {			
-			final FacesContext context = FacesContext.getCurrentInstance();
-	    	context.addMessage(null, new FacesMessage("#{text['msg_exists_cpf']}",
-	    			"#{text['exists_username']}"));	
-		}
-		if(TRUE.equals(existsEmail)) {
-			final FacesContext context = FacesContext.getCurrentInstance();
-	    	context.addMessage(null, new FacesMessage("#{text['msg_exists_email']}",
-	    			"#{text['exists_username']}"));	
-		}
-		return !(existsCpf || existsEmail || existsUsername);
 	}
 	
 	public void findCoursesByInstitute() {
@@ -171,4 +161,5 @@ public class HomeMB implements Serializable {
 	public void setInstitutes(List<Institute> institutes) {
 		this.institutes = institutes;
 	}
+	
 }

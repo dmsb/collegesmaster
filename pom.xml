@@ -88,13 +88,6 @@
 			<artifactId>slf4j-simple</artifactId>
 			<version>1.7.21</version>
 		</dependency>
-		
-		<!-- Expression Language -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>javax.el</groupId> -->
-<!-- 			<artifactId>javax.el-api</artifactId> -->
-<!-- 			<version>3.0.0</version> -->
-<!-- 		</dependency> -->
 	
 		<!-- JUnit -->
 		<dependency>
@@ -102,11 +95,11 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
-		<!-- Used for tests with JUnit and Hibernate validators -->
+
 		<dependency>
 		   <groupId>org.glassfish.web</groupId>
 		   <artifactId>javax.el</artifactId>
-		   <version>2.2.4</version>
+		   <version>2.2.6</version>
 		</dependency>
 
 		<!-- DBUnit for populate the database (usefull for tests) -->

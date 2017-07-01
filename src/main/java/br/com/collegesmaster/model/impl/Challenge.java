@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -59,6 +60,9 @@ public class Challenge implements IChallenge {
 	@OneToMany(targetEntity = Question.class, cascade = ALL, fetch = LAZY, 
 		orphanRemoval = true, mappedBy="challenge")
 	private List<Question> questions;
+	
+	@Version
+	private Long version;
 	
 	@Override
 	public Integer getId() {
@@ -109,7 +113,17 @@ public class Challenge implements IChallenge {
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
-
+	
+	@Override
+	public Long getVersion() {
+		return version;
+	}
+	
+	@Override
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 		

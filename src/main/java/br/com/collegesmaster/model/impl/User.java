@@ -20,6 +20,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -72,6 +73,9 @@ public class User implements IUser {
 	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
 	    inverseJoinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")})
     private List<Profile> profiles;
+    
+    @Version
+	private Long version;
     
     @PrePersist
     @PreUpdate
@@ -151,7 +155,17 @@ public class User implements IUser {
 	public void setProfiles(List<Profile> profiles) {
 		this.profiles = profiles;
 	}
-
+	
+	@Override
+	public Long getVersion() {
+		return version;
+	}
+	
+	@Override
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 

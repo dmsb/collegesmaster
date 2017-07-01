@@ -6,6 +6,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
+<f:view locale="#{localeBean.locale}" />
+
 <h:head>
 	<title>#{text['label_application_title']}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -76,7 +78,7 @@
 					<h:outputLabel for="password" value="#{text['label_password']}" />
 					<p:password id="password" value="#{homeMB.user.password}" size="15"
 						required="true" label="#{text['label_password']}"
-						validatorMessage="#{text['msg_invalid_password_format']}" />
+						 />
 					
 					<h:outputLabel for="profile" value="#{text['label_profile']}" />
 					<h:selectOneMenu id="profile" value="#{homeMB.userProfile.id}" label="#{text['label_profile']}">

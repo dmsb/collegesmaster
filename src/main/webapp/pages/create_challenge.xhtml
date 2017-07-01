@@ -7,6 +7,8 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:composites="http://java.sun.com/jsf/composite/composites">
 
+<f:view locale="#{localeBean.locale}" />
+
 <h:head>
 	<title>#{text['label_application_title']}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,7 +28,7 @@
 						<p:column >											
 							<h:outputLabel for="discipline" value="#{text['label_discipline']}" />
 							<h:selectOneMenu id="discipline" value="#{challengeMB.challenge.discipline.id}">
-					            <f:selectItems value="#{challengeResolutionMB.userDisciplines}" var="discipline" itemLabel="#{discipline.name}"
+					            <f:selectItems value="#{challengeResponseMB.userDisciplines}" var="discipline" itemLabel="#{discipline.name}"
 					            	itemValue="#{discipline.id}" />
 					        </h:selectOneMenu>							
 						</p:column>						
@@ -37,7 +39,7 @@
 				        		ajax="true" onclick="PF('insertQuestion_wv').show();" />
 						</p:column>
 						<p:column>
-							<p:commandButton id="register_challenge_btn" ajax="false" process="challenge_pg" update="@form"
+							<p:commandButton id="register_challenge_btn" ajax="true" process="challenge_pg" update="@form"
 								value="#{text['label_register_challenge']}" actionListener="#{challengeMB.persistChallenge()}" />
 						</p:column>
 					</p:row>
