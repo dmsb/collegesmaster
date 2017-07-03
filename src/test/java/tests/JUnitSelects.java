@@ -124,7 +124,7 @@ public class JUnitSelects extends JUnitConfiguration {
         
         final Long total = (Long)query.getSingleResult();       
 
-        assertEquals(Long.valueOf(5), total);
+        assertEquals(Long.valueOf(6), total);
       
 	}
 	

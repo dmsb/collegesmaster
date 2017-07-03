@@ -1,6 +1,9 @@
 package br.com.collegesmaster.model;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import br.com.collegesmaster.model.impl.User;
 
 public interface IGeneralInfo extends IModel {
 
@@ -31,5 +34,9 @@ public interface IGeneralInfo extends IModel {
 	void setCourse(ICourse course);
 
 	ICourse getCourse();
+
+	void setUsers(List<User> users);
+
+	List<User> getUsers();
 
 }

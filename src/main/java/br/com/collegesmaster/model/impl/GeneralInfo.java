@@ -2,9 +2,11 @@ package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Access;
@@ -14,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -66,6 +69,9 @@ public class GeneralInfo implements IGeneralInfo {
     @ManyToOne(targetEntity = Course.class, fetch = EAGER, optional = false)
     @JoinColumn(name = "courseId", referencedColumnName = "id", updatable = false)
     private ICourse course;
+    
+    @OneToMany(fetch = LAZY, mappedBy = "generalInfo", orphanRemoval = true)
+    private List<User> users;
     
     @Version
 	private Long version;
@@ -140,6 +146,17 @@ public class GeneralInfo implements IGeneralInfo {
 		this.course = course;
 	}
 	
+	
+	@Override
+	public List<User> getUsers() {
+		return users;
+	}
+
+	@Override
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
 	@Override
 	public Long getVersion() {
 		return version;

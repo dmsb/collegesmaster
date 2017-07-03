@@ -5,7 +5,6 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Access;
@@ -15,8 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -26,10 +24,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 
 import br.com.collegesmaster.annotations.Password;
 import br.com.collegesmaster.model.IGeneralInfo;
+import br.com.collegesmaster.model.IRole;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.util.CryptoUtils;
 
@@ -62,17 +60,16 @@ public class User implements IUser {
     private String salt;
 	
     @Valid
-    @OneToOne(targetEntity = GeneralInfo.class, fetch = LAZY, optional = false, cascade = ALL)
-    @JoinColumn(name = "generalInfoFK", referencedColumnName = "id")
+    @ManyToOne(targetEntity = GeneralInfo.class, fetch = LAZY, optional = false, cascade = ALL)
+    @JoinTable(name="user_general_info",
+	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
+	    inverseJoinColumns={@JoinColumn(name="generalInfoFK", referencedColumnName = "id")})
 	private IGeneralInfo generalInfo;
     
-    @NotAudited
     @NotNull
-    @ManyToMany(targetEntity = Profile.class, fetch = LAZY)
-    @JoinTable(name="user_profile",
-	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
-	    inverseJoinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")})
-    private List<Profile> profiles;
+    @ManyToOne(targetEntity = Role.class, fetch = LAZY, optional = false)
+    @JoinColumn(name = "roleFK", referencedColumnName = "id", updatable = false)
+    private IRole role;
     
     @Version
 	private Long version;
@@ -147,13 +144,13 @@ public class User implements IUser {
     }
 
 	@Override
-	public List<Profile> getProfiles() {
-		return profiles;
+	public IRole getRole() {
+		return role;
 	}
 
 	@Override
-	public void setProfiles(List<Profile> profiles) {
-		this.profiles = profiles;
+	public void setRole(IRole role) {
+		this.role = role;
 	}
 	
 	@Override

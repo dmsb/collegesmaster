@@ -15,7 +15,7 @@
 <!-- 		<class>br.com.collegesmaster.model.impl.Alternative</class> -->
 <!-- 		<class>br.com.collegesmaster.model.impl.ChallengeResponse</class> -->
 <!-- 		<class>br.com.collegesmaster.model.impl.QuestionResponse</class> -->
-<!-- 		<class>br.com.collegesmaster.model.impl.Profile</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.Role</class> -->
 <!-- 		<class>br.com.collegesmaster.model.impl.Permission</class> -->
 <!-- 		<class>br.com.collegesmaster.model.impl.AuditInfo</class> -->
 <!-- 		<class>org.hibernate.envers.DefaultRevisionEntity</class> -->
@@ -36,7 +36,7 @@
 	
 	<persistence-unit name="collegesmasterPU" transaction-type="JTA">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<jta-data-source>java:/collegesmasterDS</jta-data-source>
+		<jta-data-source>java:jboss/datasources/collegesmasterDS</jta-data-source>
 		<class>br.com.collegesmaster.model.impl.Institute</class>
 		<class>br.com.collegesmaster.model.impl.Course</class>
 		<class>br.com.collegesmaster.model.impl.Discipline</class>
@@ -48,7 +48,7 @@
 		<class>br.com.collegesmaster.model.impl.Alternative</class>
 		<class>br.com.collegesmaster.model.impl.ChallengeResponse</class>
 		<class>br.com.collegesmaster.model.impl.QuestionResponse</class>		
-		<class>br.com.collegesmaster.model.impl.Profile</class>
+		<class>br.com.collegesmaster.model.impl.Role</class>
 		<class>br.com.collegesmaster.model.impl.Permission</class>
 		<class>br.com.collegesmaster.model.impl.AuditInfo</class>
 		<class>org.hibernate.envers.DefaultRevisionEntity</class>

@@ -8,7 +8,6 @@ import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -21,11 +20,11 @@ import br.com.collegesmaster.business.IProfileBusiness;
 import br.com.collegesmaster.business.IUserBusiness;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IInstitute;
-import br.com.collegesmaster.model.IProfile;
+import br.com.collegesmaster.model.IRole;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.GeneralInfo;
 import br.com.collegesmaster.model.impl.Institute;
-import br.com.collegesmaster.model.impl.Profile;
+import br.com.collegesmaster.model.impl.Role;
 import br.com.collegesmaster.model.impl.User;
 
 @ManagedBean(name = "homeMB")
@@ -44,32 +43,32 @@ public class HomeMB implements Serializable {
 	private transient IInstituteBusiness instituteBusiness;
 	
 	private IUser user;
-	private IProfile userProfile;
+	private IRole selectedRole;
 	private IInstitute institute;	
 	private List<Institute> institutes;
 	
 	@PostConstruct
 	public void init() {
 		user = new User();
-		user.setProfiles(new ArrayList<Profile>());
+		user.setRole(new Role());
 		user.setGeneralInfo(new GeneralInfo());		
 		
 		
-		userProfile = new Profile();
+		selectedRole = new Role();
 		
 		institutes = instituteBusiness.findFetchingCourses();
 		institute = institutes.get(0);
 		user.getGeneralInfo().setCourse(institute.getCourses().get(0));
 	}
 	
-	public List<Profile> allProfiles() {
+	public List<Role> allRoles() {
 		return profileBusiness.findAll();
 	}
 	
 	public void persistUser() {
 		
-		final Profile completeProfile = (Profile) profileBusiness.findById(userProfile.getId());
-		user.getProfiles().add(completeProfile);
+		final Role completeRole = (Role) profileBusiness.findById(selectedRole.getId());
+		user.setRole(completeRole);
 		
 		final Boolean existsUsername = userBusiness.existsUsername(user.getUsername());
 		final Boolean existsEmail = userBusiness.existsEmail(user.getGeneralInfo().getEmail());
@@ -138,12 +137,12 @@ public class HomeMB implements Serializable {
 		this.user = user;
 	}
 
-	public IProfile getUserProfile() {
-		return userProfile;
+	public IRole getSelectedRole() {
+		return selectedRole;
 	}
 
-	public void setUserProfile(IProfile userProfile) {
-		this.userProfile = userProfile;
+	public void setSelectedRole(IRole selectedRole) {
+		this.selectedRole = selectedRole;
 	}
 
 	public IInstitute getInstitute() {

@@ -5,11 +5,11 @@ import java.util.List;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
-import br.com.collegesmaster.model.IProfile;
-import br.com.collegesmaster.model.impl.Profile;
+import br.com.collegesmaster.model.IRole;
+import br.com.collegesmaster.model.impl.Role;
 
-public interface IProfileBusiness extends IBusiness<IProfile> {
+public interface IProfileBusiness extends IBusiness<IRole> {
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<Profile> findAll();
+	public List<Role> findAll();
 }

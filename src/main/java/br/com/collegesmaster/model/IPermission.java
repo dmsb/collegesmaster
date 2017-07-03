@@ -2,7 +2,7 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
-import br.com.collegesmaster.model.impl.Profile;
+import br.com.collegesmaster.model.impl.Role;
 
 public interface IPermission extends IModel {
 
@@ -10,8 +10,8 @@ public interface IPermission extends IModel {
 
 	String getName();
 
-	void setProfiles(List<Profile> profiles);
+	void setRoles(List<Role> profiles);
 
-	List<Profile> getProfiles();
+	List<Role> getRoles();
 
 }

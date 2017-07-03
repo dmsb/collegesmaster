@@ -40,8 +40,8 @@ public class Permission implements IPermission {
 	private String name;
 	
 	@NotAudited
-	@ManyToMany(targetEntity = Profile.class, fetch = LAZY, mappedBy = "permissions")
-	private List<Profile> profiles;
+	@ManyToMany(targetEntity = Role.class, fetch = LAZY, mappedBy = "permissions")
+	private List<Role> roles;
 	
 	@Version
 	private Long version;
@@ -67,13 +67,13 @@ public class Permission implements IPermission {
 	}
 
 	@Override
-	public List<Profile> getProfiles() {
-		return profiles;
+	public List<Role> getRoles() {
+		return roles;
 	}
 
 	@Override
-	public void setProfiles(List<Profile> profiles) {
-		this.profiles = profiles;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 	
 	@Override

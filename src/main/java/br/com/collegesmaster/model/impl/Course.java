@@ -43,10 +43,10 @@ public class Course implements ICourse {
 	@NotBlank
 	@Column(name = "name", length = 50, nullable = false)
 	private String name;
-	
-	@NotNull	
+		
+	@NotNull
 	@ManyToOne(targetEntity = Institute.class, optional = false, fetch = LAZY)
-	@JoinColumn(name = "instituteFK", referencedColumnName = "id")
+	@JoinColumn(name = "instituteFK", referencedColumnName = "id", updatable = false)
 	private IInstitute institute;
 	
 	@NotAudited

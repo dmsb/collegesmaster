@@ -21,13 +21,13 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
 
-import br.com.collegesmaster.model.IProfile;
+import br.com.collegesmaster.model.IRole;
 
 @Entity
-@Table(name = "profile")
+@Table(name = "role")
 @Access(FIELD)
 @Audited
-public class Profile implements IProfile {
+public class Role implements IRole {
 
 	private static final long serialVersionUID = -8835309684958820875L;
 
@@ -41,8 +41,8 @@ public class Profile implements IProfile {
 	private String name;
 	
 	@ManyToMany(targetEntity = Permission.class, fetch = LAZY)
-	@JoinTable(name="profile_permission",
-	    joinColumns={@JoinColumn(name="profileFK", referencedColumnName = "id")},
+	@JoinTable(name="role_permission",
+	    joinColumns={@JoinColumn(name="roleFK", referencedColumnName = "id")},
 	    inverseJoinColumns={@JoinColumn(name="permissionFK", referencedColumnName = "id")})
 	private List<Permission> permissions;
 	
@@ -96,11 +96,11 @@ public class Profile implements IProfile {
 			return true;
 		}
 		
-		if(!(objectToBeComparated instanceof Profile)) {
+		if(!(objectToBeComparated instanceof Role)) {
 			return false;
 		}
 		
-		final Profile objectComparatedInstance = (Profile) objectToBeComparated;
+		final Role objectComparatedInstance = (Role) objectToBeComparated;
 		
 		return id == objectComparatedInstance.id &&
 				Objects.equals(name, objectComparatedInstance.name);

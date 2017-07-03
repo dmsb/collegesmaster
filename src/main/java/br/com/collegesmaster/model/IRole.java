@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.collegesmaster.model.impl.Permission;
 
-public interface IProfile extends IModel {
+public interface IRole extends IModel {
 
 	void setName(String name);
 

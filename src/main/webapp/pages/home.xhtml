@@ -80,10 +80,10 @@
 						required="true" label="#{text['label_password']}"
 						 />
 					
-					<h:outputLabel for="profile" value="#{text['label_profile']}" />
-					<h:selectOneMenu id="profile" value="#{homeMB.userProfile.id}" label="#{text['label_profile']}">
-			            <f:selectItems value="#{homeMB.allProfiles()}" var="profile" itemLabel="#{text['label_' += profile.name]}" 
-			            	itemValue="#{profile.id}" />			            
+					<h:outputLabel for="role" value="#{text['label_role']}" />
+					<h:selectOneMenu id="role" value="#{homeMB.selectedRole.id}" label="#{text['label_role']}">
+			            <f:selectItems value="#{homeMB.allRoles()}" var="role" itemLabel="#{text['label_' += role.name]}" 
+			            	itemValue="#{role.id}" />			            
 			        </h:selectOneMenu>
 			        
 			        <h:outputLabel for="institute" value="#{text['label_institute']}" />
