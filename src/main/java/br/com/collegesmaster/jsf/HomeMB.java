@@ -16,7 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.collegesmaster.business.IInstituteBusiness;
-import br.com.collegesmaster.business.IProfileBusiness;
+import br.com.collegesmaster.business.IRoleBusiness;
 import br.com.collegesmaster.business.IUserBusiness;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IInstitute;
@@ -37,7 +37,7 @@ public class HomeMB implements Serializable {
 	private transient IUserBusiness userBusiness;
 	
 	@EJB
-	private transient IProfileBusiness profileBusiness;
+	private transient IRoleBusiness profileBusiness;
 	
 	@EJB
 	private transient IInstituteBusiness instituteBusiness;

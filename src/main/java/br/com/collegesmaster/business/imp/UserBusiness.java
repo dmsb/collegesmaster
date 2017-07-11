@@ -9,6 +9,9 @@ import static br.com.collegesmaster.model.impl.User_.username;
 import java.util.List;
 import java.util.logging.Level;
 
+import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
@@ -30,6 +33,9 @@ import br.com.collegesmaster.util.CryptoUtils;
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class UserBusiness extends GenericBusiness implements IUserBusiness {
+	
+	@Resource
+	private SessionContext context;
 	
 	@Override
 	public void save(final IUser user) {		
@@ -77,8 +83,10 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		}
 
 	}
-
-	private String getUserSalt(final String usernameToBeComparated) {
+	
+	@Override
+	@PermitAll
+	public String getUserSalt(final String usernameToBeComparated) {
 		
 		queryBuilder = new StringBuilder();
 		

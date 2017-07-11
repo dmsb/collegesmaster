@@ -60,29 +60,29 @@
 
 	<!-- password = D10g0! -->
 	<user username='diogo.brito'
-		password='faqmeJFuy0DtqYz4mt0fVI3inV4AOwHMKjo6tJXG3fFkFEzW7n6TaQ03GltUFGZ+1fetQdYmCTVhE5js4RF83A=='
-		salt='qeyt59i2y8gqnj8q72l3bcu9owrdoikih4wa7btgoqm=' version='1498780800000' roleFK='1'/>
+		password='bo3t2O9eB8zfzQYYTEXyqsh6y+HLDE8gpj6k8q+nfSZQNeeb7Au66KoEgFmLng5fHMN/793tkyISa79m4ijl9w=='
+		salt='oU92lwYpHI5m6bWKtWSBBDs6FZGte1RyEbReZ7Y/wNs=' version='1498780800000' roleFK='1'/>
 
 	<user username='tainara.dantas'
-		password='faqmeJFuy0DtqYz4mt0fVI3inV4AOwHMKjo6tJXG3fFkFEzW7n6TaQ03GltUFGZ+1fetQdYmCTVhE5js4RF83A=='
-		salt='qeyt59i2y8gqnj8q72l3bcu9owrdoikih4wa7btgoqm=' version='1498780800000' roleFK='1' />
+		password='lFA7U9L3ra9MhPvchs4zTEYDc7G1VTOGfZvbZBPxhi1YFQ0g68wpnM0eoCT6/xRVqS2f3P5RT4oEeWMn/10MQQ=='
+		salt='RPgU7gXSKlm84nIUkbsVW0Fl3TkRKYm43d9shrZWNcM=' version='1498780800000' roleFK='1' />
 
 	<user username='fernando.ribeiro'
-		password='faqmeJFuy0DtqYz4mt0fVI3inV4AOwHMKjo6tJXG3fFkFEzW7n6TaQ03GltUFGZ+1fetQdYmCTVhE5js4RF83A=='
-		salt='qeyt59i2y8gqnj8q72l3bcu9owrdoikih4wa7btgoqm=' version='1498780800000' roleFK='2' />
+		password='zeetURjh8HHt5x8Wpfbsid0xgzytbyU+yznz2/JqaagkjxfZ8v98WKg0gZg6REze5/UotYqbSskKElspIhxvZA=='
+		salt='0WkPpIMfdwnubINCxolfYxisTFdlkJOIOTgwrQK5XTk=' version='1498780800000' roleFK='2' />
 
 	<user username='lucas.muniz'
-		password='faqmeJFuy0DtqYz4mt0fVI3inV4AOwHMKjo6tJXG3fFkFEzW7n6TaQ03GltUFGZ+1fetQdYmCTVhE5js4RF83A=='
-		salt='qeyt59i2y8gqnj8q72l3bcu9owrdoikih4wa7btgoqm=' version='1498780800000' roleFK='3' />
+		password='jtS7zei3YV98d0Fw7FDZS0TiEq9eyBDugKAaFLPspyGDVsgSj4Uu5a8BKP0tyNBB1jrf5jWzSUczZ2AoN491fQ=='
+		salt='qAi9dCMXb1eg966hVmbvuLYPH9DerQKpd6MwfHoXFDE=' version='1498780800000' roleFK='3' />
 	
 	<user_general_info userFK='1' generalInfoFK='1' />
 	<user_general_info userFK='2' generalInfoFK='2' />
 	<user_general_info userFK='3' generalInfoFK='3' />
 	<user_general_info userFK='4' generalInfoFK='4' />	
 	
-	<role name='professor' version='1498780800000' />
-	<role name='student' version='1498780800000' />
-	<role name='developer' version='1498780800000' />
+	<role name='PROFESSOR' version='1498780800000' />
+	<role name='STUDENT' version='1498780800000' />
+	<role name='ADMINISTRATOR' version='1498780800000' />
 
 	<permission name='persist' version='1498780800000' />
 	<permission name='merge' version='1498780800000' />

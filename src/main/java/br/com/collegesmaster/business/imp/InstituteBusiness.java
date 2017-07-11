@@ -1,15 +1,16 @@
 package br.com.collegesmaster.business.imp;
 
-import static br.com.collegesmaster.model.impl.Institute_.name;
 import static br.com.collegesmaster.model.impl.Institute_.courses;
-import static br.com.collegesmaster.model.impl.Institute_.id;
+import static br.com.collegesmaster.model.impl.Institute_.name;
+import static br.com.collegesmaster.model.impl.Model_.id;
+import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -20,7 +21,7 @@ import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.impl.Institute;
 
 @Stateless
-@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionManagement(CONTAINER)
 public class InstituteBusiness extends GenericBusiness implements IInstituteBusiness {
 
 	@Override
@@ -63,7 +64,7 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 		final Root<Institute> rootInstitute = criteriaQuery.from(Institute.class);
 		
 		final List<Selection<?>> idAndNameSelections = new ArrayList<>();
-		idAndNameSelections.add(rootInstitute.get(id));
+		idAndNameSelections.add(rootInstitute.get(id));		
 		idAndNameSelections.add(rootInstitute.get(name));
 		
 		criteriaQuery.multiselect(idAndNameSelections);
@@ -74,6 +75,7 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 	}
 	
 	@Override
+	@PermitAll
 	public List<Institute> findFetchingCourses() {
 		final CriteriaQuery<Institute> criteriaQuery = builder.createQuery(Institute.class);
 		final Root<Institute> instituteRoot = criteriaQuery.from(Institute.class);

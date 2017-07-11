@@ -3,7 +3,6 @@ package br.com.collegesmaster.model.impl;
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Objects;
 
@@ -12,13 +11,10 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -32,14 +28,9 @@ import br.com.collegesmaster.model.IQuestion;
 @Table(name = "alternative")
 @Access(FIELD)
 @Audited
-public class Alternative implements IAlternative {
+public class Alternative extends Model implements IAlternative {
 
 	private static final long serialVersionUID = -9207076283580095871L;
-
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id")
-	private Integer id;
 	
 	@NotNull
 	@Enumerated(STRING)
@@ -60,19 +51,6 @@ public class Alternative implements IAlternative {
 	@ManyToOne(targetEntity = Question.class, optional = false, fetch = LAZY)
 	@JoinColumn(name = "questionFK", referencedColumnName = "id")
 	private IQuestion question;
-	
-	@Version
-	private Long version;
-	
-    @Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
 	
 	@Override
 	public Letter getLetter() {
@@ -112,16 +90,6 @@ public class Alternative implements IAlternative {
 	@Override
 	public void setQuestion(IQuestion question) {
 		this.question = question;
-	}
-	
-	@Override
-	public Long getVersion() {
-		return version;
-	}
-	
-	@Override
-	public void setVersion(Long version) {
-		this.version = version;
 	}
 	
 	@Override

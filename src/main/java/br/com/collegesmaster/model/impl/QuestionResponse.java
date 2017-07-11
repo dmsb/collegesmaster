@@ -2,7 +2,6 @@ package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Objects;
 
@@ -13,12 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -32,14 +28,9 @@ import br.com.collegesmaster.model.IQuestionResponse;
 @Table(name = "question_response")
 @Access(FIELD)
 @Audited
-public class QuestionResponse implements IQuestionResponse {
+public class QuestionResponse extends Model implements IQuestionResponse {
 	
 	private static final long serialVersionUID = 693650150648888820L;
-
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id")
-	private Integer id;
 	
 	@NotAudited
 	@ManyToOne(targetEntity = ChallengeResponse.class, optional = false, fetch = LAZY)
@@ -55,19 +46,6 @@ public class QuestionResponse implements IQuestionResponse {
 	@Basic(fetch = FetchType.LAZY, optional = false)
 	@Column(name = "letter", unique = false, length = 1)
 	private Letter letter;
-	
-	@Version
-	private Long version;
-	
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	@Override
 	public IChallengeResponse getChallengeResponse() {
@@ -97,16 +75,6 @@ public class QuestionResponse implements IQuestionResponse {
 	@Override
 	public void setLetter(Letter letter) {
 		this.letter = letter;
-	}
-	
-	@Override
-	public Long getVersion() {
-		return version;
-	}
-	
-	@Override
-	public void setVersion(Long version) {
-		this.version = version;
 	}
 	
 	@Override

@@ -1,31 +1,38 @@
 package br.com.collegesmaster.util;
 
+import static java.util.Base64.getEncoder;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Base64;
+
+import org.jboss.logging.Logger;
 
 public abstract class CryptoUtils {
-
+	
+	private static final Logger LOGGER = Logger.getLogger(CryptoUtils.class);
+	
 	public static String getHashedPassword(final String password, final String salt) {
 
 		MessageDigest digest = null;
 
 		try {
-			digest = MessageDigest.getInstance("SHA-512");
-			digest.reset();
-			digest.update(password.getBytes());
 			
-			String hashedPassword = Base64.getEncoder().encodeToString(digest.digest());
-			hashedPassword = hashedPassword.concat(salt);
+			digest = MessageDigest.getInstance("SHA-512");
+			String hashedPassword = getEncoder().encodeToString(digest.digest(password.getBytes()));
 			digest.reset();
-			digest.update(hashedPassword.getBytes());
-			final String hashedPasswordWithSalt = Base64.getEncoder().encodeToString(digest.digest());
+			
+			hashedPassword = hashedPassword.concat(salt);
+			
+			final String hashedPasswordWithSalt = getEncoder()
+					.encodeToString(digest.digest(hashedPassword.getBytes()));
+			
 			return hashedPasswordWithSalt;
 			
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}		
+			LOGGER.error("SHA-512 algorithm not founded.", e);
+		}
+		
 		return null;
 	}
 
@@ -34,16 +41,13 @@ public abstract class CryptoUtils {
 		SecureRandom secureRandom = null;
 		
 		try {
-			secureRandom = SecureRandom.getInstance("SHA1PRNG");
-			
-			final byte[] seed = secureRandom.generateSeed(64);
-			secureRandom.setSeed(seed);
-			secureRandom.nextBytes(seed);
+			secureRandom = SecureRandom.getInstance("SHA1PRNG");			
+			final byte[] seed = secureRandom.generateSeed(32); 						
 
-			final String generatedSalt = Base64.getEncoder().encodeToString(seed);
+			final String generatedSalt = getEncoder().encodeToString(seed);
 			return generatedSalt;
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			LOGGER.error("SHA1PRNG algorithm not founded.", e);
 		}
 		
 		return null;

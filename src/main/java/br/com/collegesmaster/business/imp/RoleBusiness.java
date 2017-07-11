@@ -2,19 +2,20 @@ package br.com.collegesmaster.business.imp;
 
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
-import br.com.collegesmaster.business.IProfileBusiness;
+import br.com.collegesmaster.business.IRoleBusiness;
 import br.com.collegesmaster.model.IRole;
 import br.com.collegesmaster.model.impl.Role;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class ProfileBusiness extends GenericBusiness implements IProfileBusiness {
+public class RoleBusiness extends GenericBusiness implements IRoleBusiness {
 	
 	@Override
 	public void save(IRole profile) {
@@ -38,6 +39,7 @@ public class ProfileBusiness extends GenericBusiness implements IProfileBusiness
 	}
 	
 	@Override
+	@PermitAll
 	public List<Role> findAll() {		
 		final CriteriaQuery<Role> criteriaQuery = builder.createQuery(Role.class);
 		criteriaQuery.from(Role.class);

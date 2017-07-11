@@ -2,13 +2,13 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-	
+
 	<display-name>collegesmaster</display-name>
-	
+
 	<welcome-file-list>
 		<welcome-file>pages/home.xhtml</welcome-file>
 	</welcome-file-list>
-	
+
 	<context-param>
 		<param-name>javax.faces.CONFIG_FILES</param-name>
 		<param-value>/WEB-INF/faces-config.xml</param-value>
@@ -18,13 +18,13 @@
 		<param-value>Production</param-value>
 	</context-param>
 	<context-param>
-	     <param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
-	     <param-value>true</param-value>
-	 </context-param>
-	 <context-param>
-	     <param-name>primefaces.TRANSFORM_METADATA</param-name>
-	     <param-value>true</param-value>
-	 </context-param>
+		<param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.TRANSFORM_METADATA</param-name>
+		<param-value>true</param-value>
+	</context-param>
 	<context-param>
 		<param-name>primefaces.FONT_AWESOME</param-name>
 		<param-value>true</param-value>
@@ -33,42 +33,110 @@
 		<param-name>primefaces.THEME</param-name>
 		<param-value>dot-luv</param-value>
 	</context-param>
-	
+
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
+		<load-on-startup>10</load-on-startup>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
-	
+
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
-	 
-	<security-constraint>
-		<display-name>RoleConstraint</display-name>
-	    <web-resource-collection>
-	        <web-resource-name>all</web-resource-name>  
-	        <url-pattern>/*</url-pattern>  
-	        <http-method>GET</http-method>
-	        <http-method>POST</http-method>  	
-	    </web-resource-collection>  
-	    <auth-constraint>
-	    	<description/>
-	        <role-name>student</role-name>  
-	    </auth-constraint>  
-	</security-constraint>
-	  
-	<login-config>  
-	    <auth-method>BASIC</auth-method>  
+	
+	<login-config>
+	    <auth-method>FORM</auth-method>
+		<realm-name>collegesmaster-security-domain</realm-name>
+	    <form-login-config>
+		    <form-login-page>/pages/home.xhtml</form-login-page>
+		    <form-error-page>/pages/home.xhtml</form-error-page>
+	    </form-login-config>
 	</login-config>
 	
+	<!-- Professor Security Constraint -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>professor resources</web-resource-name>
+			<url-pattern>/pages/users/professor/*</url-pattern>
+			<http-method>GET</http-method>
+        	<http-method>POST</http-method>
+        	<http-method>PUT</http-method>
+        	<http-method>DELETE</http-method>
+        	<http-method>OPTION</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>PROFESSOR</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+	        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+	    </user-data-constraint>
+	</security-constraint>
+
+	<!-- Student Security Constraint -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>student resources</web-resource-name>
+			<url-pattern>/pages/users/student/*</url-pattern>
+			<http-method>GET</http-method>
+        	<http-method>POST</http-method>
+        	<http-method>PUT</http-method>
+        	<http-method>DELETE</http-method>
+        	<http-method>OPTION</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>STUDENT</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+	        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+	    </user-data-constraint>
+	</security-constraint>
+	
+	<!-- Administrator Security Constraint -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>administrator resources</web-resource-name>
+			<url-pattern>/pages/*</url-pattern>
+			<http-method>GET</http-method>
+        	<http-method>POST</http-method>
+        	<http-method>PUT</http-method>
+        	<http-method>DELETE</http-method>
+        	<http-method>OPTION</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>ADMINISTRATOR</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+	        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+	    </user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+	    <display-name>Public</display-name>
+	    <web-resource-collection>
+	        <web-resource-name>Public</web-resource-name>
+	        <description/>
+	        <url-pattern>/pages/home.xhtml</url-pattern>
+	        <url-pattern>/resources/*</url-pattern>
+	        <url-pattern>../resources/i18n/*</url-pattern>
+	        <http-method>GET</http-method>
+        	<http-method>POST</http-method>
+	    </web-resource-collection>
+	</security-constraint>
+
+	<!-- System roles -->
 	<security-role>
-		<description/>
-    	<role-name>student</role-name>
+		<role-name>ADMINISTRATOR</role-name>
 	</security-role>
+	<security-role>
+		<role-name>PROFESSOR</role-name>
+	</security-role>
+	<security-role>
+		<role-name>STUDENT</role-name>
+	</security-role>
+
 </web-app>

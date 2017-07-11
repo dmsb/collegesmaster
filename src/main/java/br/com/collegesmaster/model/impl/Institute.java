@@ -3,7 +3,6 @@ package br.com.collegesmaster.model.impl;
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,11 +11,8 @@ import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
@@ -29,14 +25,9 @@ import br.com.collegesmaster.model.IInstitute;
 @Table(name = "institute")
 @Access(FIELD)
 @Audited
-public class Institute implements IInstitute {
+public class Institute extends Model implements IInstitute {
 
     private static final long serialVersionUID = -7480055661943707725L;
-    
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id")
-	private Integer id;
 	
     @NotBlank
     @Column(name = "name",  nullable = false, length = 50)
@@ -51,9 +42,6 @@ public class Institute implements IInstitute {
 	@Embedded
     private Localization localization;
 	
-	@Version
-	private Long version;
-	
 	public Institute() {
     	
 	}
@@ -63,16 +51,6 @@ public class Institute implements IInstitute {
     	this.name = name;
     }
     
-	@Override
-    public Integer getId() {
-		return id;
-	}
-    
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	@Override
 	public String getName() {
         return name;
@@ -103,16 +81,6 @@ public class Institute implements IInstitute {
         this.localization = localization;
     }
     
-    @Override
-	public Long getVersion() {
-		return version;
-	}
-	
-	@Override
-	public void setVersion(Long version) {
-		this.version = version;
-	}
-	
     @Override
     public boolean equals(final Object objectToBeComparated) {
     	

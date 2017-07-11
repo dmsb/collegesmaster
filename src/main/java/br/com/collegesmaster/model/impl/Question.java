@@ -4,7 +4,6 @@ import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,14 +11,11 @@ import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -35,15 +31,10 @@ import br.com.collegesmaster.model.IQuestion;
 @Table(name = "question")
 @Access(FIELD)
 @Audited
-public class Question implements IQuestion {
+public class Question extends Model implements IQuestion {
 
 	private static final long serialVersionUID = -8970625810455399880L;
-	
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id")
-	private Integer id;
-	
+
 	@NotBlank
 	@Lob
 	@Column(name = "description", nullable = false, unique = false, columnDefinition = "text")
@@ -66,19 +57,6 @@ public class Question implements IQuestion {
 	@JoinColumn(name = "challengeFK", referencedColumnName = "id", updatable = false)
 	private IChallenge challenge;
 	
-	@Version
-	private Long version;
-	
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	@Override
 	public Integer getPontuation() {
 		return pontuation;
@@ -117,16 +95,6 @@ public class Question implements IQuestion {
 	@Override
 	public List<Alternative> getAlternatives() {
 		return alternatives;
-	}
-	
-	@Override
-	public Long getVersion() {
-		return version;
-	}
-	
-	@Override
-	public void setVersion(Long version) {
-		this.version = version;
 	}
 	
 	@Override

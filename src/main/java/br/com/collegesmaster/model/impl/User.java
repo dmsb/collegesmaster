@@ -3,22 +3,18 @@ package br.com.collegesmaster.model.impl;
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Objects;
 
 import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -35,14 +31,9 @@ import br.com.collegesmaster.util.CryptoUtils;
 @Table(name = "user")
 @Access(FIELD)
 @Audited
-public class User implements IUser {
+public class User extends Model implements IUser {
 
     private static final long serialVersionUID = -7809703915845045860L;
-    
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id")
-	private Integer id;
 	
     @NotNull
     @Size(min = 2, max = 25)
@@ -56,7 +47,7 @@ public class User implements IUser {
     private String password;
      
     @NotNull
-	@Column(name = "salt", nullable = false, length = 88)
+	@Column(name = "salt", nullable = false, length = 44)
     private String salt;
 	
     @Valid
@@ -70,9 +61,6 @@ public class User implements IUser {
     @ManyToOne(targetEntity = Role.class, fetch = LAZY, optional = false)
     @JoinColumn(name = "roleFK", referencedColumnName = "id", updatable = false)
     private IRole role;
-    
-    @Version
-	private Long version;
     
     @PrePersist
     @PreUpdate
@@ -101,16 +89,6 @@ public class User implements IUser {
 	@Override
 	public void setGeneralInfo(IGeneralInfo generalInfo) {
 		this.generalInfo = generalInfo;
-	}
-	
-    @Override
-	public Integer getId() {
-		return id;
-	}
-    
-    @Override
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	@Override
@@ -151,16 +129,6 @@ public class User implements IUser {
 	@Override
 	public void setRole(IRole role) {
 		this.role = role;
-	}
-	
-	@Override
-	public Long getVersion() {
-		return version;
-	}
-	
-	@Override
-	public void setVersion(Long version) {
-		this.version = version;
 	}
 	
 	@Override

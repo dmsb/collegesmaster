@@ -1,14 +1,12 @@
 package br.com.collegesmaster.business;
 
-import java.util.List;
-
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.User;
 
-public interface IUserBusiness extends IBusiness<IUser> {
+public interface IUserBusiness extends IBusiness<IUser, User> {
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	IUser login(String usernameToBeComparated, String passwordToBeComparated);
@@ -23,5 +21,5 @@ public interface IUserBusiness extends IBusiness<IUser> {
 	Boolean existsUsername(final String usernameToBeComparated);
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<User> findAll();
+	String getUserSalt(String usernameToBeComparated);
 }

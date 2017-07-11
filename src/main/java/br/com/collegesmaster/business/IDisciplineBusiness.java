@@ -9,7 +9,7 @@ import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.impl.Discipline;
 
-public interface IDisciplineBusiness extends IBusiness<IDiscipline> {
+public interface IDisciplineBusiness extends IBusiness<IDiscipline, Discipline> {
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	List<Discipline> findNamesByCourse(final ICourse course);
@@ -17,6 +17,4 @@ public interface IDisciplineBusiness extends IBusiness<IDiscipline> {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	List<Discipline> findByCourse(final ICourse course);
 	
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<Discipline> findAll();
 }
