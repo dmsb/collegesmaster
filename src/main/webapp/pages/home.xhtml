@@ -22,23 +22,22 @@
 			style="text-align: center;" />
 
 		<p:layoutUnit position="west" header="#{text['label_access']}" size="17%">
-			<h:form id="login_form" onsubmit="document.getElementById('login_form').action='j_security_check';" >
+<!-- 			onsubmit="document.getElementById('login_form').action='j_security_check';" -->
+			<h:form id="login_form">
 				<p:panelGrid >
-						
-						<input type="text" name="j_username" size="13" />
-						<input type="password" name="j_password" size="13"/>
+<!-- 						<input type="text" name="j_username" size="13" /> -->
+<!-- 						<input type="password" name="j_password" size="13"/> -->
 
-<!-- 						<p:inputText  id="username" value="#{userSessionMB.username}" size="15" -->
-<!-- 							placeholder="#{text['label_username']}" required="true"							 -->
-<!-- 							validatorMessage="#{text['msg_invalid_username_length']}"  /> -->
+					<p:inputText  id="username" value="#{userSessionMB.username}" size="15"
+						placeholder="#{text['label_username']}" required="true"							
+						validatorMessage="#{text['msg_invalid_username_length']}"  />
 
-<!-- 						<p:password id="password" value="#{userSessionMB.password}" size="15" -->
-<!-- 							placeholder="#{text['label_password']}" required="true" 							 -->
-<!-- 							validatorMessage="#{text['msg_invalid_password_format']}" /> -->
-						
-						<p:commandButton value="#{text['label_login']}" ajax="false"  
-							action="#{userSessionMB.jaasLogin()}" process="@form" />
-
+					<p:password id="password" value="#{userSessionMB.password}" size="15"
+						placeholder="#{text['label_password']}" required="true" 							
+						validatorMessage="#{text['msg_invalid_password_format']}" />
+					
+					<p:commandButton value="#{text['label_login']}" ajax="false"  
+						action="#{userSessionMB.jaasLogin()}" process="@form" />
 				</p:panelGrid>
 			</h:form>
 		</p:layoutUnit>

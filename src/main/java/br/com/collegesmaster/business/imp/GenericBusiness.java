@@ -7,6 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -22,6 +24,9 @@ public abstract class GenericBusiness {
 	
 	@PersistenceContext(unitName = "collegesmasterPU")
 	protected EntityManager entityManager;
+	
+	@Resource
+	protected SessionContext sessionContext;
 	
 	protected CriteriaBuilder builder;
     protected StringBuilder queryBuilder;   

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
     <context-root>/collegesmaster</context-root>
-    <security-domain>collegesmaster-security-domain</security-domain>
+    <security-domain>cm-database-domain</security-domain>
 </jboss-web>

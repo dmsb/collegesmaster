@@ -2,6 +2,7 @@ package br.com.collegesmaster.jsf;
 
 import static br.com.collegesmaster.util.JSFUtils.addMessage;
 import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
+import static br.com.collegesmaster.util.JSFUtils.getFullyPrincipalUser;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
@@ -14,7 +15,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import br.com.collegesmaster.business.IChallengeBusiness;
@@ -47,9 +47,6 @@ public class ChallengeResponseMB implements Serializable {
 	
 	@EJB
 	private transient IChallengeResponseBusiness challengeResponseBusiness;
-	
-	@ManagedProperty(value="#{userSessionMB}")
-	private UserSessionMB userSessionMB;
 
 	private List<Discipline> userDisciplines;
 	
@@ -71,14 +68,14 @@ public class ChallengeResponseMB implements Serializable {
 	
 	public void resetResponse() {
 		challengeResponse = new ChallengeResponse();
-		challengeResponse.setOwner(userSessionMB.getUser());
+		challengeResponse.setOwner(getFullyPrincipalUser());
 		challengeResponse.setQuestionsResponse(new ArrayList<>());
 		selectedQuestion = new Question();
 		selectedAlternative = new Alternative();
 	}
 	
 	public void loadUserDisciplines() {		
-		final ICourse course = userSessionMB.getUser().getGeneralInfo().getCourse();
+		final ICourse course = getFullyPrincipalUser().getGeneralInfo().getCourse();
 		userDisciplines = disciplineBusiness.findByCourse(course);
 	}
 	
@@ -129,14 +126,6 @@ public class ChallengeResponseMB implements Serializable {
 	public void persistResponse() {
 		challengeResponseBusiness.save(challengeResponse);
 		addMessageWithDetails(SEVERITY_INFO, "msg_success", "msg_response_registred_with_success");
-	}
-	
-	public UserSessionMB getUserSessionMB() {
-		return userSessionMB;
-	}
-
-	public void setUserSessionMB(UserSessionMB userSessionMB) {
-		this.userSessionMB = userSessionMB;
 	}
 
 	public List<Discipline> getUserDisciplines() {

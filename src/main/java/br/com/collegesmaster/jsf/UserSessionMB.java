@@ -1,12 +1,16 @@
 package br.com.collegesmaster.jsf;
 
+import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
+import static br.com.collegesmaster.util.JSFUtils.getHttpServletRequest;
+import static br.com.collegesmaster.util.JSFUtils.getUserPrincipal;
+import static br.com.collegesmaster.util.JSFUtils.setPrincipalUserFully;
+import static javax.faces.application.FacesMessage.SEVERITY_WARN;
+
 import java.io.Serializable;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.ViewScoped;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,10 +18,9 @@ import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.business.IUserBusiness;
 import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.util.CryptoUtils;
 
 @ManagedBean(name = "userSessionMB")
-@SessionScoped
+@ViewScoped
 public class UserSessionMB implements Serializable {
 
 	private static final long serialVersionUID = 4684060370406574773L;
@@ -29,47 +32,41 @@ public class UserSessionMB implements Serializable {
 	
 	private IUser user;
 	private String username;
-	private String password;	
+	private String password;
 
-	public void jaasLogin() {
-		
-		
-		final HttpServletRequest loginRequest = (HttpServletRequest)         
-				FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		
-		username = loginRequest.getParameterMap().get("j_username")[0];
-		final String salt = userBusiness.getUserSalt(loginRequest.getParameterMap().get("j_username")[0]);
-		final String hashedPassword = CryptoUtils.getHashedPassword(loginRequest.getParameterMap().get("j_password")[0], salt);
+	public String jaasLogin() {
+
+		final HttpServletRequest loginRequest = getHttpServletRequest();
 		
 		try {
-			
+
 	        if (loginRequest.getUserPrincipal() != null) {
 	        	loginRequest.logout();
 	        }
 			
-	        loginRequest.login(username, hashedPassword);
+	        loginRequest.login(username, password);
+	        
+	        if(loginRequest.getUserPrincipal() != null) {
+
+	        	setPrincipalUserFully(userBusiness.findByUserName(getUserPrincipal().getName()));
+	        	
+	        	if(loginRequest.isUserInRole("PROFESSOR")) {
+	        		return "/pages/users/professor/create_challenge.xhtml?faces-redirect=true";	
+	        	} else if(loginRequest.isUserInRole("STUDENT")) {
+	        		return "/pages/users/student/challenge_response.xhtml?faces-redirect=true";	
+	        	}
+	        	
+	        	user = null;
+	        	password = null;
+	        	username = null;
+	        }
 	        
 		} catch (ServletException e) {
-			LOGGER.error("Login failed.", e);
+			LOGGER.error(e.getMessage());
 		}
-	}
-	
-	public String login() {
-		user = userBusiness.login(username, password);
-		password = null;
-		if(user == null) {
-			FacesContext context = FacesContext.getCurrentInstance();
-	        context.addMessage(null, new FacesMessage("Credenciais incorretas",  "login e/ou senha incorretos"));
-	        return null;
-		} else {			
-			return "/pages/challenge_response.xhtml?faces-redirect=true";
-		}
-
-	}
-	
-	public String logout() {
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "/pages/home.xhtml?faces-redirect=true";
+		
+		addMessageWithDetails(SEVERITY_WARN, "msg_invalid_credentials", "msg_wrong_login_or_password");
+		return null;
 	}
 	
 	public IUser getUser() {

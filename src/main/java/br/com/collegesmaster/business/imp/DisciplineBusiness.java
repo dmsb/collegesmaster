@@ -1,11 +1,15 @@
 package br.com.collegesmaster.business.imp;
 
+import static javax.ejb.TransactionManagementType.CONTAINER;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -15,11 +19,13 @@ import javax.persistence.criteria.Selection;
 import br.com.collegesmaster.business.IDisciplineBusiness;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
-import br.com.collegesmaster.model.impl.Discipline_;
 import br.com.collegesmaster.model.impl.Discipline;
+import br.com.collegesmaster.model.impl.Discipline_;
 
 @Stateless
-@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionManagement(CONTAINER)
+@DeclareRoles({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
+@RolesAllowed({"ADMINISTRATOR"})
 public class DisciplineBusiness extends GenericBusiness implements IDisciplineBusiness {
 	
 	@Override
@@ -38,6 +44,7 @@ public class DisciplineBusiness extends GenericBusiness implements IDisciplineBu
 	}
 
 	@Override
+	@PermitAll
 	public IDiscipline findById(Integer id) {
 		return entityManager.find(Discipline.class, id);
 	}
@@ -53,6 +60,7 @@ public class DisciplineBusiness extends GenericBusiness implements IDisciplineBu
 		return result;
 	}
 	
+	@PermitAll
 	@Override
 	public List<Discipline> findByCourse(final ICourse course) {
 		
@@ -72,6 +80,7 @@ public class DisciplineBusiness extends GenericBusiness implements IDisciplineBu
 		return result;
 	}
 	
+	@PermitAll
 	@Override
 	public List<Discipline> findNamesByCourse(final ICourse course) {
 		

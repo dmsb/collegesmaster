@@ -2,6 +2,7 @@ package br.com.collegesmaster.jsf;
 
 import static br.com.collegesmaster.util.JSFUtils.addMessage;
 import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
+import static br.com.collegesmaster.util.JSFUtils.getFullyPrincipalUser;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 
 import java.io.Serializable;
@@ -33,9 +34,6 @@ public class ChallengeMB implements Serializable {
 	@EJB
 	private transient IChallengeBusiness challengeBusiness;
 	
-	@ManagedProperty(value="#{userSessionMB}")
-	private UserSessionMB userSessionMB;
-	
 	@ManagedProperty(value="#{challengeResponseMB}")
 	private ChallengeResponseMB challengeResponseMB;
 	
@@ -51,7 +49,7 @@ public class ChallengeMB implements Serializable {
 	public void init() {
 		challenge = new Challenge();
 		challenge.setDiscipline(new Discipline());
-		challenge.setOwner(userSessionMB.getUser());
+		challenge.setOwner(getFullyPrincipalUser());
 		challenge.setQuestions(new ArrayList<Question>());
 		
 		resetCurrentQuestion();
@@ -121,14 +119,6 @@ public class ChallengeMB implements Serializable {
 	
 	public Letter[] loadAllLetters() {
 		return Letter.values();
-	}
-	
-	public UserSessionMB getUserSessionMB() {
-		return userSessionMB;
-	}
-
-	public void setUserSessionMB(UserSessionMB userSessionMB) {
-		this.userSessionMB = userSessionMB;
 	}
 
 	public IChallenge getChallenge() {

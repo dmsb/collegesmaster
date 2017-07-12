@@ -1,11 +1,15 @@
 package br.com.collegesmaster.business.imp;
 
+import static javax.ejb.TransactionManagementType.CONTAINER;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -18,7 +22,9 @@ import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.impl.Course;
 
 @Stateless
-@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionManagement(CONTAINER)
+@DeclareRoles({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
+@RolesAllowed({"ADMINISTRATOR"})
 public class CourseBusiness extends GenericBusiness implements ICourseBusiness {
 	
 	@Override
@@ -36,6 +42,7 @@ public class CourseBusiness extends GenericBusiness implements ICourseBusiness {
 		entityManager.remove(course);
 	}
 
+	@PermitAll
 	@Override
 	public ICourse findById(Integer id) {
 		return entityManager.find(Course.class, id);
@@ -52,7 +59,8 @@ public class CourseBusiness extends GenericBusiness implements ICourseBusiness {
 		
 		return result;
 	}
-		
+	
+	@PermitAll
 	@Override
 	public List<Course> findNamesByInstitute(final IInstitute institute) {
 		
@@ -72,8 +80,5 @@ public class CourseBusiness extends GenericBusiness implements ICourseBusiness {
 		final List<Course> result = typedQuery.getResultList();
 		
 		return result;
-	}
-	
-	
-
+	}	
 }

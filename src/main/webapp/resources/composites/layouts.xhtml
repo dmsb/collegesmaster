@@ -19,7 +19,7 @@
 			style="text-align: center;" />
 
 		<p:layoutUnit id="layout_west" position="west"
-			header="#{text['label_welcome']} #{cc.attrs.main_menu_mb.userSessionMB.user.generalInfo.firstName} "
+			header="#{text['label_welcome']} #{cc.attrs.main_menu_mb.loadUserFirstName()}"
 			size="30%">
 			<h:form id="menu_form">
 				<p:menu>
@@ -37,7 +37,7 @@
 							action="#{cc.attrs.main_menu_mb.createdChallengeSelected()}"
 							icon="ui-icon-arrowrefresh-1-w" />
 						<p:menuitem value="#{text['label_logout']}"
-							action="#{cc.attrs.main_menu_mb.userSessionMB.logout()}"
+							action="#{cc.attrs.main_menu_mb.logout()}"
 							icon="ui-icon-arrowrefresh-1-w" />							
 					</p:submenu>
 				</p:menu>

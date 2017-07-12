@@ -5,16 +5,16 @@ import static br.com.collegesmaster.model.impl.GeneralInfo_.email;
 import static br.com.collegesmaster.model.impl.User_.generalInfo;
 import static br.com.collegesmaster.model.impl.User_.password;
 import static br.com.collegesmaster.model.impl.User_.username;
+import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.List;
 import java.util.logging.Level;
 
-import javax.annotation.Resource;
+import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
-import javax.ejb.SessionContext;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -28,35 +28,37 @@ import com.google.common.base.Strings;
 import br.com.collegesmaster.business.IUserBusiness;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.User;
+import br.com.collegesmaster.model.impl.User_;
 import br.com.collegesmaster.util.CryptoUtils;
 
 @Stateless
-@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionManagement(CONTAINER)
+@DeclareRoles({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
+@PermitAll
 public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	
-	@Resource
-	private SessionContext context;
-	
 	@Override
-	public void save(final IUser user) {		
+	public void save(final IUser user) {
 		entityManager.persist(user);
 	}
-
+	
 	@Override
 	public IUser update(final IUser user) {
 		return entityManager.merge(user);
 	}
-
+	
+	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
 	public void remove(final IUser user) {
 		entityManager.remove(user);
 	}
-
+	
 	@Override
 	public IUser findById(final Integer id) {
 		return entityManager.find(User.class, id);
 	}
-
+	
+	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
 	public List<User> findAll() {
 		final CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
@@ -66,7 +68,8 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 
 		return result;
 	}
-
+	
+	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
 	public IUser login(final String usernameToBeComparated, final String passwordToBeComparated) {
 		if (!(Strings.isNullOrEmpty(usernameToBeComparated) || Strings.isNullOrEmpty(passwordToBeComparated))) {
@@ -171,5 +174,23 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		
 		final Predicate containsEmail = builder.equal(userRoot.join(generalInfo).get(email), emailToBeComparated);
 		return executeExists(query, subquery, containsEmail);
+	}
+
+	@Override
+	public IUser findByUserName(final String username) {
+
+		final CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
+		final Root<User> userRoot =  criteriaQuery.from(User.class);
+		userRoot.fetch(generalInfo);
+		
+		final Predicate usernamePredicate = builder.equal(userRoot.get(User_.username), username);
+		
+		criteriaQuery
+			.select(userRoot)
+			.where(usernamePredicate);
+		
+		final TypedQuery<User> typedQuery = entityManager.createQuery(criteriaQuery);
+		return typedQuery.getSingleResult();		
+		
 	}
 }

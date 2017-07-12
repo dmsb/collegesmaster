@@ -6,14 +6,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:composites="http://java.sun.com/jsf/composite/composites">
-<f:view locale="#{localeBean.locale}">
+<f:view locale="#{localeBean.locale}" />
 <h:head>
 	<title>#{text['label_application_title']}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </h:head>
 <h:body>
-	<composites:layouts main_menu_mb="#{mainMenuMB}"
-		user_session_mb="#{userSessionMB}">
+	<composites:layouts main_menu_mb="#{mainMenuMB}">
 		<p:layoutUnit id="layout_center" position="center" header="#{text['label_completed_challenges']}" style="text-align:center">
 		</p:layoutUnit>
 	</composites:layouts>

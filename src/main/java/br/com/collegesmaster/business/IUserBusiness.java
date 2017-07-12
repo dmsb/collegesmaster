@@ -1,25 +1,29 @@
 package br.com.collegesmaster.business;
 
+import static javax.ejb.TransactionAttributeType.REQUIRED;
+
 import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.User;
 
 public interface IUserBusiness extends IBusiness<IUser, User> {
 	
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	@TransactionAttribute(REQUIRED)
 	IUser login(String usernameToBeComparated, String passwordToBeComparated);
 
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	@TransactionAttribute(REQUIRED)
 	Boolean existsCpf(String cpfToBeComparated);
 
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	@TransactionAttribute(REQUIRED)
 	Boolean existsEmail(final String emailToBeComparated);
 
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	@TransactionAttribute(REQUIRED)
 	Boolean existsUsername(final String usernameToBeComparated);
 	
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	@TransactionAttribute(REQUIRED)
 	String getUserSalt(String usernameToBeComparated);
+	
+	@TransactionAttribute(REQUIRED)
+	IUser findByUserName(String username);
 }

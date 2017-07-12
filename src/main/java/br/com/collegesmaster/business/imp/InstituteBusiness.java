@@ -8,7 +8,9 @@ import static javax.ejb.TransactionManagementType.CONTAINER;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.persistence.TypedQuery;
@@ -22,6 +24,8 @@ import br.com.collegesmaster.model.impl.Institute;
 
 @Stateless
 @TransactionManagement(CONTAINER)
+@DeclareRoles({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
+@RolesAllowed({"ADMINISTRATOR"})
 public class InstituteBusiness extends GenericBusiness implements IInstituteBusiness {
 
 	@Override
@@ -42,6 +46,7 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 		
 	}
 
+	@PermitAll
 	@Override
 	public IInstitute findById(Integer id) {
 		return entityManager.find(Institute.class, id);
@@ -57,6 +62,7 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 		return typedQuery.getResultList();
 	}
 	
+	@PermitAll
 	@Override
 	public List<Institute> findIdsAndNames() {
 		final CriteriaQuery<Institute> criteriaQuery = builder.createQuery(Institute.class);
@@ -74,8 +80,8 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 		return typedQuery.getResultList();
 	}
 	
-	@Override
 	@PermitAll
+	@Override
 	public List<Institute> findFetchingCourses() {
 		final CriteriaQuery<Institute> criteriaQuery = builder.createQuery(Institute.class);
 		final Root<Institute> instituteRoot = criteriaQuery.from(Institute.class);

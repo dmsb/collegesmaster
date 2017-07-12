@@ -1,26 +1,60 @@
 package br.com.collegesmaster.util;
 
+import java.security.Principal;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.google.common.base.Strings;
+
+import br.com.collegesmaster.model.IUser;
 
 public class JSFUtils {
 	
 	private static final String VAR_NAME = "text";
 	protected final static Logger logger = Logger.getLogger(JSFUtils.class.getName());
-
+	
+	
+	public static void setPrincipalUserFully(final IUser user) {
+		
+    	FacesContext.getCurrentInstance()
+	    	.getExternalContext()
+	    	.getApplicationMap()
+	    	.put("principalUser", user);
+	}
+	
+	public static IUser getFullyPrincipalUser() {
+		
+    	return (IUser) FacesContext.getCurrentInstance()
+	    			.getExternalContext()
+	    			.getApplicationMap()
+	    			.get("principalUser");
+	}
+	
 	public static HttpSession getHttpSession() throws NullPointerException {
 		
 		return (HttpSession) FacesContext
-			.getCurrentInstance()
-			.getExternalContext()
-			.getSession(false);		
+					.getCurrentInstance()
+					.getExternalContext()
+					.getSession(false);
+	}
+	
+	public static Principal getUserPrincipal() {
+		
+		return  FacesContext.getCurrentInstance()
+					.getExternalContext()
+					.getUserPrincipal();
+	}
+	
+	public static HttpServletRequest getHttpServletRequest() {
+		
+		return (HttpServletRequest) FacesContext.getCurrentInstance()
+					.getExternalContext().getRequest();
 	}
 	
 	public static void addMessage(final FacesMessage.Severity severity, final String message) {
