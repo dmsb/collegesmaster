@@ -22,12 +22,8 @@
 			style="text-align: center;" />
 
 		<p:layoutUnit position="west" header="#{text['label_access']}" size="17%">
-<!-- 			onsubmit="document.getElementById('login_form').action='j_security_check';" -->
 			<h:form id="login_form">
 				<p:panelGrid >
-<!-- 						<input type="text" name="j_username" size="13" /> -->
-<!-- 						<input type="password" name="j_password" size="13"/> -->
-
 					<p:inputText  id="username" value="#{userSessionMB.username}" size="15"
 						placeholder="#{text['label_username']}" required="true"							
 						validatorMessage="#{text['msg_invalid_username_length']}"  />

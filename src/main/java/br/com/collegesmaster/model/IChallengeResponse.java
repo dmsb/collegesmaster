@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface IChallengeResponse extends IModel {
 
-	void setNote(Integer note);
+	void setPontuation(Integer note);
 
-	Integer getNote();
+	Integer getPontuation();
 
 	void setQuestionsResponse(List<IQuestionResponse> myQuestionsResolution);
 

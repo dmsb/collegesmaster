@@ -23,6 +23,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 
+import org.jboss.ejb3.annotation.SecurityDomain;
+
 import com.google.common.base.Strings;
 
 import br.com.collegesmaster.business.IUserBusiness;
@@ -34,10 +36,11 @@ import br.com.collegesmaster.util.CryptoUtils;
 @Stateless
 @TransactionManagement(CONTAINER)
 @DeclareRoles({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
-@PermitAll
+@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTATOR"})
+@SecurityDomain("collegesmasterSecurityDomain")
 public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	
-	@Override
+	@Override	
 	public void save(final IUser user) {
 		entityManager.persist(user);
 	}
@@ -175,10 +178,11 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		final Predicate containsEmail = builder.equal(userRoot.join(generalInfo).get(email), emailToBeComparated);
 		return executeExists(query, subquery, containsEmail);
 	}
-
+	
 	@Override
+	@RolesAllowed({"ADMINISTRATOR"})
 	public IUser findByUserName(final String username) {
-
+		sessionContext.isCallerInRole("ADMINISTRATOR");
 		final CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
 		final Root<User> userRoot =  criteriaQuery.from(User.class);
 		userRoot.fetch(generalInfo);

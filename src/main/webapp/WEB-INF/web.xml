@@ -82,6 +82,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>student resources</web-resource-name>
+			<description />
 			<url-pattern>/pages/users/student/*</url-pattern>
 			<url-pattern>/pages/users/challenges.xhtml</url-pattern>
 			<http-method>GET</http-method>
@@ -91,9 +92,11 @@
         	<http-method>OPTION</http-method>
 		</web-resource-collection>
 		<auth-constraint>
+			<description />
 			<role-name>STUDENT</role-name>
 		</auth-constraint>
 		<user-data-constraint>
+			<description />
 	        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
 	    </user-data-constraint>
 	</security-constraint>
@@ -102,6 +105,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>administrator resources</web-resource-name>
+			<description />
 			<url-pattern>/pages/*</url-pattern>
 			<http-method>GET</http-method>
         	<http-method>POST</http-method>
@@ -110,9 +114,11 @@
         	<http-method>OPTION</http-method>
 		</web-resource-collection>
 		<auth-constraint>
+			<description />
 			<role-name>ADMINISTRATOR</role-name>
 		</auth-constraint>
 		<user-data-constraint>
+			<description />
 	        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
 	    </user-data-constraint>
 	</security-constraint>

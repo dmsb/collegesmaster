@@ -1,79 +1,79 @@
 <?xml version='1.0' encoding='utf-8'?>
 <dataset>
 
-	<institute name='instituto federal de pernambuco' country='brasil' state='pernambuco' city='recife' version='1498780800000' />
-	<institute name='instituto federal de santa catarina' country='brasil' state='santa catarina' city='jaboatão' version='1498780800000' />
-	<institute name='instituto federal de são paulo' country='brasil' state='são paulo' city='santos' version='1498780800000' />
-	<institute name='universidade federal de pernambuco' country='brasil' state='pernambuco' city='recife' version='1498780800000' />
-	<institute name='instituto federal da bahia' country='brasil' state='bahia' city='salvador' version='1498780800000' />
-	<institute name='universidade de são paulo' country='brasil' state='são paulo' city='são paulo' version='1498780800000' />
+	<institute name='Instituto Federal de Pernambuco' country='Brasil' state='pernambuco' city='Recife' version='1498780800000' />
+	<institute name='Instituto Federal de Santa Catarina' country='Brasil' state='santa catarina' city='Jaboatão' version='1498780800000' />
+	<institute name='Instituto Federal de São Paulo' country='Brasil' state='são paulo' city='Santos' version='1498780800000' />
+	<institute name='Universidade Federal de Pernambuco' country='Brasil' state='pernambuco' city='Recife' version='1498780800000' />
+	<institute name='Instituto Federal da Bahia' country='Brasil' state='bahia' city='Salvador' version='1498780800000' />
+	<institute name='Universidade de São Paulo' country='Brasil' state='são paulo' city='São Paulo' version='1498780800000' />
 
-	<course instituteFK='1' name='análise e desenvolvimento de sistemas' version='1498780800000' />
-	<course instituteFK='1' name='engenharia ambiental' version='1498780800000' />
-	<course instituteFK='1' name='eletronica' version='1498780800000' />
+	<course instituteFK='1' name='Análise e Desenvolvimento de Sistemas' version='1498780800000' />
+	<course instituteFK='1' name='Engenharia Ambiental' version='1498780800000' />
+	<course instituteFK='1' name='Eletronica' version='1498780800000' />
 
-	<course instituteFK='2' name='análise e desenvolvimento de sistemas' version='1498780800000' />
-	<course instituteFK='2' name='engenharia química' version='1498780800000' />
-	<course instituteFK='2' name='engenharia eletrica' version='1498780800000' />
+	<course instituteFK='2' name='Análise e Desenvolvimento de Sistemas' version='1498780800000' />
+	<course instituteFK='2' name='Engenharia Química' version='1498780800000' />
+	<course instituteFK='2' name='Engenharia Eletrica' version='1498780800000' />
 
-	<course instituteFK='3' name='geografia' version='1498780800000' />
-	<course instituteFK='3' name='engenharia química' version='1498780800000' />
-	<course instituteFK='3' name='engenharia eletrica' version='1498780800000' />
+	<course instituteFK='3' name='Geografia' version='1498780800000' />
+	<course instituteFK='3' name='Engenharia Química' version='1498780800000' />
+	<course instituteFK='3' name='Engenharia Eletrica' version='1498780800000' />
 
-	<course instituteFK='4' name='geografia' version='1498780800000' />
-	<course instituteFK='4' name='física' version='1498780800000' />
-	<course instituteFK='4' name='história' version='1498780800000' />
+	<course instituteFK='4' name='Geografia' version='1498780800000' />
+	<course instituteFK='4' name='Física' version='1498780800000' />
+	<course instituteFK='4' name='História' version='1498780800000' />
 
-	<course instituteFK='4' name='educação física' version='1498780800000' />
-	<course instituteFK='4' name='física' version='1498780800000' />
-	<course instituteFK='4' name='história' version='1498780800000' />
+	<course instituteFK='4' name='Educação Física' version='1498780800000' />
+	<course instituteFK='4' name='Física' version='1498780800000' />
+	<course instituteFK='4' name='História' version='1498780800000' />
 
-	<course instituteFK='5' name='análise e desenvolvimento de sistemas' version='1498780800000' />
-	<course instituteFK='5' name='história' version='1498780800000' />
+	<course instituteFK='5' name='Análise e Desenvolvimento de Sistemas' version='1498780800000' />
+	<course instituteFK='5' name='História' version='1498780800000' />
 
-	<course instituteFK='6' name='análise e desenvolvimento de sistemas' version='1498780800000' />
-	<course instituteFK='6' name='matemática' version='1498780800000' />
+	<course instituteFK='6' name='Análise e Desenvolvimento de Sistemas' version='1498780800000' />
+	<course instituteFK='6' name='Matemática' version='1498780800000' />
 
-	<discipline courseFK='1' name='software corporativo i' version='1498780800000' />
-	<discipline courseFK='1' name='redes' version='1498780800000' />
-	<discipline courseFK='1' name='introdução à programação' version='1498780800000' />
+	<discipline courseFK='1' name='Software Corporativo I' version='1498780800000' />
+	<discipline courseFK='1' name='Redes' version='1498780800000' />
+	<discipline courseFK='1' name='Introdução à Programação' version='1498780800000' />
 
-	<discipline courseFK='3' name='fisca i' version='1498780800000' />
-	<discipline courseFK='3' name='fisca ii' version='1498780800000' />
-	<discipline courseFK='3' name='fisca iii' version='1498780800000' />
+	<discipline courseFK='3' name='Fisca i' version='1498780800000' />
+	<discipline courseFK='3' name='Fisca ii' version='1498780800000' />
+	<discipline courseFK='3' name='Fisca iii' version='1498780800000' />
 
-	<discipline courseFK='4' name='software corporativo ii' version='1498780800000' />
-	<discipline courseFK='5' name='quimica i' version='1498780800000' />
-	<discipline courseFK='6' name='fisica iv' version='1498780800000' />
+	<discipline courseFK='4' name='Software Corporativo II' version='1498780800000' />
+	<discipline courseFK='5' name='Quimica I' version='1498780800000' />
+	<discipline courseFK='6' name='Fisica IV' version='1498780800000' />
 
 	<general_info birthdate='1993-10-17 00:00:00' cpf='10719498457'
-		email='diogomsb1@gmail.com' firstname='diogo' lastname='brito' courseId='1' version='1498780800000' />
+		email='diogomsb1@gmail.com' firstname='Diogo' lastname='Brito' courseId='1' version='1498780800000' />
 
 	<general_info birthdate='1998-10-17 00:00:00' cpf='42518426507'
-		email='tainaramsb1@gmail.com' firstname='tainara' lastname='dantas' courseId='1' version='1498780800000' />
+		email='tainaramsb1@gmail.com' firstname='Tainara' lastname='Dantas' courseId='1' version='1498780800000' />
 
 	<general_info birthdate='1998-10-17 00:00:00' cpf='44046156201'
-		email='transoc@gmail.com' firstname='fernando' lastname='ribeiro' courseId='1' version='1498780800000' />
+		email='transoc@gmail.com' firstname='Fernando' lastname='Ribeiro' courseId='1' version='1498780800000' />
 
 	<general_info birthdate='1998-10-17 00:00:00' cpf='34796683305'
-		email='juca1@gmail.com' firstname='lucas' lastname='muniz' courseId='2' version='1498780800000' />
+		email='juca1@gmail.com' firstname='Lucas' lastname='Muniz' courseId='2' version='1498780800000' />
 
 	<!-- password = D10g0! -->
 	<user username='diogo.brito'
 		password='bo3t2O9eB8zfzQYYTEXyqsh6y+HLDE8gpj6k8q+nfSZQNeeb7Au66KoEgFmLng5fHMN/793tkyISa79m4ijl9w=='
-		salt='oU92lwYpHI5m6bWKtWSBBDs6FZGte1RyEbReZ7Y/wNs=' version='1498780800000' roleFK='1'/>
+		salt='oU92lwYpHI5m6bWKtWSBBDs6FZGte1RyEbReZ7Y/wNs=' version='1498780800000' />
 
 	<user username='tainara.dantas'
 		password='lFA7U9L3ra9MhPvchs4zTEYDc7G1VTOGfZvbZBPxhi1YFQ0g68wpnM0eoCT6/xRVqS2f3P5RT4oEeWMn/10MQQ=='
-		salt='RPgU7gXSKlm84nIUkbsVW0Fl3TkRKYm43d9shrZWNcM=' version='1498780800000' roleFK='1' />
+		salt='RPgU7gXSKlm84nIUkbsVW0Fl3TkRKYm43d9shrZWNcM=' version='1498780800000' />
 
 	<user username='fernando.ribeiro'
 		password='zeetURjh8HHt5x8Wpfbsid0xgzytbyU+yznz2/JqaagkjxfZ8v98WKg0gZg6REze5/UotYqbSskKElspIhxvZA=='
-		salt='0WkPpIMfdwnubINCxolfYxisTFdlkJOIOTgwrQK5XTk=' version='1498780800000' roleFK='2' />
+		salt='0WkPpIMfdwnubINCxolfYxisTFdlkJOIOTgwrQK5XTk=' version='1498780800000' />
 
 	<user username='lucas.muniz'
 		password='jtS7zei3YV98d0Fw7FDZS0TiEq9eyBDugKAaFLPspyGDVsgSj4Uu5a8BKP0tyNBB1jrf5jWzSUczZ2AoN491fQ=='
-		salt='qAi9dCMXb1eg966hVmbvuLYPH9DerQKpd6MwfHoXFDE=' version='1498780800000' roleFK='3' />
+		salt='qAi9dCMXb1eg966hVmbvuLYPH9DerQKpd6MwfHoXFDE=' version='1498780800000' />
 	
 	<user_general_info userFK='1' generalInfoFK='1' />
 	<user_general_info userFK='2' generalInfoFK='2' />
@@ -83,51 +83,50 @@
 	<role name='PROFESSOR' version='1498780800000' />
 	<role name='STUDENT' version='1498780800000' />
 	<role name='ADMINISTRATOR' version='1498780800000' />
+	
+	<user_role userFK='1' roleFK='1' />
+	<user_role userFK='1' roleFK='2' />
+	<user_role userFK='2' roleFK='1' />
+	<user_role userFK='3' roleFK='3' />
+	<user_role userFK='4' roleFK='2' />
 
-	<permission name='persist' version='1498780800000' />
-	<permission name='merge' version='1498780800000' />
-	<permission name='remove' version='1498780800000' />
-
-	<role_permission roleFK='1' permissionFK='1' />
-	<role_permission roleFK='1' permissionFK='2' />
-	<role_permission roleFK='1' permissionFK='3' />
-
-	<role_permission roleFK='2' permissionFK='1' />
-	<role_permission roleFK='2' permissionFK='2' />
-	<role_permission roleFK='2' permissionFK='3' />
-
-	<role_permission roleFK='3' permissionFK='1' />
-	<role_permission roleFK='3' permissionFK='2' />
-	<role_permission roleFK='3' permissionFK='3' />
-
-	<challenge title='Challenge 1' disciplineFK='4' userFK='2' version='1498780800000' />
+	<challenge title='Challenge 1' disciplineFK='4' userFK='1' version='1498780800000' />
 	<challenge title='Challenge 2' disciplineFK='1' userFK='3' version='1498780800000' />
 	<challenge title='Challenge 3' disciplineFK='2' userFK='2' version='1498780800000' />
-	<challenge title='Challenge 3' disciplineFK='2' userFK='4' version='1498780800000' />
-	<challenge title='Challenge 3' disciplineFK='2' userFK='2' version='1498780800000' />
-	<challenge title='Challenge 2' disciplineFK='1' userFK='2' version='1498780800000' />
+	<challenge title='Challenge 4' disciplineFK='2' userFK='3' version='1498780800000' />
+	<challenge title='Challenge 5' disciplineFK='2' userFK='3' version='1498780800000' />
+	<challenge title='Challenge 6' disciplineFK='1' userFK='3' version='1498780800000' />
 
-	<question description='Question about Internet Protocols' pontuation='100' challengeFK='1' version='1498780800000' />
-	<question description='Question about Math' pontuation='80' challengeFK='1' version='1498780800000' />
+	<question description='Question about Internet Protocols' pontuation='50' challengeFK='1' version='1498780800000' />
+	<question description='Question about Math' pontuation='50' challengeFK='1' version='1498780800000' />
 
-	<question description='Question about Physic' pontuation='223' challengeFK='2' version='1498780800000' />
-	<question description='Question about maintenance' pontuation='100' challengeFK='2' version='1498780800000' />
+	<question description='Question about Physic' pontuation='50' challengeFK='2' version='1498780800000' />
+	<question description='Question about maintenance' pontuation='50' challengeFK='2' version='1498780800000' />
 
-	<question description='Question about TDD' pontuation='100' challengeFK='3' version='1498780800000' />
-	<question description='Question about BDD' pontuation='89' challengeFK='3' version='1498780800000' />
-	<question description='Question about DDD' pontuation='200' challengeFK='4' version='1498780800000' />
+	<question description='Question about TDD' pontuation='50' challengeFK='3' version='1498780800000' />
+	<question description='Question about BDD' pontuation='50' challengeFK='3' version='1498780800000' />
+	
+	<question description='Question about DDD' pontuation='50' challengeFK='4' version='1498780800000' />
 
 	<alternative definition='true' description="Response 1" letter='A' questionFK='1' version='1498780800000' />
-	<alternative definition='true' description="Response 2" letter='B' questionFK='1' version='1498780800000' />
-	<alternative definition='true' description="Response 3" letter='C' questionFK='1' version='1498780800000' />
-	<alternative definition='true' description="Response 4" letter='D' questionFK='1' version='1498780800000' />
+	<alternative definition='false' description="Response 2" letter='B' questionFK='1' version='1498780800000' />
+	<alternative definition='false' description="Response 3" letter='C' questionFK='1' version='1498780800000' />
+	<alternative definition='false' description="Response 4" letter='D' questionFK='1' version='1498780800000' />
 
-	<alternative definition='true' description="Response 2" letter='A' questionFK='2' version='1498780800000' />
-	<alternative definition='false' description="Response 3" letter='B' questionFK='2' version='1498780800000'/>
+	<alternative definition='true' description="Response 1" letter='A' questionFK='2' version='1498780800000' />
+	<alternative definition='false' description="Response 2" letter='B' questionFK='2' version='1498780800000'/>
+	<alternative definition='false' description="Response 3" letter='C' questionFK='2' version='1498780800000' />
+	<alternative definition='false' description="Response 4" letter='D' questionFK='2' version='1498780800000'/>
 
 	<alternative definition='true' description="Response 1" letter='A' questionFK='3' version='1498780800000'/>
 	<alternative definition='false' description="Response 2" letter='B' questionFK='3' version='1498780800000' />
-	<alternative definition='false' description="Response 3" letter='A' questionFK='4' version='1498780800000' />
+	<alternative definition='false' description="Response 3" letter='C' questionFK='3' version='1498780800000'/>
+	<alternative definition='false' description="Response 4" letter='D' questionFK='3' version='1498780800000' />
+	
+	<alternative definition='true' description="Response 1" letter='A' questionFK='4' version='1498780800000' />
+	<alternative definition='false' description="Response 2" letter='B' questionFK='4' version='1498780800000' />
+	<alternative definition='false' description="Response 3" letter='C' questionFK='4' version='1498780800000' />
+	<alternative definition='false' description="Response 4" letter='D' questionFK='4' version='1498780800000' />
 
 </dataset>
 

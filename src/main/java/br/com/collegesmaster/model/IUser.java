@@ -1,5 +1,7 @@
 package br.com.collegesmaster.model;
 
+import java.util.List;
+
 public interface IUser extends IModel {
 
 	String getSalt();
@@ -14,9 +16,9 @@ public interface IUser extends IModel {
 
 	void setPassword(String password);
 
-	void setRole(IRole role);
+	void setRoles(List<IRole> roles);
 
-	IRole getRole();
+	List<IRole> getRoles();
 
 	void setGeneralInfo(IGeneralInfo person);
 

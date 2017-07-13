@@ -12,6 +12,8 @@ import javax.ejb.TransactionManagement;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
+import org.jboss.ejb3.annotation.SecurityDomain;
+
 import br.com.collegesmaster.business.IRoleBusiness;
 import br.com.collegesmaster.model.IRole;
 import br.com.collegesmaster.model.impl.Role;
@@ -20,6 +22,7 @@ import br.com.collegesmaster.model.impl.Role;
 @TransactionManagement(CONTAINER)
 @DeclareRoles({"ADMINISTRATOR"})
 @RolesAllowed({"ADMINISTRATOR"})
+@SecurityDomain("collegesmasterSecurityDomain")
 public class RoleBusiness extends GenericBusiness implements IRoleBusiness {
 	
 	@Override

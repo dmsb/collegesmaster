@@ -18,6 +18,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
 
+import org.jboss.ejb3.annotation.SecurityDomain;
+
 import br.com.collegesmaster.business.IInstituteBusiness;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.impl.Institute;
@@ -26,6 +28,7 @@ import br.com.collegesmaster.model.impl.Institute;
 @TransactionManagement(CONTAINER)
 @DeclareRoles({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
 @RolesAllowed({"ADMINISTRATOR"})
+@SecurityDomain("collegesmasterSecurityDomain")
 public class InstituteBusiness extends GenericBusiness implements IInstituteBusiness {
 
 	@Override

@@ -4,6 +4,7 @@ import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Access;
@@ -11,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -57,10 +59,11 @@ public class User extends Model implements IUser {
 	    inverseJoinColumns={@JoinColumn(name="generalInfoFK", referencedColumnName = "id")})
 	private IGeneralInfo generalInfo;
     
-    @NotNull
-    @ManyToOne(targetEntity = Role.class, fetch = LAZY, optional = false)
-    @JoinColumn(name = "roleFK", referencedColumnName = "id", updatable = false)
-    private IRole role;
+    @ManyToMany(targetEntity = Role.class, fetch = LAZY)
+    @JoinTable(name="user_role",
+	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
+	    inverseJoinColumns={@JoinColumn(name="roleFK", referencedColumnName = "id")})
+    private List<IRole> roles;
     
     @PrePersist
     @PreUpdate
@@ -122,13 +125,13 @@ public class User extends Model implements IUser {
     }
 
 	@Override
-	public IRole getRole() {
-		return role;
+	public List<IRole> getRoles() {
+		return roles;
 	}
 
 	@Override
-	public void setRole(IRole role) {
-		this.role = role;
+	public void setRoles(List<IRole> roles) {
+		this.roles = roles;
 	}
 	
 	@Override

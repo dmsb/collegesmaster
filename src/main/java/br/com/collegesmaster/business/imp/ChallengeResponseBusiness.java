@@ -1,5 +1,6 @@
 package br.com.collegesmaster.business.imp;
 
+import static br.com.collegesmaster.model.impl.ChallengeResponse_.owner;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.List;
@@ -10,15 +11,21 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import org.jboss.ejb3.annotation.SecurityDomain;
 
 import br.com.collegesmaster.business.IChallengeResponseBusiness;
 import br.com.collegesmaster.model.IChallengeResponse;
+import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.ChallengeResponse;
 
 @Stateless
 @TransactionManagement(CONTAINER)
 @DeclareRoles({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
 @RolesAllowed({"ADMINISTRATOR"})
+@SecurityDomain("collegesmasterSecurityDomain")
 public class ChallengeResponseBusiness extends GenericBusiness implements IChallengeResponseBusiness {
 
 	@RolesAllowed({"STUDENT", "ADMINISTRATOR"})
@@ -49,6 +56,22 @@ public class ChallengeResponseBusiness extends GenericBusiness implements IChall
 		final CriteriaQuery<ChallengeResponse> criteriaQuery = builder.createQuery(ChallengeResponse.class);
 		final TypedQuery<ChallengeResponse> typedQuery = entityManager.createQuery(criteriaQuery);		
 		return typedQuery.getResultList();
+	}
+	
+	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
+	@Override
+	public List<ChallengeResponse> findAll(final IUser user) {
+		final CriteriaQuery<ChallengeResponse> criteriaQuery = builder.createQuery(ChallengeResponse.class);
+		final Root<ChallengeResponse> challengeResponseRoot = criteriaQuery.from(ChallengeResponse.class);
+		final Predicate userPredicate = builder.equal(challengeResponseRoot.get(owner), user);
+		
+		criteriaQuery
+			.select(challengeResponseRoot)
+			.where(userPredicate);
+		
+		final TypedQuery<ChallengeResponse> typedQuery = entityManager.createQuery(criteriaQuery);
+		return typedQuery.getResultList();
+		
 	}
 
 }

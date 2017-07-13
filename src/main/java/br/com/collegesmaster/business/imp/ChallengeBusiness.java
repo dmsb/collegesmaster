@@ -15,6 +15,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.jboss.ejb3.annotation.SecurityDomain;
+
 import br.com.collegesmaster.business.IChallengeBusiness;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.impl.Challenge;
@@ -24,6 +26,7 @@ import br.com.collegesmaster.model.impl.Question;
 @TransactionManagement(CONTAINER)
 @DeclareRoles({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
 @RolesAllowed({"ADMINISTRATOR"})
+@SecurityDomain("collegesmasterSecurityDomain")
 public class ChallengeBusiness extends GenericBusiness implements IChallengeBusiness {	
 	
 	@RolesAllowed({"PROFESSOR", "ADMINISTRATOR"})

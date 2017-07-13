@@ -8,6 +8,7 @@ import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -37,7 +38,7 @@ public class HomeMB implements Serializable {
 	private transient IUserBusiness userBusiness;
 	
 	@EJB
-	private transient IRoleBusiness profileBusiness;
+	private transient IRoleBusiness roleBusiness;
 	
 	@EJB
 	private transient IInstituteBusiness instituteBusiness;
@@ -50,7 +51,7 @@ public class HomeMB implements Serializable {
 	@PostConstruct
 	public void init() {
 		user = new User();
-		user.setRole(new Role());
+		user.setRoles(new ArrayList<>());
 		user.setGeneralInfo(new GeneralInfo());		
 		
 		
@@ -62,13 +63,13 @@ public class HomeMB implements Serializable {
 	}
 	
 	public List<Role> allRoles() {
-		return profileBusiness.findAll();
+		return roleBusiness.findAll();
 	}
 	
 	public void persistUser() {
 		
-		final Role completeRole = (Role) profileBusiness.findById(selectedRole.getId());
-		user.setRole(completeRole);
+		final Role completeRole = (Role) roleBusiness.findById(selectedRole.getId());
+		user.getRoles().add(completeRole);
 		
 		final Boolean existsUsername = userBusiness.existsUsername(user.getUsername());
 		final Boolean existsEmail = userBusiness.existsEmail(user.getGeneralInfo().getEmail());

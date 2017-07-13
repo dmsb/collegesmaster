@@ -40,8 +40,8 @@ public class ChallengeResponse extends Model implements IChallengeResponse {
 	private IUser owner;
 	
 	@NotNull
-	@Column(name = "note", nullable = false, length = 11)
-	private Integer note;
+	@Column(name = "pontuation", nullable = false, length = 11)
+	private Integer pontuation;
 	
 	@NotAudited
 	@OneToMany(targetEntity = QuestionResponse.class, cascade = ALL, 
@@ -51,7 +51,7 @@ public class ChallengeResponse extends Model implements IChallengeResponse {
 	@PrePersist
 	@PreUpdate
 	private void calculateNote() {
-		note = 0;			
+		pontuation = 0;			
 		
 		for(final IQuestionResponse response : questionsResponse) {
 			response.getTargetQuestion()
@@ -59,7 +59,7 @@ public class ChallengeResponse extends Model implements IChallengeResponse {
 				.forEach(alternative -> {					
 					if(alternative.getDefinition() && 
 							alternative.getLetter().equals(response.getLetter())) {
-						note = note + response.getTargetQuestion().getPontuation();
+						pontuation = pontuation + response.getTargetQuestion().getPontuation();
 					}
 				});
 		}
@@ -76,13 +76,13 @@ public class ChallengeResponse extends Model implements IChallengeResponse {
 	}
 
 	@Override
-	public Integer getNote() {
-		return note;
+	public Integer getPontuation() {
+		return pontuation;
 	}
 
 	@Override
-	public void setNote(Integer note) {
-		this.note = note;
+	public void setPontuation(Integer pontuation) {
+		this.pontuation = pontuation;
 	}
 
 	@Override
@@ -109,12 +109,12 @@ public class ChallengeResponse extends Model implements IChallengeResponse {
 		final ChallengeResponse objectComparatedInstance = (ChallengeResponse) objectToBeComparated;
 		
 		return id == objectComparatedInstance.id && 
-				note == objectComparatedInstance.note;
+				pontuation == objectComparatedInstance.pontuation;
 	}
 	
 	@Override
     public int hashCode() {
-        return Objects.hash(id, note);
+        return Objects.hash(id, pontuation);
     }
 	
 }

@@ -2,6 +2,7 @@ package br.com.collegesmaster.security;
 
 import static br.com.collegesmaster.util.CryptoUtils.getHashedPassword;
 
+import java.security.acl.Group;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,10 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.security.auth.login.LoginException;
 import javax.sql.DataSource;
-import javax.transaction.SystemException;
-import javax.transaction.Transaction;
 
-import org.jboss.logging.Logger;
 import org.jboss.security.PicketBoxMessages;
 import org.jboss.security.auth.spi.DatabaseServerLoginModule;
 
@@ -22,9 +20,13 @@ import com.google.common.base.Strings;
 
 public class DatabaseLoginModule extends DatabaseServerLoginModule {
 	
-	private Logger log = Logger.getLogger(getClass());
-	
 	private static String userSalt;
+	
+	@Override
+	protected Group[] getRoleSets() throws LoginException {
+		
+		return super.getRoleSets();
+	}
 	
     @Override
     protected boolean validatePassword(String enteredPassword, String encrypted) {
@@ -48,24 +50,11 @@ public class DatabaseLoginModule extends DatabaseServerLoginModule {
         
         String password = null;
         ResultSet resultSet = null;
-        
-        Transaction currentTransation = null;
-        
-        if (suspendResume) {
-            try {
-                if (tm == null)
-                    throw PicketBoxMessages.MESSAGES.invalidNullTransactionManager();
-                currentTransation = tm.suspend();
-            } catch (SystemException e) {
-                throw new RuntimeException(e);
-            }
-        }
  
         try {
  
             final InitialContext initinalContext = new InitialContext();
             final DataSource dataSource = (DataSource) initinalContext.lookup(dsJndiName);
-            log.trace("Excuting query: " + principalsQuery + ", with username: " + username);
             
             try (final Connection connection = dataSource.getConnection();
                     final PreparedStatement statement = connection.prepareStatement(principalsQuery)) {
@@ -81,14 +70,11 @@ public class DatabaseLoginModule extends DatabaseServerLoginModule {
                 password = resultSet.getString(1);
                 userSalt = resultSet.getString(2);
 
-                log.trace("Obtained user password and salt");
+            } catch (SQLException e) {
 
- 
-            } catch (SQLException ex) {
-             LoginException le = new LoginException(PicketBoxMessages.MESSAGES.failedToProcessQueryMessage());
-                le.initCause(ex.getCause());
-                log.error(ex);
-                throw le;
+            	final LoginException loginException = new LoginException(PicketBoxMessages.MESSAGES.failedToProcessQueryMessage());
+                loginException.initCause(e.getCause());;
+                throw loginException;
             } finally {
                 if (resultSet != null) {
                     try {
@@ -98,21 +84,10 @@ public class DatabaseLoginModule extends DatabaseServerLoginModule {
                 }
             }
  
-        } catch (NamingException ex) {
-            final LoginException le = new LoginException(PicketBoxMessages.MESSAGES.failedToLookupDataSourceMessage(dsJndiName));
-            le.initCause(ex);
-            log.error(ex);
-            throw le;
-        } finally {
-            if (suspendResume) {
-                try {
-                    tm.resume(currentTransation);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                if (log.isTraceEnabled())
-                    log.trace("resumeAnyTransaction");
-            }
+        } catch (NamingException e) {
+            final LoginException loginException = new LoginException(PicketBoxMessages.MESSAGES.failedToLookupDataSourceMessage(dsJndiName));
+            loginException.initCause(e);
+            throw loginException;
         }
         
         return password;
