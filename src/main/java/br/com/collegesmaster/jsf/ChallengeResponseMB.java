@@ -2,7 +2,7 @@ package br.com.collegesmaster.jsf;
 
 import static br.com.collegesmaster.util.JSFUtils.addMessage;
 import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
-import static br.com.collegesmaster.util.JSFUtils.getFullyPrincipalUser;
+import static br.com.collegesmaster.util.JSFUtils.getPrincipalUser;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
@@ -59,6 +59,8 @@ public class ChallengeResponseMB implements Serializable {
 	private IAlternative selectedAlternative;
 	
 	private IChallengeResponse challengeResponse;
+
+	private List<Character> lettersMarked;
 	
 	@PostConstruct
 	public void init() {
@@ -68,20 +70,36 @@ public class ChallengeResponseMB implements Serializable {
 	
 	public void resetResponse() {
 		challengeResponse = new ChallengeResponse();
-		challengeResponse.setOwner(getFullyPrincipalUser());
+		challengeResponse.setOwner(getPrincipalUser());
 		challengeResponse.setQuestionsResponse(new ArrayList<>());
 		selectedQuestion = new Question();
 		selectedAlternative = new Alternative();
+		lettersMarked = new ArrayList<>();
 	}
 	
 	public void loadUserDisciplines() {		
-		final ICourse course = getFullyPrincipalUser().getGeneralInfo().getCourse();
+		final ICourse course = getPrincipalUser().getGeneralInfo().getCourse();
 		userDisciplines = disciplineBusiness.findByCourse(course);
 	}
 	
 	public void loadChallengeQuestions() {		
 		selectedChallenge
 			.setQuestions(challengeBusiness.findQuestionsByChallenge(selectedChallenge));
+		
+		challengeResponse.setTargetChallenge(selectedChallenge);
+		buildQuestionsResponse();
+		
+	}
+
+	private void buildQuestionsResponse() {
+		final List<Question> questions = selectedChallenge.getQuestions();
+		
+		final Iterator<Question> iterator = questions.iterator();
+		
+		while(iterator.hasNext()) {
+			lettersMarked.add(null);
+			iterator.next();
+		}
 	}
 	
 	public void selectAlternative() {
@@ -95,9 +113,15 @@ public class ChallengeResponseMB implements Serializable {
 		if(existsAResponse) {
 			return;
 		} else {
-			challengeResponse.getQuestionsResponse().add(questionResponse);			
+			challengeResponse.getQuestionsResponse().add(questionResponse);
+			setMarkedLetter(questionResponse, questionResponse);
 		}
-				
+
+	}
+
+	private void setMarkedLetter(final IQuestionResponse questionResponse, final IQuestionResponse response) {
+		final Integer questionIndex = selectedChallenge.getQuestions().indexOf(questionResponse.getTargetQuestion());
+		lettersMarked.set(questionIndex, response.getLetter().getLetter());
 	}
 
 	private Boolean existsAResponseForThisQuestion(final IQuestionResponse questionResponse) {
@@ -105,9 +129,14 @@ public class ChallengeResponseMB implements Serializable {
 		final Iterator<IQuestionResponse> iterator = challengeResponse.getQuestionsResponse().iterator();
 		
 		while(iterator.hasNext()) {
+			
 			IQuestionResponse response = iterator.next();
+			
 			if(response.getTargetQuestion().equals(questionResponse.getTargetQuestion())) {				
+
 				response = questionResponse;
+				setMarkedLetter(questionResponse, response);
+				
 				return TRUE;
 			}
 		}
@@ -178,6 +207,14 @@ public class ChallengeResponseMB implements Serializable {
 
 	public void setSelectedAlternative(IAlternative selectedAlternative) {
 		this.selectedAlternative = selectedAlternative;
+	}
+
+	public List<Character> getLettersMarked() {
+		return lettersMarked;
+	}
+
+	public void setLettersMarked(List<Character> lettersMarked) {
+		this.lettersMarked = lettersMarked;
 	}
 
 }

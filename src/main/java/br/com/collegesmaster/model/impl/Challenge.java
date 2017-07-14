@@ -2,6 +2,7 @@ package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class Challenge extends Model implements IChallenge {
 	private IUser owner;
 	
 	@NotNull
-	@ManyToOne(targetEntity = Discipline.class, optional = false, fetch = LAZY)
+	@ManyToOne(targetEntity = Discipline.class, optional = false, fetch = EAGER)
 	@JoinColumn(name = "disciplineFK", referencedColumnName = "id")
 	private IDiscipline discipline;
 	

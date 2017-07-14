@@ -16,4 +16,8 @@ public interface IChallengeResponse extends IModel {
 
 	IUser getOwner();
 
+	void setTargetChallenge(IChallenge targetChallenge);
+
+	IChallenge getTargetChallenge();
+
 }

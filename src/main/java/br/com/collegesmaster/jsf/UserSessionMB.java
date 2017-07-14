@@ -3,7 +3,7 @@ package br.com.collegesmaster.jsf;
 import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
 import static br.com.collegesmaster.util.JSFUtils.getHttpServletRequest;
 import static br.com.collegesmaster.util.JSFUtils.getUserPrincipal;
-import static br.com.collegesmaster.util.JSFUtils.setPrincipalUserFully;
+import static br.com.collegesmaster.util.JSFUtils.setPrincipalUser;
 import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 
 import java.io.Serializable;
@@ -48,7 +48,7 @@ public class UserSessionMB implements Serializable {
 	        
 	        if(loginRequest.getUserPrincipal() != null) {
 
-	        	setPrincipalUserFully(userBusiness.findByUserName(getUserPrincipal().getName()));
+	        	setPrincipalUser(userBusiness.findByUserName(getUserPrincipal().getName()));
 	        	
 	        	if(loginRequest.isUserInRole("PROFESSOR")) {
 	        		return "/pages/users/professor/create_challenge.xhtml?faces-redirect=true";	

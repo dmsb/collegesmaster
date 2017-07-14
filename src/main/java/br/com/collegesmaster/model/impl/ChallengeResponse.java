@@ -2,6 +2,7 @@ package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
+import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IChallengeResponse;
 import br.com.collegesmaster.model.IQuestionResponse;
 import br.com.collegesmaster.model.IUser;
@@ -33,7 +35,11 @@ public class ChallengeResponse extends Model implements IChallengeResponse {
 
 	private static final long serialVersionUID = -4223636598786128623L;
 	
-	@NotAudited
+	@NotNull
+	@ManyToOne(targetEntity = Challenge.class, optional = false, fetch = EAGER)
+	@JoinColumn(name = "challengeFK", referencedColumnName = "id", updatable = false, nullable = false)
+	private IChallenge targetChallenge;
+	
 	@NotNull
 	@ManyToOne(targetEntity = User.class, optional = false, fetch = LAZY)
 	@JoinColumn(name = "userFK", referencedColumnName = "id", updatable = false, nullable = false)
@@ -50,21 +56,36 @@ public class ChallengeResponse extends Model implements IChallengeResponse {
 	
 	@PrePersist
 	@PreUpdate
-	private void calculateNote() {
+	private void calculatePontuation() {
 		pontuation = 0;			
 		
 		for(final IQuestionResponse response : questionsResponse) {
 			response.getTargetQuestion()
 				.getAlternatives()
 				.forEach(alternative -> {					
-					if(alternative.getDefinition() && 
-							alternative.getLetter().equals(response.getLetter())) {
-						pontuation = pontuation + response.getTargetQuestion().getPontuation();
-					}
+					buildPontuation(response, alternative);
 				});
 		}
 	}
+
+	private void buildPontuation(final IQuestionResponse response, Alternative alternative) {
+		if(alternative.getDefinition() && 
+				alternative.getLetter().equals(response.getLetter())) {
+			pontuation = pontuation + response.getTargetQuestion().getPontuation();
+		}
+	}
 	
+	
+	@Override
+	public IChallenge getTargetChallenge() {
+		return targetChallenge;
+	}
+
+	@Override
+	public void setTargetChallenge(IChallenge targetChallenge) {
+		this.targetChallenge = targetChallenge;
+	}
+
 	@Override
 	public IUser getOwner() {
 		return owner;

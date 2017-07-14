@@ -8,6 +8,6 @@ import br.com.collegesmaster.model.impl.ChallengeResponse;
 
 public interface IChallengeResponseBusiness extends IBusiness<IChallengeResponse, ChallengeResponse> {
 
-	List<ChallengeResponse> findAll(IUser user);
+	List<ChallengeResponse> findAllByUser(IUser user);
 
 }

@@ -1,6 +1,6 @@
 package br.com.collegesmaster.jsf;
 
-import static br.com.collegesmaster.util.JSFUtils.getFullyPrincipalUser;
+import static br.com.collegesmaster.util.JSFUtils.getPrincipalUser;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,7 +11,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.collegesmaster.business.IChallengeResponseBusiness;
-import br.com.collegesmaster.model.IChallengeResponse;
 import br.com.collegesmaster.model.impl.ChallengeResponse;
 
 @ManagedBean(name = "completedChallengesMB")
@@ -23,23 +22,13 @@ public class CompletedChallengesMB implements Serializable {
 	@EJB
 	private transient IChallengeResponseBusiness challengeResponseBusiness;
 	
-	private IChallengeResponse selectedChallenge;
-	
 	private List<ChallengeResponse> completedChallenges;
 	
 	@PostConstruct
 	public void init() {
-		completedChallenges = challengeResponseBusiness.findAll(getFullyPrincipalUser());
+		completedChallenges = challengeResponseBusiness.findAllByUser(getPrincipalUser());		
 	}
 	
-	public IChallengeResponse getSelectedChallenge() {
-		return selectedChallenge;
-	}
-
-	public void setSelectedChallenge(IChallengeResponse selectedChallenge) {
-		this.selectedChallenge = selectedChallenge;
-	}
-
 	public List<ChallengeResponse> getCompletedChallenges() {
 		return completedChallenges;
 	}

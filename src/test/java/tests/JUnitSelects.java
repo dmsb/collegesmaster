@@ -52,7 +52,7 @@ public class JUnitSelects extends JUnitConfiguration {
         final List<Institute> institutes = query.getResultList();
 
         for (final IInstitute institute : institutes) {
-            assertTrue(institute.getName().startsWith("instituto"));
+            assertTrue(institute.getName().startsWith("Instituto"));
         }
 
         assertEquals(4, institutes.size());

@@ -88,6 +88,11 @@
 										<h:outputText value="#{question.description}" />
 									</p:column>
 									
+									<p:column headerText="#{text['label_marked_alternative']}" colspan="2">
+										<h:outputText
+											value="#{challengeResponseMB.lettersMarked.get(index)}" />
+									</p:column>
+									
 									<p:ajax event="rowSelect" process="@parent"
 										update="j_idt5:challenges_form:alternatives_data_table" 
 										oncomplete="PF('alternatives_wv').show();" />								
@@ -135,7 +140,7 @@
 							<p:column>
 								<p:commandButton value="#{text['label_answer']}" oncomplete="PF('alternatives_wv').hide()"
 									actionListener="#{challengeResponseMB.selectAlternative()}"
-									process="@parent" update="j_idt5:challenges_form:questions_data_table j_idt5:challenges_form:messages" />
+									process="@this @parent" update="j_idt5:challenges_form:questions_data_table j_idt5:challenges_form:messages" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>

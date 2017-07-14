@@ -1,5 +1,7 @@
 package br.com.collegesmaster.model.impl;
 
+import static br.com.collegesmaster.util.CryptoUtils.generateSalt;
+import static br.com.collegesmaster.util.CryptoUtils.getHashedPassword;
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
@@ -27,7 +29,6 @@ import br.com.collegesmaster.annotations.Password;
 import br.com.collegesmaster.model.IGeneralInfo;
 import br.com.collegesmaster.model.IRole;
 import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.util.CryptoUtils;
 
 @Entity
 @Table(name = "user")
@@ -73,11 +74,10 @@ public class User extends Model implements IUser {
     }
     
     private void encriptyPassword() {
-    	final String salt = CryptoUtils.generateSalt();	
+    	final String salt = generateSalt();	
 		setSalt(salt);
-		setPassword(CryptoUtils.getHashedPassword(getPassword(), salt));
+		setPassword(getHashedPassword(getPassword(), salt));
     }
-    
     
     private void buildCpf() {
 		final String crudeCpf = getGeneralInfo().getCpf().replaceAll("[^0-9]", "");

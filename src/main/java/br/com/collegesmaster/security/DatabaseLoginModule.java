@@ -2,7 +2,6 @@ package br.com.collegesmaster.security;
 
 import static br.com.collegesmaster.util.CryptoUtils.getHashedPassword;
 
-import java.security.acl.Group;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,12 +20,6 @@ import com.google.common.base.Strings;
 public class DatabaseLoginModule extends DatabaseServerLoginModule {
 	
 	private static String userSalt;
-	
-	@Override
-	protected Group[] getRoleSets() throws LoginException {
-		
-		return super.getRoleSets();
-	}
 	
     @Override
     protected boolean validatePassword(String enteredPassword, String encrypted) {

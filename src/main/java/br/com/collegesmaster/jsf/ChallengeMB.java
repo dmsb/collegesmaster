@@ -2,7 +2,7 @@ package br.com.collegesmaster.jsf;
 
 import static br.com.collegesmaster.util.JSFUtils.addMessage;
 import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
-import static br.com.collegesmaster.util.JSFUtils.getFullyPrincipalUser;
+import static br.com.collegesmaster.util.JSFUtils.getPrincipalUser;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 
 import java.io.Serializable;
@@ -49,7 +49,7 @@ public class ChallengeMB implements Serializable {
 	public void init() {
 		challenge = new Challenge();
 		challenge.setDiscipline(new Discipline());
-		challenge.setOwner(getFullyPrincipalUser());
+		challenge.setOwner(getPrincipalUser());
 		challenge.setQuestions(new ArrayList<Question>());
 		
 		resetCurrentQuestion();

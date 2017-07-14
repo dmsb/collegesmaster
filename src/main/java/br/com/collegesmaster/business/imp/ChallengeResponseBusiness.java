@@ -60,7 +60,7 @@ public class ChallengeResponseBusiness extends GenericBusiness implements IChall
 	
 	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
 	@Override
-	public List<ChallengeResponse> findAll(final IUser user) {
+	public List<ChallengeResponse> findAllByUser(final IUser user) {
 		final CriteriaQuery<ChallengeResponse> criteriaQuery = builder.createQuery(ChallengeResponse.class);
 		final Root<ChallengeResponse> challengeResponseRoot = criteriaQuery.from(ChallengeResponse.class);
 		final Predicate userPredicate = builder.equal(challengeResponseRoot.get(owner), user);

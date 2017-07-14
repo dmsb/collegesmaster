@@ -2,11 +2,7 @@
 <dataset>
 
 	<institute name='Instituto Federal de Pernambuco' country='Brasil' state='pernambuco' city='Recife' version='1498780800000' />
-	<institute name='Instituto Federal de Santa Catarina' country='Brasil' state='santa catarina' city='Jaboatão' version='1498780800000' />
-	<institute name='Instituto Federal de São Paulo' country='Brasil' state='são paulo' city='Santos' version='1498780800000' />
-	<institute name='Universidade Federal de Pernambuco' country='Brasil' state='pernambuco' city='Recife' version='1498780800000' />
 	<institute name='Instituto Federal da Bahia' country='Brasil' state='bahia' city='Salvador' version='1498780800000' />
-	<institute name='Universidade de São Paulo' country='Brasil' state='são paulo' city='São Paulo' version='1498780800000' />
 
 	<course instituteFK='1' name='Análise e Desenvolvimento de Sistemas' version='1498780800000' />
 	<course instituteFK='1' name='Engenharia Ambiental' version='1498780800000' />
@@ -16,47 +12,41 @@
 	<course instituteFK='2' name='Engenharia Química' version='1498780800000' />
 	<course instituteFK='2' name='Engenharia Eletrica' version='1498780800000' />
 
-	<course instituteFK='3' name='Geografia' version='1498780800000' />
-	<course instituteFK='3' name='Engenharia Química' version='1498780800000' />
-	<course instituteFK='3' name='Engenharia Eletrica' version='1498780800000' />
-
-	<course instituteFK='4' name='Geografia' version='1498780800000' />
-	<course instituteFK='4' name='Física' version='1498780800000' />
-	<course instituteFK='4' name='História' version='1498780800000' />
-
-	<course instituteFK='4' name='Educação Física' version='1498780800000' />
-	<course instituteFK='4' name='Física' version='1498780800000' />
-	<course instituteFK='4' name='História' version='1498780800000' />
-
-	<course instituteFK='5' name='Análise e Desenvolvimento de Sistemas' version='1498780800000' />
-	<course instituteFK='5' name='História' version='1498780800000' />
-
-	<course instituteFK='6' name='Análise e Desenvolvimento de Sistemas' version='1498780800000' />
-	<course instituteFK='6' name='Matemática' version='1498780800000' />
-
 	<discipline courseFK='1' name='Software Corporativo I' version='1498780800000' />
 	<discipline courseFK='1' name='Redes' version='1498780800000' />
 	<discipline courseFK='1' name='Introdução à Programação' version='1498780800000' />
 
-	<discipline courseFK='3' name='Fisca i' version='1498780800000' />
-	<discipline courseFK='3' name='Fisca ii' version='1498780800000' />
-	<discipline courseFK='3' name='Fisca iii' version='1498780800000' />
+	<discipline courseFK='2' name='Fisca i' version='1498780800000' />
+	<discipline courseFK='2' name='Fisca ii' version='1498780800000' />
+	<discipline courseFK='2' name='Fisca iii' version='1498780800000' />
 
-	<discipline courseFK='4' name='Software Corporativo II' version='1498780800000' />
-	<discipline courseFK='5' name='Quimica I' version='1498780800000' />
+	<discipline courseFK='3' name='Testes' version='1498780800000' />
+	<discipline courseFK='3' name='Quimica I' version='1498780800000' />
+	<discipline courseFK='3' name='Fisica IV' version='1498780800000' />
+	
+	<discipline courseFK='4' name='Software Corporativo I' version='1498780800000' />
+	<discipline courseFK='4' name='Redes' version='1498780800000' />
+	<discipline courseFK='4' name='Introdução à Programação' version='1498780800000' />
+	
+	<discipline courseFK='5' name='Fisca i' version='1498780800000' />
+	<discipline courseFK='5' name='Fisca ii' version='1498780800000' />
+	<discipline courseFK='5' name='Fisca iii' version='1498780800000' />
+	
+	<discipline courseFK='6' name='Fisca II' version='1498780800000' />
+	<discipline courseFK='6' name='Quimica I' version='1498780800000' />
 	<discipline courseFK='6' name='Fisica IV' version='1498780800000' />
 
 	<general_info birthdate='1993-10-17 00:00:00' cpf='10719498457'
 		email='diogomsb1@gmail.com' firstname='Diogo' lastname='Brito' courseId='1' version='1498780800000' />
 
 	<general_info birthdate='1998-10-17 00:00:00' cpf='42518426507'
-		email='tainaramsb1@gmail.com' firstname='Tainara' lastname='Dantas' courseId='1' version='1498780800000' />
+		email='tainaramsb1@gmail.com' firstname='Tainara' lastname='Dantas' courseId='2' version='1498780800000' />
 
 	<general_info birthdate='1998-10-17 00:00:00' cpf='44046156201'
-		email='transoc@gmail.com' firstname='Fernando' lastname='Ribeiro' courseId='1' version='1498780800000' />
+		email='transoc@gmail.com' firstname='Fernando' lastname='Ribeiro' courseId='3' version='1498780800000' />
 
 	<general_info birthdate='1998-10-17 00:00:00' cpf='34796683305'
-		email='juca1@gmail.com' firstname='Lucas' lastname='Muniz' courseId='2' version='1498780800000' />
+		email='juca1@gmail.com' firstname='Lucas' lastname='Muniz' courseId='4' version='1498780800000' />
 
 	<!-- password = D10g0! -->
 	<user username='diogo.brito'

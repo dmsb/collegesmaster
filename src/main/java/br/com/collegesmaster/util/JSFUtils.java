@@ -20,15 +20,15 @@ public class JSFUtils {
 	protected final static Logger logger = Logger.getLogger(JSFUtils.class.getName());
 	
 	
-	public static void setPrincipalUserFully(final IUser user) {
-		
+	public static void setPrincipalUser(final IUser user) {
+
     	FacesContext.getCurrentInstance()
 	    	.getExternalContext()
 	    	.getApplicationMap()
 	    	.put("principalUser", user);
 	}
 	
-	public static IUser getFullyPrincipalUser() {
+	public static IUser getPrincipalUser() {
 		
     	return (IUser) FacesContext.getCurrentInstance()
 	    			.getExternalContext()

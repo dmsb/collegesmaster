@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = PasswordValidator.class)
 public @interface Password {
 	
-	String message() default "{br.com.collegesmaster.annotations.Password}";
+	String message() default "{br.com.collegesmaster.annotations.Password.message}";
     
 	Class<?>[] groups() default {};
     

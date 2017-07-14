@@ -13,26 +13,29 @@
 </h:head>
 <h:body>
 	<composites:layouts main_menu_mb="#{mainMenuMB}">
-		<p:layoutUnit id="layout_center" position="center" header="#{text['label_completed_challenges']}" style="text-align:center">
+		<p:layoutUnit id="layout_center" position="center" 
+			header="#{text['label_completed_challenges']}" style="text-align:center">
 			
 			<h:form id="challenges_form">
-				<p:panelGrid id="challenges_pg">
-					<p:row>
-						<p:column>
-							<p:dataTable id="challenges_data_table" var="challenge" value="#{completedChallengesMB.completedChallenges}"
-								selectionMode="single" selection="#{completedChallengesMB.selectedChallenge}" rowKey="#{challenge.id}"
-								paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
-								{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['msg_no_records_found']}" paginator="true"
-								rows="10" currentPageReportTemplate="{currentPage} #{text['msg_of']} {totalPages}">
-								
-								<p:column headerText="#{text['label_pontuation']}">
-									<h:outputText value="#{challenge.pontuation}" />
-								</p:column>
-								
-							</p:dataTable>
-						</p:column>
-					</p:row>
-				</p:panelGrid>
+				<p:dataTable id="challenges_data_table" var="challenge" value="#{completedChallengesMB.completedChallenges}"
+					selectionMode="single" rowKey="#{challenge.id}"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
+					{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['msg_no_records_found']}" paginator="true"
+					rows="10" currentPageReportTemplate="{currentPage} #{text['msg_of']} {totalPages}">
+					
+					<p:column headerText="#{text['label_challenge']}">
+						<h:outputText value="#{challenge.getTargetChallenge().getDiscipline().getName()}" />
+					</p:column>
+					
+					<p:column headerText="#{text['label_challenge']}">
+						<h:outputText value="#{challenge.getTargetChallenge().getTitle()}" />
+					</p:column>
+					
+					<p:column headerText="#{text['label_pontuation']}">
+						<h:outputText value="#{challenge.getPontuation()}" />
+					</p:column>
+					
+				</p:dataTable>
 			</h:form>
 		</p:layoutUnit>
 	</composites:layouts>
