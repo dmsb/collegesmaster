@@ -1,4 +1,4 @@
-package br.com.collegesmaster.business.imp;
+package br.com.collegesmaster.business.impl;
 
 import static br.com.collegesmaster.model.impl.ChallengeResponse_.owner;
 import static javax.ejb.TransactionManagementType.CONTAINER;

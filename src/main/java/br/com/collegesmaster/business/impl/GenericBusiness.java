@@ -1,4 +1,4 @@
-package br.com.collegesmaster.business.imp;
+package br.com.collegesmaster.business.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;

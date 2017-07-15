@@ -1,4 +1,4 @@
-package br.com.collegesmaster.business.imp;
+package br.com.collegesmaster.business.impl;
 
 import static br.com.collegesmaster.model.impl.GeneralInfo_.cpf;
 import static br.com.collegesmaster.model.impl.GeneralInfo_.email;

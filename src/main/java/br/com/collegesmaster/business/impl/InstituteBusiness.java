@@ -1,4 +1,4 @@
-package br.com.collegesmaster.business.imp;
+package br.com.collegesmaster.business.impl;
 
 import static br.com.collegesmaster.model.impl.Institute_.courses;
 import static br.com.collegesmaster.model.impl.Institute_.name;
