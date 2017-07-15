@@ -1,6 +1,8 @@
 package br.com.collegesmaster.jsf;
 
+import static br.com.collegesmaster.util.JSFUtils.addMessage;
 import static br.com.collegesmaster.util.JSFUtils.getPrincipalUser;
+import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 
 import java.io.Serializable;
 
@@ -14,7 +16,7 @@ import br.com.collegesmaster.model.IUser;
 
 @ManagedBean(name = "userEditMB")
 @ViewScoped
-public class UserEditMB implements Serializable {
+public class userEditMB implements Serializable {
 
 	private static final long serialVersionUID = -7014632562707028131L;
 	
@@ -29,8 +31,10 @@ public class UserEditMB implements Serializable {
 		
 	}
 	
-	public void editUser() {
+	public String editUser() {
 		userBusiness.update(user);
+		addMessage(SEVERITY_INFO, "msg_user_edited_with_success");
+		return "/pages/users/edit_user.xhtml?faces-redirect=true";
 	}
 	
 	public IUser getUser() {

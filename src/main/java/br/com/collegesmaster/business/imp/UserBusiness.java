@@ -5,6 +5,7 @@ import static br.com.collegesmaster.model.impl.GeneralInfo_.email;
 import static br.com.collegesmaster.model.impl.User_.generalInfo;
 import static br.com.collegesmaster.model.impl.User_.password;
 import static br.com.collegesmaster.model.impl.User_.username;
+import static br.com.collegesmaster.util.JSFUtils.setPrincipalUser;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.List;
@@ -47,9 +48,12 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	
 	@Override
 	public IUser update(final IUser user) {
-		user.setPassword(getUserPassword(user.getUsername()));
-		user.setSalt(getUserSalt(user.getUsername()));
-		return entityManager.merge(user);
+		final IUser updatedUser = entityManager.merge(user);
+		
+		setPrincipalUser(updatedUser);
+		entityManager.clear();
+		
+		return updatedUser;
 	}
 
 	@RolesAllowed({"ADMINISTRATOR"})
