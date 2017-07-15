@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Access;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -46,10 +47,12 @@ public class User extends Model implements IUser {
     @NotNull
     @Size(min = 6)
     @Password
+    @Basic(fetch = LAZY)
 	@Column(name = "password", nullable = false, length = 88)
     private String password;
      
     @NotNull
+    @Basic(fetch = LAZY)
 	@Column(name = "salt", nullable = false, length = 44)
     private String salt;
 	

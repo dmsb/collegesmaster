@@ -17,7 +17,7 @@ public class MainMenuMB implements Serializable {
 	
 	private static final String CHALLENGE_RESPONSE = "/pages/users/student/challenge_response.xhtml?faces-redirect=true";
 
-	private static final String CHALLENGES = "/pages/users/challenges.xhtml?faces-redirect=true";
+	private static final String EDIT_USER = "/pages/users/edit_user.xhtml?faces-redirect=true";
 
 	private static final String COMPLETED_CHALLENGES = "/pages/users/student/completed_challenges.xhtml?faces-redirect=true";
 
@@ -46,8 +46,8 @@ public class MainMenuMB implements Serializable {
 		return COMPLETED_CHALLENGES; 
 	}
 	
-	public String createdChallengeSelected() {
-		return CHALLENGES; 
+	public String editUserSelected() {
+		return EDIT_USER; 
 	}
 
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composites="http://java.sun.com/jsf/composite/composites">
+
+<f:view locale="#{localeBean.locale}" />
+
+<h:head>
+	<title>#{text['label_application_title']}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</h:head>
+<h:body>
+	<composites:layouts main_menu_mb="#{mainMenuMB}" >
+		<p:layoutUnit position="center"  header="#{text['label_edit_user']}" style="text-align:center">
+		<h:form id="register_form">
+				<h:panelGrid columns="4" cellpadding="5">
+					
+					<h:outputLabel for="email" value="#{text['label_email']}" />
+					<p:inputText id="email" value="#{userEditMB.user.generalInfo.email}" size="15"
+						required="true" label="#{text['label_email']}" />					
+					
+					<h:outputLabel for="firstName" value="#{text['label_first_name']}" />
+					<p:inputText id="firstName" value="#{userEditMB.user.generalInfo.firstName}" size="15"
+						required="true" label="#{text['label_first_name']}" />
+
+					<h:outputLabel for="lastName" value="#{text['label_last_name']}" />
+					<p:inputText id="lastName" value="#{userEditMB.user.generalInfo.lastName}" size="15"
+						required="true" label="#{text['label_last_name']}" />
+					
+					<h:outputLabel for="birthdate" value="#{text['label_birthdate']}" />
+					<p:calendar id="birthdate" value="#{userEditMB.user.generalInfo.birthdate}" size="15"
+						pattern="dd-MM-yyyy" mask="true" required="true" converter="localDateTimeConverter"
+						label="#{text['label_birthdate']}" />
+			        
+					<f:facet name="footer">
+						<p:commandButton id="editBtn" process="@form" ajax="false"
+							value="#{text['label_edit']}" action="#{userEditMB.editUser()}" />
+					</f:facet>	
+					<br />
+				</h:panelGrid>
+			</h:form>
+		</p:layoutUnit>
+	</composites:layouts>
+</h:body>
+</html>

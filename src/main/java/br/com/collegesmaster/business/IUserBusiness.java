@@ -26,4 +26,6 @@ public interface IUserBusiness extends IBusiness<IUser, User> {
 	
 	@TransactionAttribute(REQUIRED)
 	IUser findByUserName(String username);
+
+	String getUserPassword(String username);
 }

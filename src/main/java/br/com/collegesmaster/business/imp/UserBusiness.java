@@ -47,9 +47,11 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	
 	@Override
 	public IUser update(final IUser user) {
+		user.setPassword(getUserPassword(user.getUsername()));
+		user.setSalt(getUserSalt(user.getUsername()));
 		return entityManager.merge(user);
 	}
-	
+
 	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
 	public void remove(final IUser user) {
@@ -88,6 +90,28 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 			return null;
 		}
 
+	}
+	
+	@PermitAll
+	@Override
+	public String getUserPassword(final String username) {
+
+		queryBuilder = new StringBuilder();
+		
+		queryBuilder
+			.append("SELECT user.password ")
+			.append("FROM   User user ")
+			.append("WHERE  user.username = :username");
+
+		final Query query = entityManager.createQuery(queryBuilder.toString());
+		query.setParameter("username", username);
+		try {
+			final String password = (String) query.getSingleResult();
+			return password;
+		} catch (NoResultException e) {
+			logger.log(Level.INFO, "No password founded.");
+		}
+		return null;
 	}
 	
 	@Override

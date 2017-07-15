@@ -63,7 +63,7 @@
 		<web-resource-collection>
 			<web-resource-name>professor resources</web-resource-name>
 			<url-pattern>/pages/users/professor/*</url-pattern>
-			<url-pattern>/pages/users/challenges.xhtml</url-pattern>
+			<url-pattern>/pages/users/edit_user.xhtml</url-pattern>
 			<http-method>GET</http-method>
         	<http-method>POST</http-method>
         	<http-method>PUT</http-method>
@@ -84,7 +84,7 @@
 			<web-resource-name>student resources</web-resource-name>
 			<description />
 			<url-pattern>/pages/users/student/*</url-pattern>
-			<url-pattern>/pages/users/challenges.xhtml</url-pattern>
+			<url-pattern>/pages/users/edit_user.xhtml</url-pattern>
 			<http-method>GET</http-method>
         	<http-method>POST</http-method>
         	<http-method>PUT</http-method>
