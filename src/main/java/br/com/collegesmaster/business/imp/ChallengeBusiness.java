@@ -5,7 +5,6 @@ import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.List;
 
-import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -24,7 +23,6 @@ import br.com.collegesmaster.model.impl.Question;
 
 @Stateless
 @TransactionManagement(CONTAINER)
-@DeclareRoles({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
 @RolesAllowed({"ADMINISTRATOR"})
 @SecurityDomain("collegesmasterSecurityDomain")
 public class ChallengeBusiness extends GenericBusiness implements IChallengeBusiness {	

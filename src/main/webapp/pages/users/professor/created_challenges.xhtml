@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composites="http://java.sun.com/jsf/composite/composites">
+
+<f:view locale="#{localeBean.locale}" />
+
+<h:head>
+	<title>#{text['label_application_title']}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</h:head>
+<h:body>
+	<composites:layouts main_menu_mb="#{mainMenuMB}" >
+		<p:layoutUnit position="center" header="#{text['label_created_challenges']}" style="text-align:center">
+		</p:layoutUnit>
+	</composites:layouts>
+</h:body>
+</html>

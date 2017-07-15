@@ -100,8 +100,8 @@
 						<p:row>
 							<p:column colspan="2">									
 								<p:commandButton id="register_btn" ajax="true" process="question_pg" value="#{text['label_register']}"  
-									actionListener="#{challengeMB.addQuestionToChallenge()}" 
-									update="question_pg j_idt5:challenge_form:challenge_questions_dt" validateClient="true" 
+									actionListener="#{challengeMB.addQuestionToChallenge()}" validateClient="true"
+									update="j_idt5:challenge_form:challenge_questions_dt question_pg"  
 									oncomplete="PF('insertQuestion_wv').hide();" />								
 							</p:column>	
 						</p:row>

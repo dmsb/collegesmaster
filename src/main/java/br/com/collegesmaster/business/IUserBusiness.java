@@ -8,9 +8,6 @@ import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.User;
 
 public interface IUserBusiness extends IBusiness<IUser, User> {
-	
-	@TransactionAttribute(REQUIRED)
-	IUser login(String usernameToBeComparated, String passwordToBeComparated);
 
 	@TransactionAttribute(REQUIRED)
 	Boolean existsCpf(String cpfToBeComparated);
@@ -26,6 +23,7 @@ public interface IUserBusiness extends IBusiness<IUser, User> {
 	
 	@TransactionAttribute(REQUIRED)
 	IUser findByUserName(String username);
-
+	
+	@TransactionAttribute(REQUIRED)
 	String getUserPassword(String username);
 }

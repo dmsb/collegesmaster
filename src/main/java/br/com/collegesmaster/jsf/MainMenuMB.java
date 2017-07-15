@@ -13,6 +13,8 @@ import javax.faces.context.FacesContext;
 public class MainMenuMB implements Serializable {
 
 
+	private static final String CREATED_CHALLENGES = "/pages/users/professor/created_challenges.xhtml?faces-redirect=true";
+
 	private static final long serialVersionUID = 344294436330653003L;
 	
 	private static final String CHALLENGE_RESPONSE = "/pages/users/student/challenge_response.xhtml?faces-redirect=true";
@@ -44,6 +46,10 @@ public class MainMenuMB implements Serializable {
 	
 	public String completedsChallengeSelected() {
 		return COMPLETED_CHALLENGES; 
+	}
+	
+	public String createdChallengesSelected() {
+		return CREATED_CHALLENGES; 
 	}
 	
 	public String editUserSelected() {

@@ -52,16 +52,16 @@ public class ChallengeMB implements Serializable {
 		challenge.setOwner(getPrincipalUser());
 		challenge.setQuestions(new ArrayList<Question>());
 		
-		resetCurrentQuestion();
+		initCurrentQuestion();
 	}
 
-	private void resetCurrentQuestion() {
+	private void initCurrentQuestion() {
 		currentQuestion = new Question();
 		currentQuestion.setAlternatives(new ArrayList<Alternative>());
-		resetAlternatives();
+		initAlternatives();
 	}
 
-	private void resetAlternatives() {
+	private void initAlternatives() {
 		alternatives = new ArrayList<>(4);		
 		alternatives.add(new Alternative());
 		alternatives.add(new Alternative());
@@ -75,7 +75,7 @@ public class ChallengeMB implements Serializable {
 		}
 
 		trueAlternative = Letter.A;
-	}	
+	}
 	
 	public void persistChallenge() {
 		
@@ -112,7 +112,7 @@ public class ChallengeMB implements Serializable {
 		
 		challenge.getQuestions().add(currentQuestion);
 		
-		resetCurrentQuestion();
+		initCurrentQuestion();
 
 		addMessage(SEVERITY_INFO, "msg_questiond_added");
 	}
