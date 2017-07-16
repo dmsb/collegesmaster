@@ -1,7 +1,7 @@
 package br.com.collegesmaster.model.impl;
 
 import static br.com.collegesmaster.util.CryptoUtils.generateSalt;
-import static br.com.collegesmaster.util.CryptoUtils.getHashedPassword;
+import static br.com.collegesmaster.util.CryptoUtils.generateHashedPassword;
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
@@ -79,7 +79,7 @@ public class User extends Model implements IUser {
     private void encriptyPassword() {
     	final String salt = generateSalt();	
 		setSalt(salt);
-		setPassword(getHashedPassword(getPassword(), salt));
+		setPassword(generateHashedPassword(getPassword(), salt));
     }
     
     private void buildCpf() {

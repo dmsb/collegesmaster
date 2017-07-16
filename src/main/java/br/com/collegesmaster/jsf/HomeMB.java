@@ -52,11 +52,10 @@ public class HomeMB implements Serializable {
 	public void init() {
 		user = new User();
 		user.setRoles(new ArrayList<>());
-		user.setGeneralInfo(new GeneralInfo());		
-		
-		
+		user.setGeneralInfo(new GeneralInfo());
+
 		selectedRole = new Role();
-		
+
 		institutes = instituteBusiness.findFetchingCourses();
 		institute = institutes.get(0);
 		user.getGeneralInfo().setCourse(institute.getCourses().get(0));

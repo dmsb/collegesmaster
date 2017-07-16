@@ -1,6 +1,6 @@
 package br.com.collegesmaster.jsf;
 
-import static br.com.collegesmaster.util.JSFUtils.getPrincipalUser;
+import static br.com.collegesmaster.util.JSFUtils.getUserPrincipal;
 
 import java.io.Serializable;
 
@@ -28,7 +28,7 @@ public class MainMenuMB implements Serializable {
 	private static final String HOME = "/pages/home.xhtml?faces-redirect=true";
 	
 	public String loadUserFirstName() {
-		return getPrincipalUser().getGeneralInfo().getFirstName();
+		return getUserPrincipal().getUser().getGeneralInfo().getFirstName();
 	}
 	
 	public String logout() {

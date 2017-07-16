@@ -1,6 +1,6 @@
 package br.com.collegesmaster.jsf;
 
-import static br.com.collegesmaster.util.JSFUtils.getPrincipalUser;
+import static br.com.collegesmaster.util.JSFUtils.getUserPrincipal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,7 +26,7 @@ public class CompletedChallengesMB implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		completedChallenges = challengeResponseBusiness.findAllByUser(getPrincipalUser());		
+		completedChallenges = challengeResponseBusiness.findAllByUser(getUserPrincipal().getUser());		
 	}
 	
 	public List<ChallengeResponse> getCompletedChallenges() {

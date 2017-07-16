@@ -39,10 +39,19 @@
 			<scope>provided</scope>
 		</dependency>
 		
+		<!-- @DomainSecurity -->
 		<dependency>
 		    <groupId>org.jboss.ejb3</groupId>
 		    <artifactId>jboss-ejb3-ext-api</artifactId>
 		    <version>2.1.0</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<!-- Framework useful to security with wildfly -->
+		<dependency>
+		    <groupId>org.picketbox</groupId>
+		    <artifactId>picketbox</artifactId>
+		    <version>5.0.2.Final</version>
 		    <scope>provided</scope>
 		</dependency>
 		
@@ -89,14 +98,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>6.0.5</version>
 		</dependency>
-		
-		<!-- Logger -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>1.7.21</version>
-		</dependency>
-	
+
 		<!-- JUnit -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -130,13 +132,6 @@
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
 			<version>3.2.2</version>
-		</dependency>
-
-		<dependency>
-		    <groupId>org.picketbox</groupId>
-		    <artifactId>picketbox</artifactId>
-		    <version>5.0.2.Final</version>
-		    <scope>provided</scope>
 		</dependency>
 
 	</dependencies>

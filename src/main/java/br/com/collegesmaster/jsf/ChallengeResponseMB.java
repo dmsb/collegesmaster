@@ -2,7 +2,7 @@ package br.com.collegesmaster.jsf;
 
 import static br.com.collegesmaster.util.JSFUtils.addMessage;
 import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
-import static br.com.collegesmaster.util.JSFUtils.getPrincipalUser;
+import static br.com.collegesmaster.util.JSFUtils.getUserPrincipal;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
@@ -70,7 +70,7 @@ public class ChallengeResponseMB implements Serializable {
 	
 	public void resetResponse() {
 		challengeResponse = new ChallengeResponse();
-		challengeResponse.setOwner(getPrincipalUser());
+		challengeResponse.setOwner(getUserPrincipal().getUser());
 		challengeResponse.setQuestionsResponse(new ArrayList<>());
 		selectedQuestion = new Question();
 		selectedAlternative = new Alternative();
@@ -78,7 +78,7 @@ public class ChallengeResponseMB implements Serializable {
 	}
 	
 	public void loadUserDisciplines() {		
-		final ICourse course = getPrincipalUser().getGeneralInfo().getCourse();
+		final ICourse course = getUserPrincipal().getUser().getGeneralInfo().getCourse();
 		userDisciplines = disciplineBusiness.findByCourse(course);
 	}
 	
@@ -187,10 +187,6 @@ public class ChallengeResponseMB implements Serializable {
 
 	public void setSelectedQuestion(IQuestion selectedQuestion) {
 		this.selectedQuestion = selectedQuestion;
-	}
-	
-	public IDisciplineBusiness getDisciplineBusiness() {
-		return disciplineBusiness;
 	}
 
 	public IChallengeResponse getChallengeResponse() {

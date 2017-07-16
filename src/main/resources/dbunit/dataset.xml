@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <dataset>
 
-	<institute name='Instituto Federal de Pernambuco' country='Brasil' state='pernambuco' city='Recife' version='1498780800000' />
-	<institute name='Instituto Federal da Bahia' country='Brasil' state='bahia' city='Salvador' version='1498780800000' />
+	<institute name='Instituto Federal de Pernambuco' country='Brasil' state='PE' city='Recife' version='1498780800000' />
+	<institute name='Instituto Federal da Bahia' country='Brasil' state='BA' city='Salvador' version='1498780800000' />
 
 	<course instituteFK='1' name='Análise e Desenvolvimento de Sistemas' version='1498780800000' />
 	<course instituteFK='1' name='Engenharia Ambiental' version='1498780800000' />

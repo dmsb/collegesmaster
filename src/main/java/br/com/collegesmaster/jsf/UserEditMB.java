@@ -1,7 +1,7 @@
 package br.com.collegesmaster.jsf;
 
 import static br.com.collegesmaster.util.JSFUtils.addMessage;
-import static br.com.collegesmaster.util.JSFUtils.getPrincipalUser;
+import static br.com.collegesmaster.util.JSFUtils.getUserPrincipal;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 
 import java.io.Serializable;
@@ -9,14 +9,14 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 
 import br.com.collegesmaster.business.IUserBusiness;
 import br.com.collegesmaster.model.IUser;
 
 @ManagedBean(name = "userEditMB")
-@ViewScoped
-public class userEditMB implements Serializable {
+@RequestScoped
+public class UserEditMB implements Serializable {
 
 	private static final long serialVersionUID = -7014632562707028131L;
 	
@@ -27,14 +27,13 @@ public class userEditMB implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		user = getPrincipalUser();
-		
+		user = getUserPrincipal().getUser();
 	}
 	
-	public String editUser() {
+	public void editUser() {
 		userBusiness.update(user);
 		addMessage(SEVERITY_INFO, "msg_user_edited_with_success");
-		return "/pages/users/edit_user.xhtml?faces-redirect=true";
+//		return "/pages/users/edit_user.xhtml?faces-redirect=true";
 	}
 	
 	public IUser getUser() {

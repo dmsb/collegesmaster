@@ -192,7 +192,7 @@ public class JUnitSelects extends JUnitConfiguration {
 
 	private IUser buildLogin(final String username, final String password, final String salt) {
 		
-		final String hashedPassword = CryptoUtils.getHashedPassword(password, salt);        	
+		final String hashedPassword = CryptoUtils.generateHashedPassword(password, salt);        	
 		
 		final CriteriaBuilder builder = em.getCriteriaBuilder();
 		final CriteriaQuery<User> criteria = builder.createQuery(User.class);		

@@ -30,7 +30,7 @@ public abstract class GenericBusiness {
 	
 	protected CriteriaBuilder builder;
     protected StringBuilder queryBuilder;   
-    protected final static Logger logger = Logger.getLogger(GenericBusiness.class.getName());
+    protected final static Logger LOGGER = Logger.getLogger(GenericBusiness.class.getName());
     
     @PostConstruct
 	protected void init() {
@@ -65,7 +65,7 @@ public abstract class GenericBusiness {
 		try {			
 			return typedQuery.getSingleResult();
 		} catch (NoResultException e) {
-			logger.log(Level.INFO, "No results");
+			LOGGER.log(Level.INFO, "No results");
 		}
 		return null;
 	}

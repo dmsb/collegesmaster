@@ -13,33 +13,33 @@ public class StateValidator implements ConstraintValidator<State, String>{
 	@Override
 	public void initialize(State state) {	
 		states = new ArrayList<String>();
-		this.states.add("acre");
-        this.states.add("alagoas");
-        this.states.add("amapá");
-        this.states.add("amazonas");
-        this.states.add("bahia");
-        this.states.add("ceará");
-        this.states.add("distrito federal");
-        this.states.add("espírito santo");
-        this.states.add("goiás");
-        this.states.add("maranhão");
-        this.states.add("mato grosso");
-        this.states.add("mato grosso do sul");
-        this.states.add("minas gerais");
-        this.states.add("pará");
-        this.states.add("paraíba");
-        this.states.add("paraná");
-        this.states.add("pernambuco");
-        this.states.add("piauí");
-        this.states.add("rio de janeiro");
-        this.states.add("rio grande do norte");
-        this.states.add("rio grande do sul");
-        this.states.add("rondônia");
-        this.states.add("roraima");
-        this.states.add("santa catarina");
-        this.states.add("são paulo");
-        this.states.add("sergipe");
-        this.states.add("tocantins");
+		this.states.add("AC");
+        this.states.add("AL");
+        this.states.add("AP");
+        this.states.add("AM");
+        this.states.add("BA");
+        this.states.add("CE");
+        this.states.add("DF");
+        this.states.add("ES");
+        this.states.add("GO");
+        this.states.add("MR");
+        this.states.add("MG");
+        this.states.add("MS");
+        this.states.add("MG");
+        this.states.add("PA");
+        this.states.add("PB");
+        this.states.add("PR");
+        this.states.add("PE");
+        this.states.add("PI");
+        this.states.add("RJ");
+        this.states.add("RN");
+        this.states.add("RS");
+        this.states.add("RR");
+        this.states.add("RO");
+        this.states.add("SC");
+        this.states.add("SP");
+        this.states.add("SE");
+        this.states.add("TO");
 	}
 
 	@Override

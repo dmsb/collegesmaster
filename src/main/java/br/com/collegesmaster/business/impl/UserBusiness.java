@@ -4,7 +4,7 @@ import static br.com.collegesmaster.model.impl.GeneralInfo_.cpf;
 import static br.com.collegesmaster.model.impl.GeneralInfo_.email;
 import static br.com.collegesmaster.model.impl.User_.generalInfo;
 import static br.com.collegesmaster.model.impl.User_.username;
-import static br.com.collegesmaster.util.JSFUtils.setPrincipalUser;
+import static br.com.collegesmaster.util.JSFUtils.setUserInUserPrincipal;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	@Override
 	public IUser update(final IUser user) {
 		final IUser updatedUser = entityManager.merge(user);
-		setPrincipalUser(updatedUser);
+		setUserInUserPrincipal(updatedUser);
 		return updatedUser;
 	}
 
@@ -86,7 +86,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 			final String password = (String) query.getSingleResult();
 			return password;
 		} catch (NoResultException e) {
-			logger.log(Level.INFO, "No password founded.");
+			LOGGER.log(Level.INFO, "No password founded.");
 		}
 		return null;
 	}
@@ -108,7 +108,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 			final String salt = (String) query.getSingleResult();
 			return salt;
 		} catch (NoResultException e) {
-			logger.log(Level.INFO, "No salt founded.");
+			LOGGER.log(Level.INFO, "No salt founded.");
 		}
 		return null;
 	}

@@ -85,7 +85,7 @@ public class JUnitInserts extends JUnitConfiguration {
         final IUser user = new User();
         user.setUsername("diogo.brito.teste");
         user.setSalt(CryptoUtils.generateSalt());
-        user.setPassword(CryptoUtils.getHashedPassword("D10g0!", user.getSalt()));
+        user.setPassword(CryptoUtils.generateHashedPassword("D10g0!", user.getSalt()));
         user.setGeneralInfo(new GeneralInfo());
         user.getGeneralInfo().setCpf("50168636280");
         user.getGeneralInfo().setBirthdate(LocalDate.now());

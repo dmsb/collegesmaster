@@ -2,7 +2,7 @@ package br.com.collegesmaster.jsf;
 
 import static br.com.collegesmaster.util.JSFUtils.addMessage;
 import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
-import static br.com.collegesmaster.util.JSFUtils.getPrincipalUser;
+import static br.com.collegesmaster.util.JSFUtils.getUserPrincipal;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 
 import java.io.Serializable;
@@ -12,10 +12,10 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import br.com.collegesmaster.business.IChallengeBusiness;
+import br.com.collegesmaster.business.IDisciplineBusiness;
 import br.com.collegesmaster.enums.Letter;
 import br.com.collegesmaster.model.IAlternative;
 import br.com.collegesmaster.model.IChallenge;
@@ -34,8 +34,8 @@ public class ChallengeMB implements Serializable {
 	@EJB
 	private transient IChallengeBusiness challengeBusiness;
 	
-	@ManagedProperty(value="#{challengeResponseMB}")
-	private ChallengeResponseMB challengeResponseMB;
+	@EJB
+	private transient IDisciplineBusiness disciplineBusiness;
 	
 	private IChallenge challenge;
 	
@@ -49,7 +49,7 @@ public class ChallengeMB implements Serializable {
 	public void init() {
 		challenge = new Challenge();
 		challenge.setDiscipline(new Discipline());
-		challenge.setOwner(getPrincipalUser());
+		challenge.setOwner(getUserPrincipal().getUser());
 		challenge.setQuestions(new ArrayList<Question>());
 		
 		initCurrentQuestion();
@@ -81,9 +81,7 @@ public class ChallengeMB implements Serializable {
 		
 		final Integer disciplineId = challenge.getDiscipline().getId();		
 		
-		final IDiscipline discipline = challengeResponseMB
-			.getDisciplineBusiness()
-			.findById(disciplineId);
+		final IDiscipline discipline = disciplineBusiness.findById(disciplineId);
 		
 		challenge.setDiscipline(discipline);
 		
@@ -151,14 +149,6 @@ public class ChallengeMB implements Serializable {
 
 	public void setTrueAlternative(Letter trueAlternative) {
 		this.trueAlternative = trueAlternative;
-	}
-
-	public ChallengeResponseMB getchallengeResponseMB() {
-		return challengeResponseMB;
-	}
-
-	public void setchallengeResponseMB(ChallengeResponseMB challengeResponseMB) {
-		this.challengeResponseMB = challengeResponseMB;
 	}
 	
 }

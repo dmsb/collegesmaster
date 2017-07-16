@@ -1,7 +1,6 @@
 package br.com.collegesmaster.util;
 
-import static br.com.collegesmaster.util.JSFUtils.getPrincipalUser;
-
+import static br.com.collegesmaster.util.JSFUtils.getUserPrincipal;
 
 import org.hibernate.envers.RevisionListener;
 import org.jboss.logging.Logger;
@@ -18,7 +17,7 @@ public class AuditListener implements RevisionListener {
 
 		final AuditInfo auditInfo = (AuditInfo) revisionEntity;
 
-		final IUser user = getPrincipalUser();
+		final IUser user = getUserPrincipal().getUser();
 
 		if (user != null) {
 			final String username = user.getUsername();

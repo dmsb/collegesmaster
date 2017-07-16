@@ -12,7 +12,7 @@ public abstract class CryptoUtils {
 	
 	private static final Logger LOGGER = Logger.getLogger(CryptoUtils.class);
 	
-	public static String getHashedPassword(final String password, final String salt) {
+	public static String generateHashedPassword(final String password, final String salt) {
 
 		MessageDigest digest = null;
 
