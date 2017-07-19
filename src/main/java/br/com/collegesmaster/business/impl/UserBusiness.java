@@ -27,7 +27,6 @@ import org.jboss.ejb3.annotation.SecurityDomain;
 import br.com.collegesmaster.business.IUserBusiness;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.User;
-import br.com.collegesmaster.model.impl.User_;
 
 @Stateless
 @TransactionManagement(CONTAINER)
@@ -157,13 +156,13 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	
 	@Override
 	@RolesAllowed({"STUDENT"})
-	public IUser findByUserName(final String username) {
-		sessionContext.isCallerInRole("ADMINISTRATOR");
+	public IUser findByUsername(final String usernameToBeComparated) {
+		
 		final CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
 		final Root<User> userRoot =  criteriaQuery.from(User.class);
 		userRoot.fetch(generalInfo);
 		
-		final Predicate usernamePredicate = builder.equal(userRoot.get(User_.username), username);
+		final Predicate usernamePredicate = builder.equal(userRoot.get(username), usernameToBeComparated);
 		
 		criteriaQuery
 			.select(userRoot)

@@ -54,7 +54,15 @@ public class ChallengeMB implements Serializable {
 		
 		initCurrentQuestion();
 	}
-
+	
+	public List<Discipline> loadUserDisciplines() {
+		return disciplineBusiness.findNamesByCourse(getUserPrincipal().getUser().getGeneralInfo().getCourse());
+	}
+	
+	public void buildQuestion() {
+		initCurrentQuestion();
+	}
+	
 	private void initCurrentQuestion() {
 		currentQuestion = new Question();
 		currentQuestion.setAlternatives(new ArrayList<Alternative>());
@@ -109,8 +117,6 @@ public class ChallengeMB implements Serializable {
 		currentQuestion.setAlternatives(alternatives);
 		
 		challenge.getQuestions().add(currentQuestion);
-		
-		initCurrentQuestion();
 
 		addMessage(SEVERITY_INFO, "msg_questiond_added");
 	}

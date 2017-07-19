@@ -48,7 +48,7 @@ public class UserSessionMB implements Serializable {
 	        
 	        if(loginRequest.getUserPrincipal() != null) {
 
-	        	setUserInUserPrincipal(userBusiness.findByUserName(getUserPrincipal().getName()));
+	        	setUserInUserPrincipal(userBusiness.findByUsername(getUserPrincipal().getName()));
 	        	
 	        	if(loginRequest.isUserInRole("PROFESSOR")) {
 	        		return "/pages/users/professor/create_challenge.xhtml?faces-redirect=true";	

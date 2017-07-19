@@ -52,7 +52,7 @@ public class GeneralInfo extends Model implements IGeneralInfo {
 	@Size(max = 80)
     @Column(name = "lastName", nullable = false, length = 80)
     private String lastName;
-		
+
     @Column(name = "birthdate")
     private LocalDate birthdate;
     

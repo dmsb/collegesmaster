@@ -12,12 +12,11 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class MainMenuMB implements Serializable {
 
+	private static final long serialVersionUID = 344294436330653003L;
 
 	private static final String CREATED_CHALLENGES = "/pages/users/professor/created_challenges.xhtml?faces-redirect=true";
-
-	private static final long serialVersionUID = 344294436330653003L;
 	
-	private static final String CHALLENGE_RESPONSE = "/pages/users/student/challenge_response.xhtml?faces-redirect=true";
+	private static final String REPLY_CHALLENGES = "/pages/users/student/reply_challenges.xhtml?faces-redirect=true";
 
 	private static final String EDIT_USER = "/pages/users/edit_user.xhtml?faces-redirect=true";
 
@@ -27,8 +26,8 @@ public class MainMenuMB implements Serializable {
 
 	private static final String HOME = "/pages/home.xhtml?faces-redirect=true";
 	
-	public String loadUserFirstName() {
-		return getUserPrincipal().getUser().getGeneralInfo().getFirstName();
+	public String loadPrincipalUsername() {
+		return getUserPrincipal().getName();
 	}
 	
 	public String logout() {
@@ -36,23 +35,23 @@ public class MainMenuMB implements Serializable {
         return HOME;
 	}
 	
-	public String disciplinesSelected() {
-		return CHALLENGE_RESPONSE; 
+	public String redirectToReplyChallenges() {
+		return REPLY_CHALLENGES; 
 	}
 	
-	public String createChallengeSelected() {
+	public String redirectToCreateChallenge() {
 		return CREATE_CHALLENGE; 
 	}
 	
-	public String completedsChallengeSelected() {
+	public String redirectToCompletedChallenges() {
 		return COMPLETED_CHALLENGES; 
 	}
 	
-	public String createdChallengesSelected() {
+	public String redirectToCreatedChallenges() {
 		return CREATED_CHALLENGES; 
 	}
 	
-	public String editUserSelected() {
+	public String redirectToEditUser() {
 		return EDIT_USER; 
 	}
 

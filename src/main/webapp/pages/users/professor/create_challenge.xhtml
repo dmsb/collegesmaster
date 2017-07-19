@@ -14,33 +14,45 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </h:head>
 <h:body>
+	<h:outputStylesheet name="css/default.css" />
 	<composites:layouts main_menu_mb="#{mainMenuMB}" >
 		<p:layoutUnit position="center"  header="#{text['label_create_challenge']}" style="text-align:center">
 			
 			<h:form id="challenge_form">
 				<p:panelGrid id="challenge_pg">
-					<p:row>						
-						<p:column>											
-							<p:inputTextarea id="title" rows="1" cols="40"  maxlength="50" 
+					<p:row>
+						<p:column>
+							<h:outputLabel for="title" value="#{text['label_title']}" />
+						</p:column>
+						<p:column style="text-align:left">											
+							<p:inputTextarea id="title" rows="1" cols="60"  maxlength="50" 
 								value="#{challengeMB.challenge.title}" required="true"
 								placeholder="#{text['label_title']}" />							
 						</p:column>
-						<p:column >											
-							<h:outputLabel for="discipline" value="#{text['label_discipline']}" />
-							<h:selectOneMenu id="discipline" value="#{challengeMB.challenge.discipline.id}">
-					            <f:selectItems value="#{challengeResponseMB.userDisciplines}" var="discipline" itemLabel="#{discipline.name}"
-					            	itemValue="#{discipline.id}" />
-					        </h:selectOneMenu>							
-						</p:column>						
 					</p:row>
 					<p:row>
-						<p:column>
-							<p:commandButton id="create_question_btn" value="#{text['label_create_question']}"
-				        		ajax="true" onclick="PF('insertQuestion_wv').show();" />
+						<p:column>						
+							<h:outputLabel for="discipline" value="#{text['label_discipline']}" />
 						</p:column>
-						<p:column>
+						<p:column style="text-align:left">
+							<h:selectOneMenu id="discipline" value="#{challengeMB.challenge.discipline.id}">
+					            <f:selectItems value="#{challengeMB.loadUserDisciplines()}" var="discipline" itemLabel="#{discipline.name}"
+					            	itemValue="#{discipline.id}" />
+					        </h:selectOneMenu>							
+						</p:column>	
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<p:commandButton id="create_question_btn" value="#{text['label_create_question']}"
+								oncomplete="#{challengeMB.buildQuestion()}" ajax="true"
+				        		onclick="PF('insertQuestion_wv').show();" icon="fa fa-fw fa-plus-circle" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
 							<p:commandButton id="register_challenge_btn" ajax="true" process="challenge_pg" update="@form"
-								value="#{text['label_register_challenge']}" actionListener="#{challengeMB.persistChallenge()}" />
+								value="#{text['label_register_challenge']}" actionListener="#{challengeMB.persistChallenge()}" 
+								icon="fa fa-fw fa-save" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -66,8 +78,13 @@
 					<p:panelGrid id="question_pg">
 						<p:row>
 							<p:column colspan="2">
-								<p:inputTextarea placeholder="#{text['label_description']}" id="description"
-									rows="7" cols="60"  maxlength="1000" autoResize="false"
+								<h:outputText value="#{text['label_description']}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="2">
+								<p:inputTextarea id="description" rows="7"
+									cols="68" maxlength="1000" autoResize="false"
 									value="#{challengeMB.currentQuestion.description}"/>
 							</p:column>				
 						</p:row>						
@@ -78,7 +95,7 @@
 								</p:column>
 								<p:column>
 									<p:inputTextarea placeholder="#{text['label_description']}" id="description"
-									rows="5" cols="50" maxlength="1000" autoResize="false"
+									rows="5" cols="60" maxlength="1000" autoResize="false"
 									value="#{challengeMB.alternatives.get(status.index).description}" required="true" />												
 								</p:column>
 							</p:row>										
@@ -101,8 +118,8 @@
 							<p:column colspan="2">									
 								<p:commandButton id="register_btn" ajax="true" process="question_pg" value="#{text['label_register']}"  
 									actionListener="#{challengeMB.addQuestionToChallenge()}" validateClient="true"
-									update="j_idt5:challenge_form:challenge_questions_dt question_pg"  
-									oncomplete="PF('insertQuestion_wv').hide();" />								
+									update="j_idt6:challenge_form:challenge_questions_dt"
+									oncomplete="PF('insertQuestion_wv').hide();" icon="fa fa-fw fa-chevron-circle-down"/>								
 							</p:column>	
 						</p:row>
 					</p:panelGrid>

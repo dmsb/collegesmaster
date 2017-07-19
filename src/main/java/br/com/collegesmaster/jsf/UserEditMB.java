@@ -33,7 +33,6 @@ public class UserEditMB implements Serializable {
 	public void editUser() {
 		userBusiness.update(user);
 		addMessage(SEVERITY_INFO, "msg_user_edited_with_success");
-//		return "/pages/users/edit_user.xhtml?faces-redirect=true";
 	}
 	
 	public IUser getUser() {

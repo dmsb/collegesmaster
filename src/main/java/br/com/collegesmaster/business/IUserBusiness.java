@@ -22,7 +22,7 @@ public interface IUserBusiness extends IBusiness<IUser, User> {
 	String getUserSalt(String usernameToBeComparated);
 	
 	@TransactionAttribute(REQUIRED)
-	IUser findByUserName(String username);
+	IUser findByUsername(String username);
 	
 	@TransactionAttribute(REQUIRED)
 	String getUserPassword(String username);
