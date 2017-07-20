@@ -39,13 +39,14 @@ public class RoleBusiness extends GenericBusiness implements IRoleBusiness {
 		entityManager.remove(profile);
 	}
 	
+	@PermitAll
 	@Override
 	public IRole findById(Integer id) {
 		return entityManager.find(Role.class, id);
 	}
 	
-	@Override
 	@PermitAll
+	@Override
 	public List<Role> findAll() {		
 		final CriteriaQuery<Role> criteriaQuery = builder.createQuery(Role.class);
 		criteriaQuery.from(Role.class);

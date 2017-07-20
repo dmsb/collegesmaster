@@ -1,7 +1,7 @@
 package br.com.collegesmaster.jsf;
 
-import static br.com.collegesmaster.util.JSFUtils.addMessage;
-import static br.com.collegesmaster.util.JSFUtils.getUserPrincipal;
+import static br.com.collegesmaster.jsf.util.JSFUtils.addMessage;
+import static br.com.collegesmaster.jsf.util.JSFUtils.getUserPrincipal;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 
 import java.io.Serializable;

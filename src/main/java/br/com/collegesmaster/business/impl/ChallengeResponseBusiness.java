@@ -16,9 +16,11 @@ import javax.persistence.criteria.Root;
 import org.jboss.ejb3.annotation.SecurityDomain;
 
 import br.com.collegesmaster.business.IChallengeResponseBusiness;
+import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IChallengeResponse;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.ChallengeResponse;
+import br.com.collegesmaster.model.impl.ChallengeResponse_;
 
 @Stateless
 @TransactionManagement(CONTAINER)
@@ -70,6 +72,24 @@ public class ChallengeResponseBusiness extends GenericBusiness implements IChall
 		final TypedQuery<ChallengeResponse> typedQuery = entityManager.createQuery(criteriaQuery);
 		return typedQuery.getResultList();
 		
+	}
+	
+	@RolesAllowed({"PROFESSOR", "ADMINISTRATOR"})
+	@Override
+	public List<ChallengeResponse> findAllByChallenge(IChallenge selectedChallenge) {
+		final CriteriaQuery<ChallengeResponse> criteriaQuery = builder.createQuery(ChallengeResponse.class);
+		final Root<ChallengeResponse> challengeResponseRoot = criteriaQuery.from(ChallengeResponse.class);
+		challengeResponseRoot.fetch(ChallengeResponse_.owner);
+		
+		final Predicate predicate = builder
+				.equal(challengeResponseRoot.get(ChallengeResponse_.targetChallenge), selectedChallenge);
+		
+		criteriaQuery
+			.select(challengeResponseRoot)
+			.where(predicate);
+		
+		final TypedQuery<ChallengeResponse> typedQuery = entityManager.createQuery(criteriaQuery);
+		return typedQuery.getResultList();
 	}
 
 }

@@ -1,8 +1,8 @@
 package br.com.collegesmaster.jsf;
 
-import static br.com.collegesmaster.util.JSFUtils.addMessage;
-import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
-import static br.com.collegesmaster.util.JSFUtils.getUserPrincipal;
+import static br.com.collegesmaster.jsf.util.JSFUtils.addMessage;
+import static br.com.collegesmaster.jsf.util.JSFUtils.addMessageWithDetails;
+import static br.com.collegesmaster.jsf.util.JSFUtils.getUserPrincipal;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;

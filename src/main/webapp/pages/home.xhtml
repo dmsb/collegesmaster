@@ -17,6 +17,9 @@
 	<h:outputStylesheet name="css/default.css" />
 	
 	<p:layout fullPage="true">
+		
+		<p:growl id="growl" life="4000"/>
+		
 		<p:layoutUnit position="north"
 			header="#{text['label_application_title']}"
 			style="text-align: center;" />
@@ -28,14 +31,14 @@
 						<p:column>
 							<p:inputText id="username" value="#{userSessionMB.username}" size="15"
 								placeholder="#{text['label_username']}" required="true"
-								validatorMessage="#{text['msg_invalid_username_length']}" />
+								requiredMessage="#{text['msg_required_username']}" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
 							<p:password id="password" value="#{userSessionMB.password}" size="15"
 								placeholder="#{text['label_password']}" required="true"
-								validatorMessage="#{text['msg_invalid_password_format']}" />
+								requiredMessage="#{text['msg_required_password']}" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -49,9 +52,7 @@
 		</p:layoutUnit>
 
 		<p:layoutUnit position="center" header="#{text['label_create_an_account']}" style="text-align:left">
-			
-			<p:growl id="growl" showDetail="true" sticky="true" />
-
+		
 			<h:form id="register_form">
 				<p:panelGrid>
 					<p:row>
@@ -97,7 +98,7 @@
 							<h:outputLabel for="birthdate" value="#{text['label_birthdate']}" />
 						</p:column>
 						<p:column>
-							<p:calendar id="birthdate" value="#{homeMB.user.generalInfo.birthdate}" size="10"
+							<p:calendar id="birthdate" value="#{homeMB.user.generalInfo.birthdate}" size="8"
 								pattern="dd-MM-yyyy" mask="true" required="true" converter="localDateTimeConverter"
 								label="#{text['label_birthdate']}" />				
 						</p:column>
@@ -108,10 +109,9 @@
 						</p:column>
 						<p:column>
 							<p:inputText id="username" value="#{homeMB.user.username}" size="30" 
-								required="true" label="#{text['label_username']}"
-								validatorMessage="#{text['msg_invalid_username_length']}" />
+								required="true" label="#{text['label_username']}" />
 						</p:column>
-					</p:row>					
+					</p:row>
 					<p:row>
 						<p:column>
 							<h:outputLabel for="password" value="#{text['label_password']}" />
@@ -126,10 +126,12 @@
 							<h:outputLabel for="role" value="#{text['label_role']}" />
 						</p:column>
 						<p:column>
-							<h:selectOneMenu id="role" value="#{homeMB.selectedRole.id}" label="#{text['label_role']}">
+							<p:selectOneMenu id="role" value="#{homeMB.selectedRole}" label="#{text['label_role']}"
+								converter="roleConverter">
+								<f:selectItem itemLabel="#{text['label_select']}" itemValue="" />
 					            <f:selectItems value="#{homeMB.allRoles()}" var="role" itemLabel="#{text['label_' += role.name]}" 
-					            	itemValue="#{role.id}" />			            
-					        </h:selectOneMenu>
+					            	itemValue="#{role}" />			            
+					        </p:selectOneMenu>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -137,11 +139,13 @@
 					        <h:outputLabel for="institute" value="#{text['label_institute']}" />
 						</p:column>
 						<p:column>
-							<h:selectOneMenu id="institute" value="#{homeMB.institute.id}" label="#{text['label_institute']}">
-								<p:ajax event="change" listener="#{homeMB.changeInstituteEvent()}" update=":register_form:course"/>						
+							<p:selectOneMenu id="institute" value="#{homeMB.selectedInstitute}" label="#{text['label_institute']}"
+								converter="instituteConverter">
+								<f:selectItem itemLabel="#{text['label_select']}" itemValue="" />
 					            <f:selectItems value="#{homeMB.institutes}" var="institute" itemLabel="#{institute.name}" 
-					            	itemValue="#{institute.id}" />			            
-					        </h:selectOneMenu>
+					            	itemValue="#{institute}" />
+					            <p:ajax listener="#{homeMB.changeInstituteEvent()}" event="change" update=":register_form:course" />
+					        </p:selectOneMenu>
 						</p:column>
 					</p:row>
 			        <p:row>
@@ -149,11 +153,12 @@
 					        <h:outputLabel for="course" value="#{text['label_course']}" />
 						</p:column>
 						<p:column>
-							<h:selectOneMenu id="course" value="#{homeMB.user.generalInfo.course.id}" label="#{text['label_course']}">
-								<p:ajax event="change" listener="#{homeMB.changeCourseEvent()}" />
-					            <f:selectItems value="#{homeMB.institute.courses}" var="course" itemLabel="#{course.name}" 
-					            	itemValue="#{course.id}" />			            
-					        </h:selectOneMenu>
+							<p:selectOneMenu id="course" value="#{homeMB.user.generalInfo.course}" label="#{text['label_course']}"
+								converter="courseConverter">
+								<f:selectItem itemLabel="#{text['label_select']}" itemValue="" />
+					            <f:selectItems value="#{homeMB.selectedInstitute.courses}" var="course" itemLabel="#{course.name}" 
+					            	itemValue="#{course}" />
+					        </p:selectOneMenu>
 						</p:column>
 					</p:row>
 			        <p:row>

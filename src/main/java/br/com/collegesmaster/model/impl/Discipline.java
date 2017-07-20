@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -46,16 +45,14 @@ public class Discipline extends Model implements IDiscipline {
     		orphanRemoval = true, mappedBy = "discipline")
     private List<Challenge> challenges;
 	
-	@Version
-	private Long version;
-	
     public Discipline() {
     	
 	}
     
-    public Discipline(Integer id, String name) {
+    public Discipline(Integer id, String name, Long version) {
     	this.id = id;
     	this.name = name;
+    	this.version = version;
     }
     
     public Discipline(Integer id, String name, List<Challenge> challenges) {

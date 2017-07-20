@@ -1,4 +1,4 @@
-package br.com.collegesmaster.util;
+package br.com.collegesmaster.jsf.util;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

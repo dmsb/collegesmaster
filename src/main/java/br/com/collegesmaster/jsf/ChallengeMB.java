@@ -1,9 +1,12 @@
 package br.com.collegesmaster.jsf;
 
-import static br.com.collegesmaster.util.JSFUtils.addMessage;
-import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
-import static br.com.collegesmaster.util.JSFUtils.getUserPrincipal;
+import static br.com.collegesmaster.jsf.util.JSFUtils.addMessage;
+import static br.com.collegesmaster.jsf.util.JSFUtils.addMessageWithDetails;
+import static br.com.collegesmaster.jsf.util.JSFUtils.getUserPrincipal;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
+import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -59,30 +62,26 @@ public class ChallengeMB implements Serializable {
 		return disciplineBusiness.findNamesByCourse(getUserPrincipal().getUser().getGeneralInfo().getCourse());
 	}
 	
-	public void buildQuestion() {
-		initCurrentQuestion();
-	}
-	
-	private void initCurrentQuestion() {
+	public void initCurrentQuestion() {
 		currentQuestion = new Question();
 		currentQuestion.setAlternatives(new ArrayList<Alternative>());
 		initAlternatives();
 	}
 
 	private void initAlternatives() {
-		alternatives = new ArrayList<>(4);		
+		alternatives = new ArrayList<>(4);
 		alternatives.add(new Alternative());
 		alternatives.add(new Alternative());
 		alternatives.add(new Alternative());
-		alternatives.add(new Alternative());		
+		alternatives.add(new Alternative());
 		
 		final Letter[] letters = Letter.values();
 		
 		for(int i = 0; i < letters.length; i++) {
 			alternatives.get(i).setLetter(letters[i]);
 		}
-
-		trueAlternative = Letter.A;
+		
+		trueAlternative = null;
 	}
 	
 	public void persistChallenge() {
@@ -102,23 +101,28 @@ public class ChallengeMB implements Serializable {
 	
 	public void addQuestionToChallenge() {
 		
-		currentQuestion.setChallenge(challenge);
-		
-		for(final IAlternative alternative : alternatives) {
-			alternative.setQuestion(currentQuestion);
+		if(trueAlternative != null) {
 			
-			if(trueAlternative.equals(alternative.getLetter())) {
-				alternative.setDefinition(Boolean.TRUE);
-			} else {
-				alternative.setDefinition(Boolean.FALSE);
+			currentQuestion.setChallenge(challenge);
+			
+			for(final IAlternative alternative : alternatives) {
+				alternative.setQuestion(currentQuestion);
+				
+				if(trueAlternative.equals(alternative.getLetter())) {
+					alternative.setDefinition(TRUE);
+				} else {
+					alternative.setDefinition(FALSE);
+				}
 			}
+			
+			currentQuestion.setAlternatives(alternatives);
+			
+			challenge.getQuestions().add(currentQuestion);
+			
+			addMessage(SEVERITY_INFO, "msg_questiond_added");
+		} else {
+			addMessage(SEVERITY_WARN, "msg_correct_alternative_required");
 		}
-
-		currentQuestion.setAlternatives(alternatives);
-		
-		challenge.getQuestions().add(currentQuestion);
-
-		addMessage(SEVERITY_INFO, "msg_questiond_added");
 	}
 	
 	public Letter[] loadAllLetters() {

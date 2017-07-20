@@ -16,8 +16,7 @@
 <h:body>
 	<h:outputStylesheet name="css/default.css" />
 	<composites:layouts main_menu_mb="#{mainMenuMB}" >
-		<p:layoutUnit position="center"  header="#{text['label_create_challenge']}" style="text-align:center">
-			
+		<p:layoutUnit position="center" header="#{text['label_create_challenge']}" style="text-align:center">
 			<h:form id="challenge_form">
 				<p:panelGrid id="challenge_pg">
 					<p:row>
@@ -31,21 +30,22 @@
 						</p:column>
 					</p:row>
 					<p:row>
-						<p:column>						
+						<p:column>
 							<h:outputLabel for="discipline" value="#{text['label_discipline']}" />
 						</p:column>
 						<p:column style="text-align:left">
-							<h:selectOneMenu id="discipline" value="#{challengeMB.challenge.discipline.id}">
+							<p:selectOneMenu id="discipline" value="#{challengeMB.challenge.discipline}" converter="disciplineConverter">
+								<f:selectItem itemLabel="#{text['label_select']}" itemValue="" />
 					            <f:selectItems value="#{challengeMB.loadUserDisciplines()}" var="discipline" itemLabel="#{discipline.name}"
-					            	itemValue="#{discipline.id}" />
-					        </h:selectOneMenu>							
+					            	itemValue="#{discipline}" />
+					        </p:selectOneMenu>							
 						</p:column>	
 					</p:row>
 					<p:row>
 						<p:column colspan="2">
-							<p:commandButton id="create_question_btn" value="#{text['label_create_question']}"
-								oncomplete="#{challengeMB.buildQuestion()}" ajax="true"
-				        		onclick="PF('insertQuestion_wv').show();" icon="fa fa-fw fa-plus-circle" />
+							<p:commandButton id="create_question_btn" ajax="true" value="#{text['label_create_question']}"
+								process="@this" actionListener="#{challengeMB.initCurrentQuestion()}" update="j_idt6:question_form"
+				        		oncomplete="PF('insertQuestion_wv').show();" icon="fa fa-fw fa-plus-circle" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -108,17 +108,18 @@
 									style="margin-right: 10px"/>
     
 								<h:outputLabel for="true_alternative" value="#{text['label_true_alternative']}" />
-								<h:selectOneMenu id="true_alternative" value="#{challengeMB.trueAlternative}">						
+								<p:selectOneMenu id="true_alternative" value="#{challengeMB.trueAlternative}">
+									<f:selectItem itemLabel="#{text['label_select']}" itemValue="" />
 						            <f:selectItems value="#{challengeMB.loadAllLetters()}" var="letter" itemLabel="#{letter}" 
 						            	itemValue="#{letter}" />
-						        </h:selectOneMenu>
+						        </p:selectOneMenu>
 							</p:column>							
 						</p:row>
 						<p:row>
-							<p:column colspan="2">									
+							<p:column colspan="2">
 								<p:commandButton id="register_btn" ajax="true" process="question_pg" value="#{text['label_register']}"  
 									actionListener="#{challengeMB.addQuestionToChallenge()}" validateClient="true"
-									update="j_idt6:challenge_form:challenge_questions_dt"
+									update="j_idt6:challenge_form:challenge_questions_dt j_idt6:growl"
 									oncomplete="PF('insertQuestion_wv').hide();" icon="fa fa-fw fa-chevron-circle-down"/>								
 							</p:column>	
 						</p:row>

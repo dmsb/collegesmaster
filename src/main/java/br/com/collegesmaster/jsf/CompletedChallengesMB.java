@@ -1,6 +1,6 @@
 package br.com.collegesmaster.jsf;
 
-import static br.com.collegesmaster.util.JSFUtils.getUserPrincipal;
+import static br.com.collegesmaster.jsf.util.JSFUtils.getUserPrincipal;
 
 import java.io.Serializable;
 import java.util.List;

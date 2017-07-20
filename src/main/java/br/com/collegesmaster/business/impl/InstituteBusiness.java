@@ -22,6 +22,7 @@ import org.jboss.ejb3.annotation.SecurityDomain;
 import br.com.collegesmaster.business.IInstituteBusiness;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.impl.Institute;
+import br.com.collegesmaster.model.impl.Institute_;
 
 @Stateless
 @TransactionManagement(CONTAINER)
@@ -65,16 +66,16 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 	
 	@PermitAll
 	@Override
-	public List<Institute> findIdsAndNames() {
+	public List<Institute> findNames() {
 		final CriteriaQuery<Institute> criteriaQuery = builder.createQuery(Institute.class);
 		
 		final Root<Institute> rootInstitute = criteriaQuery.from(Institute.class);
 		
-		final List<Selection<?>> idAndNameSelections = new ArrayList<>();
-		idAndNameSelections.add(rootInstitute.get(id));		
-		idAndNameSelections.add(rootInstitute.get(name));
-		
-		criteriaQuery.multiselect(idAndNameSelections);
+		final List<Selection<?>> selections = new ArrayList<>();
+		selections.add(rootInstitute.get(id));		
+		selections.add(rootInstitute.get(name));
+		selections.add(rootInstitute.get(Institute_.version));
+		criteriaQuery.multiselect(selections);
 
 		final TypedQuery<Institute> typedQuery = entityManager.createQuery(criteriaQuery); 
 		

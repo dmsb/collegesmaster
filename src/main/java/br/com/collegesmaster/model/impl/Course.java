@@ -49,9 +49,10 @@ public class Course extends Model implements ICourse {
     	
 	}
     
-    public Course(Integer id, String name) {
+    public Course(Integer id, String name, Long version) {
     	this.id = id;
     	this.name = name;
+    	this.version = version;
     }
 
 	@Override

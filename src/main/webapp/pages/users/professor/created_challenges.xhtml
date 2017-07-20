@@ -17,6 +17,49 @@
 	<h:outputStylesheet name="css/default.css" />
 	<composites:layouts main_menu_mb="#{mainMenuMB}" >
 		<p:layoutUnit position="center" header="#{text['label_created_challenges']}" style="text-align:center">
+			<h:form id="challenges_form">
+				<p:dataTable id="challenges_data_table" var="challenge" value="#{createdChallengesMB.createdChallenges}"
+					selectionMode="single" selection="#{createdChallengesMB.selectedChallenge}" rowKey="#{challenge.id}"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
+					{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['msg_no_records_found']}" paginator="true"
+					rows="10" currentPageReportTemplate="{currentPage} #{text['msg_of']} {totalPages}">
+					
+					<p:column headerText="#{text['label_discipline']}">
+						<h:outputText value="#{challenge.getDiscipline().getName()}" />
+					</p:column>
+					
+					<p:column headerText="#{text['label_challenge']}">
+						<h:outputText value="#{challenge.getTitle()}" />
+					</p:column>
+					
+					<p:ajax event="rowSelect" process="@parent" listener="#{createdChallengesMB.loadResponses()}"
+						update="j_idt6:challenges_response_form:challenges_response_data_table"
+						oncomplete="PF('challenges_response_wv').show();" />
+				</p:dataTable>
+			
+			</h:form>
+			
+			<h:form id="challenges_response_form">
+				<p:dialog id="challenges_response_dialog" widgetVar="challenges_response_wv"
+					closeOnEscape="true" closable="true" resizable="false" responsive="true" 
+					hideEffect="puff" showEffect="puff" height="350" width="400" header="#{text['label_responses']}">
+					
+					<p:dataTable id="challenges_response_data_table" var="challenge_response" value="#{createdChallengesMB.responses}"
+						selectionMode="single" rowKey="#{challenge_response.id}"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
+						{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['msg_no_records_found']}" paginator="true"
+						rows="10" currentPageReportTemplate="{currentPage} #{text['msg_of']} {totalPages}">							
+					
+						<p:column headerText="#{text['label_student']}">
+							<h:outputText value="#{challenge_response.owner.username}" />
+						</p:column>
+						
+						<p:column headerText="#{text['label_pontuation']}">
+							<h:outputText value="#{challenge_response.pontuation}" />
+						</p:column>
+					</p:dataTable>
+				</p:dialog>
+			</h:form>			
 		</p:layoutUnit>
 	</composites:layouts>
 </h:body>

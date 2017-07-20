@@ -1,6 +1,7 @@
 package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
+import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
 
 import java.util.Objects;
@@ -9,12 +10,12 @@ import javax.persistence.Access;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -32,17 +33,20 @@ public class QuestionResponse extends Model implements IQuestionResponse {
 	
 	private static final long serialVersionUID = 693650150648888820L;
 	
+	@NotNull
 	@NotAudited
 	@ManyToOne(targetEntity = ChallengeResponse.class, optional = false, fetch = LAZY)
 	@JoinColumn(name = "challengeResponseFK", referencedColumnName = "id", updatable = false)
 	private IChallengeResponse challengeResponse;
 	
+	@NotNull
 	@NotAudited
 	@ManyToOne(targetEntity = Question.class, fetch = LAZY, optional = false)
 	@JoinColumn(name = "targetQuestionFK", referencedColumnName = "id", updatable = false)
 	private IQuestion targetQuestion;
 	
-	@Enumerated(EnumType.STRING)
+	@NotNull
+	@Enumerated(STRING)
 	@Basic(fetch = FetchType.LAZY, optional = false)
 	@Column(name = "letter", unique = false, length = 1)
 	private Letter letter;

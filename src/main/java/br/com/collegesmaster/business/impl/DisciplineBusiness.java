@@ -88,11 +88,12 @@ public class DisciplineBusiness extends GenericBusiness implements IDisciplineBu
 		final CriteriaQuery<Discipline> criteriaQuery = builder.createQuery(Discipline.class);
 		final Root<Discipline> rootDiscipline = criteriaQuery.from(Discipline.class);
 		
-		final List<Selection<?>> idAndNameSelections = new ArrayList<Selection<?>>();
-		idAndNameSelections.add(rootDiscipline.get(Discipline_.id));
-		idAndNameSelections.add(rootDiscipline.get(Discipline_.name));
+		final List<Selection<?>> selections = new ArrayList<Selection<?>>();
+		selections.add(rootDiscipline.get(Discipline_.id));
+		selections.add(rootDiscipline.get(Discipline_.name));
+		selections.add(rootDiscipline.get(Discipline_.version));
 		
-		criteriaQuery.multiselect(idAndNameSelections);
+		criteriaQuery.multiselect(selections);
 		
 		final Predicate coursePredicate = builder.equal(rootDiscipline.get(Discipline_.course), course);
 		criteriaQuery.where(coursePredicate);

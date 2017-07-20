@@ -46,9 +46,10 @@ public class Institute extends Model implements IInstitute {
     	
 	}
     
-    public Institute(Integer id, String name) {
+    public Institute(Integer id, String name, Long version) {
     	this.id = id;
     	this.name = name;
+    	this.version = version;
     }
     
 	@Override

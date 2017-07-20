@@ -18,7 +18,9 @@ import org.jboss.ejb3.annotation.SecurityDomain;
 
 import br.com.collegesmaster.business.IChallengeBusiness;
 import br.com.collegesmaster.model.IChallenge;
+import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.Challenge;
+import br.com.collegesmaster.model.impl.Challenge_;
 import br.com.collegesmaster.model.impl.Question;
 
 @Stateless
@@ -71,6 +73,21 @@ public class ChallengeBusiness extends GenericBusiness implements IChallengeBusi
 		criteriaQuery.where(challengeCondition);
 		
 		final TypedQuery<Question> typedQuery = entityManager.createQuery(criteriaQuery);
+		
+		return typedQuery.getResultList();
+	}
+	
+	@RolesAllowed({"PROFESSOR", "ADMINISTRATOR"})
+	@Override
+	public List<Challenge> findByUser(final IUser user) {
+		final CriteriaQuery<Challenge> criteriaQuery = builder.createQuery(Challenge.class);
+		final Root<Challenge> challengeRoot = criteriaQuery.from(Challenge.class);
+		
+		final Predicate predicate = builder.equal(challengeRoot.get(Challenge_.owner), user);
+		
+		criteriaQuery.where(predicate);
+		
+		final TypedQuery<Challenge> typedQuery = entityManager.createQuery(criteriaQuery);
 		
 		return typedQuery.getResultList();
 	}	

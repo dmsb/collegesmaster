@@ -45,7 +45,6 @@ public class User extends Model implements IUser {
     private String username;
     
     @NotNull
-    @Size(min = 6)
     @Password
     @Basic(fetch = LAZY)
 	@Column(name = "password", nullable = false, length = 88)

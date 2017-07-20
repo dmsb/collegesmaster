@@ -1,7 +1,7 @@
 package br.com.collegesmaster.jsf;
 
-import static br.com.collegesmaster.util.JSFUtils.addMessage;
-import static br.com.collegesmaster.util.JSFUtils.addMessageWithDetails;
+import static br.com.collegesmaster.jsf.util.JSFUtils.addMessage;
+import static br.com.collegesmaster.jsf.util.JSFUtils.addMessageWithDetails;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
@@ -16,6 +16,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.collegesmaster.business.ICourseBusiness;
 import br.com.collegesmaster.business.IInstituteBusiness;
 import br.com.collegesmaster.business.IRoleBusiness;
 import br.com.collegesmaster.business.IUserBusiness;
@@ -23,6 +24,7 @@ import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.IRole;
 import br.com.collegesmaster.model.IUser;
+import br.com.collegesmaster.model.impl.Course;
 import br.com.collegesmaster.model.impl.GeneralInfo;
 import br.com.collegesmaster.model.impl.Institute;
 import br.com.collegesmaster.model.impl.Role;
@@ -43,9 +45,12 @@ public class HomeMB implements Serializable {
 	@EJB
 	private transient IInstituteBusiness instituteBusiness;
 	
+	@EJB
+	private transient ICourseBusiness courseBusiness;
+	
 	private IUser user;
 	private IRole selectedRole;
-	private IInstitute institute;	
+	private IInstitute selectedInstitute;	
 	private List<Institute> institutes;
 	
 	@PostConstruct
@@ -56,9 +61,10 @@ public class HomeMB implements Serializable {
 
 		selectedRole = new Role();
 
-		institutes = instituteBusiness.findFetchingCourses();
-		institute = institutes.get(0);
-		user.getGeneralInfo().setCourse(institute.getCourses().get(0));
+		institutes = instituteBusiness.findNames();
+		selectedInstitute = new Institute();
+		selectedInstitute.setCourses(new ArrayList<>());
+		user.getGeneralInfo().setCourse(new Course());
 	}
 	
 	public List<Role> allRoles() {
@@ -66,9 +72,11 @@ public class HomeMB implements Serializable {
 	}
 	
 	public void persistUser() {
-		
-		final Role completeRole = (Role) roleBusiness.findById(selectedRole.getId());
+		final IRole completeRole = roleBusiness.findById(selectedRole.getId());
 		user.getRoles().add(completeRole);
+		
+		final ICourse completedCourse = courseBusiness.findById(user.getGeneralInfo().getCourse().getId());
+		user.getGeneralInfo().setCourse(completedCourse);
 		
 		final Boolean existsUsername = userBusiness.existsUsername(user.getUsername());
 		final Boolean existsEmail = userBusiness.existsEmail(user.getGeneralInfo().getEmail());
@@ -98,35 +106,14 @@ public class HomeMB implements Serializable {
 		}	
 	}
 	
-	public void findCoursesByInstitute() {
-		if(institute != null) {
-			final ICourse currentCourse = institute.getCourses().get(0);
-			user.getGeneralInfo().setCourse(currentCourse);			
-		}
-	}
-	
 	public void changeInstituteEvent() {
-		
-		final Integer currentUserInstituteId = institute.getId();
-		
-		institutes.forEach(currentInstitute -> {
-			if(currentUserInstituteId.equals(currentInstitute.getId())) {				
-				institute = currentInstitute;
-				final ICourse updatedCourse = currentInstitute.getCourses().get(0);
-				user.getGeneralInfo().setCourse(updatedCourse);
-			}
-		});
-	}
-	
-	public void changeCourseEvent() {
-		
-		final Integer currentUserCourseId = user.getGeneralInfo().getCourse().getId();
-		
-		institute.getCourses().forEach(currentCourse -> {
-			if(currentUserCourseId.equals(currentCourse.getId())) {
-				user.getGeneralInfo().setCourse(currentCourse);
-			}
-		});
+		if(selectedInstitute != null) {			
+			final List<Course> courses = courseBusiness.findNamesByInstitute(selectedInstitute);
+			selectedInstitute.setCourses(courses);
+			user.getGeneralInfo().setCourse(courses.get(0));
+		} else {
+			user.getGeneralInfo().setCourse(new Course());
+		}
 	}
 	
 	public IUser getUser() {
@@ -145,12 +132,12 @@ public class HomeMB implements Serializable {
 		this.selectedRole = selectedRole;
 	}
 
-	public IInstitute getInstitute() {
-		return institute;
+	public IInstitute getSelectedInstitute() {
+		return selectedInstitute;
 	}
 
-	public void setInstitute(IInstitute institute) {
-		this.institute = institute;
+	public void setSelectedInstitute(IInstitute selectedInstitute) {
+		this.selectedInstitute = selectedInstitute;
 	}
 
 	public List<Institute> getInstitutes() {

@@ -1,10 +1,10 @@
 package br.com.collegesmaster.business.impl;
 
+import static br.com.collegesmaster.jsf.util.JSFUtils.setUserInUserPrincipal;
 import static br.com.collegesmaster.model.impl.GeneralInfo_.cpf;
 import static br.com.collegesmaster.model.impl.GeneralInfo_.email;
 import static br.com.collegesmaster.model.impl.User_.generalInfo;
 import static br.com.collegesmaster.model.impl.User_.username;
-import static br.com.collegesmaster.util.JSFUtils.setUserInUserPrincipal;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.List;
@@ -34,7 +34,8 @@ import br.com.collegesmaster.model.impl.User;
 @RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTATOR"})
 public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	
-	@Override	
+	@PermitAll
+	@Override
 	public void save(final IUser user) {
 		entityManager.persist(user);
 	}
@@ -90,8 +91,8 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		return null;
 	}
 	
-	@Override
 	@PermitAll
+	@Override
 	public String getUserSalt(final String usernameToBeComparated) {
 		
 		queryBuilder = new StringBuilder();
@@ -112,6 +113,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		return null;
 	}
 	
+	@PermitAll
 	@Override
 	public Boolean existsCpf(final String cpfToBeComparated) {
 		
@@ -127,6 +129,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		return executeExists(query, subquery, containsCpf);
 	}
 
+	@PermitAll
 	@Override
 	public Boolean existsUsername(final String usernameToBeComparated) {
 		
@@ -141,6 +144,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	
 	}
 
+	@PermitAll
 	@Override
 	public Boolean existsEmail(final String emailToBeComparated) {
 		
@@ -154,8 +158,8 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		return executeExists(query, subquery, containsEmail);
 	}
 	
+	@PermitAll
 	@Override
-	@RolesAllowed({"STUDENT"})
 	public IUser findByUsername(final String usernameToBeComparated) {
 		
 		final CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);

@@ -68,11 +68,12 @@ public class CourseBusiness extends GenericBusiness implements ICourseBusiness {
 		final CriteriaQuery<Course> criteriaQuery = builder.createQuery(Course.class);
 		final Root<Course> rootCourse = criteriaQuery.from(Course.class);
 		
-		final List<Selection<?>> idAndNameSelections = new ArrayList<Selection<?>>();
-		idAndNameSelections.add(rootCourse.get("id"));
-		idAndNameSelections.add(rootCourse.get("name"));
+		final List<Selection<?>> selections = new ArrayList<Selection<?>>();
+		selections.add(rootCourse.get("id"));
+		selections.add(rootCourse.get("name"));
+		selections.add(rootCourse.get("version"));
 		
-		criteriaQuery.multiselect(idAndNameSelections);
+		criteriaQuery.multiselect(selections);
 		
 		final Predicate institutePredicate = builder.equal(rootCourse.get("institute"), institute);
 		criteriaQuery.where(institutePredicate);
