@@ -10,56 +10,56 @@
 <f:view locale="#{localeBean.locale}" />
 
 <h:head>
-	<title>#{text['label_application_title']}</title>
+	<title>#{text['collegesmaster']}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </h:head>
 <h:body>
 	<h:outputStylesheet name="css/default.css" />
-	<composites:layouts main_menu_mb="#{mainMenuMB}">
-		<p:layoutUnit position="center" header="#{text['label_edit_user']}" style="text-align:center">
+	<composites:layouts main_menu_mb="#{mainMenuMB}" id="composite">
+		<p:layoutUnit position="center" header="#{text['edit_user']}" style="text-align:center">
 			<h:form id="register_form">
 				<p:panelGrid style="text-align:left">
 					<p:row>
 						<p:column>
-							<h:outputLabel for="email" value="#{text['label_email']}" />
+							<h:outputLabel for="email" value="#{text['email']}" />
 						</p:column>
 						<p:column>
 							<p:inputText id="email" value="#{userEditMB.user.generalInfo.email}" size="20"
-								required="true" label="#{text['label_email']}" />
+								required="true" label="#{text['email']}" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
-							<h:outputLabel for="firstName" value="#{text['label_first_name']}" />
+							<h:outputLabel for="firstName" value="#{text['first_name']}" />
 						</p:column>
 						<p:column>
 							<p:inputText id="firstName" value="#{userEditMB.user.generalInfo.firstName}" size="20"
-								required="true" label="#{text['label_first_name']}" />
+								required="true" label="#{text['first_name']}" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
-							<h:outputLabel for="lastName" value="#{text['label_last_name']}" />
+							<h:outputLabel for="lastName" value="#{text['last_name']}" />
 						</p:column>
 						<p:column>
 							<p:inputText id="lastName" value="#{userEditMB.user.generalInfo.lastName}" size="20"
-								required="true" label="#{text['label_last_name']}" />
+								required="true" label="#{text['last_name']}" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
-							<h:outputLabel for="birthdate" value="#{text['label_birthdate']}" />
+							<h:outputLabel for="birthdate" value="#{text['birthdate']}" />
 						</p:column>
 						<p:column>
 							<p:calendar id="birthdate" value="#{userEditMB.user.generalInfo.birthdate}" size="20"
 								pattern="dd-MM-yyyy" mask="true" required="true" converter="localDateTimeConverter"
-								label="#{text['label_birthdate']}" />
+								label="#{text['birthdate']}" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column colspan="2">
 							<p:commandButton id="editBtn" process="@form" ajax="false"
-								value="#{text['label_edit']}" action="#{userEditMB.editUser()}" />
+								value="#{text['edit']}" action="#{userEditMB.editUser()}" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>

@@ -135,16 +135,4 @@
         	<http-method>POST</http-method>
 	    </web-resource-collection>
 	</security-constraint>
-
-	<!-- System roles -->
-	<security-role>
-		<role-name>ADMINISTRATOR</role-name>
-	</security-role>
-	<security-role>
-		<role-name>PROFESSOR</role-name>
-	</security-role>
-	<security-role>
-		<role-name>STUDENT</role-name>
-	</security-role>
-
 </web-app>

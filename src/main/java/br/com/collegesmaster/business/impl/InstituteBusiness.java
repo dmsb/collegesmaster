@@ -90,7 +90,6 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 				
 		instituteRoot.fetch(courses);
 		criteriaQuery.select(instituteRoot).distinct(true);
-		//"If DISTINCT is not specified, duplicate values are not eliminated." (section 4.8 of JPA v2.0)
 		
 		final TypedQuery<Institute> typedQuery = entityManager.createQuery(criteriaQuery);		
 		

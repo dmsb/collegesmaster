@@ -8,31 +8,31 @@
 	xmlns:composites="http://java.sun.com/jsf/composite/composites">
 <f:view locale="#{localeBean.locale}" />
 <h:head>
-	<title>#{text['label_application_title']}</title>
+	<title>#{text['collegesmaster']}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </h:head>
 <h:body>
 	<h:outputStylesheet name="css/default.css" />
-	<composites:layouts main_menu_mb="#{mainMenuMB}">
+	<composites:layouts main_menu_mb="#{mainMenuMB}" id="composite">
 		<p:layoutUnit id="layout_center" position="center" 
-			header="#{text['label_completed_challenges']}" style="text-align:center">
+			header="#{text['completed_challenges']}" style="text-align:center">
 			
 			<h:form id="challenges_form">
 				<p:dataTable id="challenges_data_table" var="challenge" value="#{completedChallengesMB.completedChallenges}"
 					selectionMode="single" rowKey="#{challenge.id}"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
-					{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['msg_no_records_found']}" paginator="true"
-					rows="10" currentPageReportTemplate="{currentPage} #{text['msg_of']} {totalPages}">
+					{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['no_records_found_message']}" paginator="true"
+					rows="10" currentPageReportTemplate="{currentPage} #{text['of_message']} {totalPages}">
 					
-					<p:column headerText="#{text['label_challenge']}">
+					<p:column headerText="#{text['discipline']}">
 						<h:outputText value="#{challenge.getTargetChallenge().getDiscipline().getName()}" />
 					</p:column>
 					
-					<p:column headerText="#{text['label_challenge']}">
+					<p:column headerText="#{text['challenge']}">
 						<h:outputText value="#{challenge.getTargetChallenge().getTitle()}" />
 					</p:column>
 					
-					<p:column headerText="#{text['label_pontuation']}">
+					<p:column headerText="#{text['pontuation']}">
 						<h:outputText value="#{challenge.getPontuation()}" />
 					</p:column>
 					

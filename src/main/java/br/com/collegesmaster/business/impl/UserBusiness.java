@@ -31,7 +31,6 @@ import br.com.collegesmaster.model.impl.User;
 @Stateless
 @TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
-@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTATOR"})
 public class UserBusiness extends GenericBusiness implements IUserBusiness {
 	
 	@PermitAll
@@ -40,6 +39,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		entityManager.persist(user);
 	}
 	
+	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTATOR"})
 	@Override
 	public IUser update(final IUser user) {
 		final IUser updatedUser = entityManager.merge(user);
@@ -53,6 +53,7 @@ public class UserBusiness extends GenericBusiness implements IUserBusiness {
 		entityManager.remove(user);
 	}
 	
+	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTATOR"})
 	@Override
 	public IUser findById(final Integer id) {
 		return entityManager.find(User.class, id);

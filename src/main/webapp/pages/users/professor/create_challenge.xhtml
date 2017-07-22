@@ -10,32 +10,33 @@
 <f:view locale="#{localeBean.locale}" />
 
 <h:head>
-	<title>#{text['label_application_title']}</title>
+	<title>#{text['collegesmaster']}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </h:head>
 <h:body>
 	<h:outputStylesheet name="css/default.css" />
-	<composites:layouts main_menu_mb="#{mainMenuMB}" >
-		<p:layoutUnit position="center" header="#{text['label_create_challenge']}" style="text-align:center">
+	<composites:layouts main_menu_mb="#{mainMenuMB}" id="composite">
+		
+		<p:layoutUnit position="center" header="#{text['create_challenge']}" style="text-align:center">
 			<h:form id="challenge_form">
 				<p:panelGrid id="challenge_pg">
 					<p:row>
 						<p:column>
-							<h:outputLabel for="title" value="#{text['label_title']}" />
+							<h:outputLabel for="title" value="#{text['title']}" />
 						</p:column>
 						<p:column style="text-align:left">											
-							<p:inputTextarea id="title" rows="1" cols="60"  maxlength="50" 
-								value="#{challengeMB.challenge.title}" required="true"
-								placeholder="#{text['label_title']}" />							
+							<p:inputText id="title" required="true" size="40"
+								value="#{challengeMB.challenge.title}"  />							
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
-							<h:outputLabel for="discipline" value="#{text['label_discipline']}" />
+							<h:outputLabel for="discipline" value="#{text['discipline']}" />
 						</p:column>
 						<p:column style="text-align:left">
-							<p:selectOneMenu id="discipline" value="#{challengeMB.challenge.discipline}" converter="disciplineConverter">
-								<f:selectItem itemLabel="#{text['label_select']}" itemValue="" />
+							<p:selectOneMenu id="discipline" value="#{challengeMB.challenge.discipline}" converter="disciplineConverter"
+								required="true" requiredMessage="#{text['required_discipline_message']}">
+								<f:selectItem itemLabel="#{text['select']}" itemValue="" />
 					            <f:selectItems value="#{challengeMB.loadUserDisciplines()}" var="discipline" itemLabel="#{discipline.name}"
 					            	itemValue="#{discipline}" />
 					        </p:selectOneMenu>							
@@ -43,27 +44,27 @@
 					</p:row>
 					<p:row>
 						<p:column colspan="2">
-							<p:commandButton id="create_question_btn" ajax="true" value="#{text['label_create_question']}"
-								process="@this" actionListener="#{challengeMB.initCurrentQuestion()}" update="j_idt6:question_form"
+							<p:commandButton id="create_question_btn" ajax="true" value="#{text['create_question']}"
+								process="@this" actionListener="#{challengeMB.initCurrentQuestion()}" update="composite:question_form"
 				        		oncomplete="PF('insertQuestion_wv').show();" icon="fa fa-fw fa-plus-circle" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column colspan="2">
-							<p:commandButton id="register_challenge_btn" ajax="true" process="challenge_pg" update="@form"
-								value="#{text['label_register_challenge']}" actionListener="#{challengeMB.persistChallenge()}" 
-								icon="fa fa-fw fa-save" />
+							<p:commandButton id="register_challenge_btn" ajax="false" process="challenge_pg"
+								value="#{text['register_challenge']}" actionListener="#{challengeMB.persistChallenge()}" 
+								icon="fa fa-fw fa-save" update="@form" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column colspan="2">
 							<p:dataTable id="challenge_questions_dt" var="question" value="#{challengeMB.challenge.questions}"
 								rowKey="#{question.hashCode()}" selection="#{challengeMB.currentQuestion}"
-								selectionMode="single" emptyMessage="#{text['msg_no_records_found']}">
+								selectionMode="single" emptyMessage="#{text['no_records_found_message']}">
 				                 <f:facet name="header">
-				            		#{text['label_questions']}
+				            		#{text['questions']}
 						        </f:facet>
-						        <p:column headerText="#{text['label_description']}" >
+						        <p:column headerText="#{text['question_description']}" >
 						            <h:outputText value="#{question.description}" />
 						        </p:column>
 						    </p:dataTable>					    						   
@@ -73,56 +74,73 @@
 			</h:form>
 			
 			<h:form id="question_form">
-				<p:dialog header="#{text['label_question']}" id="insert_question_dialog" widgetVar="insertQuestion_wv" closeOnEscape="true" closable="true" resizable="false"
+				<p:dialog header="#{text['question']}" id="insert_question_dialog" widgetVar="insertQuestion_wv" closeOnEscape="true" closable="true" resizable="false"
 					responsive="true" hideEffect="puff" showEffect="puff" height="550" width="700">				
 					<p:panelGrid id="question_pg">
 						<p:row>
 							<p:column colspan="2">
-								<h:outputText value="#{text['label_description']}" />
+								<h:outputText value="#{text['question_description']}" />
 							</p:column>
 						</p:row>
 						<p:row>
 							<p:column colspan="2">
-								<p:inputTextarea id="description" rows="7"
+								<p:inputTextarea id="description" rows="7" required="true"
 									cols="68" maxlength="1000" autoResize="false"
-									value="#{challengeMB.currentQuestion.description}"/>
+									value="#{challengeMB.currentQuestion.description}"
+									requiredMessage="#{text['required_question_description_message']}"/>
 							</p:column>				
 						</p:row>						
 						<ui:repeat var="letter" value="#{challengeMB.loadAllLetters()}" varStatus="status">
 							<p:row>
 								<p:column>
-									<h:outputText value="#{text['label_letter']} #{letter}" />											
+									<h:outputText value="#{text['letter']} #{letter}" />											
 								</p:column>
 								<p:column>
-									<p:inputTextarea placeholder="#{text['label_description']}" id="description"
+									<p:inputTextarea placeholder="#{text['description']}" id="description"
 									rows="5" cols="60" maxlength="1000" autoResize="false"
-									value="#{challengeMB.alternatives.get(status.index).description}" required="true" />												
+									value="#{challengeMB.alternatives.get(status.index).description}" required="true"
+									requiredMessage="#{text['required_alternative_message']}" />												
 								</p:column>
 							</p:row>										
 				        </ui:repeat>
 				        <p:row>
-							<p:column colspan="2" >
-								<h:outputLabel for="pontuation" value="#{text['label_pontuation']}" />
-		        				<p:spinner id="pontuation" value="#{challengeMB.currentQuestion.pontuation}"
-		        					stepFactor="10" min="0" max="100" size="5" required="true"
-									style="margin-right: 10px"/>
-    
-								<h:outputLabel for="true_alternative" value="#{text['label_true_alternative']}" />
-								<p:selectOneMenu id="true_alternative" value="#{challengeMB.trueAlternative}">
-									<f:selectItem itemLabel="#{text['label_select']}" itemValue="" />
-						            <f:selectItems value="#{challengeMB.loadAllLetters()}" var="letter" itemLabel="#{letter}" 
-						            	itemValue="#{letter}" />
-						        </p:selectOneMenu>
-							</p:column>							
-						</p:row>
-						<p:row>
-							<p:column colspan="2">
-								<p:commandButton id="register_btn" ajax="true" process="question_pg" value="#{text['label_register']}"  
-									actionListener="#{challengeMB.addQuestionToChallenge()}" validateClient="true"
-									update="j_idt6:challenge_form:challenge_questions_dt j_idt6:growl"
-									oncomplete="PF('insertQuestion_wv').hide();" icon="fa fa-fw fa-chevron-circle-down"/>								
-							</p:column>	
-						</p:row>
+				        	<p:column colspan="2">
+		   						<p:panelGrid>
+			   						<p:row>
+										<p:column>
+											<h:outputLabel for="pontuation" value="#{text['pontuation']}" />
+										</p:column>
+										<p:column>
+					        				<p:spinner id="pontuation" value="#{challengeMB.currentQuestion.pontuation}"
+					        					stepFactor="10" min="0" max="100" size="5" required="true"
+												requiredMessage="#{text['required_pontuation_message']}"
+												style="margin-right: 10px"/>
+			   							</p:column>
+			   						</p:row>
+			   						<p:row>
+			   							<p:column>
+											<h:outputLabel for="true_alternative" value="#{text['true_alternative']}" />
+										</p:column>
+										<p:column>
+											<p:selectOneMenu id="true_alternative" value="#{challengeMB.trueAlternative}"
+												required="true" requiredMessage="#{text['required_true_alternative_message']}">
+												<f:selectItem itemLabel="#{text['select']}" itemValue="" />
+									            <f:selectItems value="#{challengeMB.loadAllLetters()}" var="letter" itemLabel="#{letter}" 
+									            	itemValue="#{letter}" />
+									        </p:selectOneMenu>
+										</p:column>							
+									</p:row>
+									<p:row>
+										<p:column colspan="2">
+											<p:commandButton id="register_btn" ajax="true" process="question_pg" value="#{text['register']}"  
+												actionListener="#{challengeMB.addQuestionToChallenge()}" validateClient="true"
+												update="composite:challenge_form:challenge_questions_dt composite:growl"
+												oncomplete="PF('insertQuestion_wv').hide();" icon="fa fa-fw fa-chevron-circle-down"/>								
+										</p:column>	
+									</p:row>
+								</p:panelGrid>
+				        	</p:column>
+				        </p:row>
 					</p:panelGrid>
 				</p:dialog>	
 			</h:form>

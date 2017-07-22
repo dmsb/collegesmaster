@@ -108,7 +108,7 @@ public class ChallengeResponseMB implements Serializable {
 		
 		final Boolean existsAResponse = existsAResponseForThisQuestion(questionResponse);		
 		
-		addMessage(SEVERITY_INFO, "msg_picked_alternative");
+		addMessage(SEVERITY_INFO, "picked_alternative_message");
 		
 		if(existsAResponse) {
 			return;
@@ -154,7 +154,7 @@ public class ChallengeResponseMB implements Serializable {
 	
 	public void persistResponse() {
 		challengeResponseBusiness.save(challengeResponse);
-		addMessageWithDetails(SEVERITY_INFO, "msg_success", "msg_response_registred_with_success");
+		addMessageWithDetails(SEVERITY_INFO, "success_message", "response_registred_with_success_message");
 	}
 
 	public List<Discipline> getUserDisciplines() {

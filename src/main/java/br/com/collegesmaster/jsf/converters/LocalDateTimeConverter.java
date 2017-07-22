@@ -25,7 +25,7 @@ public class LocalDateTimeConverter implements Converter {
 			return LocalDate.parse(value, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 		} catch (DateTimeParseException | IllegalArgumentException e) {
 			LOGGER.error("Invalid date format: " + e.getMessage());
-			addMessage(SEVERITY_WARN, "msg_invalid_date");
+			addMessage(SEVERITY_WARN, "invalid_date_message");
 		}
 		return null;
 	}

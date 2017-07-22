@@ -10,39 +10,42 @@
 	<composite:attribute name="main_menu_mb" required="true"
 		type="br.com.collegesmaster.jsf.MainMenuMB"
 		shortDescription="Managed bean for main menu" />
+	
+	<composite:attribute name="id" />
+	
 </composite:interface>
 
 <composite:implementation>
 	
-	<p:growl id="growl" life="4000"/>
+	<p:growl id="growl" life="4000" />
 	
 	<p:layout id="layout" fullPage="true">
 		<p:layoutUnit id="layout_north" position="north"
-			header="#{text['label_application_title']}"
+			header="#{text['collegesmaster']}"
 			style="text-align: center;" />
 
 		<p:layoutUnit id="layout_west" position="west"
-			header="#{text['label_welcome']} #{cc.attrs.main_menu_mb.loadPrincipalUsername()}"
+			header="#{text['welcome']} #{cc.attrs.main_menu_mb.loadPrincipalUsername()}"
 			size="20%">
 			<h:form id="menu_form">
 				<p:menu>
-					<p:submenu label="#{text['label_user_menu']}">
-						<p:menuitem value="#{text['label_reply_challenges']}"
+					<p:submenu label="#{text['user_menu']}">
+						<p:menuitem value="#{text['reply_challenges']}"
 							action="#{cc.attrs.main_menu_mb.redirectToReplyChallenges()}"							
 							icon="fa fa-fw fa-tasks" />
-						<p:menuitem value="#{text['label_create_challenge']}"
+						<p:menuitem value="#{text['create_challenge']}"
 							action="#{cc.attrs.main_menu_mb.redirectToCreateChallenge()}"
 							icon="fa fa-fw fa-plus" />
-						<p:menuitem value="#{text['label_completed_challenges']}"
+						<p:menuitem value="#{text['completed_challenges']}"
 							action="#{cc.attrs.main_menu_mb.redirectToCompletedChallenges()}"
 							icon="fa fa-fw fa-history" />
-						<p:menuitem value=" #{text['label_created_challenges']}"
+						<p:menuitem value=" #{text['created_challenges']}"
 							action="#{cc.attrs.main_menu_mb.redirectToCreatedChallenges()}"
 							icon="fa fa-fw fa-list" />
-						<p:menuitem value="#{text['label_edit_user']}"
+						<p:menuitem value="#{text['edit_user']}"
 							action="#{cc.attrs.main_menu_mb.redirectToEditUser()}"							
 							icon="fa fa-fw fa-edit" />
-						<p:menuitem value="#{text['label_logout']}"
+						<p:menuitem value="#{text['logout']}"
 							action="#{cc.attrs.main_menu_mb.logout()}"
 							icon="fa fa-fw fa-sign-out" />							
 					</p:submenu>

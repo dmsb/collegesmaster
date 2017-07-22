@@ -83,15 +83,15 @@ public class HomeMB implements Serializable {
 		final Boolean existsCpf = userBusiness.existsCpf(user.getGeneralInfo().getCpf());
 		
 		if(TRUE.equals(existsCpf)) {
-			addMessage(SEVERITY_WARN, "msg_exists_cpf");
+			addMessage(SEVERITY_WARN, "exists_cpf_message");
 		}
 		
 		if(TRUE.equals(existsUsername)) {
-			addMessage(SEVERITY_WARN, "msg_exists_username");
+			addMessage(SEVERITY_WARN, "exists_username_message");
 		}
 		
 		if(TRUE.equals(existsEmail)) {	
-			addMessage(SEVERITY_WARN, "msg_exists_email");
+			addMessage(SEVERITY_WARN, "exists_email_message");
 		}
 
 		final Boolean isValid = !(existsCpf || existsEmail || existsUsername);
@@ -100,7 +100,7 @@ public class HomeMB implements Serializable {
 			return;
 		} else {
 			userBusiness.save(user);
-			addMessageWithDetails(SEVERITY_INFO, "msg_success", "msg_user_registred_with_success");
+			addMessageWithDetails(SEVERITY_INFO, "success_message", "user_registred_with_success_message");
 			
 			init();			
 		}	

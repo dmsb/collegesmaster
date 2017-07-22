@@ -25,7 +25,6 @@ import br.com.collegesmaster.model.impl.Question;
 
 @Stateless
 @TransactionManagement(CONTAINER)
-@RolesAllowed({"ADMINISTRATOR"})
 @SecurityDomain("collegesmasterSecurityDomain")
 public class ChallengeBusiness extends GenericBusiness implements IChallengeBusiness {	
 	
@@ -40,7 +39,8 @@ public class ChallengeBusiness extends GenericBusiness implements IChallengeBusi
 	public IChallenge update(final IChallenge challenge) {
 		return entityManager.merge(challenge);
 	}
-
+	
+	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
 	public void remove(final IChallenge challenge) {
 		entityManager.remove(challenge);
@@ -51,7 +51,8 @@ public class ChallengeBusiness extends GenericBusiness implements IChallengeBusi
 	public IChallenge findById(Integer id) {
 		return entityManager.find(Challenge.class, id);
 	}
-
+	
+	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
 	public List<Challenge> findAll() {
 		

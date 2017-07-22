@@ -24,7 +24,6 @@ import br.com.collegesmaster.model.impl.ChallengeResponse_;
 
 @Stateless
 @TransactionManagement(CONTAINER)
-@RolesAllowed({"ADMINISTRATOR"})
 @SecurityDomain("collegesmasterSecurityDomain")
 public class ChallengeResponseBusiness extends GenericBusiness implements IChallengeResponseBusiness {
 
@@ -39,7 +38,8 @@ public class ChallengeResponseBusiness extends GenericBusiness implements IChall
 	public IChallengeResponse update(IChallengeResponse response) {
 		return entityManager.merge(response);
 	}
-
+	
+	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
 	public void remove(IChallengeResponse response) {
 		entityManager.remove(response);
@@ -50,7 +50,8 @@ public class ChallengeResponseBusiness extends GenericBusiness implements IChall
 	public IChallengeResponse findById(Integer id) {
 		return entityManager.find(ChallengeResponse.class, id);
 	}
-
+	
+	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
 	public List<ChallengeResponse> findAll() {
 		final CriteriaQuery<ChallengeResponse> criteriaQuery = builder.createQuery(ChallengeResponse.class);

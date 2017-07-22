@@ -32,7 +32,7 @@ public class UserEditMB implements Serializable {
 	
 	public void editUser() {
 		userBusiness.update(user);
-		addMessage(SEVERITY_INFO, "msg_user_edited_with_success");
+		addMessage(SEVERITY_INFO, "user_edited_with_success_message");
 	}
 	
 	public IUser getUser() {

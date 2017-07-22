@@ -61,7 +61,7 @@ public class UserSessionMB implements Serializable {
 			LOGGER.error(e.getMessage());
 		}
 		
-		addMessageWithDetails(SEVERITY_WARN, "msg_invalid_credentials", "msg_wrong_login_or_password");
+		addMessageWithDetails(SEVERITY_WARN, "invalid_credentials_mesage", "wrong_login_or_password_message");
 		return null;
 	}
 	

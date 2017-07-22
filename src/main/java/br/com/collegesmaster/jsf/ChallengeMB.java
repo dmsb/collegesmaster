@@ -94,7 +94,7 @@ public class ChallengeMB implements Serializable {
 		
 		challengeBusiness.save(challenge);
 		
-		addMessageWithDetails(SEVERITY_INFO, "msg_success", "msg_challenge_registred_with_success");
+		addMessageWithDetails(SEVERITY_INFO, "success_message", "challenge_registred_with_success_message");
 
 		init();
 	}
@@ -119,9 +119,9 @@ public class ChallengeMB implements Serializable {
 			
 			challenge.getQuestions().add(currentQuestion);
 			
-			addMessage(SEVERITY_INFO, "msg_questiond_added");
+			addMessage(SEVERITY_INFO, "questiond_added_message");
 		} else {
-			addMessage(SEVERITY_WARN, "msg_correct_alternative_required");
+			addMessage(SEVERITY_WARN, "correct_alternative_required_message");
 		}
 	}
 	

@@ -10,30 +10,30 @@
 <f:view locale="#{localeBean.locale}" />
 
 <h:head>
-	<title>#{text['label_application_title']}</title>
+	<title>#{text['collegesmaster']}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </h:head>
 <h:body>
 	<h:outputStylesheet name="css/default.css" />
-	<composites:layouts main_menu_mb="#{mainMenuMB}" >
-		<p:layoutUnit position="center" header="#{text['label_created_challenges']}" style="text-align:center">
+	<composites:layouts main_menu_mb="#{mainMenuMB}" id="composite" >
+		<p:layoutUnit position="center" header="#{text['created_challenges']}" style="text-align:center">
 			<h:form id="challenges_form">
 				<p:dataTable id="challenges_data_table" var="challenge" value="#{createdChallengesMB.createdChallenges}"
 					selectionMode="single" selection="#{createdChallengesMB.selectedChallenge}" rowKey="#{challenge.id}"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
-					{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['msg_no_records_found']}" paginator="true"
-					rows="10" currentPageReportTemplate="{currentPage} #{text['msg_of']} {totalPages}">
+					{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['no_records_found_message']}" paginator="true"
+					rows="10" currentPageReportTemplate="{currentPage} #{text['of_message']} {totalPages}">
 					
-					<p:column headerText="#{text['label_discipline']}">
+					<p:column headerText="#{text['discipline']}">
 						<h:outputText value="#{challenge.getDiscipline().getName()}" />
 					</p:column>
 					
-					<p:column headerText="#{text['label_challenge']}">
+					<p:column headerText="#{text['challenge']}">
 						<h:outputText value="#{challenge.getTitle()}" />
 					</p:column>
 					
 					<p:ajax event="rowSelect" process="@parent" listener="#{createdChallengesMB.loadResponses()}"
-						update="j_idt6:challenges_response_form:challenges_response_data_table"
+						update="composite:challenges_response_form:challenges_response_data_table"
 						oncomplete="PF('challenges_response_wv').show();" />
 				</p:dataTable>
 			
@@ -42,19 +42,19 @@
 			<h:form id="challenges_response_form">
 				<p:dialog id="challenges_response_dialog" widgetVar="challenges_response_wv"
 					closeOnEscape="true" closable="true" resizable="false" responsive="true" 
-					hideEffect="puff" showEffect="puff" height="350" width="400" header="#{text['label_responses']}">
+					hideEffect="puff" showEffect="puff" height="350" width="400" header="#{text['responses']}">
 					
 					<p:dataTable id="challenges_response_data_table" var="challenge_response" value="#{createdChallengesMB.responses}"
 						selectionMode="single" rowKey="#{challenge_response.id}"
 						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
-						{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['msg_no_records_found']}" paginator="true"
-						rows="10" currentPageReportTemplate="{currentPage} #{text['msg_of']} {totalPages}">							
+						{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['no_records_found_message']}" paginator="true"
+						rows="10" currentPageReportTemplate="{currentPage} #{text['of_message']} {totalPages}">							
 					
-						<p:column headerText="#{text['label_student']}">
+						<p:column headerText="#{text['student']}">
 							<h:outputText value="#{challenge_response.owner.username}" />
 						</p:column>
 						
-						<p:column headerText="#{text['label_pontuation']}">
+						<p:column headerText="#{text['pontuation']}">
 							<h:outputText value="#{challenge_response.pontuation}" />
 						</p:column>
 					</p:dataTable>
