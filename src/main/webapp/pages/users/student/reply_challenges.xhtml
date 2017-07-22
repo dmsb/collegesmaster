@@ -103,7 +103,7 @@
 						<p:row>
 							<p:column>
 								<p:commandButton value="#{text['submit_response']}" update="composite:challenges_form"
-									oncomplete="PF('alternatives_wv').hide(); PF('questions_wv').hide();"
+									oncomplete="PF('alternatives_wv').hide(); PF('questions_wv').hide();" ajax="false"
 									actionListener="#{challengeResponseMB.persistResponse()}" icon="fa fa-fw fa-send"/>
 							</p:column>
 						</p:row>

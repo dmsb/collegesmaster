@@ -110,9 +110,10 @@ public class HomeMB implements Serializable {
 		if(selectedInstitute != null) {			
 			final List<Course> courses = courseBusiness.findNamesByInstitute(selectedInstitute);
 			selectedInstitute.setCourses(courses);
-			user.getGeneralInfo().setCourse(courses.get(0));
 		} else {
 			user.getGeneralInfo().setCourse(new Course());
+			selectedInstitute = new Institute();
+			selectedInstitute.setCourses(new ArrayList<>());
 		}
 	}
 	

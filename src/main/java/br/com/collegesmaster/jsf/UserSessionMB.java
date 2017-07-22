@@ -53,7 +53,7 @@ public class UserSessionMB implements Serializable {
 	        	if(loginRequest.isUserInRole("PROFESSOR")) {
 	        		return "/pages/users/professor/create_challenge.xhtml?faces-redirect=true";	
 	        	} else if(loginRequest.isUserInRole("STUDENT")) {
-	        		return "/pages/users/student/challenge_response.xhtml?faces-redirect=true";	
+	        		return "/pages/users/student/reply_challenges.xhtml?faces-redirect=true";	
 	        	}
 	        }
 	        

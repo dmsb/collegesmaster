@@ -1,7 +1,6 @@
 package br.com.collegesmaster.jsf;
 
 import static br.com.collegesmaster.jsf.util.JSFUtils.addMessage;
-import static br.com.collegesmaster.jsf.util.JSFUtils.addMessageWithDetails;
 import static br.com.collegesmaster.jsf.util.JSFUtils.getUserPrincipal;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -154,7 +153,7 @@ public class ChallengeResponseMB implements Serializable {
 	
 	public void persistResponse() {
 		challengeResponseBusiness.save(challengeResponse);
-		addMessageWithDetails(SEVERITY_INFO, "success_message", "response_registred_with_success_message");
+		addMessage(SEVERITY_INFO, "response_registred_with_success_message");
 	}
 
 	public List<Discipline> getUserDisciplines() {
