@@ -42,7 +42,8 @@
 			
 			<h:form id="challenges_form">				
 				<p:dialog id="challenges_dialog" widgetVar="challenges_wv" closeOnEscape="true" closable="true" resizable="false"
-					responsive="true" hideEffect="puff" showEffect="puff" height="350" width="400" header="#{text['challenges']}">
+					responsive="true" hideEffect="puff" showEffect="puff" header="#{text['challenges']}"
+					maximizable="true" minimizable="true" width="1280">
 					<p:panelGrid id="challenges_pg">
 						<p:row>
 							<p:column>
@@ -66,7 +67,8 @@
 				</p:dialog>	
 				
 				<p:dialog id="questions_dialog" widgetVar="questions_wv" closeOnEscape="true" closable="true" resizable="false"
-					responsive="true" hideEffect="puff" showEffect="puff" height="500" width="500" header="#{text['questions']}">
+					responsive="true" hideEffect="puff" showEffect="puff" header="#{text['questions']}" 
+					maximizable="true" minimizable="true" width="1280">
 					<p:messages id="messages" autoUpdate="true" closable="true" />
 					<p:panelGrid id="questions_pg">
 						<p:row>
@@ -89,7 +91,7 @@
 										<h:outputText value="#{question.description}" />
 									</p:column>
 									
-									<p:column headerText="#{text['marked_alternative']}" colspan="2">
+									<p:column headerText="#{text['marked_alternative']}" colspan="2" width="10%">
 										<h:outputText
 											value="#{challengeResponseMB.lettersMarked.get(index)}" />
 									</p:column>
@@ -112,8 +114,9 @@
 				</p:dialog>
 				
 				<p:dialog id="alternatives_dialog" widgetVar="alternatives_wv" closeOnEscape="true" closable="true" resizable="false"
-					responsive="true" hideEffect="puff" showEffect="puff" height="500" width="500" header="#{text['alternatives']}">
-					<p:panelGrid id="responses_pg">						
+					responsive="true" hideEffect="puff" showEffect="puff" header="#{text['alternatives']}"
+					maximizable="true" minimizable="true" width="1280">
+					<p:panelGrid id="responses_pg">
 						<p:row>						
 							<p:column>
 								<p:dataTable id="alternatives_data_table" var="alternative" value="#{challengeResponseMB.selectedQuestion.alternatives}"
@@ -126,7 +129,7 @@
 										#{challengeResponseMB.selectedQuestion.description}
 									</f:facet>
 									
-									<p:column headerText="#{text['letter']}">
+									<p:column headerText="#{text['letter']}" width="5%">
 										<h:outputText value="#{alternative.letter}" />
 									</p:column>
 									
