@@ -10,9 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.google.common.base.Strings;
 
-import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.security.CustomPrincipal;
-
 public class JSFUtils {
 	
 	private static final String VAR_NAME = "text";
@@ -23,20 +20,6 @@ public class JSFUtils {
 					.getCurrentInstance()
 					.getExternalContext()
 					.getRequest();
-	}
-	
-	public static void setUserInUserPrincipal(final IUser user) {
-		((CustomPrincipal) FacesContext
-			.getCurrentInstance()
-			.getExternalContext()
-			.getUserPrincipal()).setUser(user);
-	}
-	
-	public static CustomPrincipal getUserPrincipal() {
-		return  (CustomPrincipal) FacesContext
-					.getCurrentInstance()
-					.getExternalContext()
-					.getUserPrincipal();
 	}
 	
 	public static void addMessage(final FacesMessage.Severity severity, final String message) {

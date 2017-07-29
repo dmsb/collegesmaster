@@ -1,19 +1,20 @@
 package br.com.collegesmaster.jsf;
 
-import static br.com.collegesmaster.jsf.util.JSFUtils.getUserPrincipal;
-
 import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
+import br.com.collegesmaster.annotations.qualifiers.LoggedIn;
 import br.com.collegesmaster.business.IChallengeResponseBusiness;
+import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.ChallengeResponse;
 
-@ManagedBean(name = "completedChallengesMB")
+@Named("completedChallengesMB")
 @ViewScoped
 public class CompletedChallengesMB implements Serializable {
 	
@@ -22,11 +23,14 @@ public class CompletedChallengesMB implements Serializable {
 	@EJB
 	private transient IChallengeResponseBusiness challengeResponseBusiness;
 	
+	@Inject @LoggedIn 
+	private IUser loggedUser;
+	
 	private List<ChallengeResponse> completedChallenges;
 	
 	@PostConstruct
 	public void init() {
-		completedChallenges = challengeResponseBusiness.findAllByUser(getUserPrincipal().getUser());		
+		completedChallenges = challengeResponseBusiness.findAllByUser(loggedUser);		
 	}
 	
 	public List<ChallengeResponse> getCompletedChallenges() {

@@ -22,7 +22,7 @@
 
 	<dependencies>
 		
-		<!-- API for JavaEE, provided by Wildfly 10 -->		
+		<!-- API for JavaEE, provided by Wildfly 10 -->
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>
@@ -30,6 +30,20 @@
 			<scope>provided</scope>
 		</dependency>
 		
+		<dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- For CDI in Wildfly-->
+		<dependency>
+		    <groupId>org.jboss.weld</groupId>
+		    <artifactId>weld-core</artifactId>
+		    <version>2.4.4.Final</version>
+		</dependency>
+        
 		<!-- dom4j is an open source Java library for working with XML, XPath and XSLT, 
 			provided by Wildfly 10 -->
 		<dependency>

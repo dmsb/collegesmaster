@@ -19,11 +19,5 @@ public interface IUserBusiness extends IBusiness<IUser, User> {
 	Boolean existsUsername(final String usernameToBeComparated);
 	
 	@TransactionAttribute(REQUIRED)
-	String getUserSalt(String usernameToBeComparated);
-	
-	@TransactionAttribute(REQUIRED)
 	IUser findByUsername(String username);
-	
-	@TransactionAttribute(REQUIRED)
-	String getUserPassword(String username);
 }

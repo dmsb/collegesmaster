@@ -5,6 +5,7 @@ import java.util.Locale;
 import javax.validation.MessageInterpolator;
 
 public class LocaleSpecificMessageInterpolator implements MessageInterpolator {
+	
 	private final MessageInterpolator defaultInterpolator;
 	private final Locale defaultLocale;
 		

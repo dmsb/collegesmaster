@@ -2,91 +2,114 @@ package br.com.collegesmaster.jsf;
 
 import static br.com.collegesmaster.jsf.util.JSFUtils.addMessageWithDetails;
 import static br.com.collegesmaster.jsf.util.JSFUtils.getHttpServletRequest;
-import static br.com.collegesmaster.jsf.util.JSFUtils.getUserPrincipal;
-import static br.com.collegesmaster.jsf.util.JSFUtils.setUserInUserPrincipal;
 import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.jboss.logging.Logger;
 
+import br.com.collegesmaster.annotations.qualifiers.LoggedIn;
 import br.com.collegesmaster.business.IUserBusiness;
+import br.com.collegesmaster.exception.NotLoggedInUserException;
 import br.com.collegesmaster.model.IUser;
+import br.com.collegesmaster.model.impl.User;
+import br.com.collegesmaster.security.model.ICredentials;
+import br.com.collegesmaster.security.model.impl.Credentials;
 
-@ManagedBean(name = "userSessionMB")
-@ViewScoped
+@Named("userSessionMB")
+@SessionScoped
 public class UserSessionMB implements Serializable {
 
 	private static final long serialVersionUID = 4684060370406574773L;
 	
-	private static final Logger LOGGER = Logger.getLogger(UserSessionMB.class);
-	
+	@Inject
+	private Logger LOGGER;
+
 	@EJB
 	private transient IUserBusiness userBusiness;
-	
-	private IUser user;
-	private String username;
-	private String password;
+
+	private ICredentials credentials;
+
+	private IUser loggedUser;
+
+	@PostConstruct
+	public void init() {
+		credentials = new Credentials();
+	}
 
 	public String jaasLogin() {
 
 		final HttpServletRequest loginRequest = getHttpServletRequest();
-		
+
 		try {
 
-	        if (loginRequest.getUserPrincipal() != null) {
-	        	loginRequest.logout();
-	        }
-			
-	        loginRequest.login(username, password);
-	        
-	        if(loginRequest.getUserPrincipal() != null) {
+			if (loginRequest.getUserPrincipal() != null) {
+				loginRequest.logout();
+			}
 
-	        	setUserInUserPrincipal(userBusiness.findByUsername(getUserPrincipal().getName()));
-	        	
-	        	if(loginRequest.isUserInRole("PROFESSOR")) {
-	        		return "/pages/users/professor/create_challenge.xhtml?faces-redirect=true";	
-	        	} else if(loginRequest.isUserInRole("STUDENT")) {
-	        		return "/pages/users/student/reply_challenges.xhtml?faces-redirect=true";	
-	        	}
-	        }
-	        
+			loginRequest.login(credentials.getUsername(), credentials.getPassword());
+
+			if (loginRequest.getUserPrincipal() != null) {
+				loggedUser = userBusiness.findByUsername(credentials.getUsername());
+
+				if (loginRequest.isUserInRole("PROFESSOR")) {
+					return "/pages/users/professor/create_challenge.xhtml?faces-redirect=true";
+				} else if (loginRequest.isUserInRole("STUDENT")) {
+					return "/pages/users/student/reply_challenges.xhtml?faces-redirect=true";
+				}
+			}
+
 		} catch (ServletException e) {
 			LOGGER.error(e.getMessage());
 		}
-		
+
 		addMessageWithDetails(SEVERITY_WARN, "invalid_credentials_mesage", "wrong_login_or_password_message");
 		return null;
 	}
-	
+
+	public void logout() {
+		loggedUser = null;
+	}
+
+	@Produces
+	@LoggedIn
+	public IUser getLoggedUser() throws LoginException {
+		if (loggedUser == null) {
+			throw new NotLoggedInUserException();
+		} else {
+			return loggedUser;
+		}
+	}
+
+	void onEventInLoggedUser(@Observes @LoggedIn User user) {
+		this.loggedUser = user; 
+	}
+
+	public ICredentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(ICredentials credentials) {
+		this.credentials = credentials;
+	}
+
 	public IUser getUser() {
-		return user;
+		return loggedUser;
 	}
 
 	public void setUser(IUser user) {
-		this.user = user;
+		this.loggedUser = user;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
 }

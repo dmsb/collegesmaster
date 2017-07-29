@@ -1,7 +1,6 @@
 package br.com.collegesmaster.jsf;
 
 import static br.com.collegesmaster.jsf.util.JSFUtils.addMessage;
-import static br.com.collegesmaster.jsf.util.JSFUtils.getUserPrincipal;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
@@ -13,21 +12,24 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
+import br.com.collegesmaster.annotations.qualifiers.LoggedIn;
 import br.com.collegesmaster.business.IChallengeBusiness;
 import br.com.collegesmaster.business.IDisciplineBusiness;
 import br.com.collegesmaster.enums.Letter;
 import br.com.collegesmaster.model.IAlternative;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IDiscipline;
+import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.Alternative;
 import br.com.collegesmaster.model.impl.Challenge;
 import br.com.collegesmaster.model.impl.Discipline;
 import br.com.collegesmaster.model.impl.Question;
 
-@ManagedBean(name = "challengeMB")
+@Named("challengeMB")
 @ViewScoped
 public class ChallengeMB implements Serializable {
 
@@ -38,6 +40,9 @@ public class ChallengeMB implements Serializable {
 	
 	@EJB
 	private transient IDisciplineBusiness disciplineBusiness;
+	
+	@Inject @LoggedIn 
+	private IUser loggedUser;
 	
 	private IChallenge challenge;
 	
@@ -51,14 +56,14 @@ public class ChallengeMB implements Serializable {
 	public void init() {
 		challenge = new Challenge();
 		challenge.setDiscipline(new Discipline());
-		challenge.setOwner(getUserPrincipal().getUser());
+		challenge.setOwner(loggedUser);
 		challenge.setQuestions(new ArrayList<Question>());
 		
 		initCurrentQuestion();
 	}
 	
 	public List<Discipline> loadUserDisciplines() {
-		return disciplineBusiness.findNamesByCourse(getUserPrincipal().getUser().getGeneralInfo().getCourse());
+		return disciplineBusiness.findNamesByCourse(loggedUser.getGeneralInfo().getCourse());
 	}
 	
 	public void initCurrentQuestion() {

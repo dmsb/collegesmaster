@@ -1,20 +1,21 @@
 package br.com.collegesmaster.jsf;
 
 import static br.com.collegesmaster.jsf.util.JSFUtils.addMessage;
-import static br.com.collegesmaster.jsf.util.JSFUtils.getUserPrincipal;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
+import br.com.collegesmaster.annotations.qualifiers.LoggedIn;
 import br.com.collegesmaster.business.IUserBusiness;
 import br.com.collegesmaster.model.IUser;
 
-@ManagedBean(name = "userEditMB")
+@Named("userEditMB")
 @RequestScoped
 public class UserEditMB implements Serializable {
 
@@ -23,11 +24,14 @@ public class UserEditMB implements Serializable {
 	@EJB
 	private transient IUserBusiness userBusiness;
 	
+	@Inject @LoggedIn 
+	private IUser loggedUser;
+	
 	private IUser user;
 	
 	@PostConstruct
 	public void init() {
-		user = getUserPrincipal().getUser();
+		user = loggedUser;
 	}
 	
 	public void editUser() {

@@ -12,13 +12,17 @@ import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
 
+import br.com.collegesmaster.annotations.qualifiers.UserDatabase;
 import br.com.collegesmaster.business.IInstituteBusiness;
 import br.com.collegesmaster.model.IInstitute;
 import br.com.collegesmaster.model.impl.Institute;
@@ -28,38 +32,44 @@ import br.com.collegesmaster.model.impl.Institute_;
 @TransactionManagement(CONTAINER)
 @RolesAllowed({"ADMINISTRATOR"})
 @SecurityDomain("collegesmasterSecurityDomain")
-public class InstituteBusiness extends GenericBusiness implements IInstituteBusiness {
-
+public class InstituteBusiness implements IInstituteBusiness {
+	
+	@Inject @UserDatabase
+	private EntityManager em;
+	
+	@Inject
+	protected CriteriaBuilder cb;
+	
 	@Override
 	public void save(IInstitute institute) {
-		entityManager.persist(institute);
+		em.persist(institute);
 		
 	}
 
 	@Override
 	public IInstitute update(IInstitute institute) {
-		return entityManager.merge(institute);
+		return em.merge(institute);
 		
 	}
 
 	@Override
 	public void remove(IInstitute institute) {
-		entityManager.remove(institute);
+		em.remove(institute);
 		
 	}
 
 	@PermitAll
 	@Override
 	public IInstitute findById(Integer id) {
-		return entityManager.find(Institute.class, id);
+		return em.find(Institute.class, id);
 	}
 	
 	@Override
 	public List<Institute> findAll() {
-		final CriteriaQuery<Institute> criteriaQuery = builder.createQuery(Institute.class);		
+		final CriteriaQuery<Institute> criteriaQuery = cb.createQuery(Institute.class);		
 		criteriaQuery.from(Institute.class);
 		
-		final TypedQuery<Institute> typedQuery = entityManager.createQuery(criteriaQuery);		
+		final TypedQuery<Institute> typedQuery = em.createQuery(criteriaQuery);		
 		
 		return typedQuery.getResultList();
 	}
@@ -67,7 +77,7 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 	@PermitAll
 	@Override
 	public List<Institute> findNames() {
-		final CriteriaQuery<Institute> criteriaQuery = builder.createQuery(Institute.class);
+		final CriteriaQuery<Institute> criteriaQuery = cb.createQuery(Institute.class);
 		
 		final Root<Institute> rootInstitute = criteriaQuery.from(Institute.class);
 		
@@ -77,7 +87,7 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 		selections.add(rootInstitute.get(Institute_.version));
 		criteriaQuery.multiselect(selections);
 
-		final TypedQuery<Institute> typedQuery = entityManager.createQuery(criteriaQuery); 
+		final TypedQuery<Institute> typedQuery = em.createQuery(criteriaQuery); 
 		
 		return typedQuery.getResultList();
 	}
@@ -85,13 +95,13 @@ public class InstituteBusiness extends GenericBusiness implements IInstituteBusi
 	@PermitAll
 	@Override
 	public List<Institute> findFetchingCourses() {
-		final CriteriaQuery<Institute> criteriaQuery = builder.createQuery(Institute.class);
+		final CriteriaQuery<Institute> criteriaQuery = cb.createQuery(Institute.class);
 		final Root<Institute> instituteRoot = criteriaQuery.from(Institute.class);
 				
 		instituteRoot.fetch(courses);
 		criteriaQuery.select(instituteRoot).distinct(true);
 		
-		final TypedQuery<Institute> typedQuery = entityManager.createQuery(criteriaQuery);		
+		final TypedQuery<Institute> typedQuery = em.createQuery(criteriaQuery);		
 		
 		return typedQuery.getResultList();
 	}

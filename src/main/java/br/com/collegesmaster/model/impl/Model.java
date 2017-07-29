@@ -14,7 +14,7 @@ import br.com.collegesmaster.model.IModel;
 
 @MappedSuperclass
 @Access(FIELD)
-public class Model implements IModel {
+public abstract class Model implements IModel {
 
 	private static final long serialVersionUID = 3854273522875200187L;
 	
@@ -45,7 +45,4 @@ public class Model implements IModel {
 	public void setVersion(Long version) {
 		this.version = version;
 	}
-	
-	
-
 }

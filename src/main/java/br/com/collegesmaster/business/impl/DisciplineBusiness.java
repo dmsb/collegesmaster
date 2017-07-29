@@ -9,7 +9,10 @@ import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -17,6 +20,7 @@ import javax.persistence.criteria.Selection;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
 
+import br.com.collegesmaster.annotations.qualifiers.UserDatabase;
 import br.com.collegesmaster.business.IDisciplineBusiness;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
@@ -27,35 +31,41 @@ import br.com.collegesmaster.model.impl.Discipline_;
 @TransactionManagement(CONTAINER)
 @RolesAllowed({"ADMINISTRATOR"})
 @SecurityDomain("collegesmasterSecurityDomain")
-public class DisciplineBusiness extends GenericBusiness implements IDisciplineBusiness {
+public class DisciplineBusiness implements IDisciplineBusiness {
+	
+	@Inject @UserDatabase
+	private EntityManager em;
+	
+	@Inject
+	protected CriteriaBuilder cb;
 	
 	@Override
 	public void save(IDiscipline discipline) {
-		entityManager.persist(discipline);
+		em.persist(discipline);
 	}
 
 	@Override
 	public IDiscipline update(IDiscipline discipline) {
-		return entityManager.merge(discipline);
+		return em.merge(discipline);
 	}
 
 	@Override
 	public void remove(IDiscipline discipline) {
-		entityManager.remove(discipline);
+		em.remove(discipline);
 	}
 
 	@Override
 	@PermitAll
 	public IDiscipline findById(Integer id) {
-		return entityManager.find(Discipline.class, id);
+		return em.find(Discipline.class, id);
 	}
 
 	@Override
 	public List<Discipline> findAll() {
 		
-		final CriteriaQuery<Discipline> criteriaQuery = builder.createQuery(Discipline.class);
+		final CriteriaQuery<Discipline> criteriaQuery = cb.createQuery(Discipline.class);
 		criteriaQuery.from(Discipline.class);
-		final TypedQuery<Discipline> typedQuery = entityManager.createQuery(criteriaQuery);		
+		final TypedQuery<Discipline> typedQuery = em.createQuery(criteriaQuery);		
 		final List<Discipline> result = typedQuery.getResultList(); 
 		
 		return result;
@@ -65,17 +75,17 @@ public class DisciplineBusiness extends GenericBusiness implements IDisciplineBu
 	@Override
 	public List<Discipline> findByCourse(final ICourse course) {
 		
-		final CriteriaQuery<Discipline> criteriaQuery = builder.createQuery(Discipline.class);
+		final CriteriaQuery<Discipline> criteriaQuery = cb.createQuery(Discipline.class);
 		final Root<Discipline> rootDiscipline = criteriaQuery.from(Discipline.class);
 		
-		final Predicate coursePredicate = builder.equal(rootDiscipline.get(Discipline_.course), course);
+		final Predicate coursePredicate = cb.equal(rootDiscipline.get(Discipline_.course), course);
 		rootDiscipline.fetch(Discipline_.challenges);
 		
 		criteriaQuery.select(rootDiscipline)
 					 .distinct(true)
 					 .where(coursePredicate);
 		
-		final TypedQuery<Discipline> typedQuery = entityManager.createQuery(criteriaQuery);		
+		final TypedQuery<Discipline> typedQuery = em.createQuery(criteriaQuery);		
 		final List<Discipline> result = typedQuery.getResultList();
 		
 		return result;
@@ -85,7 +95,7 @@ public class DisciplineBusiness extends GenericBusiness implements IDisciplineBu
 	@Override
 	public List<Discipline> findNamesByCourse(final ICourse course) {
 		
-		final CriteriaQuery<Discipline> criteriaQuery = builder.createQuery(Discipline.class);
+		final CriteriaQuery<Discipline> criteriaQuery = cb.createQuery(Discipline.class);
 		final Root<Discipline> rootDiscipline = criteriaQuery.from(Discipline.class);
 		
 		final List<Selection<?>> selections = new ArrayList<Selection<?>>();
@@ -95,10 +105,10 @@ public class DisciplineBusiness extends GenericBusiness implements IDisciplineBu
 		
 		criteriaQuery.multiselect(selections);
 		
-		final Predicate coursePredicate = builder.equal(rootDiscipline.get(Discipline_.course), course);
+		final Predicate coursePredicate = cb.equal(rootDiscipline.get(Discipline_.course), course);
 		criteriaQuery.where(coursePredicate);
 		
-		final TypedQuery<Discipline> typedQuery = entityManager.createQuery(criteriaQuery);		
+		final TypedQuery<Discipline> typedQuery = em.createQuery(criteriaQuery);		
 		final List<Discipline> result = typedQuery.getResultList();
 		
 		return result;

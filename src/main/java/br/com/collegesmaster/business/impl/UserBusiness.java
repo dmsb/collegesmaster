@@ -1,29 +1,35 @@
 package br.com.collegesmaster.business.impl;
 
-import static br.com.collegesmaster.jsf.util.JSFUtils.setUserInUserPrincipal;
 import static br.com.collegesmaster.model.impl.GeneralInfo_.cpf;
 import static br.com.collegesmaster.model.impl.GeneralInfo_.email;
 import static br.com.collegesmaster.model.impl.User_.generalInfo;
 import static br.com.collegesmaster.model.impl.User_.username;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.List;
-import java.util.logging.Level;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
+import org.jboss.logging.Logger;
 
+import br.com.collegesmaster.annotations.qualifiers.LoggedIn;
+import br.com.collegesmaster.annotations.qualifiers.UserDatabase;
 import br.com.collegesmaster.business.IUserBusiness;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.User;
@@ -31,150 +37,151 @@ import br.com.collegesmaster.model.impl.User;
 @Stateless
 @TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
-public class UserBusiness extends GenericBusiness implements IUserBusiness {
-	
+public class UserBusiness implements IUserBusiness {
+
+	@Inject
+	private Logger LOGGER;
+
+	@Inject
+	@UserDatabase
+	private EntityManager em;
+
+	@Inject
+	private CriteriaBuilder cb;
+
+	@Inject
+	@LoggedIn
+	private Event<IUser> userUpdateEvent;
+
 	@PermitAll
 	@Override
 	public void save(final IUser user) {
-		entityManager.persist(user);
+		em.persist(user);
 	}
-	
-	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTATOR"})
+
+	@RolesAllowed({ "STUDENT", "PROFESSOR", "ADMINISTATOR" })
 	@Override
 	public IUser update(final IUser user) {
-		final IUser updatedUser = entityManager.merge(user);
-		setUserInUserPrincipal(updatedUser);
+		final IUser updatedUser = em.merge(user);
+		userUpdateEvent.fire(updatedUser);
 		return updatedUser;
 	}
 
-	@RolesAllowed({"ADMINISTRATOR"})
+	@RolesAllowed({ "ADMINISTRATOR" })
 	@Override
 	public void remove(final IUser user) {
-		entityManager.remove(user);
+		em.remove(user);
 	}
-	
-	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTATOR"})
+
+	@RolesAllowed({ "STUDENT", "PROFESSOR", "ADMINISTATOR" })
 	@Override
 	public IUser findById(final Integer id) {
-		return entityManager.find(User.class, id);
+		return em.find(User.class, id);
 	}
-	
-	@RolesAllowed({"ADMINISTRATOR"})
+
+	@RolesAllowed({ "ADMINISTRATOR" })
 	@Override
 	public List<User> findAll() {
-		final CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
+		final CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
 		criteriaQuery.from(User.class);
-		final TypedQuery<User> typedQuery = entityManager.createQuery(criteriaQuery);
+		final TypedQuery<User> typedQuery = em.createQuery(criteriaQuery);
 		final List<User> result = typedQuery.getResultList();
 
 		return result;
 	}
-	
-	@PermitAll
-	@Override
-	public String getUserPassword(final String username) {
 
-		queryBuilder = new StringBuilder();
-		
-		queryBuilder
-			.append("SELECT user.password ")
-			.append("FROM   User user ")
-			.append("WHERE  user.username = :username");
-
-		final Query query = entityManager.createQuery(queryBuilder.toString());
-		query.setParameter("username", username);
-		try {
-			final String password = (String) query.getSingleResult();
-			return password;
-		} catch (NoResultException e) {
-			LOGGER.log(Level.INFO, "No password founded.");
-		}
-		return null;
-	}
-	
-	@PermitAll
-	@Override
-	public String getUserSalt(final String usernameToBeComparated) {
-		
-		queryBuilder = new StringBuilder();
-		
-		queryBuilder
-			.append("SELECT user.salt ")
-			.append("FROM   User user ")
-			.append("WHERE  user.username = :username");
-
-		final Query query = entityManager.createQuery(queryBuilder.toString());
-		query.setParameter("username", usernameToBeComparated);
-		try {
-			final String salt = (String) query.getSingleResult();
-			return salt;
-		} catch (NoResultException e) {
-			LOGGER.log(Level.INFO, "No salt founded.");
-		}
-		return null;
-	}
-	
 	@PermitAll
 	@Override
 	public Boolean existsCpf(final String cpfToBeComparated) {
-		
+
 		final CriteriaQuery<Boolean> query = buildBooleanReturnQuery(User.class);
-		
+
 		final Subquery<User> subquery = query.subquery(User.class);
 		final Root<User> userRoot = subquery.from(User.class);
 		subquery.select(userRoot);
-		
-		final String crudeCpfToBeComparated = cpfToBeComparated.replaceAll("[^0-9]", "");		
-		
-		final Predicate containsCpf = builder.equal(userRoot.join(generalInfo).get(cpf), crudeCpfToBeComparated);
+
+		final String crudeCpfToBeComparated = cpfToBeComparated.replaceAll("[^0-9]", "");
+
+		final Predicate containsCpf = cb.equal(userRoot.join(generalInfo).get(cpf), crudeCpfToBeComparated);
 		return executeExists(query, subquery, containsCpf);
 	}
 
 	@PermitAll
 	@Override
 	public Boolean existsUsername(final String usernameToBeComparated) {
-		
+
 		final CriteriaQuery<Boolean> query = buildBooleanReturnQuery(User.class);
-		
+
 		final Subquery<User> subquery = query.subquery(User.class);
 		final Root<User> userRoot = subquery.from(User.class);
 		subquery.select(userRoot);
-		
-		final Predicate containsUsername = builder.equal(userRoot.get(username), usernameToBeComparated);
+
+		final Predicate containsUsername = cb.equal(userRoot.get(username), usernameToBeComparated);
 		return executeExists(query, subquery, containsUsername);
-	
+
 	}
 
 	@PermitAll
 	@Override
 	public Boolean existsEmail(final String emailToBeComparated) {
-		
+
 		final CriteriaQuery<Boolean> query = buildBooleanReturnQuery(User.class);
-		
+
 		final Subquery<User> subquery = query.subquery(User.class);
 		final Root<User> userRoot = subquery.from(User.class);
 		subquery.select(userRoot);
-		
-		final Predicate containsEmail = builder.equal(userRoot.join(generalInfo).get(email), emailToBeComparated);
+
+		final Predicate containsEmail = cb.equal(userRoot.join(generalInfo).get(email), emailToBeComparated);
 		return executeExists(query, subquery, containsEmail);
 	}
-	
+
 	@PermitAll
 	@Override
 	public IUser findByUsername(final String usernameToBeComparated) {
-		
-		final CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
-		final Root<User> userRoot =  criteriaQuery.from(User.class);
+
+		final CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
+		final Root<User> userRoot = criteriaQuery.from(User.class);
 		userRoot.fetch(generalInfo);
-		
-		final Predicate usernamePredicate = builder.equal(userRoot.get(username), usernameToBeComparated);
-		
-		criteriaQuery
-			.select(userRoot)
-			.where(usernamePredicate);
-		
-		final TypedQuery<User> typedQuery = entityManager.createQuery(criteriaQuery);
-		return typedQuery.getSingleResult();		
-		
+
+		final Predicate usernamePredicate = cb.equal(userRoot.get(username), usernameToBeComparated);
+
+		criteriaQuery.select(userRoot).where(usernamePredicate);
+
+		final TypedQuery<User> typedQuery = em.createQuery(criteriaQuery);
+		return typedQuery.getSingleResult();
+
+	}
+
+	protected Boolean executeExists(final CriteriaQuery<Boolean> query, final Subquery<User> subquery,
+			final Predicate... predicates) {
+
+		subquery.where(predicates);
+		final Predicate exists = cb.exists(subquery);
+		query.where(exists);
+
+		final TypedQuery<Boolean> typedQuery = em.createQuery(query);
+
+		if (TRUE.equals(singleResult(typedQuery))) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+	protected CriteriaQuery<Boolean> buildBooleanReturnQuery(final Class<?> classz) {
+		final CriteriaQuery<Boolean> query = cb.createQuery(Boolean.class);
+		query.from(classz);
+		query.select(cb.literal(TRUE)).distinct(true);
+		return query;
+	}
+
+	@SuppressWarnings("rawtypes")
+	protected Object singleResult(final TypedQuery typedQuery) {
+		try {
+			return typedQuery.getSingleResult();
+		} catch (NoResultException e) {
+			LOGGER.info("No results");
+		}
+		return null;
 	}
 }

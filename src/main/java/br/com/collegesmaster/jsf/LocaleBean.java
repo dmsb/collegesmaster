@@ -1,15 +1,18 @@
 package br.com.collegesmaster.jsf;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
-@ManagedBean(name = "localeBean")
+@Named("localeBean")
 @SessionScoped
-public class LocaleBean {
+public class LocaleBean implements Serializable {
+	
+	private static final long serialVersionUID = -4840308196500474498L;
 	
 	private Locale locale;
 

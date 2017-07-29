@@ -2,7 +2,6 @@ package br.com.collegesmaster.security;
 
 import static br.com.collegesmaster.util.CryptoUtils.generateHashedPassword;
 
-import java.security.Principal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,8 +9,6 @@ import java.sql.SQLException;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.security.auth.login.LoginException;
 import javax.sql.DataSource;
 
@@ -20,23 +17,10 @@ import org.jboss.security.auth.spi.DatabaseServerLoginModule;
 
 import com.google.common.base.Strings;
 
-import br.com.collegesmaster.model.impl.User;
-
 public class DatabaseLoginModule extends DatabaseServerLoginModule {
 	
-	@PersistenceContext(unitName = "collegesmasterPU")
-	protected EntityManager entityManager;
-	
 	private static String userSalt;
-
-	@Override
-	protected Principal createIdentity(String username) throws Exception {
-
-		final CustomPrincipal customPrincipal = new CustomPrincipal(username, new User());
-		
-		return customPrincipal;
-	}
-
+	
 	@Override
 	protected boolean validatePassword(String enteredPassword, String encrypted) {
 

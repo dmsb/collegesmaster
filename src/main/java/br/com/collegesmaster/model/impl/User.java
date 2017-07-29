@@ -1,7 +1,7 @@
 package br.com.collegesmaster.model.impl;
 
-import static br.com.collegesmaster.util.CryptoUtils.generateSalt;
 import static br.com.collegesmaster.util.CryptoUtils.generateHashedPassword;
+import static br.com.collegesmaster.util.CryptoUtils.generateSalt;
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;

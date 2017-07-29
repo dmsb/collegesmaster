@@ -29,14 +29,14 @@
 				<p:panelGrid>
 					<p:row>
 						<p:column>
-							<p:inputText id="username" value="#{userSessionMB.username}" size="15"
+							<p:inputText id="username" value="#{userSessionMB.credentials.username}" size="15"
 								placeholder="#{text['username']}" required="true"
 								requiredMessage="#{text['required_username_message']}" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:password id="password" value="#{userSessionMB.password}" size="15"
+							<p:password id="password" value="#{userSessionMB.credentials.password}" size="15"
 								placeholder="#{text['password']}" required="true"
 								requiredMessage="#{text['required_password_message']}" />
 						</p:column>

@@ -8,13 +8,17 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
 
+import br.com.collegesmaster.annotations.qualifiers.UserDatabase;
 import br.com.collegesmaster.business.IChallengeResponseBusiness;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IChallengeResponse;
@@ -25,52 +29,58 @@ import br.com.collegesmaster.model.impl.ChallengeResponse_;
 @Stateless
 @TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
-public class ChallengeResponseBusiness extends GenericBusiness implements IChallengeResponseBusiness {
-
+public class ChallengeResponseBusiness  implements IChallengeResponseBusiness {
+	
+	@Inject @UserDatabase
+	private EntityManager em;
+	
+	@Inject
+	protected CriteriaBuilder cb;
+	
 	@RolesAllowed({"STUDENT", "ADMINISTRATOR"})
 	@Override
 	public void save(IChallengeResponse response) {
-		entityManager.persist(response);
+		em.persist(response);
 	}
 
 	@RolesAllowed({"STUDENT", "ADMINISTRATOR"})
 	@Override
 	public IChallengeResponse update(IChallengeResponse response) {
-		return entityManager.merge(response);
+		return em.merge(response);
 	}
 	
 	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
 	public void remove(IChallengeResponse response) {
-		entityManager.remove(response);
+		em.remove(response);
 	}
 
 	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
 	@Override
 	public IChallengeResponse findById(Integer id) {
-		return entityManager.find(ChallengeResponse.class, id);
+		return em.find(ChallengeResponse.class, id);
 	}
 	
 	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
 	public List<ChallengeResponse> findAll() {
-		final CriteriaQuery<ChallengeResponse> criteriaQuery = builder.createQuery(ChallengeResponse.class);
-		final TypedQuery<ChallengeResponse> typedQuery = entityManager.createQuery(criteriaQuery);		
+		final CriteriaQuery<ChallengeResponse> criteriaQuery = cb.createQuery(ChallengeResponse.class);
+		final TypedQuery<ChallengeResponse> typedQuery = em.createQuery(criteriaQuery);		
 		return typedQuery.getResultList();
 	}
 	
 	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
 	@Override
 	public List<ChallengeResponse> findAllByUser(final IUser user) {
-		final CriteriaQuery<ChallengeResponse> criteriaQuery = builder.createQuery(ChallengeResponse.class);
+		final CriteriaQuery<ChallengeResponse> criteriaQuery = cb.createQuery(ChallengeResponse.class);
 		final Root<ChallengeResponse> challengeResponseRoot = criteriaQuery.from(ChallengeResponse.class);
-		final Predicate userPredicate = builder.equal(challengeResponseRoot.get(owner), user);
+		final Predicate userPredicate = cb.equal(challengeResponseRoot.get(owner), user);
 		
 		criteriaQuery
 			.select(challengeResponseRoot)
 			.where(userPredicate);
 		
-		final TypedQuery<ChallengeResponse> typedQuery = entityManager.createQuery(criteriaQuery);
+		final TypedQuery<ChallengeResponse> typedQuery = em.createQuery(criteriaQuery);
 		return typedQuery.getResultList();
 		
 	}
@@ -78,18 +88,18 @@ public class ChallengeResponseBusiness extends GenericBusiness implements IChall
 	@RolesAllowed({"PROFESSOR", "ADMINISTRATOR"})
 	@Override
 	public List<ChallengeResponse> findAllByChallenge(IChallenge selectedChallenge) {
-		final CriteriaQuery<ChallengeResponse> criteriaQuery = builder.createQuery(ChallengeResponse.class);
+		final CriteriaQuery<ChallengeResponse> criteriaQuery = cb.createQuery(ChallengeResponse.class);
 		final Root<ChallengeResponse> challengeResponseRoot = criteriaQuery.from(ChallengeResponse.class);
 		challengeResponseRoot.fetch(ChallengeResponse_.owner);
 		
-		final Predicate predicate = builder
+		final Predicate predicate = cb
 				.equal(challengeResponseRoot.get(ChallengeResponse_.targetChallenge), selectedChallenge);
 		
 		criteriaQuery
 			.select(challengeResponseRoot)
 			.where(predicate);
 		
-		final TypedQuery<ChallengeResponse> typedQuery = entityManager.createQuery(criteriaQuery);
+		final TypedQuery<ChallengeResponse> typedQuery = em.createQuery(criteriaQuery);
 		return typedQuery.getResultList();
 	}
 

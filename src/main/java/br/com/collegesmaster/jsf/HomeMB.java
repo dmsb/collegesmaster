@@ -13,8 +13,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import br.com.collegesmaster.business.ICourseBusiness;
 import br.com.collegesmaster.business.IInstituteBusiness;
@@ -30,7 +30,7 @@ import br.com.collegesmaster.model.impl.Institute;
 import br.com.collegesmaster.model.impl.Role;
 import br.com.collegesmaster.model.impl.User;
 
-@ManagedBean(name = "homeMB")
+@Named("homeMB")
 @ViewScoped
 public class HomeMB implements Serializable {
 

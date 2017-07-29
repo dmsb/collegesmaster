@@ -1,17 +1,22 @@
 package br.com.collegesmaster.jsf;
 
-import static br.com.collegesmaster.jsf.util.JSFUtils.getUserPrincipal;
-
 import java.io.Serializable;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-@ManagedBean(name = "mainMenuMB")
+import br.com.collegesmaster.annotations.qualifiers.LoggedIn;
+import br.com.collegesmaster.model.IUser;
+
+@Named("mainMenuMB")
 @SessionScoped
 public class MainMenuMB implements Serializable {
-
+	
+	@Inject @LoggedIn 
+	private IUser loggedUser;
+	
 	private static final long serialVersionUID = 344294436330653003L;
 
 	private static final String CREATED_CHALLENGES = "/pages/users/professor/created_challenges.xhtml?faces-redirect=true";
@@ -27,7 +32,7 @@ public class MainMenuMB implements Serializable {
 	private static final String HOME = "/pages/home.xhtml?faces-redirect=true";
 	
 	public String loadPrincipalUsername() {
-		return getUserPrincipal().getName();
+		return loggedUser.getUsername();
 	}
 	
 	public String logout() {

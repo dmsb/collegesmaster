@@ -1,7 +1,6 @@
 package br.com.collegesmaster.jsf;
 
 import static br.com.collegesmaster.jsf.util.JSFUtils.addMessage;
-import static br.com.collegesmaster.jsf.util.JSFUtils.getUserPrincipal;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
@@ -13,9 +12,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
+import br.com.collegesmaster.annotations.qualifiers.LoggedIn;
 import br.com.collegesmaster.business.IChallengeBusiness;
 import br.com.collegesmaster.business.IChallengeResponseBusiness;
 import br.com.collegesmaster.business.IDisciplineBusiness;
@@ -26,13 +27,14 @@ import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
 import br.com.collegesmaster.model.IQuestion;
 import br.com.collegesmaster.model.IQuestionResponse;
+import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.Alternative;
 import br.com.collegesmaster.model.impl.ChallengeResponse;
 import br.com.collegesmaster.model.impl.Discipline;
 import br.com.collegesmaster.model.impl.Question;
 import br.com.collegesmaster.model.impl.QuestionResponse;
 
-@ManagedBean(name = "challengeResponseMB")
+@Named("challengeResponseMB")
 @ViewScoped
 public class ChallengeResponseMB implements Serializable {
 
@@ -46,7 +48,10 @@ public class ChallengeResponseMB implements Serializable {
 	
 	@EJB
 	private transient IChallengeResponseBusiness challengeResponseBusiness;
-
+	
+	@Inject @LoggedIn 
+	private IUser loggedUser;
+	
 	private List<Discipline> userDisciplines;
 	
 	private IDiscipline selectedDiscipline;
@@ -69,7 +74,7 @@ public class ChallengeResponseMB implements Serializable {
 	
 	public void resetResponse() {
 		challengeResponse = new ChallengeResponse();
-		challengeResponse.setOwner(getUserPrincipal().getUser());
+		challengeResponse.setOwner(loggedUser);
 		challengeResponse.setQuestionsResponse(new ArrayList<>());
 		selectedQuestion = new Question();
 		selectedAlternative = new Alternative();
@@ -77,7 +82,7 @@ public class ChallengeResponseMB implements Serializable {
 	}
 	
 	public void loadUserDisciplines() {		
-		final ICourse course = getUserPrincipal().getUser().getGeneralInfo().getCourse();
+		final ICourse course = loggedUser.getGeneralInfo().getCourse();
 		userDisciplines = disciplineBusiness.findByCourse(course);
 	}
 	
