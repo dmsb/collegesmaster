@@ -7,7 +7,6 @@ import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
@@ -34,9 +33,9 @@ public class UserSessionMB implements Serializable {
 	private static final long serialVersionUID = 4684060370406574773L;
 	
 	@Inject
-	private Logger LOGGER;
+	private transient Logger LOGGER;
 
-	@EJB
+	@Inject
 	private transient IUserBusiness userBusiness;
 
 	private ICredentials credentials;
@@ -61,8 +60,10 @@ public class UserSessionMB implements Serializable {
 			loginRequest.login(credentials.getUsername(), credentials.getPassword());
 
 			if (loginRequest.getUserPrincipal() != null) {
+				
 				loggedUser = userBusiness.findByUsername(credentials.getUsername());
-
+				LOGGER.info("Login success!");
+				
 				if (loginRequest.isUserInRole("PROFESSOR")) {
 					return "/pages/users/professor/create_challenge.xhtml?faces-redirect=true";
 				} else if (loginRequest.isUserInRole("STUDENT")) {

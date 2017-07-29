@@ -6,7 +6,6 @@ import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,7 +20,7 @@ public class UserEditMB implements Serializable {
 
 	private static final long serialVersionUID = -7014632562707028131L;
 	
-	@EJB
+	@Inject
 	private transient IUserBusiness userBusiness;
 	
 	@Inject @LoggedIn 

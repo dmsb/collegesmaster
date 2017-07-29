@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.collegesmaster.business.ICourseBusiness;
@@ -36,16 +36,16 @@ public class HomeMB implements Serializable {
 
 	private static final long serialVersionUID = 7422462580072371882L;
 
-	@EJB
+	@Inject
 	private transient IUserBusiness userBusiness;
 	
-	@EJB
+	@Inject
 	private transient IRoleBusiness roleBusiness;
 	
-	@EJB
+	@Inject
 	private transient IInstituteBusiness instituteBusiness;
 	
-	@EJB
+	@Inject
 	private transient ICourseBusiness courseBusiness;
 	
 	private IUser user;

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,7 +19,7 @@ public class CompletedChallengesMB implements Serializable {
 	
 	private static final long serialVersionUID = 5741010490287887376L;
 	
-	@EJB
+	@Inject
 	private transient IChallengeResponseBusiness challengeResponseBusiness;
 	
 	@Inject @LoggedIn 
