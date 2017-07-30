@@ -1,4 +1,4 @@
-package br.com.collegesmaster.annotations.qualifiers;
+package br.com.collegesmaster.annotation.qualifier;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;

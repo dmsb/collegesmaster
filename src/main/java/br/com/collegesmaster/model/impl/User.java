@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
 
-import br.com.collegesmaster.annotations.Password;
+import br.com.collegesmaster.annotation.Password;
 import br.com.collegesmaster.model.IGeneralInfo;
 import br.com.collegesmaster.model.IRole;
 import br.com.collegesmaster.model.IUser;

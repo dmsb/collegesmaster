@@ -68,7 +68,7 @@ public class HomeMB implements Serializable {
 	}
 	
 	public List<Role> allRoles() {
-		return roleBusiness.findAll();
+		return roleBusiness.findAllEnabledRolesToClients();
 	}
 	
 	public void persistUser() {

@@ -18,7 +18,7 @@ import javax.persistence.criteria.Root;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
 
-import br.com.collegesmaster.annotations.qualifiers.UserDatabase;
+import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 import br.com.collegesmaster.business.IChallengeResponseBusiness;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IChallengeResponse;
@@ -63,7 +63,7 @@ public class ChallengeResponseBusiness  implements IChallengeResponseBusiness {
 	
 	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
-	public List<ChallengeResponse> findAll() {
+	public List<ChallengeResponse> findAllEnabledRolesToClients() {
 		final CriteriaQuery<ChallengeResponse> criteriaQuery = cb.createQuery(ChallengeResponse.class);
 		final TypedQuery<ChallengeResponse> typedQuery = em.createQuery(criteriaQuery);		
 		return typedQuery.getResultList();

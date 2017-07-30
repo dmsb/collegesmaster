@@ -19,7 +19,7 @@ import javax.persistence.criteria.Root;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
 
-import br.com.collegesmaster.annotations.qualifiers.UserDatabase;
+import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 import br.com.collegesmaster.business.IChallengeBusiness;
 import br.com.collegesmaster.model.IChallenge;
 import br.com.collegesmaster.model.IUser;
@@ -41,7 +41,7 @@ public class ChallengeBusiness implements IChallengeBusiness {
 	@RolesAllowed({"PROFESSOR", "ADMINISTRATOR"})
 	@Override
 	public void save(final IChallenge challenge) {
-		em.persist(challenge);		
+		em.persist(challenge);
 	}
 	
 	@RolesAllowed({"PROFESSOR", "ADMINISTRATOR"})
@@ -64,7 +64,7 @@ public class ChallengeBusiness implements IChallengeBusiness {
 	
 	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
-	public List<Challenge> findAll() {
+	public List<Challenge> findAllEnabledRolesToClients() {
 		
 		final CriteriaQuery<Challenge> criteriaQuery = cb.createQuery(Challenge.class);
 		final TypedQuery<Challenge> typedQuery = em.createQuery(criteriaQuery);		

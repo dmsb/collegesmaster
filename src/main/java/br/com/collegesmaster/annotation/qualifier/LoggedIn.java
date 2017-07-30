@@ -1,4 +1,4 @@
-package br.com.collegesmaster.annotations.qualifiers;
+package br.com.collegesmaster.annotation.qualifier;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
@@ -14,4 +14,6 @@ import javax.inject.Qualifier;
 @Qualifier
 @Retention(RUNTIME)
 @Target({TYPE, METHOD, FIELD, PARAMETER})
-public @interface Users {}
+public @interface LoggedIn {
+
+}

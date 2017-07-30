@@ -7,7 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.annotations.qualifiers.LoggedIn;
+import br.com.collegesmaster.annotation.qualifier.LoggedIn;
 import br.com.collegesmaster.model.IUser;
 
 @Named("mainMenuMB")

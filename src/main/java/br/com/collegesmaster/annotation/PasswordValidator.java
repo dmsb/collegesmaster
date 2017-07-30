@@ -1,4 +1,4 @@
-package br.com.collegesmaster.annotations;
+package br.com.collegesmaster.annotation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

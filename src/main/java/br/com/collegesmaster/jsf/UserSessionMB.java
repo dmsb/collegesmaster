@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.jboss.logging.Logger;
 
-import br.com.collegesmaster.annotations.qualifiers.LoggedIn;
+import br.com.collegesmaster.annotation.qualifier.LoggedIn;
 import br.com.collegesmaster.business.IUserBusiness;
 import br.com.collegesmaster.exception.NotLoggedInUserException;
 import br.com.collegesmaster.model.IUser;

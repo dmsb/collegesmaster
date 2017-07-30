@@ -10,7 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 
 import org.jboss.logging.Logger;
 
-import br.com.collegesmaster.annotations.qualifiers.UserDatabase;
+import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 
 @ApplicationScoped
 public class FactoryProducer {

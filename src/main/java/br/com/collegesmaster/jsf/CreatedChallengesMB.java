@@ -8,7 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.annotations.qualifiers.LoggedIn;
+import br.com.collegesmaster.annotation.qualifier.LoggedIn;
 import br.com.collegesmaster.business.IChallengeBusiness;
 import br.com.collegesmaster.business.IChallengeResponseBusiness;
 import br.com.collegesmaster.model.IChallenge;

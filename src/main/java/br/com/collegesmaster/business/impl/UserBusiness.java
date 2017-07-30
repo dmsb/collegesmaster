@@ -28,8 +28,8 @@ import javax.persistence.criteria.Subquery;
 import org.jboss.ejb3.annotation.SecurityDomain;
 import org.jboss.logging.Logger;
 
-import br.com.collegesmaster.annotations.qualifiers.LoggedIn;
-import br.com.collegesmaster.annotations.qualifiers.UserDatabase;
+import br.com.collegesmaster.annotation.qualifier.LoggedIn;
+import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 import br.com.collegesmaster.business.IUserBusiness;
 import br.com.collegesmaster.model.IUser;
 import br.com.collegesmaster.model.impl.User;
@@ -81,7 +81,7 @@ public class UserBusiness implements IUserBusiness {
 
 	@RolesAllowed({ "ADMINISTRATOR" })
 	@Override
-	public List<User> findAll() {
+	public List<User> findAllEnabledRolesToClients() {
 		final CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
 		criteriaQuery.from(User.class);
 		final TypedQuery<User> typedQuery = em.createQuery(criteriaQuery);

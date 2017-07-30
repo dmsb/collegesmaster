@@ -6,7 +6,7 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import br.com.collegesmaster.annotations.State;
+import br.com.collegesmaster.annotation.State;
 
 @Embeddable
 public class Localization implements Serializable {

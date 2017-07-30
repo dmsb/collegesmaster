@@ -20,7 +20,7 @@ import javax.persistence.criteria.Selection;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
 
-import br.com.collegesmaster.annotations.qualifiers.UserDatabase;
+import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 import br.com.collegesmaster.business.IDisciplineBusiness;
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
@@ -61,7 +61,7 @@ public class DisciplineBusiness implements IDisciplineBusiness {
 	}
 
 	@Override
-	public List<Discipline> findAll() {
+	public List<Discipline> findAllEnabledRolesToClients() {
 		
 		final CriteriaQuery<Discipline> criteriaQuery = cb.createQuery(Discipline.class);
 		criteriaQuery.from(Discipline.class);

@@ -69,7 +69,6 @@
 				<p:dialog id="questions_dialog" widgetVar="questions_wv" closeOnEscape="true" closable="true" resizable="false"
 					responsive="true" hideEffect="puff" showEffect="puff" header="#{text['questions']}" 
 					maximizable="true" minimizable="true" width="1280">
-					<p:messages id="messages" autoUpdate="true" closable="true" />
 					<p:panelGrid id="questions_pg">
 						<p:row>
 							<p:column>
@@ -145,7 +144,8 @@
 								<p:commandButton value="#{text['answer']}" oncomplete="PF('alternatives_wv').hide()"
 									actionListener="#{challengeResponseMB.selectAlternative()}"
 									process="@this @parent" icon="fa fa-fw fa-send"
-									update="composite:challenges_form:questions_data_table composite:challenges_form:messages" />
+									update="composite:challenges_form:questions_data_table
+									composite:growl" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>

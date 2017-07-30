@@ -1,4 +1,4 @@
-package br.com.collegesmaster.annotations;
+package br.com.collegesmaster.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,12 +8,12 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Target({ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = StateValidator.class)
-public @interface State {
+@Constraint(validatedBy = PasswordValidator.class)
+public @interface Password {
 	
-	String message() default "{br.com.collegesmaster.Localization.state}";
+	String message() default "{br.com.collegesmaster.annotations.Password.message}";
     
 	Class<?>[] groups() default {};
     

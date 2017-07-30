@@ -13,13 +13,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
 
-import br.com.collegesmaster.annotations.qualifiers.UserDatabase;
+import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 import br.com.collegesmaster.business.IRoleBusiness;
 import br.com.collegesmaster.model.IRole;
 import br.com.collegesmaster.model.impl.Role;
+import br.com.collegesmaster.model.impl.Role_;
 
 @Stateless
 @TransactionManagement(CONTAINER)
@@ -57,11 +60,15 @@ public class RoleBusiness implements IRoleBusiness {
 	
 	@PermitAll
 	@Override
-	public List<Role> findAll() {		
+	public List<Role> findAllEnabledRolesToClients() {		
 		final CriteriaQuery<Role> criteriaQuery = cb.createQuery(Role.class);
-		criteriaQuery.from(Role.class);
-		final TypedQuery<Role> typedQuery = em.createQuery(criteriaQuery);		
-		final List<Role> result = typedQuery.getResultList(); 
+		Root<Role> rootRole = criteriaQuery.from(Role.class);
+
+		final Predicate exceptAdmRole = cb.notEqual(rootRole.get(Role_.name), "ADMINISTRATOR");
+		criteriaQuery.where(exceptAdmRole);
+		
+		final TypedQuery<Role> typedQuery = em.createQuery(criteriaQuery);
+		final List<Role> result = typedQuery.getResultList();
 		
 		return result;
 	}

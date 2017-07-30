@@ -25,6 +25,6 @@ public interface IBusiness <I extends IModel, C extends Model> {
 	public I findById(Integer id);
 	
 	@TransactionAttribute(REQUIRED)
-	public List<C> findAll();
+	public List<C> findAllEnabledRolesToClients();
 
 }
