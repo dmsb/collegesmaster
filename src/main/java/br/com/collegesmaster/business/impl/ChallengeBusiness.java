@@ -16,6 +16,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.ws.rs.Path;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
 
@@ -27,6 +28,7 @@ import br.com.collegesmaster.model.impl.Challenge;
 import br.com.collegesmaster.model.impl.Challenge_;
 import br.com.collegesmaster.model.impl.Question;
 
+@Path("/challenge")
 @Stateless
 @TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
@@ -40,7 +42,7 @@ public class ChallengeBusiness implements IChallengeBusiness {
 	
 	@RolesAllowed({"PROFESSOR", "ADMINISTRATOR"})
 	@Override
-	public void save(final IChallenge challenge) {
+	public void create(final IChallenge challenge) {
 		em.persist(challenge);
 	}
 	
@@ -64,7 +66,7 @@ public class ChallengeBusiness implements IChallengeBusiness {
 	
 	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
-	public List<Challenge> findAllEnabledRolesToClients() {
+	public List<Challenge> findAll() {
 		
 		final CriteriaQuery<Challenge> criteriaQuery = cb.createQuery(Challenge.class);
 		final TypedQuery<Challenge> typedQuery = em.createQuery(criteriaQuery);		
@@ -74,7 +76,7 @@ public class ChallengeBusiness implements IChallengeBusiness {
 	@PermitAll
 	@Override
 	public List<Question> findQuestionsByChallenge(final IChallenge selectedChallenge) {
-		
+
 		final CriteriaQuery<Question> criteriaQuery = cb.createQuery(Question.class);
 		final Root<Question> questionRoot = criteriaQuery.from(Question.class);
 		

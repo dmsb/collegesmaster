@@ -19,7 +19,7 @@ public class FactoryProducer {
 	@Produces
 	@UserDatabase
 	private EntityManager entityManager;
-
+	
 	@Produces
 	public CriteriaBuilder criteriaBulder() {
 		return entityManager.getCriteriaBuilder();

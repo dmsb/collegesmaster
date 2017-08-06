@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
 	<display-name>collegesmaster</display-name>
 
@@ -33,7 +33,7 @@
 		<param-name>primefaces.THEME</param-name>
 		<param-value>dot-luv</param-value>
 	</context-param>
-
+	
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -48,16 +48,16 @@
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
-	
+
 	<login-config>
-	    <auth-method>FORM</auth-method>
+		<auth-method>FORM</auth-method>
 		<realm-name>cm-database-domain</realm-name>
-	    <form-login-config>
-		    <form-login-page>/pages/home.xhtml</form-login-page>
-		    <form-error-page>/pages/home.xhtml</form-error-page>
-	    </form-login-config>
+		<form-login-config>
+			<form-login-page>/pages/home.xhtml</form-login-page>
+			<form-error-page>/pages/home.xhtml</form-error-page>
+		</form-login-config>
 	</login-config>
-	
+
 	<!-- Professor Security Constraint -->
 	<security-constraint>
 		<web-resource-collection>
@@ -65,17 +65,17 @@
 			<url-pattern>/pages/users/professor/*</url-pattern>
 			<url-pattern>/pages/users/edit_user.xhtml</url-pattern>
 			<http-method>GET</http-method>
-        	<http-method>POST</http-method>
-        	<http-method>PUT</http-method>
-        	<http-method>DELETE</http-method>
-        	<http-method>OPTION</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+			<http-method>OPTION</http-method>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>PROFESSOR</role-name>
 		</auth-constraint>
 		<user-data-constraint>
-	        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-	    </user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
 	</security-constraint>
 
 	<!-- Student Security Constraint -->
@@ -86,10 +86,10 @@
 			<url-pattern>/pages/users/student/*</url-pattern>
 			<url-pattern>/pages/users/edit_user.xhtml</url-pattern>
 			<http-method>GET</http-method>
-        	<http-method>POST</http-method>
-        	<http-method>PUT</http-method>
-        	<http-method>DELETE</http-method>
-        	<http-method>OPTION</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+			<http-method>OPTION</http-method>
 		</web-resource-collection>
 		<auth-constraint>
 			<description />
@@ -97,10 +97,10 @@
 		</auth-constraint>
 		<user-data-constraint>
 			<description />
-	        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-	    </user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
 	</security-constraint>
-	
+
 	<!-- Administrator Security Constraint -->
 	<security-constraint>
 		<web-resource-collection>
@@ -108,10 +108,10 @@
 			<description />
 			<url-pattern>/pages/*</url-pattern>
 			<http-method>GET</http-method>
-        	<http-method>POST</http-method>
-        	<http-method>PUT</http-method>
-        	<http-method>DELETE</http-method>
-        	<http-method>OPTION</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+			<http-method>OPTION</http-method>
 		</web-resource-collection>
 		<auth-constraint>
 			<description />
@@ -119,20 +119,47 @@
 		</auth-constraint>
 		<user-data-constraint>
 			<description />
-	        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-	    </user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<display-name>Public</display-name>
+		<web-resource-collection>
+			<web-resource-name>Public</web-resource-name>
+			<description />
+			<url-pattern>/pages/home.xhtml</url-pattern>
+			<url-pattern>/resources/*</url-pattern>
+			<url-pattern>../resources/i18n/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
 	</security-constraint>
 	
-	<security-constraint>
-	    <display-name>Public</display-name>
-	    <web-resource-collection>
-	        <web-resource-name>Public</web-resource-name>
-	        <description/>
-	        <url-pattern>/pages/home.xhtml</url-pattern>
-	        <url-pattern>/resources/*</url-pattern>
-	        <url-pattern>../resources/i18n/*</url-pattern>
-	        <http-method>GET</http-method>
-        	<http-method>POST</http-method>
-	    </web-resource-collection>
-	</security-constraint>
+	<servlet>
+        <servlet-name>Resteasy</servlet-name>
+        <servlet-class>
+            org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
+        </servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>br.com.collegesmaster.rest.RestApplication</param-value>
+        </init-param>
+    </servlet>
+    
+    <filter>
+        <filter-name>Resteasy</filter-name>
+        <filter-class>
+            org.jboss.resteasy.plugins.server.servlet.FilterDispatcher
+        </filter-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>br.com.collegesmaster.rest.RestApplication</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>Resteasy</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>

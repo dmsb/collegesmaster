@@ -40,7 +40,7 @@ public class DisciplineBusiness implements IDisciplineBusiness {
 	protected CriteriaBuilder cb;
 	
 	@Override
-	public void save(IDiscipline discipline) {
+	public void create(IDiscipline discipline) {
 		em.persist(discipline);
 	}
 
@@ -61,7 +61,7 @@ public class DisciplineBusiness implements IDisciplineBusiness {
 	}
 
 	@Override
-	public List<Discipline> findAllEnabledRolesToClients() {
+	public List<Discipline> findAll() {
 		
 		final CriteriaQuery<Discipline> criteriaQuery = cb.createQuery(Discipline.class);
 		criteriaQuery.from(Discipline.class);

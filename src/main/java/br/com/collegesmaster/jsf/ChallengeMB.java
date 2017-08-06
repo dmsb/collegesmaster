@@ -95,7 +95,7 @@ public class ChallengeMB implements Serializable {
 		
 		challenge.setDiscipline(discipline);
 		
-		challengeBusiness.save(challenge);
+		challengeBusiness.create(challenge);
 		addMessage(SEVERITY_INFO, "challenge_registred_with_success_message");
 
 		init();

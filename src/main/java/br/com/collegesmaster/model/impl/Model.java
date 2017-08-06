@@ -10,10 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.com.collegesmaster.model.IModel;
 
 @MappedSuperclass
 @Access(FIELD)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class Model implements IModel {
 
 	private static final long serialVersionUID = 3854273522875200187L;

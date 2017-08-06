@@ -19,6 +19,8 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import br.com.collegesmaster.model.IInstitute;
 
 @Entity
@@ -34,6 +36,7 @@ public class Institute extends Model implements IInstitute {
     @Size(min = 3)
     private String name;
     
+    @JsonManagedReference
     @NotAudited
     @OneToMany(targetEntity = Course.class, cascade = ALL, 
     		fetch = LAZY, orphanRemoval = true, mappedBy = "institute")

@@ -156,7 +156,7 @@ public class ChallengeResponseMB implements Serializable {
 	}
 	
 	public void persistResponse() {
-		challengeResponseBusiness.save(challengeResponse);
+		challengeResponseBusiness.create(challengeResponse);
 		addMessage(SEVERITY_INFO, "response_registred_with_success_message");
 	}
 

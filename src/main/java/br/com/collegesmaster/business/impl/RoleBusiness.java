@@ -37,7 +37,7 @@ public class RoleBusiness implements IRoleBusiness {
 	protected CriteriaBuilder cb;
 	
 	@Override
-	public void save(IRole profile) {
+	public void create(IRole profile) {
 		em.persist(profile);
 
 	}
@@ -60,7 +60,7 @@ public class RoleBusiness implements IRoleBusiness {
 	
 	@PermitAll
 	@Override
-	public List<Role> findAllEnabledRolesToClients() {		
+	public List<Role> findAll() {		
 		final CriteriaQuery<Role> criteriaQuery = cb.createQuery(Role.class);
 		Root<Role> rootRole = criteriaQuery.from(Role.class);
 

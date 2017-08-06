@@ -20,6 +20,8 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IInstitute;
 
@@ -34,12 +36,14 @@ public class Course extends Model implements ICourse {
 	@NotBlank
 	@Column(name = "name", length = 50, nullable = false)
 	private String name;
-		
+	
+	@JsonBackReference
 	@NotNull
 	@ManyToOne(targetEntity = Institute.class, optional = false, fetch = LAZY)
 	@JoinColumn(name = "instituteFK", referencedColumnName = "id", updatable = false)
 	private IInstitute institute;
 	
+	@JsonBackReference
 	@NotAudited
 	@OneToMany(targetEntity = Discipline.class, cascade = ALL, fetch = LAZY,
 			orphanRemoval = true, mappedBy = "course")

@@ -3,6 +3,7 @@ package br.com.collegesmaster.business.impl;
 import static br.com.collegesmaster.model.impl.Institute_.courses;
 import static br.com.collegesmaster.model.impl.Institute_.name;
 import static br.com.collegesmaster.model.impl.Model_.id;
+import static javax.ejb.TransactionAttributeType.REQUIRED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionManagement;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -41,7 +43,7 @@ public class InstituteBusiness implements IInstituteBusiness {
 	protected CriteriaBuilder cb;
 	
 	@Override
-	public void save(IInstitute institute) {
+	public void create(IInstitute institute) {
 		em.persist(institute);
 		
 	}
@@ -65,7 +67,7 @@ public class InstituteBusiness implements IInstituteBusiness {
 	}
 	
 	@Override
-	public List<Institute> findAllEnabledRolesToClients() {
+	public List<Institute> findAll() {
 		final CriteriaQuery<Institute> criteriaQuery = cb.createQuery(Institute.class);		
 		criteriaQuery.from(Institute.class);
 		
@@ -75,6 +77,7 @@ public class InstituteBusiness implements IInstituteBusiness {
 	}
 	
 	@PermitAll
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public List<Institute> findNames() {
 		final CriteriaQuery<Institute> criteriaQuery = cb.createQuery(Institute.class);
@@ -93,6 +96,7 @@ public class InstituteBusiness implements IInstituteBusiness {
 	}
 	
 	@PermitAll
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public List<Institute> findFetchingCourses() {
 		final CriteriaQuery<Institute> criteriaQuery = cb.createQuery(Institute.class);

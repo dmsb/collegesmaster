@@ -20,6 +20,8 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import br.com.collegesmaster.model.ICourse;
 import br.com.collegesmaster.model.IDiscipline;
 
@@ -35,6 +37,7 @@ public class Discipline extends Model implements IDiscipline {
     @Column(name = "name", length = 30, nullable = false)
     private String name;
 	
+	@JsonManagedReference
     @NotNull
     @ManyToOne(targetEntity = Course.class, optional = false, fetch = LAZY)
     @JoinColumn(name = "courseFK", referencedColumnName = "id")

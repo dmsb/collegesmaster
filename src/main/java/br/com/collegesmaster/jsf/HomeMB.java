@@ -68,7 +68,7 @@ public class HomeMB implements Serializable {
 	}
 	
 	public List<Role> allRoles() {
-		return roleBusiness.findAllEnabledRolesToClients();
+		return roleBusiness.findAll();
 	}
 	
 	public void persistUser() {
@@ -99,7 +99,7 @@ public class HomeMB implements Serializable {
 		if(FALSE.equals(isValid)) {
 			return;
 		} else {
-			userBusiness.save(user);
+			userBusiness.create(user);
 			addMessageWithDetails(SEVERITY_INFO, "success_message", "user_registred_with_success_message");
 			
 			init();			

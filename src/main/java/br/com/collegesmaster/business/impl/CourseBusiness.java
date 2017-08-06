@@ -39,7 +39,7 @@ public class CourseBusiness implements ICourseBusiness {
 	protected CriteriaBuilder cb;
 	
 	@Override
-	public void save(ICourse course) {
+	public void create(ICourse course) {
 		em.persist(course);
 	}
 
@@ -60,13 +60,13 @@ public class CourseBusiness implements ICourseBusiness {
 	}
 
 	@Override
-	public List<Course> findAllEnabledRolesToClients() {
+	public List<Course> findAll() {
 		
 		final CriteriaQuery<Course> criteriaQuery = cb.createQuery(Course.class);		
 		criteriaQuery.from(Course.class);
 		
 		final TypedQuery<Course> typedQuery = em.createQuery(criteriaQuery);
-		final List<Course> result = typedQuery.getResultList(); 
+		final List<Course> result = typedQuery.getResultList();
 		
 		return result;
 	}

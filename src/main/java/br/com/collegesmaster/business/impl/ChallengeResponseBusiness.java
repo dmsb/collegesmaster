@@ -39,7 +39,7 @@ public class ChallengeResponseBusiness  implements IChallengeResponseBusiness {
 	
 	@RolesAllowed({"STUDENT", "ADMINISTRATOR"})
 	@Override
-	public void save(IChallengeResponse response) {
+	public void create(IChallengeResponse response) {
 		em.persist(response);
 	}
 
@@ -63,7 +63,7 @@ public class ChallengeResponseBusiness  implements IChallengeResponseBusiness {
 	
 	@RolesAllowed({"ADMINISTRATOR"})
 	@Override
-	public List<ChallengeResponse> findAllEnabledRolesToClients() {
+	public List<ChallengeResponse> findAll() {
 		final CriteriaQuery<ChallengeResponse> criteriaQuery = cb.createQuery(ChallengeResponse.class);
 		final TypedQuery<ChallengeResponse> typedQuery = em.createQuery(criteriaQuery);		
 		return typedQuery.getResultList();

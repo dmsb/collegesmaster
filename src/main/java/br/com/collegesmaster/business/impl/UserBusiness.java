@@ -6,6 +6,7 @@ import static br.com.collegesmaster.model.impl.User_.generalInfo;
 import static br.com.collegesmaster.model.impl.User_.username;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static javax.ejb.TransactionAttributeType.REQUIRED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionManagement;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
@@ -55,7 +57,7 @@ public class UserBusiness implements IUserBusiness {
 
 	@PermitAll
 	@Override
-	public void save(final IUser user) {
+	public void create(final IUser user) {
 		em.persist(user);
 	}
 
@@ -81,7 +83,7 @@ public class UserBusiness implements IUserBusiness {
 
 	@RolesAllowed({ "ADMINISTRATOR" })
 	@Override
-	public List<User> findAllEnabledRolesToClients() {
+	public List<User> findAll() {
 		final CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
 		criteriaQuery.from(User.class);
 		final TypedQuery<User> typedQuery = em.createQuery(criteriaQuery);
@@ -91,6 +93,7 @@ public class UserBusiness implements IUserBusiness {
 	}
 
 	@PermitAll
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean existsCpf(final String cpfToBeComparated) {
 
@@ -107,6 +110,7 @@ public class UserBusiness implements IUserBusiness {
 	}
 
 	@PermitAll
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean existsUsername(final String usernameToBeComparated) {
 
@@ -122,6 +126,7 @@ public class UserBusiness implements IUserBusiness {
 	}
 
 	@PermitAll
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean existsEmail(final String emailToBeComparated) {
 
@@ -136,6 +141,7 @@ public class UserBusiness implements IUserBusiness {
 	}
 
 	@PermitAll
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public IUser findByUsername(final String usernameToBeComparated) {
 

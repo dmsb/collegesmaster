@@ -87,7 +87,7 @@ public class UserSessionMB implements Serializable {
 	@LoggedIn
 	public IUser getLoggedUser() throws LoginException {
 		if (loggedUser == null) {
-			throw new NotLoggedInUserException();
+			throw new NotLoggedInUserException("Fail to get logged user.");
 		} else {
 			return loggedUser;
 		}
