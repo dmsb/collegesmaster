@@ -9,9 +9,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.collegesmaster.annotation.qualifier.LoggedIn;
-import br.com.collegesmaster.business.IChallengeResponseBusiness;
-import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.model.impl.ChallengeResponse;
+import br.com.collegesmaster.business.ChallengeResponseBusiness;
+import br.com.collegesmaster.model.User;
+import br.com.collegesmaster.model.impl.ChallengeResponseImpl;
 
 @Named("completedChallengesMB")
 @ViewScoped
@@ -20,23 +20,23 @@ public class CompletedChallengesMB implements Serializable {
 	private static final long serialVersionUID = 5741010490287887376L;
 	
 	@Inject
-	private transient IChallengeResponseBusiness challengeResponseBusiness;
+	private transient ChallengeResponseBusiness challengeResponseBusiness;
 	
 	@Inject @LoggedIn 
-	private IUser loggedUser;
+	private User loggedUser;
 	
-	private List<ChallengeResponse> completedChallenges;
+	private List<ChallengeResponseImpl> completedChallenges;
 	
 	@PostConstruct
 	public void init() {
 		completedChallenges = challengeResponseBusiness.findAllByUser(loggedUser);		
 	}
 	
-	public List<ChallengeResponse> getCompletedChallenges() {
+	public List<ChallengeResponseImpl> getCompletedChallenges() {
 		return completedChallenges;
 	}
 
-	public void setCompletedChallenges(List<ChallengeResponse> completedChallenges) {
+	public void setCompletedChallenges(List<ChallengeResponseImpl> completedChallenges) {
 		this.completedChallenges = completedChallenges;
 	}
 

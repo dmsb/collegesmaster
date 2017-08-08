@@ -9,12 +9,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.collegesmaster.annotation.qualifier.LoggedIn;
-import br.com.collegesmaster.business.IChallengeBusiness;
-import br.com.collegesmaster.business.IChallengeResponseBusiness;
-import br.com.collegesmaster.model.IChallenge;
-import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.model.impl.Challenge;
-import br.com.collegesmaster.model.impl.ChallengeResponse;
+import br.com.collegesmaster.business.ChallengeBusiness;
+import br.com.collegesmaster.business.ChallengeResponseBusiness;
+import br.com.collegesmaster.model.Challenge;
+import br.com.collegesmaster.model.User;
+import br.com.collegesmaster.model.impl.ChallengeImpl;
+import br.com.collegesmaster.model.impl.ChallengeResponseImpl;
 
 @Named("createdChallengesMB")
 @ViewScoped
@@ -23,19 +23,19 @@ public class CreatedChallengesMB implements Serializable {
 	private static final long serialVersionUID = -2849018737435663613L;
 	
 	@Inject
-	private transient IChallengeBusiness challengeBusiness;
+	private transient ChallengeBusiness challengeBusiness;
 	
 	@Inject
-	private transient IChallengeResponseBusiness challengeResponseBusiness;
+	private transient ChallengeResponseBusiness challengeResponseBusiness;
 	
 	@Inject @LoggedIn 
-	private IUser loggedUser;
+	private User loggedUser;
 	
-	private List<Challenge> createdChallenges;
+	private List<ChallengeImpl> createdChallenges;
 	
-	private List<ChallengeResponse> responses;
+	private List<ChallengeResponseImpl> responses;
 	
-	private IChallenge selectedChallenge;
+	private Challenge selectedChallenge;
 	
 	@PostConstruct
 	public void init() {
@@ -46,27 +46,27 @@ public class CreatedChallengesMB implements Serializable {
 		responses = challengeResponseBusiness.findAllByChallenge(selectedChallenge);
 	}
 	
-	public List<Challenge> getCreatedChallenges() {
+	public List<ChallengeImpl> getCreatedChallenges() {
 		return createdChallenges;
 	}
 
-	public void setCreatedChallenges(List<Challenge> createdChallenges) {
+	public void setCreatedChallenges(List<ChallengeImpl> createdChallenges) {
 		this.createdChallenges = createdChallenges;
 	}
 
-	public List<ChallengeResponse> getResponses() {
+	public List<ChallengeResponseImpl> getResponses() {
 		return responses;
 	}
 
-	public void setResponses(List<ChallengeResponse> responses) {
+	public void setResponses(List<ChallengeResponseImpl> responses) {
 		this.responses = responses;
 	}
 
-	public IChallenge getSelectedChallenge() {
+	public Challenge getSelectedChallenge() {
 		return selectedChallenge;
 	}
 
-	public void setSelectedChallenge(IChallenge selectedChallenge) {
+	public void setSelectedChallenge(Challenge selectedChallenge) {
 		this.selectedChallenge = selectedChallenge;
 	}
 	

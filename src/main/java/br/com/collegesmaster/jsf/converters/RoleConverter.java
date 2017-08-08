@@ -7,7 +7,7 @@ import javax.faces.convert.FacesConverter;
 
 import com.google.common.base.Strings;
 
-import br.com.collegesmaster.model.impl.Role;
+import br.com.collegesmaster.model.impl.RoleImpl;
 
 @FacesConverter(value = "roleConverter")
 public class RoleConverter implements Converter {
@@ -15,7 +15,7 @@ public class RoleConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String role) {
 		if(!Strings.isNullOrEmpty(role)) {
-			return (Role)component.getAttributes().get(role);
+			return (RoleImpl)component.getAttributes().get(role);
 		} else {
 			return null;
 		}
@@ -24,8 +24,8 @@ public class RoleConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object role) {
 		
-		if(role instanceof Role) {
-			Role currentRole = (Role) role;
+		if(role instanceof RoleImpl) {
+			RoleImpl currentRole = (RoleImpl) role;
 			if(currentRole.getId() != null) {
 				component.getAttributes().put(currentRole.getId().toString(), currentRole);
 				return currentRole.getId().toString();

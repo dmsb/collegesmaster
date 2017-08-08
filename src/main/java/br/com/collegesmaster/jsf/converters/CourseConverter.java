@@ -7,7 +7,7 @@ import javax.faces.convert.FacesConverter;
 
 import com.google.common.base.Strings;
 
-import br.com.collegesmaster.model.impl.Course;
+import br.com.collegesmaster.model.impl.CourseImpl;
 
 @FacesConverter(value = "courseConverter")
 public class CourseConverter implements Converter {
@@ -15,7 +15,7 @@ public class CourseConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String course) {
 		if(!Strings.isNullOrEmpty(course)) {
-			return (Course)component.getAttributes().get(course);
+			return (CourseImpl)component.getAttributes().get(course);
 		} else {
 			return null;
 		}
@@ -24,8 +24,8 @@ public class CourseConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object course) {
 		
-		if(course instanceof Course) {
-			Course currentCourse = (Course) course;
+		if(course instanceof CourseImpl) {
+			CourseImpl currentCourse = (CourseImpl) course;
 			if(currentCourse.getId() != null) {
 				component.getAttributes().put(currentCourse.getId().toString(), currentCourse);
 				return currentCourse.getId().toString();

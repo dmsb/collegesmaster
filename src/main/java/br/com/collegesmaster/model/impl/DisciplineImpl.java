@@ -1,0 +1,150 @@
+package br.com.collegesmaster.model.impl;
+
+import static javax.persistence.AccessType.FIELD;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.Access;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import br.com.collegesmaster.model.Course;
+import br.com.collegesmaster.model.Discipline;
+
+@Entity
+@Table(name = "discipline")
+@Access(FIELD)
+@Audited
+public class DisciplineImpl implements Discipline {
+
+    private static final long serialVersionUID = -8467860341227715787L;
+	
+    @Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id")
+	protected Integer id;
+	
+	@Version
+	protected Long version;
+	
+	@NotBlank
+    @Column(name = "name", length = 30, nullable = false)
+    private String name;
+	
+	@JsonManagedReference
+    @NotNull
+    @ManyToOne(targetEntity = CourseImpl.class, optional = false, fetch = LAZY)
+    @JoinColumn(name = "courseFK", referencedColumnName = "id")
+    private Course course;
+    
+	@NotAudited
+    @OneToMany(targetEntity = ChallengeImpl.class, cascade = ALL, fetch = LAZY,
+    		orphanRemoval = true, mappedBy = "discipline")
+    private List<ChallengeImpl> challenges;
+	
+    public DisciplineImpl() {
+    	
+	}
+    
+    public DisciplineImpl(Integer id, String name, Long version) {
+    	this.id = id;
+    	this.name = name;
+    	this.version = version;
+    }
+    
+    public DisciplineImpl(Integer id, String name, List<ChallengeImpl> challenges) {
+    	this.id = id;
+    	this.name = name;    	
+    	this.challenges = challenges;
+    }
+    
+    @Override
+	public Integer getId() {
+		return id;
+	}
+
+	@Override
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	@Override
+	public Long getVersion() {
+		return version;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	
+	@Override
+	public Course getCourse() {
+        return course;
+    }
+
+    @Override
+	public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    @Override
+	public String getName() {
+        return name;
+    }
+
+    @Override
+	public void setName(String name) {
+        this.name = name;
+    }
+    
+    @Override
+	public List<ChallengeImpl> getChallenges() {
+		return challenges;
+	}
+
+	@Override
+	public void setChallenges(List<ChallengeImpl> challenges) {
+		this.challenges = challenges;
+	}
+	
+	@Override
+	public boolean equals(final Object objectToBeComparated) {			
+		
+		if(objectToBeComparated == this) {
+			return true;
+		}
+		
+		if(!(objectToBeComparated instanceof DisciplineImpl)) {
+			return false;
+		}
+		
+		final DisciplineImpl objectComparatedInstance = (DisciplineImpl) objectToBeComparated;
+		
+		return id == objectComparatedInstance.id && 
+				Objects.equals(name, objectComparatedInstance.name);
+	}
+    
+	@Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+}

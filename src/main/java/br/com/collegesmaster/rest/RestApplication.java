@@ -5,9 +5,10 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
-import br.com.collegesmaster.business.impl.InstituteBusiness;
-import br.com.collegesmaster.business.impl.RoleBusiness;
-import br.com.collegesmaster.business.impl.UserBusiness;
+import br.com.collegesmaster.rest.config.JacksonConfig;
+import br.com.collegesmaster.rest.controller.impl.InstituteControllerImpl;
+import br.com.collegesmaster.rest.controller.impl.RoleControllerImpl;
+import br.com.collegesmaster.rest.controller.impl.UserControllerImpl;
 
 public class RestApplication extends Application {
 	
@@ -15,9 +16,11 @@ public class RestApplication extends Application {
 	public Set<Class<?>> getClasses() {
 		
 		final Set<Class<?>> restServices =  new HashSet<>();
-		restServices.add(UserBusiness.class);
-		restServices.add(InstituteBusiness.class);
-		restServices.add(RoleBusiness.class);
+		restServices.add(JacksonConfig.class);
+		
+		restServices.add(UserControllerImpl.class);
+		restServices.add(InstituteControllerImpl.class);
+		restServices.add(RoleControllerImpl.class);
 		
 		return restServices;
 	}

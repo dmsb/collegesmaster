@@ -11,8 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.collegesmaster.annotation.qualifier.LoggedIn;
-import br.com.collegesmaster.business.IUserBusiness;
-import br.com.collegesmaster.model.IUser;
+import br.com.collegesmaster.business.UserBusiness;
+import br.com.collegesmaster.model.impl.UserImpl;
 
 @Named("userEditMB")
 @RequestScoped
@@ -21,12 +21,12 @@ public class UserEditMB implements Serializable {
 	private static final long serialVersionUID = -7014632562707028131L;
 	
 	@Inject
-	private transient IUserBusiness userBusiness;
+	private transient UserBusiness userBusiness;
 	
 	@Inject @LoggedIn 
-	private IUser loggedUser;
+	private UserImpl loggedUser;
 	
-	private IUser user;
+	private UserImpl user;
 	
 	@PostConstruct
 	public void init() {
@@ -38,11 +38,11 @@ public class UserEditMB implements Serializable {
 		addMessage(SEVERITY_INFO, "user_edited_with_success_message");
 	}
 	
-	public IUser getUser() {
+	public UserImpl getUser() {
 		return user;
 	}
 
-	public void setUser(IUser user) {
+	public void setUser(UserImpl user) {
 		this.user = user;
 	}
 	

@@ -17,13 +17,13 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.collegesmaster.model.IDiscipline;
-import br.com.collegesmaster.model.IInstitute;
-import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.model.impl.Challenge;
-import br.com.collegesmaster.model.impl.Discipline;
-import br.com.collegesmaster.model.impl.Institute;
-import br.com.collegesmaster.model.impl.User;
+import br.com.collegesmaster.model.Discipline;
+import br.com.collegesmaster.model.Institute;
+import br.com.collegesmaster.model.User;
+import br.com.collegesmaster.model.impl.ChallengeImpl;
+import br.com.collegesmaster.model.impl.DisciplineImpl;
+import br.com.collegesmaster.model.impl.InstituteImpl;
+import br.com.collegesmaster.model.impl.UserImpl;
 import br.com.collegesmaster.util.CryptoUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -44,14 +44,14 @@ public class JUnitSelects extends JUnitConfiguration {
 		final String selectAllFederalInstitutesQuery = queryBuilder.toString();
 		logger.info("Proccessing test 01: " + selectAllFederalInstitutesQuery);
         
-		final TypedQuery<Institute> query = em.createQuery(
+		final TypedQuery<InstituteImpl> query = em.createQuery(
         		selectAllFederalInstitutesQuery,
-                Institute.class);
+                InstituteImpl.class);
         query.setParameter("name", "instituto%");
         
-        final List<Institute> institutes = query.getResultList();
+        final List<InstituteImpl> institutes = query.getResultList();
 
-        for (final IInstitute institute : institutes) {
+        for (final Institute institute : institutes) {
             assertTrue(institute.getName().startsWith("Instituto"));
         }
 
@@ -69,14 +69,14 @@ public class JUnitSelects extends JUnitConfiguration {
 		final String selectAllCorporativeSoftwareDisciplneQuery = queryBuilder.toString();
 		logger.info("Proccessing test 02: " + selectAllCorporativeSoftwareDisciplneQuery);
 		
-		final TypedQuery<Discipline> query = em.createQuery(
+		final TypedQuery<DisciplineImpl> query = em.createQuery(
         		selectAllCorporativeSoftwareDisciplneQuery,
-                Discipline.class);
+                DisciplineImpl.class);
         query.setParameter("name", "software corporativo%");
         
-        final List<Discipline> disciplines = query.getResultList();
+        final List<DisciplineImpl> disciplines = query.getResultList();
 
-        for (final IDiscipline discipline : disciplines) {
+        for (final Discipline discipline : disciplines) {
             assertTrue(discipline.getName().startsWith("software corp"));
         }
 
@@ -94,14 +94,14 @@ public class JUnitSelects extends JUnitConfiguration {
 		final String selectAllDisciplinesByName = queryBuilder.toString();
 		logger.info("Proccessing test 03: " + selectAllDisciplinesByName);
 		
-		final TypedQuery<Discipline> query = em.createQuery(
+		final TypedQuery<DisciplineImpl> query = em.createQuery(
         		selectAllDisciplinesByName,
-                Discipline.class);
+                DisciplineImpl.class);
         query.setParameter("name", "quimica i");
         
-        final List<Discipline> disciplines = query.getResultList();
+        final List<DisciplineImpl> disciplines = query.getResultList();
 
-        for (final IDiscipline discipline : disciplines) {
+        for (final Discipline discipline : disciplines) {
         	if("quimica i".equals(discipline.getName()) == false) {
         		fail();
         		return;
@@ -161,7 +161,7 @@ public class JUnitSelects extends JUnitConfiguration {
 		
 		final Query query = em.createQuery(queryBuilder.toString());		       
         
-		final List<Challenge> result =  query.getResultList();
+		final List<ChallengeImpl> result =  query.getResultList();
 		assertEquals(result.size(), 5);
 	}
 	
@@ -172,7 +172,7 @@ public class JUnitSelects extends JUnitConfiguration {
 		final String password = "D10g0!";
 		
 		final String salt = getUserSalt(username);        
-		final IUser user = buildLogin(username, password, salt);
+		final User user = buildLogin(username, password, salt);
 		
 		assertEquals("User logged!", username, user.getUsername());		
 	}
@@ -190,20 +190,20 @@ public class JUnitSelects extends JUnitConfiguration {
 		return salt;
 	}
 
-	private IUser buildLogin(final String username, final String password, final String salt) {
+	private User buildLogin(final String username, final String password, final String salt) {
 		
 		final String hashedPassword = CryptoUtils.generateHashedPassword(password, salt);        	
 		
 		final CriteriaBuilder builder = em.getCriteriaBuilder();
-		final CriteriaQuery<User> criteria = builder.createQuery(User.class);		
-		final Root<User> userRoot = criteria.from(User.class);
+		final CriteriaQuery<UserImpl> criteria = builder.createQuery(UserImpl.class);		
+		final Root<UserImpl> userRoot = criteria.from(UserImpl.class);
 		
 		final Predicate usernamePredicate = builder.equal(userRoot.get("username"), username);
 		final Predicate passwordPredicate = builder.equal(userRoot.get("password"), hashedPassword);
 		criteria.where(usernamePredicate, passwordPredicate);
-		final TypedQuery<User> query = em.createQuery(criteria);		
+		final TypedQuery<UserImpl> query = em.createQuery(criteria);		
 		
-		final IUser user = query.getSingleResult();
+		final User user = query.getSingleResult();
                 
         return user;
 	}	

@@ -8,14 +8,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.collegesmaster.annotation.qualifier.LoggedIn;
-import br.com.collegesmaster.model.IUser;
+import br.com.collegesmaster.model.User;
 
 @Named("mainMenuMB")
 @SessionScoped
 public class MainMenuMB implements Serializable {
 	
 	@Inject @LoggedIn 
-	private IUser loggedUser;
+	private User loggedUser;
 	
 	private static final long serialVersionUID = 344294436330653003L;
 

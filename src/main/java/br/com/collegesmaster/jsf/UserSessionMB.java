@@ -19,12 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.annotation.qualifier.LoggedIn;
-import br.com.collegesmaster.business.IUserBusiness;
+import br.com.collegesmaster.business.UserBusiness;
 import br.com.collegesmaster.exception.NotLoggedInUserException;
-import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.model.impl.User;
-import br.com.collegesmaster.security.model.ICredentials;
-import br.com.collegesmaster.security.model.impl.Credentials;
+import br.com.collegesmaster.model.impl.UserImpl;
+import br.com.collegesmaster.security.model.Credentials;
+import br.com.collegesmaster.security.model.impl.CredentialsImpl;
 
 @Named("userSessionMB")
 @SessionScoped
@@ -36,15 +35,15 @@ public class UserSessionMB implements Serializable {
 	private transient Logger LOGGER;
 
 	@Inject
-	private transient IUserBusiness userBusiness;
+	private transient UserBusiness userBusiness;
 
-	private ICredentials credentials;
+	private Credentials credentials;
 
-	private IUser loggedUser;
+	private UserImpl loggedUser;
 
 	@PostConstruct
 	public void init() {
-		credentials = new Credentials();
+		credentials = new CredentialsImpl();
 	}
 
 	public String jaasLogin() {
@@ -85,7 +84,7 @@ public class UserSessionMB implements Serializable {
 
 	@Produces
 	@LoggedIn
-	public IUser getLoggedUser() throws LoginException {
+	public UserImpl getLoggedUser() throws LoginException {
 		if (loggedUser == null) {
 			throw new NotLoggedInUserException("Fail to get logged user.");
 		} else {
@@ -93,23 +92,23 @@ public class UserSessionMB implements Serializable {
 		}
 	}
 
-	void onEventInLoggedUser(@Observes @LoggedIn User user) {
+	void onEventInLoggedUser(@Observes @LoggedIn UserImpl user) {
 		this.loggedUser = user; 
 	}
 
-	public ICredentials getCredentials() {
+	public Credentials getCredentials() {
 		return credentials;
 	}
 
-	public void setCredentials(ICredentials credentials) {
+	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
 	}
 
-	public IUser getUser() {
+	public UserImpl getUser() {
 		return loggedUser;
 	}
 
-	public void setUser(IUser user) {
+	public void setUser(UserImpl user) {
 		this.loggedUser = user;
 	}
 

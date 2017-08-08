@@ -16,19 +16,18 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.business.ICourseBusiness;
-import br.com.collegesmaster.business.IInstituteBusiness;
-import br.com.collegesmaster.business.IRoleBusiness;
-import br.com.collegesmaster.business.IUserBusiness;
-import br.com.collegesmaster.model.ICourse;
-import br.com.collegesmaster.model.IInstitute;
-import br.com.collegesmaster.model.IRole;
-import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.model.impl.Course;
-import br.com.collegesmaster.model.impl.GeneralInfo;
-import br.com.collegesmaster.model.impl.Institute;
-import br.com.collegesmaster.model.impl.Role;
-import br.com.collegesmaster.model.impl.User;
+import br.com.collegesmaster.business.CourseBusiness;
+import br.com.collegesmaster.business.InstituteBusiness;
+import br.com.collegesmaster.business.RoleBusiness;
+import br.com.collegesmaster.business.UserBusiness;
+import br.com.collegesmaster.model.Course;
+import br.com.collegesmaster.model.Institute;
+import br.com.collegesmaster.model.Role;
+import br.com.collegesmaster.model.impl.CourseImpl;
+import br.com.collegesmaster.model.impl.GeneralInfoImpl;
+import br.com.collegesmaster.model.impl.InstituteImpl;
+import br.com.collegesmaster.model.impl.RoleImpl;
+import br.com.collegesmaster.model.impl.UserImpl;
 
 @Named("homeMB")
 @ViewScoped
@@ -37,45 +36,45 @@ public class HomeMB implements Serializable {
 	private static final long serialVersionUID = 7422462580072371882L;
 
 	@Inject
-	private transient IUserBusiness userBusiness;
+	private transient UserBusiness userBusiness;
 	
 	@Inject
-	private transient IRoleBusiness roleBusiness;
+	private transient RoleBusiness roleBusiness;
 	
 	@Inject
-	private transient IInstituteBusiness instituteBusiness;
+	private transient InstituteBusiness instituteBusiness;
 	
 	@Inject
-	private transient ICourseBusiness courseBusiness;
+	private transient CourseBusiness courseBusiness;
 	
-	private IUser user;
-	private IRole selectedRole;
-	private IInstitute selectedInstitute;	
-	private List<Institute> institutes;
+	private UserImpl user;
+	private Role selectedRole;
+	private Institute selectedInstitute;	
+	private List<InstituteImpl> institutes;
 	
 	@PostConstruct
 	public void init() {
-		user = new User();
+		user = new UserImpl();
 		user.setRoles(new ArrayList<>());
-		user.setGeneralInfo(new GeneralInfo());
+		user.setGeneralInfo(new GeneralInfoImpl());
 
-		selectedRole = new Role();
+		selectedRole = new RoleImpl();
 
 		institutes = instituteBusiness.findNames();
-		selectedInstitute = new Institute();
+		selectedInstitute = new InstituteImpl();
 		selectedInstitute.setCourses(new ArrayList<>());
-		user.getGeneralInfo().setCourse(new Course());
+		user.getGeneralInfo().setCourse(new CourseImpl());
 	}
 	
-	public List<Role> allRoles() {
+	public List<RoleImpl> allRoles() {
 		return roleBusiness.findAll();
 	}
 	
 	public void persistUser() {
-		final IRole completeRole = roleBusiness.findById(selectedRole.getId());
+		final Role completeRole = roleBusiness.findById(selectedRole.getId());
 		user.getRoles().add(completeRole);
 		
-		final ICourse completedCourse = courseBusiness.findById(user.getGeneralInfo().getCourse().getId());
+		final Course completedCourse = courseBusiness.findById(user.getGeneralInfo().getCourse().getId());
 		user.getGeneralInfo().setCourse(completedCourse);
 		
 		final Boolean existsUsername = userBusiness.existsUsername(user.getUsername());
@@ -108,44 +107,44 @@ public class HomeMB implements Serializable {
 	
 	public void changeInstituteEvent() {
 		if(selectedInstitute != null) {			
-			final List<Course> courses = courseBusiness.findNamesByInstitute(selectedInstitute);
+			final List<CourseImpl> courses = courseBusiness.findNamesByInstitute(selectedInstitute);
 			selectedInstitute.setCourses(courses);
 		} else {
-			user.getGeneralInfo().setCourse(new Course());
-			selectedInstitute = new Institute();
+			user.getGeneralInfo().setCourse(new CourseImpl());
+			selectedInstitute = new InstituteImpl();
 			selectedInstitute.setCourses(new ArrayList<>());
 		}
 	}
 	
-	public IUser getUser() {
+	public UserImpl getUser() {
 		return user;
 	}
 
-	public void setUser(IUser user) {
+	public void setUser(UserImpl user) {
 		this.user = user;
 	}
 
-	public IRole getSelectedRole() {
+	public Role getSelectedRole() {
 		return selectedRole;
 	}
 
-	public void setSelectedRole(IRole selectedRole) {
+	public void setSelectedRole(Role selectedRole) {
 		this.selectedRole = selectedRole;
 	}
 
-	public IInstitute getSelectedInstitute() {
+	public Institute getSelectedInstitute() {
 		return selectedInstitute;
 	}
 
-	public void setSelectedInstitute(IInstitute selectedInstitute) {
+	public void setSelectedInstitute(Institute selectedInstitute) {
 		this.selectedInstitute = selectedInstitute;
 	}
 
-	public List<Institute> getInstitutes() {
+	public List<InstituteImpl> getInstitutes() {
 		return institutes;
 	}
 
-	public void setInstitutes(List<Institute> institutes) {
+	public void setInstitutes(List<InstituteImpl> institutes) {
 		this.institutes = institutes;
 	}
 	

@@ -16,22 +16,21 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.collegesmaster.annotation.qualifier.LoggedIn;
-import br.com.collegesmaster.business.IChallengeBusiness;
-import br.com.collegesmaster.business.IChallengeResponseBusiness;
-import br.com.collegesmaster.business.IDisciplineBusiness;
-import br.com.collegesmaster.model.IAlternative;
-import br.com.collegesmaster.model.IChallenge;
-import br.com.collegesmaster.model.IChallengeResponse;
-import br.com.collegesmaster.model.ICourse;
-import br.com.collegesmaster.model.IDiscipline;
-import br.com.collegesmaster.model.IQuestion;
-import br.com.collegesmaster.model.IQuestionResponse;
-import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.model.impl.Alternative;
-import br.com.collegesmaster.model.impl.ChallengeResponse;
-import br.com.collegesmaster.model.impl.Discipline;
-import br.com.collegesmaster.model.impl.Question;
-import br.com.collegesmaster.model.impl.QuestionResponse;
+import br.com.collegesmaster.business.ChallengeBusiness;
+import br.com.collegesmaster.business.ChallengeResponseBusiness;
+import br.com.collegesmaster.business.DisciplineBusiness;
+import br.com.collegesmaster.model.Alternative;
+import br.com.collegesmaster.model.Challenge;
+import br.com.collegesmaster.model.Course;
+import br.com.collegesmaster.model.Discipline;
+import br.com.collegesmaster.model.Question;
+import br.com.collegesmaster.model.QuestionResponse;
+import br.com.collegesmaster.model.User;
+import br.com.collegesmaster.model.impl.AlternativeImpl;
+import br.com.collegesmaster.model.impl.ChallengeResponseImpl;
+import br.com.collegesmaster.model.impl.DisciplineImpl;
+import br.com.collegesmaster.model.impl.QuestionImpl;
+import br.com.collegesmaster.model.impl.QuestionResponseImpl;
 
 @Named("challengeResponseMB")
 @ViewScoped
@@ -40,28 +39,28 @@ public class ChallengeResponseMB implements Serializable {
 	private static final long serialVersionUID = -6656488708325792261L;
 	
 	@Inject
-	private transient IDisciplineBusiness disciplineBusiness;
+	private transient DisciplineBusiness disciplineBusiness;
 	
 	@Inject
-	private transient IChallengeBusiness challengeBusiness;
+	private transient ChallengeBusiness challengeBusiness;
 	
 	@Inject
-	private transient IChallengeResponseBusiness challengeResponseBusiness;
+	private transient ChallengeResponseBusiness challengeResponseBusiness;
 	
 	@Inject @LoggedIn 
-	private IUser loggedUser;
+	private User loggedUser;
 	
-	private List<Discipline> userDisciplines;
+	private List<DisciplineImpl> userDisciplines;
 	
-	private IDiscipline selectedDiscipline;
+	private Discipline selectedDiscipline;
 	
-	private IChallenge selectedChallenge;
+	private Challenge selectedChallenge;
 	
-	private IQuestion selectedQuestion;
+	private Question selectedQuestion;
 	
-	private IAlternative selectedAlternative;
+	private Alternative selectedAlternative;
 	
-	private IChallengeResponse challengeResponse;
+	private ChallengeResponseImpl challengeResponse;
 
 	private List<Character> lettersMarked;
 	
@@ -72,16 +71,16 @@ public class ChallengeResponseMB implements Serializable {
 	}
 	
 	public void resetResponse() {
-		challengeResponse = new ChallengeResponse();
+		challengeResponse = new ChallengeResponseImpl();
 		challengeResponse.setOwner(loggedUser);
 		challengeResponse.setQuestionsResponse(new ArrayList<>());
-		selectedQuestion = new Question();
-		selectedAlternative = new Alternative();
+		selectedQuestion = new QuestionImpl();
+		selectedAlternative = new AlternativeImpl();
 		lettersMarked = new ArrayList<>();
 	}
 	
 	public void loadUserDisciplines() {		
-		final ICourse course = loggedUser.getGeneralInfo().getCourse();
+		final Course course = loggedUser.getGeneralInfo().getCourse();
 		userDisciplines = disciplineBusiness.findByCourse(course);
 	}
 	
@@ -95,9 +94,9 @@ public class ChallengeResponseMB implements Serializable {
 	}
 
 	private void buildQuestionsResponse() {
-		final List<Question> questions = selectedChallenge.getQuestions();
+		final List<QuestionImpl> questions = selectedChallenge.getQuestions();
 		
-		final Iterator<Question> iterator = questions.iterator();
+		final Iterator<QuestionImpl> iterator = questions.iterator();
 		
 		while(iterator.hasNext()) {
 			lettersMarked.add(null);
@@ -107,7 +106,7 @@ public class ChallengeResponseMB implements Serializable {
 	
 	public void selectAlternative() {
 		
-		final IQuestionResponse questionResponse = buildQuestionResponse();
+		final QuestionResponse questionResponse = buildQuestionResponse();
 		
 		final Boolean existsAResponse = existsAResponseForThisQuestion(questionResponse);		
 		
@@ -122,18 +121,18 @@ public class ChallengeResponseMB implements Serializable {
 
 	}
 
-	private void setMarkedLetter(final IQuestionResponse questionResponse, final IQuestionResponse response) {
+	private void setMarkedLetter(final QuestionResponse questionResponse, final QuestionResponse response) {
 		final Integer questionIndex = selectedChallenge.getQuestions().indexOf(questionResponse.getTargetQuestion());
 		lettersMarked.set(questionIndex, response.getLetter().getLetter());
 	}
 
-	private Boolean existsAResponseForThisQuestion(final IQuestionResponse questionResponse) {
+	private Boolean existsAResponseForThisQuestion(final QuestionResponse questionResponse) {
 		
-		final Iterator<IQuestionResponse> iterator = challengeResponse.getQuestionsResponse().iterator();
+		final Iterator<QuestionResponse> iterator = challengeResponse.getQuestionsResponse().iterator();
 		
 		while(iterator.hasNext()) {
 			
-			IQuestionResponse response = iterator.next();
+			QuestionResponse response = iterator.next();
 			
 			if(response.getTargetQuestion().equals(questionResponse.getTargetQuestion())) {				
 
@@ -147,8 +146,8 @@ public class ChallengeResponseMB implements Serializable {
 		return FALSE;
 	}
 
-	private IQuestionResponse buildQuestionResponse() {
-		final IQuestionResponse questionResponse = new QuestionResponse();
+	private QuestionResponse buildQuestionResponse() {
+		final QuestionResponse questionResponse = new QuestionResponseImpl();
 		questionResponse.setChallengeResponse(challengeResponse);
 		questionResponse.setTargetQuestion(selectedQuestion);
 		questionResponse.setLetter(selectedAlternative.getLetter());
@@ -160,51 +159,51 @@ public class ChallengeResponseMB implements Serializable {
 		addMessage(SEVERITY_INFO, "response_registred_with_success_message");
 	}
 
-	public List<Discipline> getUserDisciplines() {
+	public List<DisciplineImpl> getUserDisciplines() {
 		return userDisciplines;
 	}
 
-	public void setUserDisciplines(List<Discipline> userDisciplines) {
+	public void setUserDisciplines(List<DisciplineImpl> userDisciplines) {
 		this.userDisciplines = userDisciplines;
 	}
 
-	public IDiscipline getSelectedDiscipline() {
+	public Discipline getSelectedDiscipline() {
 		return selectedDiscipline;
 	}
 
-	public void setSelectedDiscipline(IDiscipline selectedDiscipline) {
+	public void setSelectedDiscipline(Discipline selectedDiscipline) {
 		this.selectedDiscipline = selectedDiscipline;
 	}
 
-	public IChallenge getSelectedChallenge() {
+	public Challenge getSelectedChallenge() {
 		return selectedChallenge;
 	}
 
-	public void setSelectedChallenge(IChallenge selectedChallenge) {
+	public void setSelectedChallenge(Challenge selectedChallenge) {
 		this.selectedChallenge = selectedChallenge;
 	}
 
-	public IQuestion getSelectedQuestion() {
+	public Question getSelectedQuestion() {
 		return selectedQuestion;
 	}
 
-	public void setSelectedQuestion(IQuestion selectedQuestion) {
+	public void setSelectedQuestion(Question selectedQuestion) {
 		this.selectedQuestion = selectedQuestion;
 	}
 
-	public IChallengeResponse getChallengeResponse() {
+	public ChallengeResponseImpl getChallengeResponse() {
 		return challengeResponse;
 	}
 
-	public void setChallengeResponse(IChallengeResponse challengeResponse) {
+	public void setChallengeResponse(ChallengeResponseImpl challengeResponse) {
 		this.challengeResponse = challengeResponse;
 	}
 
-	public IAlternative getSelectedAlternative() {
+	public Alternative getSelectedAlternative() {
 		return selectedAlternative;
 	}
 
-	public void setSelectedAlternative(IAlternative selectedAlternative) {
+	public void setSelectedAlternative(Alternative selectedAlternative) {
 		this.selectedAlternative = selectedAlternative;
 	}
 

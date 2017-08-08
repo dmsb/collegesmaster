@@ -16,17 +16,16 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.collegesmaster.annotation.qualifier.LoggedIn;
-import br.com.collegesmaster.business.IChallengeBusiness;
-import br.com.collegesmaster.business.IDisciplineBusiness;
+import br.com.collegesmaster.business.ChallengeBusiness;
+import br.com.collegesmaster.business.DisciplineBusiness;
 import br.com.collegesmaster.enums.Letter;
-import br.com.collegesmaster.model.IAlternative;
-import br.com.collegesmaster.model.IChallenge;
-import br.com.collegesmaster.model.IDiscipline;
-import br.com.collegesmaster.model.IUser;
-import br.com.collegesmaster.model.impl.Alternative;
-import br.com.collegesmaster.model.impl.Challenge;
-import br.com.collegesmaster.model.impl.Discipline;
-import br.com.collegesmaster.model.impl.Question;
+import br.com.collegesmaster.model.Alternative;
+import br.com.collegesmaster.model.Discipline;
+import br.com.collegesmaster.model.User;
+import br.com.collegesmaster.model.impl.AlternativeImpl;
+import br.com.collegesmaster.model.impl.ChallengeImpl;
+import br.com.collegesmaster.model.impl.DisciplineImpl;
+import br.com.collegesmaster.model.impl.QuestionImpl;
 
 @Named("challengeMB")
 @ViewScoped
@@ -35,48 +34,48 @@ public class ChallengeMB implements Serializable {
 	private static final long serialVersionUID = 6075067137564460555L;
 	
 	@Inject
-	private transient IChallengeBusiness challengeBusiness;
+	private transient ChallengeBusiness challengeBusiness;
 	
 	@Inject
-	private transient IDisciplineBusiness disciplineBusiness;
+	private transient DisciplineBusiness disciplineBusiness;
 	
 	@Inject @LoggedIn 
-	private IUser loggedUser;
+	private User loggedUser;
 	
-	private IChallenge challenge;
+	private ChallengeImpl challenge;
 	
-	private Question currentQuestion;
+	private QuestionImpl currentQuestion;
 	
-	private List<Alternative> alternatives;
+	private List<AlternativeImpl> alternatives;
 	
 	private Letter trueAlternative;
 	
 	@PostConstruct
 	public void init() {
-		challenge = new Challenge();
-		challenge.setDiscipline(new Discipline());
+		challenge = new ChallengeImpl();
+		challenge.setDiscipline(new DisciplineImpl());
 		challenge.setOwner(loggedUser);
-		challenge.setQuestions(new ArrayList<Question>());
+		challenge.setQuestions(new ArrayList<QuestionImpl>());
 		
 		initCurrentQuestion();
 	}
 	
-	public List<Discipline> loadUserDisciplines() {
+	public List<DisciplineImpl> loadUserDisciplines() {
 		return disciplineBusiness.findNamesByCourse(loggedUser.getGeneralInfo().getCourse());
 	}
 	
 	public void initCurrentQuestion() {
-		currentQuestion = new Question();
-		currentQuestion.setAlternatives(new ArrayList<Alternative>());
+		currentQuestion = new QuestionImpl();
+		currentQuestion.setAlternatives(new ArrayList<AlternativeImpl>());
 		initAlternatives();
 	}
 
 	private void initAlternatives() {
 		alternatives = new ArrayList<>(4);
-		alternatives.add(new Alternative());
-		alternatives.add(new Alternative());
-		alternatives.add(new Alternative());
-		alternatives.add(new Alternative());
+		alternatives.add(new AlternativeImpl());
+		alternatives.add(new AlternativeImpl());
+		alternatives.add(new AlternativeImpl());
+		alternatives.add(new AlternativeImpl());
 		
 		final Letter[] letters = Letter.values();
 		
@@ -91,7 +90,7 @@ public class ChallengeMB implements Serializable {
 		
 		final Integer disciplineId = challenge.getDiscipline().getId();		
 		
-		final IDiscipline discipline = disciplineBusiness.findById(disciplineId);
+		final Discipline discipline = disciplineBusiness.findById(disciplineId);
 		
 		challenge.setDiscipline(discipline);
 		
@@ -107,7 +106,7 @@ public class ChallengeMB implements Serializable {
 			
 			currentQuestion.setChallenge(challenge);
 			
-			for(final IAlternative alternative : alternatives) {
+			for(final Alternative alternative : alternatives) {
 				alternative.setQuestion(currentQuestion);
 				
 				if(trueAlternative.equals(alternative.getLetter())) {
@@ -131,27 +130,27 @@ public class ChallengeMB implements Serializable {
 		return Letter.values();
 	}
 
-	public IChallenge getChallenge() {
+	public ChallengeImpl getChallenge() {
 		return challenge;
 	}
 
-	public void setChallenge(IChallenge challenge) {
+	public void setChallenge(ChallengeImpl challenge) {
 		this.challenge = challenge;
 	}
 
-	public Question getCurrentQuestion() {
+	public QuestionImpl getCurrentQuestion() {
 		return currentQuestion;
 	}
 
-	public void setCurrentQuestion(Question currentQuestion) {
+	public void setCurrentQuestion(QuestionImpl currentQuestion) {
 		this.currentQuestion = currentQuestion;
 	}
 	
-	public List<Alternative> getAlternatives() {
+	public List<AlternativeImpl> getAlternatives() {
 		return alternatives;
 	}
 
-	public void setAlternatives(List<Alternative> alternatives) {
+	public void setAlternatives(List<AlternativeImpl> alternatives) {
 		this.alternatives = alternatives;
 	}
 
