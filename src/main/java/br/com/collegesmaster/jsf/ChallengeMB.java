@@ -1,8 +1,9 @@
 package br.com.collegesmaster.jsf;
 
-import static br.com.collegesmaster.jsf.util.JSFUtils.addMessage;
+import static br.com.collegesmaster.jsf.util.JsfUtils.addMessage;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 
@@ -94,8 +95,13 @@ public class ChallengeMB implements Serializable {
 		
 		challenge.setDiscipline(discipline);
 		
-		challengeBusiness.create(challenge);
-		addMessage(SEVERITY_INFO, "challenge_registred_with_success_message");
+		final Boolean created = challengeBusiness.create(challenge);
+		
+		if(created) {
+			addMessage(SEVERITY_INFO, "challenge_registred_with_success_message");
+		} else {
+			addMessage(SEVERITY_ERROR, "unexpected_error");
+		}
 
 		init();
 	}

@@ -5,10 +5,14 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
+import br.com.collegesmaster.business.impl.ChallengeBusinessImpl;
+import br.com.collegesmaster.business.impl.ChallengeResponseBusinessImpl;
+import br.com.collegesmaster.business.impl.CourseBusinessImpl;
+import br.com.collegesmaster.business.impl.DisciplineBusinessImpl;
+import br.com.collegesmaster.business.impl.InstituteBusinessImpl;
+import br.com.collegesmaster.business.impl.RoleBusinessImpl;
+import br.com.collegesmaster.business.impl.UserBusinessImpl;
 import br.com.collegesmaster.rest.config.JacksonConfig;
-import br.com.collegesmaster.rest.controller.impl.InstituteControllerImpl;
-import br.com.collegesmaster.rest.controller.impl.RoleControllerImpl;
-import br.com.collegesmaster.rest.controller.impl.UserControllerImpl;
 
 public class RestApplication extends Application {
 	
@@ -18,9 +22,13 @@ public class RestApplication extends Application {
 		final Set<Class<?>> restServices =  new HashSet<>();
 		restServices.add(JacksonConfig.class);
 		
-		restServices.add(UserControllerImpl.class);
-		restServices.add(InstituteControllerImpl.class);
-		restServices.add(RoleControllerImpl.class);
+		restServices.add(UserBusinessImpl.class);
+		restServices.add(InstituteBusinessImpl.class);
+		restServices.add(RoleBusinessImpl.class);
+		restServices.add(ChallengeBusinessImpl.class);
+		restServices.add(ChallengeResponseBusinessImpl.class);
+		restServices.add(CourseBusinessImpl.class);
+		restServices.add(DisciplineBusinessImpl.class);
 		
 		return restServices;
 	}

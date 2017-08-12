@@ -1,29 +1,43 @@
 package br.com.collegesmaster.business;
 
-import static javax.ejb.TransactionAttributeType.NOT_SUPPORTED;
-import static javax.ejb.TransactionAttributeType.REQUIRED;
-
 import java.util.List;
 
-import javax.ejb.TransactionAttribute;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
+
+import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.model.Model;
 
 public interface Business <M extends Model> {
-
-	@TransactionAttribute(REQUIRED)
-	public void create(M imodel);
 	
-	@TransactionAttribute(REQUIRED)
+	static final Logger LOGGER = Logger.getLogger(Business.class);
+	
+	@POST
+	@Path("/create")
+	public Boolean create(M imodel);
+	
+	@PUT
+	@Path("/update/{id}")
 	public M update(M imodel) ;
 	
-	@TransactionAttribute(REQUIRED)
-	public void remove(M imodel);
+	@DELETE
+	@Path("/delete/{id}")
+	public Boolean remove(M imodel);
 	
-	@TransactionAttribute(NOT_SUPPORTED)
-	public M findById(Integer id);
+	@GET
+	@Path("/{id}")
+	public M findById(@PathParam("id") Integer id);
 	
-	@TransactionAttribute(REQUIRED)
+	@GET
+	List<M> findAll(@Context UriInfo requestInfo);
+	
 	public List<M> findAll();
-
+	
 }

@@ -1,6 +1,6 @@
 package br.com.collegesmaster.jsf.converters;
 
-import static br.com.collegesmaster.jsf.util.JSFUtils.addMessage;
+import static br.com.collegesmaster.jsf.util.JsfUtils.addMessage;
 import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 
 import java.time.LocalDate;

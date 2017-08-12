@@ -1,7 +1,7 @@
 package br.com.collegesmaster.jsf;
 
-import static br.com.collegesmaster.jsf.util.JSFUtils.addMessageWithDetails;
-import static br.com.collegesmaster.jsf.util.JSFUtils.getHttpServletRequest;
+import static br.com.collegesmaster.jsf.util.JsfUtils.addMessageWithDetails;
+import static br.com.collegesmaster.jsf.util.JsfUtils.getHttpServletRequest;
 import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 
 import java.io.Serializable;

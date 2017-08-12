@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.google.common.base.Strings;
 
-public class JSFUtils {
+public class JsfUtils {
 	
 	private static final String VAR_NAME = "text";
-	protected final static Logger logger = Logger.getLogger(JSFUtils.class.getName());
+	protected final static Logger logger = Logger.getLogger(JsfUtils.class.getName());
 	
 	public static HttpServletRequest getHttpServletRequest() {
 		return (HttpServletRequest) FacesContext

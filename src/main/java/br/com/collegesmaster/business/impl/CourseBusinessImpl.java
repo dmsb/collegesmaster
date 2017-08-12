@@ -1,13 +1,19 @@
 package br.com.collegesmaster.business.impl;
 
+import static br.com.collegesmaster.rest.util.RestUtils.buildPredicatesFromRequest;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+import static javax.ejb.TransactionAttributeType.REQUIRED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionManagement;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -17,6 +23,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
+import javax.ws.rs.core.UriInfo;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
 
@@ -37,27 +44,54 @@ public class CourseBusinessImpl implements CourseBusiness {
 	@Inject
 	protected CriteriaBuilder cb;
 	
+	@TransactionAttribute(REQUIRED)
 	@Override
-	public void create(CourseImpl course) {
-		em.persist(course);
+	public Boolean create(CourseImpl course) {
+		if(course != null && course.getId() == null && course.getVersion() == null) {
+			em.persist(course);
+			return TRUE;
+		} else {
+			LOGGER.warn("Entity not persisted, invalid arguments");
+			return FALSE;			
+		}
 	}
 
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public CourseImpl update(CourseImpl course) {
-		return em.merge(course);	
+		if(course != null && course.getId() != null && course.getVersion() != null) {
+			return em.merge(course);
+		} else {
+			LOGGER.warn("Entity not persisted, invalid arguments");
+			return null;
+		}
 	}
 
+	@TransactionAttribute(REQUIRED)
 	@Override
-	public void remove(CourseImpl course) {
-		em.remove(course);
+	public Boolean remove(CourseImpl course) {
+		if(course != null && course.getId() != null && course.getVersion() != null) {
+			em.remove(course);				
+			return TRUE;
+		} else {
+			LOGGER.warn("Entity not removed, invalid arguments");
+			return FALSE;
+		}
 	}
 
 	@PermitAll
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public CourseImpl findById(Integer id) {
-		return em.find(CourseImpl.class, id);
+		if(id != null) {
+			return em.find(CourseImpl.class, id);			
+		} else {
+			LOGGER.warn("Cannot find entity, invalid arguments");
+			return null;
+		}
 	}
-
+	
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public List<CourseImpl> findAll() {
 		
@@ -68,6 +102,28 @@ public class CourseBusinessImpl implements CourseBusiness {
 		final List<CourseImpl> result = typedQuery.getResultList();
 		
 		return result;
+	}
+	
+	@PermitAll
+	@TransactionAttribute(REQUIRED)
+	@Override
+	public List<CourseImpl> findAll(final UriInfo requestInfo) {
+		
+		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo, CourseImpl.class);
+		
+		final CriteriaQuery<CourseImpl> criteriaQuery = cb.createQuery(CourseImpl.class);		
+		final Root<CourseImpl> instituteRoot = criteriaQuery.from(CourseImpl.class);
+		
+		final List<Predicate> predicates = new ArrayList<>();
+		equalsPredicate.forEach((key, value) -> {
+			predicates.add(cb.equal(instituteRoot.get(key), value));
+		});
+
+		criteriaQuery.where(predicates.toArray(new Predicate[0]));
+
+		final TypedQuery<CourseImpl> typedQuery = em.createQuery(criteriaQuery);		
+		
+		return typedQuery.getResultList();
 	}
 	
 	@PermitAll

@@ -1,6 +1,7 @@
 package br.com.collegesmaster.jsf;
 
-import static br.com.collegesmaster.jsf.util.JSFUtils.addMessage;
+import static br.com.collegesmaster.jsf.util.JsfUtils.addMessage;
+import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import javax.inject.Named;
 
 import br.com.collegesmaster.annotation.qualifier.LoggedIn;
 import br.com.collegesmaster.business.UserBusiness;
+import br.com.collegesmaster.model.User;
 import br.com.collegesmaster.model.impl.UserImpl;
 
 @Named("userEditMB")
@@ -34,8 +36,14 @@ public class UserEditMB implements Serializable {
 	}
 	
 	public void editUser() {
-		userBusiness.update(user);
-		addMessage(SEVERITY_INFO, "user_edited_with_success_message");
+		
+		final User created = userBusiness.update(user);
+		
+		if(created != null) {
+			addMessage(SEVERITY_INFO, "user_edited_with_success_message");
+		} else {
+			addMessage(SEVERITY_ERROR, "unexpected_error");
+		}
 	}
 	
 	public UserImpl getUser() {

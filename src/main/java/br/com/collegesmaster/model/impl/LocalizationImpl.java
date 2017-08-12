@@ -6,8 +6,6 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import br.com.collegesmaster.annotation.State;
-
 @Embeddable
 public class LocalizationImpl implements Serializable {
 	
@@ -16,7 +14,6 @@ public class LocalizationImpl implements Serializable {
 	@Column(name = "country", nullable = false, length = 50)
 	private String country;
 	
-	@State
 	@Column(name = "state", nullable = false, length = 30)
 	private String state;
 	

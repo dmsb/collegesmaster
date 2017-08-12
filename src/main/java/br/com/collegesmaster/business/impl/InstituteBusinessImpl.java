@@ -1,5 +1,8 @@
 package br.com.collegesmaster.business.impl;
 
+import static br.com.collegesmaster.rest.util.RestUtils.buildPredicatesFromRequest;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static javax.ejb.TransactionAttributeType.REQUIRED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
@@ -20,6 +23,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
+import javax.ws.rs.core.UriInfo;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
 
@@ -40,30 +44,54 @@ public class InstituteBusinessImpl implements InstituteBusiness {
 	@Inject
 	protected CriteriaBuilder cb;
 	
+	@TransactionAttribute(REQUIRED)
 	@Override
-	public void create(InstituteImpl institute) {
-		em.persist(institute);
-		
-	}
-
-	@Override
-	public InstituteImpl update(InstituteImpl institute) {
-		return em.merge(institute);
-		
-	}
-
-	@Override
-	public void remove(InstituteImpl institute) {
-		em.remove(institute);
-		
-	}
-
-	@PermitAll
-	@Override
-	public InstituteImpl findById(Integer id) {
-		return em.find(InstituteImpl.class, id);
+	public Boolean create(final InstituteImpl institute) {
+		if(institute != null && institute.getId() == null && institute.getVersion() == null) {
+			em.persist(institute);
+			return TRUE;
+		} else {
+			LOGGER.warn("Entity not persisted, invalid arguments");
+			return FALSE;			
+		}
 	}
 	
+	@TransactionAttribute(REQUIRED)
+	@Override
+	public InstituteImpl update(final InstituteImpl institute) {
+		if(institute != null && institute.getId() != null && institute.getVersion() != null) {
+			return em.merge(institute);
+		} else {
+			LOGGER.warn("Entity not persisted, invalid arguments");
+			return null;
+		}
+	}
+	
+	@TransactionAttribute(REQUIRED)
+	@Override
+	public Boolean remove(final InstituteImpl institute) {
+		if(institute != null && institute.getId() != null && institute.getVersion() != null) {
+			em.remove(institute);				
+			return TRUE;
+		} else {
+			LOGGER.warn("Entity not removed, invalid arguments");
+			return FALSE;
+		}
+	}
+	
+	@PermitAll
+	@TransactionAttribute(REQUIRED)
+	@Override
+	public InstituteImpl findById(final Integer id) {
+		if(id != null) {
+			return em.find(InstituteImpl.class, id);			
+		} else {
+			LOGGER.warn("Cannot find entity, invalid arguments");
+			return null;
+		}
+	}
+	
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public List<InstituteImpl> findAll() {
 		final CriteriaQuery<InstituteImpl> criteriaQuery = cb.createQuery(InstituteImpl.class);		
@@ -111,7 +139,10 @@ public class InstituteBusinessImpl implements InstituteBusiness {
 	@PermitAll
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public List<InstituteImpl> findAll(final Map<String, Object> equalsPredicate) {
+	public List<InstituteImpl> findAll(final UriInfo requestInfo) {
+		
+		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo, InstituteImpl.class);
+		
 		final CriteriaQuery<InstituteImpl> criteriaQuery = cb.createQuery(InstituteImpl.class);		
 		final Root<InstituteImpl> instituteRoot = criteriaQuery.from(InstituteImpl.class);
 		
@@ -119,9 +150,9 @@ public class InstituteBusinessImpl implements InstituteBusiness {
 		equalsPredicate.forEach((key, value) -> {
 			predicates.add(cb.equal(instituteRoot.get(key), value));
 		});
-		
+
 		criteriaQuery.where(predicates.toArray(new Predicate[0]));
-		
+
 		final TypedQuery<InstituteImpl> typedQuery = em.createQuery(criteriaQuery);		
 		
 		return typedQuery.getResultList();
