@@ -4,7 +4,6 @@ import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,14 +11,11 @@ import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -35,17 +31,9 @@ import br.com.collegesmaster.model.Question;
 @Table(name = "question")
 @Access(FIELD)
 @Audited
-public class QuestionImpl implements Question {
+public class QuestionImpl extends ModelImpl implements Question {
 
 	private static final long serialVersionUID = -8970625810455399880L;
-	
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id")
-	protected Integer id;
-	
-	@Version
-	protected Long version;
 	
 	@NotBlank
 	@Lob
@@ -67,27 +55,7 @@ public class QuestionImpl implements Question {
 	@ManyToOne(targetEntity = ChallengeImpl.class, optional = false, fetch = LAZY)
 	@JoinColumn(name = "challengeFK", referencedColumnName = "id", updatable = false)
 	private Challenge challenge;
-
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	@Override
-	public Long getVersion() {
-		return version;
-	}
-
-	@Override
-	public void setVersion(Long version) {
-		this.version = version;
-	}
-
+	
 	@Override
 	public Integer getPontuation() {
 		return pontuation;

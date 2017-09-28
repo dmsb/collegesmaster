@@ -5,7 +5,6 @@ import static br.com.collegesmaster.util.CryptoUtils.generateSalt;
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,8 +13,6 @@ import javax.persistence.Access;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -23,7 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -39,17 +35,9 @@ import br.com.collegesmaster.model.User;
 @Table(name = "user")
 @Access(FIELD)
 @Audited
-public class UserImpl implements User {
+public class UserImpl extends ModelImpl implements User {
 
     private static final long serialVersionUID = -7809703915845045860L;
-	
-    @Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id")
-	protected Integer id;
-	
-	@Version
-	protected Long version;
 	
     @NotNull
     @Size(min = 2, max = 25)
@@ -97,26 +85,6 @@ public class UserImpl implements User {
 		final String crudeCpf = getGeneralInfo().getCpf().replaceAll("[^0-9]", "");
 		getGeneralInfo().setCpf(crudeCpf);
     }
-    
-    @Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	@Override
-	public Long getVersion() {
-		return version;
-	}
-
-	@Override
-	public void setVersion(Long version) {
-		this.version = version;
-	}
 	
 	@Override
 	public GeneralInfo getGeneralInfo() {

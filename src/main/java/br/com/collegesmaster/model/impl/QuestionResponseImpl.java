@@ -3,7 +3,6 @@ package br.com.collegesmaster.model.impl;
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Objects;
 
@@ -13,12 +12,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -33,17 +29,9 @@ import br.com.collegesmaster.model.QuestionResponse;
 @Table(name = "question_response")
 @Access(FIELD)
 @Audited
-public class QuestionResponseImpl implements QuestionResponse {
+public class QuestionResponseImpl extends ModelImpl implements QuestionResponse {
 	
 	private static final long serialVersionUID = 693650150648888820L;
-	
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id")
-	protected Integer id;
-	
-	@Version
-	protected Long version;
 	
 	@NotNull
 	@NotAudited
@@ -62,27 +50,7 @@ public class QuestionResponseImpl implements QuestionResponse {
 	@Basic(fetch = FetchType.LAZY, optional = false)
 	@Column(name = "letter", unique = false, length = 1)
 	private Letter letter;
-	
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	@Override
-	public Long getVersion() {
-		return version;
-	}
-
-	@Override
-	public void setVersion(Long version) {
-		this.version = version;
-	}
-	
+		
 	@Override
 	public ChallengeResponse getChallengeResponse() {
 		return challengeResponse;

@@ -4,7 +4,6 @@ import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,13 +11,10 @@ import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -33,17 +29,9 @@ import br.com.collegesmaster.model.User;
 @Table(name = "challenge")
 @Access(FIELD)
 @Audited
-public class ChallengeImpl implements Challenge {
+public class ChallengeImpl extends ModelImpl implements Challenge {
 
 	private static final long serialVersionUID = 6314730845000580522L;
-	
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id")
-	protected Integer id;
-	
-	@Version
-	protected Long version;
 	
 	@NotBlank
 	@Column(name= "title", nullable = false, length = 30)
@@ -64,26 +52,6 @@ public class ChallengeImpl implements Challenge {
 	@OneToMany(targetEntity = QuestionImpl.class, cascade = ALL, fetch = LAZY, 
 		orphanRemoval = true, mappedBy="challenge")
 	private List<QuestionImpl> questions;
-	
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	@Override
-	public Long getVersion() {
-		return version;
-	}
-
-	@Override
-	public void setVersion(Long version) {
-		this.version = version;
-	}
 	
 	@Override
 	public User getOwner() {

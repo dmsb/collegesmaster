@@ -17,7 +17,7 @@ import org.jboss.security.auth.spi.DatabaseServerLoginModule;
 
 import com.google.common.base.Strings;
 
-public class DatabaseLoginModule extends DatabaseServerLoginModule{
+public class DatabaseLoginModule extends DatabaseServerLoginModule {
 	
 	private String userSalt;
 	
