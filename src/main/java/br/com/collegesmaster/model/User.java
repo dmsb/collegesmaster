@@ -24,4 +24,8 @@ public interface User extends Model {
 
 	GeneralInfo getGeneralInfo();
 
+	Course getCourse();
+
+	void setCourse(Course course);
+
 }

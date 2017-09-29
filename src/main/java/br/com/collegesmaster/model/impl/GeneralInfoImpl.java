@@ -1,7 +1,6 @@
 package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
-import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
 import java.time.LocalDate;
@@ -11,8 +10,6 @@ import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -22,7 +19,6 @@ import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.br.CPF;
 
-import br.com.collegesmaster.model.Course;
 import br.com.collegesmaster.model.GeneralInfo;
 
 @Entity
@@ -55,11 +51,6 @@ public class GeneralInfoImpl extends ModelImpl implements GeneralInfo {
 
     @Column(name = "birthdate")
     private LocalDate birthdate;
-    
-    @NotNull
-    @ManyToOne(targetEntity = CourseImpl.class, fetch = EAGER, optional = false)
-    @JoinColumn(name = "courseId", referencedColumnName = "id", updatable = false)
-    private Course course;
     
     @OneToMany(fetch = LAZY, mappedBy = "generalInfo", orphanRemoval = true)
     private List<UserImpl> users;
@@ -112,18 +103,7 @@ public class GeneralInfoImpl extends ModelImpl implements GeneralInfo {
 	@Override
 	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
-	}
-	
-	@Override
-	public Course getCourse() {
-		return course;
-	}
-
-	@Override
-	public void setCourse(Course course) {
-		this.course = course;
-	}
-	
+	}	
 	
 	@Override
 	public List<UserImpl> getUsers() {

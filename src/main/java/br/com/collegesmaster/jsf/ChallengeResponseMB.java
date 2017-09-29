@@ -81,7 +81,7 @@ public class ChallengeResponseMB implements Serializable {
 	}
 	
 	public void loadUserDisciplines() {		
-		final Course course = loggedUser.getGeneralInfo().getCourse();
+		final Course course = loggedUser.getCourse();
 		userDisciplines = disciplineBusiness.findByCourse(course);
 	}
 	

@@ -64,7 +64,7 @@ public class HomeMB implements Serializable {
 		institutes = instituteBusiness.findNames();
 		selectedInstitute = new InstituteImpl();
 		selectedInstitute.setCourses(new ArrayList<>());
-		user.getGeneralInfo().setCourse(new CourseImpl());
+		user.setCourse(new CourseImpl());
 	}
 	
 	public List<RoleImpl> allRoles() {
@@ -75,9 +75,27 @@ public class HomeMB implements Serializable {
 		final Role completeRole = roleBusiness.findById(selectedRole.getId());
 		user.getRoles().add(completeRole);
 		
-		final Course completedCourse = courseBusiness.findById(user.getGeneralInfo().getCourse().getId());
-		user.getGeneralInfo().setCourse(completedCourse);
+		final Course completedCourse = courseBusiness.findById(user.getCourse().getId());
+		user.setCourse(completedCourse);
 		
+		final Boolean isValid = checkUniqueConstraints();
+		
+		if(FALSE.equals(isValid)) {
+			return;
+		} else {
+			
+			final Boolean created = userBusiness.create(user);
+			if(created) {
+				addMessageWithDetails(SEVERITY_INFO, "success_message", "user_registred_with_success_message");
+			} else {
+				addMessage(SEVERITY_ERROR, "unexpected_error");
+			}
+			
+			init();			
+		}	
+	}
+
+	private Boolean checkUniqueConstraints() {
 		final Boolean existsUsername = userBusiness.existsUsername(user.getUsername());
 		final Boolean existsEmail = userBusiness.existsEmail(user.getGeneralInfo().getEmail());
 		final Boolean existsCpf = userBusiness.existsCpf(user.getGeneralInfo().getCpf());
@@ -95,20 +113,7 @@ public class HomeMB implements Serializable {
 		}
 
 		final Boolean isValid = !(existsCpf || existsEmail || existsUsername);
-		
-		if(FALSE.equals(isValid)) {
-			return;
-		} else {
-			
-			final Boolean created = userBusiness.create(user);
-			if(created) {
-				addMessageWithDetails(SEVERITY_INFO, "success_message", "user_registred_with_success_message");
-			} else {
-				addMessage(SEVERITY_ERROR, "unexpected_error");
-			}
-			
-			init();			
-		}	
+		return isValid;
 	}
 	
 	public void changeInstituteEvent() {
@@ -116,7 +121,7 @@ public class HomeMB implements Serializable {
 			final List<CourseImpl> courses = courseBusiness.findNamesByInstitute(selectedInstitute);
 			selectedInstitute.setCourses(courses);
 		} else {
-			user.getGeneralInfo().setCourse(new CourseImpl());
+			user.setCourse(new CourseImpl());
 			selectedInstitute = new InstituteImpl();
 			selectedInstitute.setCourses(new ArrayList<>());
 		}

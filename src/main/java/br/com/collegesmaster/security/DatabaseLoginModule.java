@@ -22,12 +22,10 @@ public class DatabaseLoginModule extends DatabaseServerLoginModule {
 	private String userSalt;
 	
 	@Override
-	protected boolean validatePassword(String enteredPassword, String encrypted) {
+	protected boolean validatePassword(String enteredPassword, final String encrypted) {
 		
 		if (!(Strings.isNullOrEmpty(userSalt) && Strings.isNullOrEmpty(enteredPassword))) {
-
 			enteredPassword = generateHashedPassword(enteredPassword, userSalt);
-
 			if (encrypted.equals(enteredPassword)) {
 				return true;
 			}
@@ -38,56 +36,67 @@ public class DatabaseLoginModule extends DatabaseServerLoginModule {
 
 	@Override
 	protected String getUsersPassword() throws LoginException {
-
-		final String username = getUsername();
-
+		
+		final DataSource dataSource = buildDataSource();
+		
+		final String usernameToBeLogged = getUsername();
 		String password = null;
-		ResultSet resultSet = null;
-
+		ResultSet userReturned = null;
+		
 		try {
 
-			final InitialContext initinalContext = new InitialContext();
-			final DataSource dataSource = (DataSource) initinalContext.lookup(dsJndiName);
+			userReturned = verifyUsername(dataSource, usernameToBeLogged);
 
-			try {
-
-				final Connection connection = dataSource.getConnection();
-				final PreparedStatement statement = connection.prepareStatement(principalsQuery);
-
-				statement.setString(1, username);
-				resultSet = statement.executeQuery();
-
-				if (resultSet.next() == false) {
-					log.trace("Query returned no matches from database.");
-					throw PicketBoxMessages.MESSAGES.noMatchingUsernameFoundInPrincipals();
-				}
-
-				password = resultSet.getString(1);
-				userSalt = resultSet.getString(2);
-
-			} catch (SQLException e) {
-
-				final LoginException loginException = new LoginException(
-						PicketBoxMessages.MESSAGES.failedToProcessQueryMessage());
-				loginException.initCause(e.getCause());
-				throw loginException;
-			} finally {
-				if (resultSet != null) {
-					try {
-						resultSet.close();
-					} catch (SQLException e) {
-					}
-				}
+			if (userReturned.next() == false) {
+				log.trace("Query returned no matches from database.");
+				throw PicketBoxMessages.MESSAGES.noMatchingUsernameFoundInPrincipals();
 			}
 
+			password = userReturned.getString(1);
+			userSalt = userReturned.getString(2);
+
+		} catch (SQLException e) {
+
+			final LoginException loginException = new LoginException(
+					PicketBoxMessages.MESSAGES.failedToProcessQueryMessage());
+			loginException.initCause(e.getCause());
+			throw loginException;
+		} finally {
+			if (userReturned != null) {
+				try {
+					userReturned.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+
+		return password;
+	}
+
+	private ResultSet verifyUsername(final DataSource dataSource, final String username) throws SQLException {
+		
+		final Connection connection = dataSource.getConnection();
+		final PreparedStatement statement = connection.prepareStatement(principalsQuery);
+		statement.setString(1, username);
+		
+		return statement.executeQuery();
+		
+	}
+
+	private DataSource buildDataSource() throws LoginException {
+		
+		DataSource dataSource = null;
+		
+		try {
+			final InitialContext initinalContext = new InitialContext();
+			dataSource = (DataSource) initinalContext.lookup(dsJndiName);
 		} catch (NamingException e) {
 			final LoginException loginException = new LoginException(
 					PicketBoxMessages.MESSAGES.failedToLookupDataSourceMessage(dsJndiName));
 			loginException.initCause(e);
 			throw loginException;
 		}
-
-		return password;
+		return dataSource;
 	}
 
 }

@@ -4,6 +4,7 @@ import static br.com.collegesmaster.util.CryptoUtils.generateHashedPassword;
 import static br.com.collegesmaster.util.CryptoUtils.generateSalt;
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
 import java.util.List;
@@ -27,6 +28,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.envers.Audited;
 
 import br.com.collegesmaster.annotation.Password;
+import br.com.collegesmaster.model.Course;
 import br.com.collegesmaster.model.GeneralInfo;
 import br.com.collegesmaster.model.Role;
 import br.com.collegesmaster.model.User;
@@ -55,6 +57,11 @@ public class UserImpl extends ModelImpl implements User {
 	@Column(name = "salt", nullable = false, length = 44)
     private String salt;
 	
+    @NotNull
+    @ManyToOne(targetEntity = CourseImpl.class, fetch = EAGER, optional = false)
+    @JoinColumn(name = "courseFK", referencedColumnName = "id", updatable = false)
+    private Course course;
+    
     @Valid
     @ManyToOne(targetEntity = GeneralInfoImpl.class, fetch = LAZY, optional = false, cascade = ALL)
     @JoinTable(name="user_general_info",
@@ -126,6 +133,16 @@ public class UserImpl extends ModelImpl implements User {
         this.password = password;
     }
 
+	@Override
+	public Course getCourse() {
+		return course;
+	}
+
+	@Override
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+	
 	@Override
 	public List<Role> getRoles() {
 		return roles;

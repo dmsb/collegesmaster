@@ -62,7 +62,7 @@ public class ChallengeMB implements Serializable {
 	}
 	
 	public List<DisciplineImpl> loadUserDisciplines() {
-		return disciplineBusiness.findNamesByCourse(loggedUser.getGeneralInfo().getCourse());
+		return disciplineBusiness.findNamesByCourse(loggedUser.getCourse());
 	}
 	
 	public void initCurrentQuestion() {
