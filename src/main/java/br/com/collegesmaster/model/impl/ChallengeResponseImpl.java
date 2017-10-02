@@ -69,7 +69,7 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 	}
 
 	private void buildPontuation(final QuestionResponse response, AlternativeImpl alternative) {
-		if(alternative.getDefinition() && 
+		if(alternative.getIsTrue() && 
 				alternative.getLetter().equals(response.getLetter())) {
 			pontuation = pontuation + response.getTargetQuestion().getPontuation();
 		}

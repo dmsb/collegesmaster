@@ -31,8 +31,8 @@ public class MainMenuMB implements Serializable {
 
 	private static final String HOME = "/pages/home.xhtml?faces-redirect=true";
 	
-	public String loadPrincipalUsername() {
-		return loggedUser.getUsername();
+	public String loadUserFirstName() {
+		return loggedUser.getGeneralInfo().getFirstName();
 	}
 	
 	public String logout() {

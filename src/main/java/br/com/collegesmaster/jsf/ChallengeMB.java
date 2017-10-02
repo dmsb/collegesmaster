@@ -116,9 +116,9 @@ public class ChallengeMB implements Serializable {
 				alternative.setQuestion(currentQuestion);
 				
 				if(trueAlternative.equals(alternative.getLetter())) {
-					alternative.setDefinition(TRUE);
+					alternative.setIsTrue(TRUE);
 				} else {
-					alternative.setDefinition(FALSE);
+					alternative.setIsTrue(FALSE);
 				}
 			}
 			

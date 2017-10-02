@@ -152,7 +152,7 @@
 					        <h:outputLabel for="course" value="#{text['course']}" />
 						</p:column>
 						<p:column>
-							<p:selectOneMenu id="course" value="#{homeMB.user.generalInfo.course}" label="#{text['course']}"
+							<p:selectOneMenu id="course" value="#{homeMB.user.course}" label="#{text['course']}"
 								converter="courseConverter" required="true" requiredMessage="#{text['required_course_message']}">
 								<f:selectItem itemLabel="#{text['select']}" itemValue="" />
 					            <f:selectItems value="#{homeMB.selectedInstitute.courses}" var="course" itemLabel="#{course.name}" 

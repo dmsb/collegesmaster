@@ -4,19 +4,18 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	
 <!-- 	<persistence-unit name="collegesmasterPU" transaction-type="RESOURCE_LOCAL"> -->
-<!-- 		<class>br.com.collegesmaster.model.impl.Model</class> -->
-<!-- 		<class>br.com.collegesmaster.model.impl.Institute</class> -->
-<!-- 		<class>br.com.collegesmaster.model.impl.Course</class> -->
-<!-- 		<class>br.com.collegesmaster.model.impl.Discipline</class> -->
-<!-- 		<class>br.com.collegesmaster.model.impl.Localization</class> -->
-<!-- 		<class>br.com.collegesmaster.model.impl.User</class> -->
-<!-- 		<class>br.com.collegesmaster.model.impl.GeneralInfo</class> -->
-<!-- 		<class>br.com.collegesmaster.model.impl.Challenge</class> -->
-<!-- 		<class>br.com.collegesmaster.model.impl.Question</class> -->
-<!-- 		<class>br.com.collegesmaster.model.impl.Alternative</class> -->
-<!-- 		<class>br.com.collegesmaster.model.impl.ChallengeResponse</class> -->
-<!-- 		<class>br.com.collegesmaster.model.impl.QuestionResponse</class>		 -->
-<!-- 		<class>br.com.collegesmaster.model.impl.Role</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.InstituteImpl</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.CourseImpl</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.DisciplineImpl</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.LocalizationImpl</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.UserImpl</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.GeneralInfoImpl</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.ChallengeImpl</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.QuestionImpl</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.AlternativeImpl</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.ChallengeResponseImpl</class> -->
+<!-- 		<class>br.com.collegesmaster.model.impl.QuestionResponseImpl</class>		 -->
+<!-- 		<class>br.com.collegesmaster.model.impl.RoleImpl</class> -->
 <!-- 		<class>br.com.collegesmaster.model.impl.AuditInfo</class> -->
 <!-- 		<class>org.hibernate.envers.DefaultRevisionEntity</class> -->
 <!-- 		<exclude-unlisted-classes>false</exclude-unlisted-classes> -->

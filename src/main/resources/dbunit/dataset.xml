@@ -98,25 +98,25 @@
 	
 	<question description='Question about DDD' pontuation='50' challengeFK='4' version='1498780800000' />
 
-	<alternative definition='true' description="Response 1" letter='A' questionFK='1' version='1498780800000' />
-	<alternative definition='false' description="Response 2" letter='B' questionFK='1' version='1498780800000' />
-	<alternative definition='false' description="Response 3" letter='C' questionFK='1' version='1498780800000' />
-	<alternative definition='false' description="Response 4" letter='D' questionFK='1' version='1498780800000' />
+	<alternative isTrue='true' description="Response 1" letter='A' questionFK='1' version='1498780800000' />
+	<alternative isTrue='false' description="Response 2" letter='B' questionFK='1' version='1498780800000' />
+	<alternative isTrue='false' description="Response 3" letter='C' questionFK='1' version='1498780800000' />
+	<alternative isTrue='false' description="Response 4" letter='D' questionFK='1' version='1498780800000' />
 
-	<alternative definition='true' description="Response 1" letter='A' questionFK='2' version='1498780800000' />
-	<alternative definition='false' description="Response 2" letter='B' questionFK='2' version='1498780800000'/>
-	<alternative definition='false' description="Response 3" letter='C' questionFK='2' version='1498780800000' />
-	<alternative definition='false' description="Response 4" letter='D' questionFK='2' version='1498780800000'/>
+	<alternative isTrue='true' description="Response 1" letter='A' questionFK='2' version='1498780800000' />
+	<alternative isTrue='false' description="Response 2" letter='B' questionFK='2' version='1498780800000'/>
+	<alternative isTrue='false' description="Response 3" letter='C' questionFK='2' version='1498780800000' />
+	<alternative isTrue='false' description="Response 4" letter='D' questionFK='2' version='1498780800000'/>
 
-	<alternative definition='true' description="Response 1" letter='A' questionFK='3' version='1498780800000'/>
-	<alternative definition='false' description="Response 2" letter='B' questionFK='3' version='1498780800000' />
-	<alternative definition='false' description="Response 3" letter='C' questionFK='3' version='1498780800000'/>
-	<alternative definition='false' description="Response 4" letter='D' questionFK='3' version='1498780800000' />
+	<alternative isTrue='true' description="Response 1" letter='A' questionFK='3' version='1498780800000'/>
+	<alternative isTrue='false' description="Response 2" letter='B' questionFK='3' version='1498780800000' />
+	<alternative isTrue='false' description="Response 3" letter='C' questionFK='3' version='1498780800000'/>
+	<alternative isTrue='false' description="Response 4" letter='D' questionFK='3' version='1498780800000' />
 	
-	<alternative definition='true' description="Response 1" letter='A' questionFK='4' version='1498780800000' />
-	<alternative definition='false' description="Response 2" letter='B' questionFK='4' version='1498780800000' />
-	<alternative definition='false' description="Response 3" letter='C' questionFK='4' version='1498780800000' />
-	<alternative definition='false' description="Response 4" letter='D' questionFK='4' version='1498780800000' />
+	<alternative isTrue='true' description="Response 1" letter='A' questionFK='4' version='1498780800000' />
+	<alternative isTrue='false' description="Response 2" letter='B' questionFK='4' version='1498780800000' />
+	<alternative isTrue='false' description="Response 3" letter='C' questionFK='4' version='1498780800000' />
+	<alternative isTrue='false' description="Response 4" letter='D' questionFK='4' version='1498780800000' />
 
 </dataset>
 

@@ -8,13 +8,13 @@ public interface Alternative extends Model {
 
 	String getDescription();
 
-	void setDefinition(Boolean definition);
-
 	void setLetter(Letter letter);
 
 	Letter getLetter();
 
-	Boolean getDefinition();
+	void setIsTrue(Boolean isTrue);
+	
+	Boolean getIsTrue();
 
 	void setQuestion(Question question);
 

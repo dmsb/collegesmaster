@@ -44,8 +44,8 @@ public class AlternativeImpl extends ModelImpl implements Alternative {
     private String description;
     
     @NotNull
-	@Column(name = "definition", unique = false, nullable = false)
-	private Boolean definition;
+	@Column(name = "isTrue", unique = false, nullable = false)
+	private Boolean isTrue;
 	
     @NotNull
 	@ManyToOne(targetEntity = QuestionImpl.class, optional = false, fetch = LAZY)
@@ -73,13 +73,13 @@ public class AlternativeImpl extends ModelImpl implements Alternative {
 	}
 	
 	@Override
-	public Boolean getDefinition() {
-		return definition;
+	public Boolean getIsTrue() {
+		return isTrue;
 	}
 
 	@Override
-	public void setDefinition(Boolean definition) {
-		this.definition = definition;
+	public void setIsTrue(Boolean isTrue) {
+		this.isTrue = isTrue;
 	}
 	
 	@Override
@@ -107,11 +107,11 @@ public class AlternativeImpl extends ModelImpl implements Alternative {
 		
 		return id == objectComparatedInstance.id && 
 			    Objects.equals(description, objectComparatedInstance.description) &&
-			    Objects.equals(definition, objectComparatedInstance.definition);
+			    Objects.equals(isTrue, objectComparatedInstance.isTrue);
 	}
 	
 	@Override
     public int hashCode() {
-        return Objects.hash(id, description, definition);
+        return Objects.hash(id, description, isTrue);
     }
 }
