@@ -10,6 +10,7 @@ import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -40,7 +41,8 @@ public class DisciplineImpl extends ModelImpl implements Discipline {
 	@JsonManagedReference
     @NotNull
     @ManyToOne(targetEntity = CourseImpl.class, optional = false, fetch = LAZY)
-    @JoinColumn(name = "courseFK", referencedColumnName = "id")
+    @JoinColumn(name = "courseFK", referencedColumnName = "id",
+    	foreignKey = @ForeignKey(name = "DISCIPLINE_courseFK"))
     private Course course;
     
 	@NotAudited

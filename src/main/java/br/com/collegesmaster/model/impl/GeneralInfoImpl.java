@@ -12,17 +12,23 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.collegesmaster.model.GeneralInfo;
 
 @Entity
-@Table(name = "general_info")
+@Table(name = "general_info",
+	uniqueConstraints = {
+			@UniqueConstraint(columnNames = "cpf",  name = "UK_GI_username"),
+			@UniqueConstraint(columnNames = "email",  name = "UK_GI_email")
+		})
 @Access(FIELD)
 @Audited
 public class GeneralInfoImpl extends ModelImpl implements GeneralInfo {
@@ -31,12 +37,12 @@ public class GeneralInfoImpl extends ModelImpl implements GeneralInfo {
 	
 	@NotNull
 	@CPF
-	@Column(name = "cpf", unique = true,  nullable = false, length = 11)	
+	@Column(name = "cpf", nullable = false, length = 11)	
     private String cpf;
 		
 	@NotNull
 	@Email
-	@Column(name = "email", unique = true, nullable = false, length = 50)
+	@Column(name = "email", nullable = false, length = 50)
     private String email;
 
 	@NotNull
@@ -52,6 +58,7 @@ public class GeneralInfoImpl extends ModelImpl implements GeneralInfo {
     @Column(name = "birthdate")
     private LocalDate birthdate;
     
+    @NotAudited
     @OneToMany(fetch = LAZY, mappedBy = "generalInfo", orphanRemoval = true)
     private List<UserImpl> users;
 	

@@ -1,6 +1,8 @@
 package br.com.collegesmaster.model;
 
-import java.util.List;
+import java.util.Set;
+
+import br.com.collegesmaster.model.impl.RoleImpl;
 
 public interface User extends Model {
 
@@ -16,9 +18,9 @@ public interface User extends Model {
 
 	void setPassword(String password);
 
-	void setRoles(List<Role> roles);
+	void setRoles(Set<RoleImpl> roles);
 
-	List<Role> getRoles();
+	Set<RoleImpl> getRoles();
 
 	void setGeneralInfo(GeneralInfo person);
 

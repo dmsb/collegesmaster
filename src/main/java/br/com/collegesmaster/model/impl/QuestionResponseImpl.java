@@ -12,13 +12,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 
 import br.com.collegesmaster.enums.Letter;
 import br.com.collegesmaster.model.ChallengeResponse;
@@ -34,15 +34,15 @@ public class QuestionResponseImpl extends ModelImpl implements QuestionResponse 
 	private static final long serialVersionUID = 693650150648888820L;
 	
 	@NotNull
-	@NotAudited
 	@ManyToOne(targetEntity = ChallengeResponseImpl.class, optional = false, fetch = LAZY)
-	@JoinColumn(name = "challengeResponseFK", referencedColumnName = "id", updatable = false)
+	@JoinColumn(name = "challengeResponseFK", referencedColumnName = "id", updatable = false,
+		foreignKey = @ForeignKey(name = "QR_challengeResponseFK"))
 	private ChallengeResponse challengeResponse;
 	
 	@NotNull
-	@NotAudited
 	@ManyToOne(targetEntity = QuestionImpl.class, fetch = LAZY, optional = false)
-	@JoinColumn(name = "targetQuestionFK", referencedColumnName = "id", updatable = false)
+	@JoinColumn(name = "targetQuestionFK", referencedColumnName = "id", updatable = false,
+		foreignKey = @ForeignKey(name = "QR_targetQuestionFK"))
 	private Question targetQuestion;
 	
 	@NotNull

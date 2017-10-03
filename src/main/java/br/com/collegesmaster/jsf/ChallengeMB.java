@@ -72,6 +72,7 @@ public class ChallengeMB implements Serializable {
 	}
 
 	private void initAlternatives() {
+		
 		alternatives = new ArrayList<>(4);
 		alternatives.add(new AlternativeImpl());
 		alternatives.add(new AlternativeImpl());

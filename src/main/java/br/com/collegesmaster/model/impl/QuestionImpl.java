@@ -11,6 +11,7 @@ import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -50,10 +51,10 @@ public class QuestionImpl extends ModelImpl implements Question {
 	@OneToMany(targetEntity = AlternativeImpl.class, cascade = ALL, fetch = EAGER, orphanRemoval = true, mappedBy = "question")
 	private List<AlternativeImpl> alternatives;
 
-	@NotAudited
 	@NotNull
 	@ManyToOne(targetEntity = ChallengeImpl.class, optional = false, fetch = LAZY)
-	@JoinColumn(name = "challengeFK", referencedColumnName = "id", updatable = false)
+	@JoinColumn(name = "challengeFK", referencedColumnName = "id", updatable = false,
+		foreignKey = @ForeignKey(name = "QUESTION_challengeFK"))
 	private Challenge challenge;
 	
 	@Override

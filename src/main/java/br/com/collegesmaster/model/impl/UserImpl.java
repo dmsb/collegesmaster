@@ -7,13 +7,14 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Access;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -21,6 +22,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,11 +32,11 @@ import org.hibernate.envers.Audited;
 import br.com.collegesmaster.annotation.Password;
 import br.com.collegesmaster.model.Course;
 import br.com.collegesmaster.model.GeneralInfo;
-import br.com.collegesmaster.model.Role;
 import br.com.collegesmaster.model.User;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user",
+	uniqueConstraints = @UniqueConstraint(columnNames = "username",  name = "UK_USER_username"))
 @Access(FIELD)
 @Audited
 public class UserImpl extends ModelImpl implements User {
@@ -59,21 +61,23 @@ public class UserImpl extends ModelImpl implements User {
 	
     @NotNull
     @ManyToOne(targetEntity = CourseImpl.class, fetch = EAGER, optional = false)
-    @JoinColumn(name = "courseFK", referencedColumnName = "id", updatable = false)
+    @JoinColumn(name = "courseFK", referencedColumnName = "id", updatable = false,
+    	foreignKey = @ForeignKey(name = "USER_courseFK"))
     private Course course;
     
     @Valid
     @ManyToOne(targetEntity = GeneralInfoImpl.class, fetch = LAZY, optional = false, cascade = ALL)
-    @JoinTable(name="user_general_info",
-	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
-	    inverseJoinColumns={@JoinColumn(name="generalInfoFK", referencedColumnName = "id")})
+    @JoinColumn(name = "generalInfoFK", referencedColumnName = "id", updatable = false,
+		foreignKey = @ForeignKey(name = "USER_generalInfoFK"))
 	private GeneralInfo generalInfo;
     
-    @ManyToMany(targetEntity = RoleImpl.class, fetch = LAZY)
+    @ManyToMany(fetch = LAZY)
     @JoinTable(name="user_role",
-	    joinColumns={@JoinColumn(name="userFK", referencedColumnName = "id")},
-	    inverseJoinColumns={@JoinColumn(name="roleFK", referencedColumnName = "id")})
-    private List<Role> roles;
+	    joinColumns = {@JoinColumn(name="userFK", referencedColumnName = "id")},
+	    foreignKey = @ForeignKey(name = "UR_userFK"),
+	    inverseJoinColumns = {@JoinColumn(name="roleFK", referencedColumnName = "id")},
+	    inverseForeignKey = @ForeignKey(name = "UR_roleFK"))
+    private Set<RoleImpl> roles;
     
     @PrePersist
     @PreUpdate
@@ -144,12 +148,12 @@ public class UserImpl extends ModelImpl implements User {
 	}
 	
 	@Override
-	public List<Role> getRoles() {
+	public Set<RoleImpl> getRoles() {
 		return roles;
 	}
 
 	@Override
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<RoleImpl> roles) {
 		this.roles = roles;
 	}
 	

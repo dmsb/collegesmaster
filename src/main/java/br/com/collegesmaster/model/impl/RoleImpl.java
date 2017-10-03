@@ -1,16 +1,20 @@
 package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
+import static javax.persistence.FetchType.LAZY;
 
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import br.com.collegesmaster.model.Role;
 
@@ -26,6 +30,10 @@ public class RoleImpl extends ModelImpl implements Role {
 	@Column(name = "name", nullable = false, unique = true, length = 20)
 	private String name;
 	
+	@NotAudited
+    @ManyToMany(fetch = LAZY, mappedBy = "roles")
+    private Set<UserImpl> users;
+	
 	@Override
 	public String getName() {
 		return name;
@@ -36,6 +44,16 @@ public class RoleImpl extends ModelImpl implements Role {
 		this.name = name;
 	}
 	
+	@Override
+	public Set<UserImpl> getUsers() {
+		return users;
+	}
+
+	@Override
+	public void setUsers(Set<UserImpl> users) {
+		this.users = users;
+	}
+
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 		

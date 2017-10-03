@@ -28,7 +28,7 @@
 <!-- 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />			 -->
 <!-- 			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" /> -->
 			
-<!-- 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" /> -->
+<!-- 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" /> -->
 <!-- 			<property name="hibernate.show_sql" value="true" />			 -->
 <!-- 		</properties> -->
 <!-- 	</persistence-unit> -->
@@ -62,7 +62,7 @@
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			
 			<property name="hibernate.transaction.flush_before_completion" value="true"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			
 		</properties>
 	</persistence-unit>	

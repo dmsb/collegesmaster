@@ -11,12 +11,14 @@ import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -28,7 +30,8 @@ import br.com.collegesmaster.model.QuestionResponse;
 import br.com.collegesmaster.model.User;
 
 @Entity
-@Table(name = "challenge_response")
+@Table(name = "challenge_response",
+	uniqueConstraints = @UniqueConstraint(columnNames = {"challengeFK", "userFK"},  name = "UK_CHALLENGE_USER"))
 @Access(FIELD)
 @Audited
 public class ChallengeResponseImpl extends ModelImpl implements ChallengeResponse {
@@ -37,12 +40,14 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 	
 	@NotNull
 	@ManyToOne(targetEntity = ChallengeImpl.class, optional = false, fetch = EAGER)
-	@JoinColumn(name = "challengeFK", referencedColumnName = "id", updatable = false, nullable = false)
+	@JoinColumn(name = "challengeFK", referencedColumnName = "id", updatable = false, nullable = false,
+		foreignKey = @ForeignKey(name = "CR_challengeFK"))
 	private Challenge targetChallenge;
 	
 	@NotNull
 	@ManyToOne(targetEntity = UserImpl.class, optional = false, fetch = LAZY)
-	@JoinColumn(name = "userFK", referencedColumnName = "id", updatable = false, nullable = false)
+	@JoinColumn(name = "userFK", referencedColumnName = "id", updatable = false, nullable = false,
+		foreignKey = @ForeignKey(name = "CR_userFK"))
 	private User owner;
 	
 	@NotNull

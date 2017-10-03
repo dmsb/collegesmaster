@@ -10,6 +10,7 @@ import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -42,11 +43,12 @@ public class CourseImpl extends ModelImpl implements Course {
 	@JsonBackReference
 	@NotNull
 	@ManyToOne(targetEntity = InstituteImpl.class, optional = false, fetch = LAZY)
-	@JoinColumn(name = "instituteFK", referencedColumnName = "id", updatable = false)
+	@JoinColumn(name = "instituteFK", referencedColumnName = "id", updatable = false,
+		foreignKey = @ForeignKey(name = "COURSE_instituteFK"))
 	private Institute institute;
 	
-	@JsonBackReference
 	@NotAudited
+	@JsonBackReference
 	@OneToMany(targetEntity = DisciplineImpl.class, cascade = ALL, fetch = LAZY,
 			orphanRemoval = true, mappedBy = "course")
 	private List<DisciplineImpl> disciplines;

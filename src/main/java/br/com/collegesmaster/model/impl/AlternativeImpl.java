@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -49,7 +50,8 @@ public class AlternativeImpl extends ModelImpl implements Alternative {
 	
     @NotNull
 	@ManyToOne(targetEntity = QuestionImpl.class, optional = false, fetch = LAZY)
-	@JoinColumn(name = "questionFK", referencedColumnName = "id")
+	@JoinColumn(name = "questionFK", referencedColumnName = "id", 
+		foreignKey = @ForeignKey(name = "ALTERNATIVE_questionFK"))
 	private Question question;
 	
 	@Override

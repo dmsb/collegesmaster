@@ -10,6 +10,7 @@ import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -56,7 +57,7 @@ public class HomeMB implements Serializable {
 	@PostConstruct
 	public void init() {
 		user = new UserImpl();
-		user.setRoles(new ArrayList<>());
+		user.setRoles(new HashSet<>());
 		user.setGeneralInfo(new GeneralInfoImpl());
 
 		selectedRole = new RoleImpl();
@@ -72,7 +73,7 @@ public class HomeMB implements Serializable {
 	}
 	
 	public void persistUser() {
-		final Role completeRole = roleBusiness.findById(selectedRole.getId());
+		final RoleImpl completeRole = roleBusiness.findById(selectedRole.getId());
 		user.getRoles().add(completeRole);
 		
 		final Course completedCourse = courseBusiness.findById(user.getCourse().getId());

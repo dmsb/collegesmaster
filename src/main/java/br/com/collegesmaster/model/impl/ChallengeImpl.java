@@ -11,6 +11,7 @@ import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -37,15 +38,16 @@ public class ChallengeImpl extends ModelImpl implements Challenge {
 	@Column(name= "title", nullable = false, length = 30)
 	private String title;
 	
-	@NotAudited
 	@NotNull
 	@ManyToOne(targetEntity = UserImpl.class, optional = false, fetch = LAZY)
-	@JoinColumn(name = "userFK", referencedColumnName = "id", updatable = false)
+	@JoinColumn(name = "userFK", referencedColumnName = "id", updatable = false,
+		foreignKey = @ForeignKey(name = "CHALLENGE_userFK"))
 	private User owner;
 	
 	@NotNull
 	@ManyToOne(targetEntity = DisciplineImpl.class, optional = false, fetch = EAGER)
-	@JoinColumn(name = "disciplineFK", referencedColumnName = "id")
+	@JoinColumn(name = "disciplineFK", referencedColumnName = "id", 
+		foreignKey = @ForeignKey(name = "CHALLENGE_disciplineFK"))
 	private Discipline discipline;
 	
 	@NotAudited
