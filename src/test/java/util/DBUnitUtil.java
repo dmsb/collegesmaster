@@ -1,4 +1,4 @@
-package tests;
+package util;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -35,7 +35,7 @@ public class DBUnitUtil {
             final FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
             builder.setColumnSensing(true);
             final URL url = DBUnitUtil.class.getResource(XML_FILE);
-            final IDataSet dataSet = builder.build(url);           
+            final IDataSet dataSet = builder.build(url);
             DatabaseOperation.CLEAN_INSERT.execute(db_conn, dataSet);
         } catch (Exception ex) {
             throw new RuntimeException(ex.getMessage(), ex);

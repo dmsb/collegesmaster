@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionManagement;
@@ -25,9 +26,11 @@ import javax.persistence.criteria.Root;
 import javax.ws.rs.core.UriInfo;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
+import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 import br.com.collegesmaster.business.ChallengeResponseBusiness;
+import br.com.collegesmaster.business.util.BooleanReponseBuilder;
 import br.com.collegesmaster.model.Challenge;
 import br.com.collegesmaster.model.User;
 import br.com.collegesmaster.model.impl.ChallengeResponseImpl;
@@ -38,23 +41,45 @@ import br.com.collegesmaster.model.impl.ChallengeResponseImpl_;
 @SecurityDomain("collegesmasterSecurityDomain")
 public class ChallengeResponseBusinessImpl  implements ChallengeResponseBusiness {
 	
+	@Inject
+	private Logger LOGGER;
+	
 	@Inject @UserDatabase
 	private EntityManager em;
 	
 	@Inject
-	protected CriteriaBuilder cb;
+	private CriteriaBuilder cb;
+	
+	@EJB
+	private BooleanReponseBuilder<ChallengeResponseImpl> booleanResponseBuilder;
 	
 	@RolesAllowed({"STUDENT", "ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean create(final ChallengeResponseImpl response) {
 		if(response != null && response.getId() == null && response.getVersion() == null) {
-			em.persist(response);
+			
+			final Boolean wasResponded = wasRespondedByUser(response);
+
+			if(wasResponded) {
+				return FALSE;
+			} else {
+				em.persist(response);
+			}
 			return TRUE;
 		} else {
-			LOGGER.warn("Entity not persisted, invalid arguments");
+			LOGGER.error("Entity not persisted, invalid arguments");
 			return FALSE;			
 		}
+	}
+
+	private Boolean wasRespondedByUser(final ChallengeResponseImpl response) {
+		final Root<ChallengeResponseImpl> challengeRoot = booleanResponseBuilder
+				.build(ChallengeResponseImpl.class);
+		final Predicate wasRespondedPredicate = 
+				cb.equal(challengeRoot.get(ChallengeResponseImpl_.owner), response.getOwner());
+		final Boolean wasResponded = booleanResponseBuilder.where(wasRespondedPredicate).execute();
+		return wasResponded;
 	}
 
 	@RolesAllowed({"STUDENT", "ADMINISTRATOR"})
@@ -74,7 +99,7 @@ public class ChallengeResponseBusinessImpl  implements ChallengeResponseBusiness
 	@Override
 	public Boolean remove(final ChallengeResponseImpl response) {
 		if(response != null && response.getId() != null && response.getVersion() != null) {
-			em.remove(response);				
+			em.remove(response);
 			return TRUE;
 		} else {
 			LOGGER.warn("Entity not removed, invalid arguments");
@@ -99,7 +124,7 @@ public class ChallengeResponseBusinessImpl  implements ChallengeResponseBusiness
 	@Override
 	public List<ChallengeResponseImpl> findAll() {
 		final CriteriaQuery<ChallengeResponseImpl> criteriaQuery = cb.createQuery(ChallengeResponseImpl.class);
-		final TypedQuery<ChallengeResponseImpl> typedQuery = em.createQuery(criteriaQuery);		
+		final TypedQuery<ChallengeResponseImpl> typedQuery = em.createQuery(criteriaQuery);
 		return typedQuery.getResultList();
 	}
 	

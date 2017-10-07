@@ -1,8 +1,6 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -17,8 +15,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.collegesmaster.model.Discipline;
-import br.com.collegesmaster.model.Institute;
 import br.com.collegesmaster.model.User;
 import br.com.collegesmaster.model.impl.ChallengeImpl;
 import br.com.collegesmaster.model.impl.DisciplineImpl;
@@ -36,78 +32,37 @@ public class JUnitSelects extends JUnitConfiguration {
 	public void test01_getInstitutes() {
 		
 		queryBuilder
-				.append("SELECT institute  ")
-				.append("FROM   Institute institute ")
-				.append("WHERE  institute.name LIKE :name ")
+				.append("SELECT institute ")
+				.append("FROM   InstituteImpl institute ")
 				.append("ORDER  BY institute.name");
 		
-		final String selectAllFederalInstitutesQuery = queryBuilder.toString();
-		logger.info("Proccessing test 01: " + selectAllFederalInstitutesQuery);
+		final String findAll = queryBuilder.toString();
+		logger.info("Proccessing test 01: " + findAll);
         
-		final TypedQuery<InstituteImpl> query = em.createQuery(
-        		selectAllFederalInstitutesQuery,
-                InstituteImpl.class);
-        query.setParameter("name", "instituto%");
-        
+		final TypedQuery<InstituteImpl> query = em.createQuery(findAll, InstituteImpl.class);
+
         final List<InstituteImpl> institutes = query.getResultList();
 
-        for (final Institute institute : institutes) {
-            assertTrue(institute.getName().startsWith("Instituto"));
-        }
-
-        assertEquals(4, institutes.size());
+        assertEquals(2, institutes.size());
 	}
 	
 	@Test
 	public void test02_getDisciplines() {
 		queryBuilder
-				.append("SELECT discipline  ")
-				.append("FROM   Discipline discipline ")
-				.append("WHERE  discipline.name LIKE :name ")
+				.append("SELECT discipline ")
+				.append("FROM   DisciplineImpl discipline ")
 				.append("ORDER  BY discipline.name");			
 		
-		final String selectAllCorporativeSoftwareDisciplneQuery = queryBuilder.toString();
-		logger.info("Proccessing test 02: " + selectAllCorporativeSoftwareDisciplneQuery);
+		final String findAll = queryBuilder.toString();
+		logger.info("Proccessing test 02: " + findAll);
 		
 		final TypedQuery<DisciplineImpl> query = em.createQuery(
-        		selectAllCorporativeSoftwareDisciplneQuery,
+        		findAll,
                 DisciplineImpl.class);
-        query.setParameter("name", "software corporativo%");
         
         final List<DisciplineImpl> disciplines = query.getResultList();
 
-        for (final Discipline discipline : disciplines) {
-            assertTrue(discipline.getName().startsWith("software corp"));
-        }
-
-        assertEquals(2, disciplines.size());
-	}
-	
-	@Test
-	public void test03_getDisciplinesByName() {
-		queryBuilder
-				.append("SELECT discipline  ")
-				.append("FROM   Discipline discipline ")
-				.append("WHERE  discipline.name = :name ")
-				.append("ORDER  BY discipline.name");			
-		
-		final String selectAllDisciplinesByName = queryBuilder.toString();
-		logger.info("Proccessing test 03: " + selectAllDisciplinesByName);
-		
-		final TypedQuery<DisciplineImpl> query = em.createQuery(
-        		selectAllDisciplinesByName,
-                DisciplineImpl.class);
-        query.setParameter("name", "quimica i");
-        
-        final List<DisciplineImpl> disciplines = query.getResultList();
-
-        for (final Discipline discipline : disciplines) {
-        	if("quimica i".equals(discipline.getName()) == false) {
-        		fail();
-        		return;
-        	}
-        }
-        assertEquals(1, disciplines.size());
+        assertEquals(18, disciplines.size());
 	}
 	
 	@Test
@@ -115,7 +70,7 @@ public class JUnitSelects extends JUnitConfiguration {
 
 		queryBuilder
 				.append("SELECT COUNT(c) ")
-				.append("FROM   Challenge c");			
+				.append("FROM   ChallengeImpl c");			
 		
 		final String totalOfChallenges = queryBuilder.toString();
 		logger.info("Proccessing test 05: " + totalOfChallenges);
@@ -135,8 +90,8 @@ public class JUnitSelects extends JUnitConfiguration {
 		queryBuilder
 				.append("SELECT   user.person.cpf, ")
 				.append("		  user.person.firstName ")
-				.append("FROM     User user ")
-				.append("ORDER BY user.person.firstName");
+				.append("FROM     UserImpl user ")
+				.append("ORDER BY user.generalInfo.firstName");
 		
 		final String listByName = queryBuilder.toString();
 		logger.info("Proccessing test 05: " + listByName);
@@ -154,7 +109,7 @@ public class JUnitSelects extends JUnitConfiguration {
 	public void test06_getChallenges() {
 
 		queryBuilder
-				.append("FROM Challenge c");			
+				.append("FROM ChallengeImpl c");			
 		
 		final String totalAttachments = queryBuilder.toString();
 		logger.info("Proccessing test 07: " + totalAttachments);
@@ -162,7 +117,7 @@ public class JUnitSelects extends JUnitConfiguration {
 		final Query query = em.createQuery(queryBuilder.toString());		       
         
 		final List<ChallengeImpl> result =  query.getResultList();
-		assertEquals(result.size(), 5);
+		assertEquals(result.size(), 6);
 	}
 	
 	@Test
@@ -181,7 +136,7 @@ public class JUnitSelects extends JUnitConfiguration {
 
 		queryBuilder
 				.append("SELECT user.salt ")
-				.append("FROM   User user where user.username = :username");				
+				.append("FROM UserImpl user where user.username = :username");				
 		
 		final Query query = em.createQuery(queryBuilder.toString());		
         query.setParameter("username", username);

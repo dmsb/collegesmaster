@@ -12,7 +12,6 @@ import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,7 +19,6 @@ import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.annotation.qualifier.LoggedIn;
 import br.com.collegesmaster.business.UserBusiness;
-import br.com.collegesmaster.exception.NotLoggedInUserException;
 import br.com.collegesmaster.model.impl.UserImpl;
 import br.com.collegesmaster.security.model.Credentials;
 import br.com.collegesmaster.security.model.impl.CredentialsImpl;
@@ -39,6 +37,8 @@ public class UserSessionMB implements Serializable {
 
 	private Credentials credentials;
 
+	@Produces
+	@LoggedIn
 	private UserImpl loggedUser;
 
 	@PostConstruct
@@ -81,35 +81,21 @@ public class UserSessionMB implements Serializable {
 	public void logout() {
 		loggedUser = null;
 	}
-
-	@Produces
-	@LoggedIn
-	public UserImpl getLoggedUser() throws LoginException {
-		if (loggedUser == null) {
-			throw new NotLoggedInUserException("Fail to get logged user.");
-		} else {
-			return loggedUser;
-		}
+	
+	public UserImpl getLoggedUser() {
+		return loggedUser;
 	}
-
-	void onEventInLoggedUser(@Observes @LoggedIn UserImpl user) {
-		this.loggedUser = user; 
+	
+	public void setLoggedUser(@Observes @LoggedIn UserImpl loggedUser) {
+		this.loggedUser = loggedUser;
 	}
-
+	
 	public Credentials getCredentials() {
 		return credentials;
 	}
 
 	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
-	}
-
-	public UserImpl getUser() {
-		return loggedUser;
-	}
-
-	public void setUser(UserImpl user) {
-		this.loggedUser = user;
 	}
 
 }

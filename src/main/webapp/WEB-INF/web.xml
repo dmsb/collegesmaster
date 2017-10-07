@@ -50,7 +50,7 @@
 	</session-config>
 
 	<login-config>
-		<auth-method>FORM</auth-method>
+		<auth-method>BASIC</auth-method>
 		<realm-name>cm-database-domain</realm-name>
 		<form-login-config>
 			<form-login-page>/pages/home.xhtml</form-login-page>

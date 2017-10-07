@@ -20,6 +20,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
+import util.DBUnitUtil;
+
 public class JUnitConfiguration {
 		
     protected static EntityManagerFactory emf;
