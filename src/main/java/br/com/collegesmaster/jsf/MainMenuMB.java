@@ -2,7 +2,7 @@ package br.com.collegesmaster.jsf;
 
 import java.io.Serializable;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,7 +11,7 @@ import br.com.collegesmaster.annotation.qualifier.LoggedIn;
 import br.com.collegesmaster.model.User;
 
 @Named("mainMenuMB")
-@SessionScoped
+@RequestScoped
 public class MainMenuMB implements Serializable {
 	
 	@Inject @LoggedIn 
