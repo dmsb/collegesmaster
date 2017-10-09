@@ -13,18 +13,18 @@ import br.com.collegesmaster.model.impl.UserImpl;
 @Path("/users")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public interface UserBusiness extends Business<UserImpl> {
+public interface UserBusiness extends BasicCrudOperation<UserImpl> {
 
 	@GET
-	@Path("/exists_cpf/{cpf}")
+	@Path("/exists-cpf/{cpf}")
 	Boolean existsCpf(@PathParam("cpf") String cpf);
 	
 	@GET
-	@Path("/exists_email/{email}")
+	@Path("/exists-email/{email}")
 	Boolean existsEmail(@PathParam("email") String email);
 	
 	@GET
-	@Path("/exists_username/{username}")
+	@Path("/exists-username/{username}")
 	Boolean existsUsername(@PathParam("username") String username);
 	
 	@GET

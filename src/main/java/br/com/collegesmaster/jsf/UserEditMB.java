@@ -11,7 +11,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.annotation.qualifier.LoggedIn;
+import br.com.collegesmaster.annotation.qualifier.AuthenticatedUser;
 import br.com.collegesmaster.business.UserBusiness;
 import br.com.collegesmaster.model.User;
 import br.com.collegesmaster.model.impl.UserImpl;
@@ -25,7 +25,7 @@ public class UserEditMB implements Serializable {
 	@Inject
 	private transient UserBusiness userBusiness;
 	
-	@Inject @LoggedIn 
+	@Inject @AuthenticatedUser 
 	private UserImpl loggedUser;
 	
 	private UserImpl user;

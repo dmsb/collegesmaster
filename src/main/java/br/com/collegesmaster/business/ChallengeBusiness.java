@@ -16,7 +16,7 @@ import br.com.collegesmaster.model.impl.QuestionImpl;
 @Path("/challenges")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public interface ChallengeBusiness extends Business<ChallengeImpl> {
+public interface ChallengeBusiness extends BasicCrudOperation<ChallengeImpl> {
 	
 	List<QuestionImpl> findQuestionsByChallenge(Challenge selectedChallenge);
 	

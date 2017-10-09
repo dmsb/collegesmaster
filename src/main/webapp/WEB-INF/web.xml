@@ -6,7 +6,7 @@
 	<display-name>collegesmaster</display-name>
 
 	<welcome-file-list>
-		<welcome-file>pages/home.xhtml</welcome-file>
+		<welcome-file>pages/login.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<context-param>
@@ -53,8 +53,8 @@
 		<auth-method>BASIC</auth-method>
 		<realm-name>cm-database-domain</realm-name>
 		<form-login-config>
-			<form-login-page>/pages/home.xhtml</form-login-page>
-			<form-error-page>/pages/home.xhtml</form-error-page>
+			<form-login-page>/pages/login.xhtml</form-login-page>
+			<form-error-page>/pages/login.xhtml</form-error-page>
 		</form-login-config>
 	</login-config>
 
@@ -128,14 +128,15 @@
 		<web-resource-collection>
 			<web-resource-name>Public</web-resource-name>
 			<description />
-			<url-pattern>/pages/home.xhtml</url-pattern>
+			<url-pattern>/pages/login.xhtml</url-pattern>
 			<url-pattern>/resources/*</url-pattern>
 			<url-pattern>../resources/i18n/*</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 		</web-resource-collection>
 	</security-constraint>
-	
+   
+   <!--  Define Class to configure JAX-RS with RestEasy -->
 	<servlet>
         <servlet-name>Resteasy</servlet-name>
         <servlet-class>
@@ -162,4 +163,11 @@
         <filter-name>Resteasy</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    
+   <!--  Active Roles Allowed in restEasy --> 
+    <context-param>
+      <param-name>resteasy.role.based.security</param-name>
+      <param-value>true</param-value>
+   </context-param>
+   
 </web-app>

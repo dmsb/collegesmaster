@@ -14,14 +14,14 @@ import br.com.collegesmaster.model.impl.InstituteImpl;
 @Path("/institutes")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public interface InstituteBusiness extends Business<InstituteImpl> {
+public interface InstituteBusiness extends BasicCrudOperation<InstituteImpl> {
 	
 	@GET
 	@Path("/names")
 	List<InstituteImpl> findNames();
 	
 	@GET
-	@Path("/fetching_couses")
+	@Path("/fetching-courses")
 	List<InstituteImpl> findFetchingCourses();
 	
 }

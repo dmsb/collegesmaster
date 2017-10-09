@@ -25,6 +25,7 @@ import javax.persistence.criteria.Root;
 import javax.ws.rs.core.UriInfo;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
+import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 import br.com.collegesmaster.business.RoleBusiness;
@@ -36,6 +37,9 @@ import br.com.collegesmaster.model.impl.RoleImpl_;
 @RolesAllowed({"ADMINISTRATOR"})
 @SecurityDomain("collegesmasterSecurityDomain")
 public class RoleBusinessImpl implements RoleBusiness {
+	
+	@Inject
+	private Logger LOGGER;
 	
 	@Inject @UserDatabase
 	private EntityManager em;
@@ -108,7 +112,7 @@ public class RoleBusinessImpl implements RoleBusiness {
 	@Override
 	public List<RoleImpl> findAll(final UriInfo requestInfo) {
 		
-		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo, RoleImpl.class);
+		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo);
 		
 		final CriteriaQuery<RoleImpl> criteriaQuery = cb.createQuery(RoleImpl.class);		
 		final Root<RoleImpl> instituteRoot = criteriaQuery.from(RoleImpl.class);

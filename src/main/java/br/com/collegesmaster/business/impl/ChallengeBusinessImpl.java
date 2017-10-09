@@ -26,6 +26,7 @@ import javax.persistence.criteria.Root;
 import javax.ws.rs.core.UriInfo;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
+import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 import br.com.collegesmaster.business.ChallengeBusiness;
@@ -39,6 +40,9 @@ import br.com.collegesmaster.model.impl.QuestionImpl;
 @TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
 public class ChallengeBusinessImpl implements ChallengeBusiness {
+	
+	@Inject
+	private Logger LOGGER;
 	
 	@Inject @UserDatabase
 	private EntityManager em;
@@ -110,17 +114,15 @@ public class ChallengeBusinessImpl implements ChallengeBusiness {
 	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public List<ChallengeImpl> findAll(final UriInfo requestInfo) {
+	public List<ChallengeImpl> findAll(final UriInfo filterInfo) {
 		
-		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo, ChallengeImpl.class);
+		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(filterInfo);
 		
 		final CriteriaQuery<ChallengeImpl> criteriaQuery = cb.createQuery(ChallengeImpl.class);		
 		final Root<ChallengeImpl> instituteRoot = criteriaQuery.from(ChallengeImpl.class);
 		
 		final List<Predicate> predicates = new ArrayList<>();
-		equalsPredicate.forEach((key, value) -> {
-			predicates.add(cb.equal(instituteRoot.get(key), value));
-		});
+		equalsPredicate.forEach((key, value) -> predicates.add(cb.equal(instituteRoot.get(key), value)));
 
 		criteriaQuery.where(predicates.toArray(new Predicate[0]));
 

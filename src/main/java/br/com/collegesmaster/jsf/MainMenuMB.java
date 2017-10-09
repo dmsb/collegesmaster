@@ -7,14 +7,14 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.annotation.qualifier.LoggedIn;
+import br.com.collegesmaster.annotation.qualifier.AuthenticatedUser;
 import br.com.collegesmaster.model.User;
 
 @Named("mainMenuMB")
 @RequestScoped
 public class MainMenuMB implements Serializable {
 	
-	@Inject @LoggedIn 
+	@Inject @AuthenticatedUser 
 	private User loggedUser;
 	
 	private static final long serialVersionUID = 344294436330653003L;
@@ -29,7 +29,7 @@ public class MainMenuMB implements Serializable {
 
 	private static final String CREATE_CHALLENGE = "/pages/users/professor/create_challenge.xhtml?faces-redirect=true";
 
-	private static final String HOME = "/pages/home.xhtml?faces-redirect=true";
+	private static final String LOGIN = "/pages/login.xhtml?faces-redirect=true";
 	
 	public String loadUserFirstName() {
 		return loggedUser.getGeneralInfo().getFirstName();
@@ -37,7 +37,7 @@ public class MainMenuMB implements Serializable {
 	
 	public String logout() {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return HOME;
+        return LOGIN;
 	}
 	
 	public String redirectToReplyChallenges() {

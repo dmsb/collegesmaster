@@ -15,7 +15,7 @@ import br.com.collegesmaster.model.impl.DisciplineImpl;
 @Path("/disciplines")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public interface DisciplineBusiness extends Business<DisciplineImpl> {
+public interface DisciplineBusiness extends BasicCrudOperation<DisciplineImpl> {
 	
 	@GET
 	@Path("/names/{courseId}")

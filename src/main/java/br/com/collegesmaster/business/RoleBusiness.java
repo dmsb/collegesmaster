@@ -11,6 +11,6 @@ import br.com.collegesmaster.model.impl.RoleImpl;
 @Path("/roles")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public interface RoleBusiness extends Business<RoleImpl> {
+public interface RoleBusiness extends BasicCrudOperation<RoleImpl> {
 	
 }

@@ -16,7 +16,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.annotation.qualifier.LoggedIn;
+import br.com.collegesmaster.annotation.qualifier.AuthenticatedUser;
 import br.com.collegesmaster.business.ChallengeBusiness;
 import br.com.collegesmaster.business.DisciplineBusiness;
 import br.com.collegesmaster.enums.Letter;
@@ -40,7 +40,7 @@ public class ChallengeMB implements Serializable {
 	@Inject
 	private transient DisciplineBusiness disciplineBusiness;
 	
-	@Inject @LoggedIn 
+	@Inject @AuthenticatedUser 
 	private User loggedUser;
 	
 	private ChallengeImpl challenge;

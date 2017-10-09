@@ -9,7 +9,6 @@ public abstract class FunctionUtils {
 
 	public static <T extends Model> Boolean existsFieldInEntity(final String field, final Class<T> model) {
 		try {
-			model.getDeclaredFields();
 			model.getDeclaredField(field);
 			return TRUE;
 		} catch (NoSuchFieldException | SecurityException e) {

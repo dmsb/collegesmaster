@@ -29,10 +29,10 @@ import javax.ws.rs.core.UriInfo;
 import org.jboss.ejb3.annotation.SecurityDomain;
 import org.jboss.logging.Logger;
 
-import br.com.collegesmaster.annotation.qualifier.LoggedIn;
+import br.com.collegesmaster.annotation.qualifier.AuthenticatedUser;
 import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 import br.com.collegesmaster.business.UserBusiness;
-import br.com.collegesmaster.business.util.BooleanReponseBuilder;
+import br.com.collegesmaster.business.factory.BooleanReponseFactory;
 import br.com.collegesmaster.model.impl.GeneralInfoImpl_;
 import br.com.collegesmaster.model.impl.UserImpl;
 import br.com.collegesmaster.model.impl.UserImpl_;
@@ -53,11 +53,12 @@ public class UserBusinessImpl implements UserBusiness {
 	private CriteriaBuilder cb;
 
 	@Inject
-	@LoggedIn
+	@AuthenticatedUser
 	private Event<UserImpl> userUpdateEvent;
 
 	@EJB
-	private BooleanReponseBuilder<UserImpl> booleanResponseBuilder;
+	private BooleanReponseFactory<UserImpl> booleanResponseBuilder;
+	
 	@PermitAll
 	@Override
 	public Boolean create(final UserImpl user) {
@@ -123,7 +124,7 @@ public class UserBusinessImpl implements UserBusiness {
 	@Override
 	public List<UserImpl> findAll(final UriInfo requestInfo) {
 		
-		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo, UserImpl.class);
+		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo);
 		
 		final CriteriaQuery<UserImpl> criteriaQuery = cb.createQuery(UserImpl.class);		
 		final Root<UserImpl> instituteRoot = criteriaQuery.from(UserImpl.class);
@@ -192,6 +193,5 @@ public class UserBusinessImpl implements UserBusiness {
 
 		final TypedQuery<UserImpl> typedQuery = em.createQuery(criteriaQuery);
 		return typedQuery.getSingleResult();
-
 	}
 }

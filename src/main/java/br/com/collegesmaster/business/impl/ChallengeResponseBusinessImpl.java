@@ -30,7 +30,7 @@ import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 import br.com.collegesmaster.business.ChallengeResponseBusiness;
-import br.com.collegesmaster.business.util.BooleanReponseBuilder;
+import br.com.collegesmaster.business.factory.BooleanReponseFactory;
 import br.com.collegesmaster.model.Challenge;
 import br.com.collegesmaster.model.User;
 import br.com.collegesmaster.model.impl.ChallengeResponseImpl;
@@ -51,7 +51,7 @@ public class ChallengeResponseBusinessImpl  implements ChallengeResponseBusiness
 	private CriteriaBuilder cb;
 	
 	@EJB
-	private BooleanReponseBuilder<ChallengeResponseImpl> booleanResponseBuilder;
+	private BooleanReponseFactory<ChallengeResponseImpl> booleanResponseBuilder;
 	
 	@RolesAllowed({"STUDENT", "ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
@@ -133,7 +133,7 @@ public class ChallengeResponseBusinessImpl  implements ChallengeResponseBusiness
 	@Override
 	public List<ChallengeResponseImpl> findAll(final UriInfo requestInfo) {
 		
-		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo, ChallengeResponseImpl.class);
+		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo);
 		
 		final CriteriaQuery<ChallengeResponseImpl> criteriaQuery = cb.createQuery(ChallengeResponseImpl.class);		
 		final Root<ChallengeResponseImpl> instituteRoot = criteriaQuery.from(ChallengeResponseImpl.class);

@@ -8,7 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.annotation.qualifier.LoggedIn;
+import br.com.collegesmaster.annotation.qualifier.AuthenticatedUser;
 import br.com.collegesmaster.business.ChallengeResponseBusiness;
 import br.com.collegesmaster.model.User;
 import br.com.collegesmaster.model.impl.ChallengeResponseImpl;
@@ -22,7 +22,7 @@ public class CompletedChallengesMB implements Serializable {
 	@Inject
 	private transient ChallengeResponseBusiness challengeResponseBusiness;
 	
-	@Inject @LoggedIn 
+	@Inject @AuthenticatedUser 
 	private User loggedUser;
 	
 	private List<ChallengeResponseImpl> completedChallenges;

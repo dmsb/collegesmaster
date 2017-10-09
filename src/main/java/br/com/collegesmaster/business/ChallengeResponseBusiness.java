@@ -15,7 +15,7 @@ import br.com.collegesmaster.model.impl.ChallengeResponseImpl;
 @Path("/challenges_response")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public interface ChallengeResponseBusiness extends Business<ChallengeResponseImpl> {
+public interface ChallengeResponseBusiness extends BasicCrudOperation<ChallengeResponseImpl> {
 	
 	List<ChallengeResponseImpl> findAllByUser(User user);
 	

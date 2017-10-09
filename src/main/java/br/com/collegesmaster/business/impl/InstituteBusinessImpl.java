@@ -26,6 +26,7 @@ import javax.persistence.criteria.Selection;
 import javax.ws.rs.core.UriInfo;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
+import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 import br.com.collegesmaster.business.InstituteBusiness;
@@ -37,6 +38,9 @@ import br.com.collegesmaster.model.impl.InstituteImpl_;
 @RolesAllowed({"ADMINISTRATOR"})
 @SecurityDomain("collegesmasterSecurityDomain")
 public class InstituteBusinessImpl implements InstituteBusiness {
+	
+	@Inject
+	private Logger LOGGER;
 	
 	@Inject @UserDatabase
 	private EntityManager em;
@@ -141,7 +145,7 @@ public class InstituteBusinessImpl implements InstituteBusiness {
 	@Override
 	public List<InstituteImpl> findAll(final UriInfo requestInfo) {
 		
-		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo, InstituteImpl.class);
+		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo);
 		
 		final CriteriaQuery<InstituteImpl> criteriaQuery = cb.createQuery(InstituteImpl.class);		
 		final Root<InstituteImpl> instituteRoot = criteriaQuery.from(InstituteImpl.class);

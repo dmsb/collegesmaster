@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.jboss.logging.Logger;
 
-import br.com.collegesmaster.annotation.qualifier.LoggedIn;
+import br.com.collegesmaster.annotation.qualifier.AuthenticatedUser;
 import br.com.collegesmaster.business.UserBusiness;
 import br.com.collegesmaster.model.impl.UserImpl;
 import br.com.collegesmaster.security.model.Credentials;
@@ -36,9 +36,7 @@ public class UserSessionMB implements Serializable {
 	private transient UserBusiness userBusiness;
 
 	private Credentials credentials;
-
-	@Produces
-	@LoggedIn
+	
 	private UserImpl loggedUser;
 
 	@PostConstruct
@@ -81,12 +79,13 @@ public class UserSessionMB implements Serializable {
 	public void logout() {
 		loggedUser = null;
 	}
-	
+
+	@Produces @AuthenticatedUser
 	public UserImpl getLoggedUser() {
 		return loggedUser;
 	}
 	
-	public void setLoggedUser(@Observes @LoggedIn UserImpl loggedUser) {
+	public void setLoggedUser(@Observes @AuthenticatedUser UserImpl loggedUser) {
 		this.loggedUser = loggedUser;
 	}
 	

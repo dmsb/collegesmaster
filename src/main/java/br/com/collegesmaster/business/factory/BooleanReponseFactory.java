@@ -1,4 +1,4 @@
-package br.com.collegesmaster.business.util;
+package br.com.collegesmaster.business.factory;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -23,7 +23,7 @@ import br.com.collegesmaster.model.Model;
 
 @Stateless
 @TransactionManagement(CONTAINER)
-public class BooleanReponseBuilder<T extends Model> {
+public class BooleanReponseFactory<T extends Model> {
 	
 	@Inject
 	private Logger LOGGER;
@@ -51,7 +51,7 @@ public class BooleanReponseBuilder<T extends Model> {
 		return root;
 	}
 	
-	public BooleanReponseBuilder<T> where(final Predicate... predicates) {
+	public BooleanReponseFactory<T> where(final Predicate... predicates) {
 		subquery.where(predicates);
 		final Predicate exists = cb.exists(subquery);
 		booleanQuery.where(exists);

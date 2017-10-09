@@ -1,6 +1,6 @@
 package br.com.collegesmaster.exception;
 
-public class NotLoggedInUserException extends RuntimeException {
+public class NotLoggedInUserException extends BusinessException {
 
 	private static final long serialVersionUID = -6329378679053500886L;
 	

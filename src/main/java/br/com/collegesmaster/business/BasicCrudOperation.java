@@ -11,13 +11,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
-import org.jboss.logging.Logger;
-
 import br.com.collegesmaster.model.Model;
 
-public interface Business <M extends Model> {
-	
-	static final Logger LOGGER = Logger.getLogger(Business.class);
+public interface BasicCrudOperation <M extends Model> {
 	
 	@POST
 	@Path("/create")

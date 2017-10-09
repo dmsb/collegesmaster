@@ -16,7 +16,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.annotation.qualifier.LoggedIn;
+import br.com.collegesmaster.annotation.qualifier.AuthenticatedUser;
 import br.com.collegesmaster.business.ChallengeBusiness;
 import br.com.collegesmaster.business.ChallengeResponseBusiness;
 import br.com.collegesmaster.business.DisciplineBusiness;
@@ -48,7 +48,7 @@ public class ChallengeResponseMB implements Serializable {
 	@Inject
 	private transient ChallengeResponseBusiness challengeResponseBusiness;
 	
-	@Inject @LoggedIn 
+	@Inject @AuthenticatedUser 
 	private User loggedUser;
 	
 	private List<DisciplineImpl> userDisciplines;
