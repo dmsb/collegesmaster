@@ -13,6 +13,9 @@ import br.com.collegesmaster.business.impl.InstituteBusinessImpl;
 import br.com.collegesmaster.business.impl.RoleBusinessImpl;
 import br.com.collegesmaster.business.impl.UserBusinessImpl;
 import br.com.collegesmaster.rest.config.JacksonConfig;
+import br.com.collegesmaster.rest.handler.RestExceptionHandler;
+import br.com.collegesmaster.rest.security.controller.impl.AuthenticationControllerImpl;
+import br.com.collegesmaster.rest.security.filter.TokenAuthenticationFilter;
 
 public class RestApplication extends Application {
 	
@@ -20,7 +23,9 @@ public class RestApplication extends Application {
 	public Set<Class<?>> getClasses() {
 		
 		final Set<Class<?>> restServices =  new HashSet<>();
+		restServices.add(RestExceptionHandler.class);
 		restServices.add(JacksonConfig.class);
+		restServices.add(TokenAuthenticationFilter.class);
 		
 		restServices.add(UserBusinessImpl.class);
 		restServices.add(InstituteBusinessImpl.class);
@@ -29,8 +34,11 @@ public class RestApplication extends Application {
 		restServices.add(ChallengeResponseBusinessImpl.class);
 		restServices.add(CourseBusinessImpl.class);
 		restServices.add(DisciplineBusinessImpl.class);
+		restServices.add(AuthenticationControllerImpl.class);
+		
 		
 		return restServices;
 	}
 
+	
 }

@@ -1,8 +1,6 @@
 package br.com.collegesmaster.exception;
 
-import javax.ws.rs.WebApplicationException;
-
-public class BusinessException extends WebApplicationException {
+public class BusinessException extends RuntimeException {
 
 	private static final long serialVersionUID = 6521252599631741812L;
 

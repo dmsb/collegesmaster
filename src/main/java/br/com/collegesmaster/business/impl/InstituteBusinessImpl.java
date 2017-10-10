@@ -110,6 +110,7 @@ public class InstituteBusinessImpl implements InstituteBusiness {
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public List<InstituteImpl> findNames() {
+		
 		final CriteriaQuery<InstituteImpl> criteriaQuery = cb.createQuery(InstituteImpl.class);
 		
 		final Root<InstituteImpl> rootInstitute = criteriaQuery.from(InstituteImpl.class);

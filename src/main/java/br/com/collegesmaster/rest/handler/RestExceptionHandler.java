@@ -4,14 +4,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import br.com.collegesmaster.exception.BusinessException;
-
 @Provider
-public class ExceptionHandler <T extends BusinessException> implements ExceptionMapper<T> {
+public class RestExceptionHandler implements ExceptionMapper<Exception> {
 
 	@Override
-	public Response toResponse(T exception) {
+	public Response toResponse(Exception exception) {
 		return Response.status(Response.Status.NOT_FOUND).build();
 	}
-
 }

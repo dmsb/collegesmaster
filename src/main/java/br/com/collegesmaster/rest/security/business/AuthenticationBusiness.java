@@ -1,8 +1,11 @@
 package br.com.collegesmaster.rest.security.business;
 
+import static javax.ejb.TransactionAttributeType.REQUIRED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
+import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionManagement;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
@@ -50,6 +53,8 @@ public class AuthenticationBusiness {
 	@AuthenticatedUser
 	private Event<UserImpl> userUpdateEvent;
 	
+	@PermitAll
+	@TransactionAttribute(REQUIRED)
 	public User authenticate(final Credentials credentials) throws LoginException {
 		
 		final String username = credentials.getUsername();
@@ -61,7 +66,6 @@ public class AuthenticationBusiness {
 
 			if(Strings.isNullOrEmpty(salt) == false) {
 				final UserImpl user = buildLogin(username, password, salt);
-				userUpdateEvent.fire(user);
 				return user;
 			}
 		}
@@ -76,7 +80,7 @@ public class AuthenticationBusiness {
 		
 		queryBuilder
 			.append("SELECT user.salt ")
-			.append("FROM   User user WHERE user.username = :username");
+			.append("FROM   UserImpl user WHERE user.username = :username");
 
 		final Query query = em.createQuery(queryBuilder.toString());
 		query.setParameter("username", username);

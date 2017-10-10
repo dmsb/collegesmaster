@@ -28,7 +28,7 @@ public interface BasicCrudOperation <M extends Model> {
 	public Boolean remove(M imodel);
 	
 	@GET
-	@Path("/{id}")
+	@Path("/find/{id}")
 	public M findById(@PathParam("id") Integer id);
 	
 	@GET

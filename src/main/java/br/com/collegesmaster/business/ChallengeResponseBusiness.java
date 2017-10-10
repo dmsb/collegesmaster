@@ -12,7 +12,7 @@ import br.com.collegesmaster.model.Challenge;
 import br.com.collegesmaster.model.User;
 import br.com.collegesmaster.model.impl.ChallengeResponseImpl;
 
-@Path("/challenges_response")
+@Path("/challenges-response")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public interface ChallengeResponseBusiness extends BasicCrudOperation<ChallengeResponseImpl> {

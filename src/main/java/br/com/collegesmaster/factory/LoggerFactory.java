@@ -1,4 +1,4 @@
-package br.com.collegesmaster.business.factory;
+package br.com.collegesmaster.factory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
@@ -9,7 +9,8 @@ import org.jboss.logging.Logger;
 @ApplicationScoped
 public class LoggerFactory {
 
-	@Produces Logger getLogger(InjectionPoint injectionPoint) {
+	@Produces
+	public Logger getLogger(InjectionPoint injectionPoint) {
 		return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getSimpleName());
 	}
 	
