@@ -16,6 +16,8 @@ import javax.ws.rs.core.Response.Status;
 import org.jboss.ejb3.annotation.SecurityDomain;
 import org.jboss.logging.Logger;
 
+import br.com.collegesmaster.business.UserBusiness;
+import br.com.collegesmaster.model.impl.UserImpl;
 import br.com.collegesmaster.rest.security.controller.AuthenticationController;
 
 @Stateless
@@ -28,6 +30,11 @@ public class AuthenticationControllerImpl implements AuthenticationController {
 	@Inject
 	private Logger LOGGER;
 	
+	@Inject
+	private transient UserBusiness userBusiness;
+	
+	private UserImpl loggedUser;
+	
 	@PermitAll
 	@TransactionAttribute(REQUIRED)
 	@Override
@@ -37,13 +44,15 @@ public class AuthenticationControllerImpl implements AuthenticationController {
 		try {
 			logoutPrincipalIfExists(authenticationRequest);
 			authenticationRequest.login(username, password);
+			loggedUser = userBusiness.findByUsername(username);
+			LOGGER.info("Login success!");
 			
 		} catch (ServletException e) {
 			LOGGER.warn("User not authenticated!", e);
 			return Response.status(Status.UNAUTHORIZED).build();
 		}
 		
-		return Response.ok().build();
+		return Response.ok().entity(loggedUser).build();
 	}
 	
 	@PermitAll
@@ -64,6 +73,8 @@ public class AuthenticationControllerImpl implements AuthenticationController {
 	private void logoutPrincipalIfExists(final HttpServletRequest loginRequest) throws ServletException {
 		if (loginRequest.getUserPrincipal() != null) {
 			loginRequest.logout();
+		} else {
+			LOGGER.info("This user isn't logged");
 		}
 	}
 

@@ -10,7 +10,6 @@ import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -57,7 +56,7 @@ public class HomeMB implements Serializable {
 	@PostConstruct
 	public void init() {
 		user = new UserImpl();
-		user.setRoles(new HashSet<>());
+		user.setRoles(new ArrayList<>());
 		user.setGeneralInfo(new GeneralInfoImpl());
 
 		selectedRole = new RoleImpl();

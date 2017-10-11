@@ -9,7 +9,7 @@ public interface Credentials extends Serializable {
 	String getPassword();
 
 	void setUsername(String username);
-
+	
 	String getUsername();
 
 }

@@ -49,11 +49,10 @@ public class UserSessionMB implements Serializable {
 		final HttpServletRequest loginRequest = getHttpServletRequest();
 
 		try {
-
 			if (loginRequest.getUserPrincipal() != null) {
 				loginRequest.logout();
 			}
-
+			
 			loginRequest.login(credentials.getUsername(), credentials.getPassword());
 
 			if (loginRequest.getUserPrincipal() != null) {

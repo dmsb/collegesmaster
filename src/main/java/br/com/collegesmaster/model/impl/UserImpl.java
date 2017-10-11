@@ -7,8 +7,8 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Access;
 import javax.persistence.Basic;
@@ -77,7 +77,7 @@ public class UserImpl extends ModelImpl implements User {
 	    foreignKey = @ForeignKey(name = "UR_userFK"),
 	    inverseJoinColumns = {@JoinColumn(name="roleFK", referencedColumnName = "id")},
 	    inverseForeignKey = @ForeignKey(name = "UR_roleFK"))
-    private Set<RoleImpl> roles;
+    private List<RoleImpl> roles;
     
     @PrePersist
     @PreUpdate
@@ -148,12 +148,12 @@ public class UserImpl extends ModelImpl implements User {
 	}
 	
 	@Override
-	public Set<RoleImpl> getRoles() {
+	public List<RoleImpl> getRoles() {
 		return roles;
 	}
 
 	@Override
-	public void setRoles(Set<RoleImpl> roles) {
+	public void setRoles(List<RoleImpl> roles) {
 		this.roles = roles;
 	}
 	

@@ -2,101 +2,85 @@ package br.com.collegesmaster.security;
 
 import static br.com.collegesmaster.util.CryptoUtils.generateHashedPassword;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.security.Principal;
+import java.security.acl.Group;
+import java.util.List;
+import java.util.Map;
 
-import javax.naming.InitialContext;
+import javax.inject.Inject;
 import javax.naming.NamingException;
+import javax.security.auth.Subject;
+import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.login.LoginException;
-import javax.sql.DataSource;
 
-import org.jboss.security.PicketBoxMessages;
+import org.jboss.logging.Logger;
+import org.jboss.security.SimpleGroup;
 import org.jboss.security.auth.spi.DatabaseServerLoginModule;
 
 import com.google.common.base.Strings;
 
+import br.com.collegesmaster.model.impl.RoleImpl;
+import br.com.collegesmaster.security.business.AuthenticationBusiness;
+import br.com.collegesmaster.util.CdiHelper;
+
 public class DatabaseLoginModule extends DatabaseServerLoginModule {
-	
+
 	private String userSalt;
-	
+
+	@Inject
+	private AuthenticationBusiness authBusiness;
+
+	@Inject
+	private Logger LOGGER;
+
+	@Override
+	public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ?> sharedState,
+			Map<String, ?> options) {
+		try {
+			CdiHelper.programmaticInjection(DatabaseLoginModule.class, this);
+		} catch (NamingException e) {
+			LOGGER.error(e);
+		}
+		super.initialize(subject, callbackHandler, sharedState, options);
+	}
+
+	@Override
+	protected String getUsersPassword() throws LoginException {
+		userSalt = authBusiness.getUserSalt(getUsername());
+		return authBusiness.getUserPassword(getUsername());
+	}
+
 	@Override
 	protected boolean validatePassword(String enteredPassword, final String encrypted) {
-		
 		if (!(Strings.isNullOrEmpty(userSalt) && Strings.isNullOrEmpty(enteredPassword))) {
 			enteredPassword = generateHashedPassword(enteredPassword, userSalt);
 			if (encrypted.equals(enteredPassword)) {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
 	@Override
-	protected String getUsersPassword() throws LoginException {
-		
-		final DataSource dataSource = buildDataSource();
-		
-		final String usernameToBeLogged = getUsername();
-		String password = null;
-		ResultSet userReturned = null;
-		
-		try {
+	protected Group[] getRoleSets() throws LoginException {
+		final List<RoleImpl> userRoles = authBusiness.getUserRoles(getUsername());
+		return buildRoleGroup(userRoles);
+	}
 
-			userReturned = verifyUsername(dataSource, usernameToBeLogged);
+	private Group[] buildRoleGroup(List<RoleImpl> userRoles) {
+		final Group group = new SimpleGroup("Roles");
+		buildRolePrincipals(userRoles, group);
+		return new Group[] {group};
+	}
 
-			if (userReturned.next() == false) {
-				log.trace("Query returned no matches from database.");
-				throw PicketBoxMessages.MESSAGES.noMatchingUsernameFoundInPrincipals();
+	private void buildRolePrincipals(List<RoleImpl> userRoles, final Group group) {
+		userRoles.forEach(role -> {
+			try {
+				final Principal p = createIdentity(role.getName());
+				group.addMember(p);
+			} catch (Exception e) {
+				LOGGER.error("Fail to build user roles", e);
 			}
-
-			password = userReturned.getString(1);
-			userSalt = userReturned.getString(2);
-
-		} catch (SQLException e) {
-
-			final LoginException loginException = new LoginException(
-					PicketBoxMessages.MESSAGES.failedToProcessQueryMessage());
-			loginException.initCause(e.getCause());
-			throw loginException;
-		} finally {
-			if (userReturned != null) {
-				try {
-					userReturned.close();
-				} catch (SQLException e) {
-				}
-			}
-		}
-
-		return password;
+		});
 	}
-
-	private ResultSet verifyUsername(final DataSource dataSource, final String username) throws SQLException {
-		
-		final Connection connection = dataSource.getConnection();
-		final PreparedStatement statement = connection.prepareStatement(principalsQuery);
-		statement.setString(1, username);
-		
-		return statement.executeQuery();
-		
-	}
-
-	private DataSource buildDataSource() throws LoginException {
-		
-		DataSource dataSource = null;
-		
-		try {
-			final InitialContext initinalContext = new InitialContext();
-			dataSource = (DataSource) initinalContext.lookup(dsJndiName);
-		} catch (NamingException e) {
-			final LoginException loginException = new LoginException(
-					PicketBoxMessages.MESSAGES.failedToLookupDataSourceMessage(dsJndiName));
-			loginException.initCause(e);
-			throw loginException;
-		}
-		return dataSource;
-	}
-
 }

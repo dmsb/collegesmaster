@@ -12,7 +12,7 @@ import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 @ApplicationScoped
 public class PersistenceFactory {
 
-	@PersistenceContext(unitName = "collegesmasterPU")
+	@PersistenceContext(name = "entityManagerJndi", unitName = "collegesmasterPU")
 	@Produces
 	@UserDatabase
 	private EntityManager entityManager;
