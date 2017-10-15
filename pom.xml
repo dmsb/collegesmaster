@@ -6,11 +6,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Colleges Master</name>
-	
+
 	<properties>
 		<hibernate.version>5.2.10.Final</hibernate.version>
+		<wildfly.home>D:\wildfly-10.1.0.Final</wildfly.home>
 	</properties>
-	
+
 	<repositories>
 		<repository>
 			<id>prime-repo</id>
@@ -21,7 +22,7 @@
 	</repositories>
 
 	<dependencies>
-		
+
 		<!-- API for JavaEE, provided by Wildfly 10 -->
 		<dependency>
 			<groupId>javax</groupId>
@@ -29,65 +30,65 @@
 			<version>7.0</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
-            <version>2.0</version>
-            <scope>provided</scope>
-        </dependency>
-        
-        <!-- For CDI in Wildfly-->
-		<dependency>
-		    <groupId>org.jboss.weld</groupId>
-		    <artifactId>weld-core</artifactId>
-		    <version>2.4.4.Final</version>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
 		</dependency>
-        
-		<!-- dom4j is an open source Java library for working with XML, XPath and XSLT, 
-			provided by Wildfly 10 -->
+
+		<!-- For CDI in Wildfly -->
+		<dependency>
+			<groupId>org.jboss.weld</groupId>
+			<artifactId>weld-core</artifactId>
+			<version>2.4.4.Final</version>
+		</dependency>
+
+		<!-- dom4j is an open source Java library for working with XML, XPath and 
+			XSLT, provided by Wildfly 10 -->
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
 			<version>1.6.1</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- @DomainSecurity -->
 		<dependency>
-		    <groupId>org.jboss.ejb3</groupId>
-		    <artifactId>jboss-ejb3-ext-api</artifactId>
-		    <version>2.1.0</version>
-		    <scope>provided</scope>
+			<groupId>org.jboss.ejb3</groupId>
+			<artifactId>jboss-ejb3-ext-api</artifactId>
+			<version>2.1.0</version>
+			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- Framework useful to security with wildfly -->
 		<dependency>
-		    <groupId>org.picketbox</groupId>
-		    <artifactId>picketbox</artifactId>
-		    <version>5.0.2.Final</version>
-		    <scope>provided</scope>
+			<groupId>org.picketbox</groupId>
+			<artifactId>picketbox</artifactId>
+			<version>5.0.2.Final</version>
+			<scope>provided</scope>
 		</dependency>
-		
-		<!--  RestEasy -->
+
+		<!-- RestEasy -->
 		<dependency>
-	        <groupId>org.jboss.resteasy</groupId>
-	        <artifactId>resteasy-jaxrs</artifactId>
-	        <version>3.1.4.Final</version>
-	    </dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.1.4.Final</version>
+		</dependency>
 
 		<dependency>
-		    <groupId>org.jboss.resteasy</groupId>
-		    <artifactId>resteasy-jackson2-provider</artifactId>
-		    <version>3.1.4.Final</version>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson2-provider</artifactId>
+			<version>3.1.4.Final</version>
 		</dependency>
-	    
+
 		<dependency>
-		    <groupId>com.fasterxml.jackson.datatype</groupId>
-		    <artifactId>jackson-datatype-hibernate5</artifactId>
-		    <version>2.9.0</version>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-hibernate5</artifactId>
+			<version>2.9.0</version>
 		</dependency>
-	    
+
 		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -100,11 +101,11 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-envers</artifactId>
-		    <version>${hibernate.version}</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-envers</artifactId>
+			<version>${hibernate.version}</version>
 		</dependency>
-		
+
 		<!-- Primefaces -->
 		<dependency>
 			<groupId>org.primefaces</groupId>
@@ -116,14 +117,14 @@
 			<artifactId>dot-luv</artifactId>
 			<version>1.0.10</version>
 		</dependency>
-		
+
 		<!-- JSF -->
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.faces</artifactId>
 			<version>2.2.13</version>
 		</dependency>
-		
+
 		<!-- Database -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -139,9 +140,9 @@
 		</dependency>
 
 		<dependency>
-		   <groupId>org.glassfish.web</groupId>
-		   <artifactId>javax.el</artifactId>
-		   <version>2.2.6</version>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>javax.el</artifactId>
+			<version>2.2.6</version>
 		</dependency>
 
 		<!-- DBUnit for populate the database (usefull for tests) -->
@@ -165,18 +166,20 @@
 			<artifactId>commons-collections</artifactId>
 			<version>3.2.2</version>
 		</dependency>
-		
-		<!-- Json Web Token (JWT) -->
-		<dependency>
-		    <groupId>io.jsonwebtoken</groupId>
-		    <artifactId>jjwt</artifactId>
-		    <version>0.8.0</version>
-		</dependency>
 
 	</dependencies>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>1.2.0.Final</version>
+				<configuration>
+					<jboss-home>${wildfly.home}</jboss-home>
+					<modules-path>${wildfly.home}\modules\system\layers\base</modules-path>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>

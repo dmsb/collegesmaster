@@ -10,7 +10,6 @@ import javax.ejb.TransactionManagement;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -49,15 +48,15 @@ public class AuthenticationBusiness {
 	private StringBuilder queryBuilder;
 	
 	@PermitAll
-	public UserImpl authenticate(final String usernameToBeComparated, 
-			final String passwordToBeComparated) throws LoginException {
+	public UserImpl authenticate(final String username, 
+			final String password) throws LoginException {
 		
-		if (!(Strings.isNullOrEmpty(usernameToBeComparated) || Strings.isNullOrEmpty(passwordToBeComparated))) {
+		if (!(Strings.isNullOrEmpty(username) || Strings.isNullOrEmpty(password))) {
 
-			final String salt = getUserSalt(usernameToBeComparated);
+			final String salt = findUserSalt(username);
 
 			if(Strings.isNullOrEmpty(salt) == false) {
-				final UserImpl user = buildLogin(usernameToBeComparated, passwordToBeComparated, salt);
+				final UserImpl user = buildLogin(username, password, salt);
 				return user;
 			}
 		}
@@ -65,7 +64,7 @@ public class AuthenticationBusiness {
 	}
 	
 	@PermitAll
-	public String getUserSalt(final String usernameToBeComparated) throws LoginException {
+	public String findUserSalt(final String username) throws LoginException {
 		
 		queryBuilder = new StringBuilder();
 		
@@ -74,10 +73,10 @@ public class AuthenticationBusiness {
 			.append("FROM   UserImpl user ")
 			.append("WHERE  user.username = :username");
 
-		final Query query = em.createQuery(queryBuilder.toString());
-		query.setParameter("username", usernameToBeComparated);
+		final TypedQuery<String> query = em.createQuery(queryBuilder.toString(), String.class);
+		query.setParameter("username", username);
 		try {
-			final String salt = (String) query.getSingleResult();
+			final String salt = query.getSingleResult();
 			return salt;
 		} catch (NoResultException e) {
 			LOGGER.log(Level.INFO, "No salt founded.");
@@ -87,7 +86,7 @@ public class AuthenticationBusiness {
 	}
 	
 	@PermitAll
-	public String getUserPassword(final String username) throws LoginException {
+	public String findUserPassword(final String username) throws LoginException {
 		
 		queryBuilder = new StringBuilder();
 		
@@ -102,7 +101,7 @@ public class AuthenticationBusiness {
 		typedQuery.setParameter("username", username);
 		
 		try {
-			final String password = (String) typedQuery.getSingleResult();
+			final String password = typedQuery.getSingleResult();
 			return password;
 		} catch (NoResultException e) {
 			LOGGER.log(Level.INFO, "No password founded.");
@@ -112,7 +111,7 @@ public class AuthenticationBusiness {
 	}
 	
 	@PermitAll
-	public List<RoleImpl> getUserRoles(final String username) throws LoginException {
+	public List<RoleImpl> findUserRoles(final String username) throws LoginException {
 		
 		final CriteriaQuery<RoleImpl> criteriaQuery = cb.createQuery(RoleImpl.class);		
 		final Root<RoleImpl> rootRole = criteriaQuery.from(RoleImpl.class);
@@ -131,18 +130,17 @@ public class AuthenticationBusiness {
 		throw new LoginException();
 	}
 
-	@PermitAll
-	private UserImpl buildLogin(final String usernameToBeComparated,
-			final String passwordToBeComparated, final String saltToBeComparated) throws LoginException {
+	private UserImpl buildLogin(final String username,
+			final String password, final String salt) throws LoginException {
 
 		final String hashedPassword = CryptoUtils
-				.generateHashedPassword(passwordToBeComparated, saltToBeComparated);
+				.generateHashedPassword(password, salt);
 
 		final CriteriaQuery<UserImpl> query = cb.createQuery(UserImpl.class);
 		final Root<UserImpl> userRoot = query.from(UserImpl.class);
 		userRoot.fetch(UserImpl_.generalInfo);
 		
-		final Predicate usernamePredicate = cb.equal(userRoot.get(UserImpl_.username), usernameToBeComparated);
+		final Predicate usernamePredicate = cb.equal(userRoot.get(UserImpl_.username), username);
 		final Predicate passwordPredicate = cb.equal(userRoot.get(UserImpl_.password), hashedPassword);
 		
 		query.select(userRoot).where(usernamePredicate, passwordPredicate);		
@@ -154,7 +152,6 @@ public class AuthenticationBusiness {
 		} catch (NoResultException e) {
 			LOGGER.warn(e.getMessage());
 		}
-		
 		throw new LoginException();
 	}
 	

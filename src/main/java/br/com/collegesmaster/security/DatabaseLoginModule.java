@@ -46,8 +46,8 @@ public class DatabaseLoginModule extends DatabaseServerLoginModule {
 
 	@Override
 	protected String getUsersPassword() throws LoginException {
-		userSalt = authBusiness.getUserSalt(getUsername());
-		return authBusiness.getUserPassword(getUsername());
+		userSalt = authBusiness.findUserSalt(getUsername());
+		return authBusiness.findUserPassword(getUsername());
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class DatabaseLoginModule extends DatabaseServerLoginModule {
 
 	@Override
 	protected Group[] getRoleSets() throws LoginException {
-		final List<RoleImpl> userRoles = authBusiness.getUserRoles(getUsername());
+		final List<RoleImpl> userRoles = authBusiness.findUserRoles(getUsername());
 		return buildRoleGroup(userRoles);
 	}
 

@@ -144,9 +144,9 @@ public class InstituteBusinessImpl implements InstituteBusiness {
 	@PermitAll
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public List<InstituteImpl> findAll(final UriInfo requestInfo) {
+	public List<InstituteImpl> findAllByPredicates(final UriInfo requestInfo) {
 		
-		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo);
+		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo.getQueryParameters());
 		
 		final CriteriaQuery<InstituteImpl> criteriaQuery = cb.createQuery(InstituteImpl.class);		
 		final Root<InstituteImpl> instituteRoot = criteriaQuery.from(InstituteImpl.class);

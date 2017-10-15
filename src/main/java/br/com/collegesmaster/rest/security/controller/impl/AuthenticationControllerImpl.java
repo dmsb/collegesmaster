@@ -1,12 +1,14 @@
 package br.com.collegesmaster.rest.security.controller.impl;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static javax.ejb.TransactionAttributeType.REQUIRED;
+import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +23,7 @@ import br.com.collegesmaster.model.impl.UserImpl;
 import br.com.collegesmaster.rest.security.controller.AuthenticationController;
 
 @Stateless
-@TransactionManagement(TransactionManagementType.BEAN)
+@TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
 public class AuthenticationControllerImpl implements AuthenticationController {
 
@@ -59,22 +61,30 @@ public class AuthenticationControllerImpl implements AuthenticationController {
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Response jaasLogout(final HttpServletRequest logoutRequest) {
-		
 		try {
-			logoutPrincipalIfExists(logoutRequest);
+			final Boolean logoutSuccess = logoutPrincipalIfExists(logoutRequest);
+			return returnLogoutResponse(logoutSuccess);
 		} catch (ServletException e) {
 			LOGGER.warn("Error in user logout!!", e);
 			return Response.status(Status.NOT_ACCEPTABLE).build();
 		}
-		
-		return Response.ok().build();
 	}
 
-	private void logoutPrincipalIfExists(final HttpServletRequest loginRequest) throws ServletException {
+	private Response returnLogoutResponse(Boolean logoutSuccess) {
+		if(logoutSuccess) {
+			return Response.ok().build();
+		} else {
+			return Response.status(Status.NOT_MODIFIED).build();
+		}
+	}
+
+	private Boolean logoutPrincipalIfExists(final HttpServletRequest loginRequest) throws ServletException {
 		if (loginRequest.getUserPrincipal() != null) {
 			loginRequest.logout();
+			return TRUE;
 		} else {
 			LOGGER.info("This user isn't logged");
+			return FALSE;
 		}
 	}
 

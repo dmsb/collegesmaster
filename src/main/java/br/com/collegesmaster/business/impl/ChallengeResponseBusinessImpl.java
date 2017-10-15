@@ -131,9 +131,9 @@ public class ChallengeResponseBusinessImpl  implements ChallengeResponseBusiness
 	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public List<ChallengeResponseImpl> findAll(final UriInfo requestInfo) {
+	public List<ChallengeResponseImpl> findAllByPredicates(final UriInfo requestInfo) {
 		
-		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo);
+		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo.getQueryParameters());
 		
 		final CriteriaQuery<ChallengeResponseImpl> criteriaQuery = cb.createQuery(ChallengeResponseImpl.class);		
 		final Root<ChallengeResponseImpl> instituteRoot = criteriaQuery.from(ChallengeResponseImpl.class);

@@ -110,9 +110,9 @@ public class DisciplineBusinessImpl implements DisciplineBusiness {
 	@PermitAll
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public List<DisciplineImpl> findAll(final UriInfo requestInfo) {
+	public List<DisciplineImpl> findAllByPredicates(final UriInfo requestInfo) {
 		
-		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo);
+		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo.getQueryParameters());
 		
 		final CriteriaQuery<DisciplineImpl> criteriaQuery = cb.createQuery(DisciplineImpl.class);		
 		final Root<DisciplineImpl> instituteRoot = criteriaQuery.from(DisciplineImpl.class);

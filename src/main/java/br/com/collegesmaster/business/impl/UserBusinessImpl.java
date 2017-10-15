@@ -122,9 +122,9 @@ public class UserBusinessImpl implements UserBusiness {
 	@RolesAllowed({"ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public List<UserImpl> findAll(final UriInfo requestInfo) {
+	public List<UserImpl> findAllByPredicates(final UriInfo requestInfo) {
 		
-		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo);
+		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo.getQueryParameters());
 		
 		final CriteriaQuery<UserImpl> criteriaQuery = cb.createQuery(UserImpl.class);		
 		final Root<UserImpl> instituteRoot = criteriaQuery.from(UserImpl.class);

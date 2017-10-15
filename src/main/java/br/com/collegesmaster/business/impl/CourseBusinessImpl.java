@@ -111,9 +111,9 @@ public class CourseBusinessImpl implements CourseBusiness {
 	@PermitAll
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public List<CourseImpl> findAll(final UriInfo requestInfo) {
+	public List<CourseImpl> findAllByPredicates(final UriInfo requestInfo) {
 		
-		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo);
+		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo.getQueryParameters());
 		
 		final CriteriaQuery<CourseImpl> criteriaQuery = cb.createQuery(CourseImpl.class);		
 		final Root<CourseImpl> instituteRoot = criteriaQuery.from(CourseImpl.class);

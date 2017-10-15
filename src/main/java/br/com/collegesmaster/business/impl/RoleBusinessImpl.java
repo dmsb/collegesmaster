@@ -83,6 +83,7 @@ public class RoleBusinessImpl implements RoleBusiness {
 	}
 	
 	@PermitAll
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public RoleImpl findById(Integer id) {
 		if(id != null) {
@@ -94,6 +95,7 @@ public class RoleBusinessImpl implements RoleBusiness {
 	}
 	
 	@PermitAll
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public List<RoleImpl> findAll() {		
 		final CriteriaQuery<RoleImpl> criteriaQuery = cb.createQuery(RoleImpl.class);
@@ -108,11 +110,12 @@ public class RoleBusinessImpl implements RoleBusiness {
 		return result;
 	}
 	
+	@PermitAll
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public List<RoleImpl> findAll(final UriInfo requestInfo) {
+	public List<RoleImpl> findAllByPredicates(final UriInfo requestInfo) {
 		
-		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo);
+		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo.getQueryParameters());
 		
 		final CriteriaQuery<RoleImpl> criteriaQuery = cb.createQuery(RoleImpl.class);		
 		final Root<RoleImpl> instituteRoot = criteriaQuery.from(RoleImpl.class);

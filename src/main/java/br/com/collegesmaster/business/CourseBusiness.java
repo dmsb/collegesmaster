@@ -14,7 +14,7 @@ import br.com.collegesmaster.model.impl.CourseImpl;
 @Path("/courses")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public interface CourseBusiness extends BasicCrudOperation<CourseImpl> {
+public interface CourseBusiness extends BasicCrudBusiness<CourseImpl> {
 	
 	List<CourseImpl> findNamesByInstitute(final Institute institute);
 
