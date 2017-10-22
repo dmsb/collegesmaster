@@ -60,6 +60,7 @@ public class UserBusinessImpl implements UserBusiness {
 	private BooleanReponseFactory<UserImpl> booleanResponseBuilder;
 	
 	@PermitAll
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean create(final UserImpl user) {
 		if(user != null && user.getId() == null && user.getVersion() == null) {
@@ -72,6 +73,7 @@ public class UserBusinessImpl implements UserBusiness {
 	}
 
 	@RolesAllowed({ "STUDENT", "PROFESSOR", "ADMINISTATOR" })
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public UserImpl update(final UserImpl user) {
 		if(user != null && user.getId() != null && user.getVersion() != null) {
@@ -86,6 +88,7 @@ public class UserBusinessImpl implements UserBusiness {
 	}
 
 	@RolesAllowed({ "ADMINISTRATOR" })
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean remove(final UserImpl user) {
 		if(user != null && user.getId() != null && user.getVersion() != null) {
@@ -98,6 +101,7 @@ public class UserBusinessImpl implements UserBusiness {
 	}
 
 	@RolesAllowed({ "STUDENT", "PROFESSOR", "ADMINISTATOR" })
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public UserImpl findById(final Integer id) {
 		if(id != null) {
@@ -109,6 +113,7 @@ public class UserBusinessImpl implements UserBusiness {
 	}
 
 	@RolesAllowed({ "ADMINISTRATOR" })
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public List<UserImpl> findAll() {
 		final CriteriaQuery<UserImpl> criteriaQuery = cb.createQuery(UserImpl.class);
