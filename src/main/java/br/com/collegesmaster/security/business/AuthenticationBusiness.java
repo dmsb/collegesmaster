@@ -25,7 +25,6 @@ import com.google.common.base.Strings;
 
 import br.com.collegesmaster.annotation.qualifier.UserDatabase;
 import br.com.collegesmaster.model.impl.RoleImpl;
-import br.com.collegesmaster.model.impl.RoleImpl_;
 import br.com.collegesmaster.model.impl.UserImpl;
 import br.com.collegesmaster.model.impl.UserImpl_;
 import br.com.collegesmaster.util.CryptoUtils;
@@ -113,16 +112,17 @@ public class AuthenticationBusiness {
 	@PermitAll
 	public List<RoleImpl> findUserRoles(final String username) throws LoginException {
 		
-		final CriteriaQuery<RoleImpl> criteriaQuery = cb.createQuery(RoleImpl.class);		
-		final Root<RoleImpl> rootRole = criteriaQuery.from(RoleImpl.class);
+		final CriteriaQuery<UserImpl> criteriaQuery = cb.createQuery(UserImpl.class);		
+		final Root<UserImpl> rootUser = criteriaQuery.from(UserImpl.class);
 		
 		criteriaQuery
-			.where(cb.equal(rootRole.join(RoleImpl_.users).get(UserImpl_.username), username));
+			.where(cb.equal(rootUser.get(UserImpl_.username), username));
 		
-		final TypedQuery<RoleImpl> typedQuery = em.createQuery(criteriaQuery);
+		final TypedQuery<UserImpl> typedQuery = em.createQuery(criteriaQuery);
 		
 		try {
-			return typedQuery.getResultList();
+			final UserImpl user = typedQuery.getSingleResult();
+			return user.getRoles();
 		} catch (NoResultException e) {
 			LOGGER.log(Level.INFO, "No roles foundeds.");
 		}

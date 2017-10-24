@@ -18,10 +18,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.collegesmaster.model.Course;
@@ -40,15 +39,13 @@ public class CourseImpl extends ModelImpl implements Course {
 	@Column(name = "name", length = 50, nullable = false)
 	private String name;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@NotNull
 	@ManyToOne(targetEntity = InstituteImpl.class, optional = false, fetch = LAZY)
 	@JoinColumn(name = "instituteFK", referencedColumnName = "id", updatable = false,
 		foreignKey = @ForeignKey(name = "COURSE_instituteFK"))
 	private Institute institute;
 	
-	@NotAudited
-	@JsonBackReference
 	@OneToMany(targetEntity = DisciplineImpl.class, cascade = ALL, fetch = LAZY,
 			orphanRemoval = true, mappedBy = "course")
 	private List<DisciplineImpl> disciplines;

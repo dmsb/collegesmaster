@@ -2,8 +2,12 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
-import br.com.collegesmaster.model.impl.AlternativeImpl;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.collegesmaster.model.impl.AlternativeImpl;
+import br.com.collegesmaster.model.impl.QuestionImpl;
+
+@JsonDeserialize(as = QuestionImpl.class)
 public interface Question extends Model {
 
 	void setAlternatives(List<AlternativeImpl> alternatives);

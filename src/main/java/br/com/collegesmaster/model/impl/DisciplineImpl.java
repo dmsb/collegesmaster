@@ -21,7 +21,7 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.collegesmaster.model.Course;
 import br.com.collegesmaster.model.Discipline;
@@ -38,7 +38,7 @@ public class DisciplineImpl extends ModelImpl implements Discipline {
     @Column(name = "name", length = 30, nullable = false)
     private String name;
 	
-	@JsonManagedReference
+	@JsonIgnore
     @NotNull
     @ManyToOne(targetEntity = CourseImpl.class, optional = false, fetch = LAZY)
     @JoinColumn(name = "courseFK", referencedColumnName = "id",

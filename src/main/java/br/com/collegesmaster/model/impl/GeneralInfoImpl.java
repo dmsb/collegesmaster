@@ -1,25 +1,24 @@
 package br.com.collegesmaster.model.impl;
 
 import static javax.persistence.AccessType.FIELD;
-import static javax.persistence.FetchType.LAZY;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.br.CPF;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.com.collegesmaster.model.GeneralInfo;
 
@@ -31,6 +30,8 @@ import br.com.collegesmaster.model.GeneralInfo;
 		})
 @Access(FIELD)
 @Audited
+@JsonIdentityInfo(property = "id",
+	generator = ObjectIdGenerators.PropertyGenerator.class)
 public class GeneralInfoImpl extends ModelImpl implements GeneralInfo {
 	
 	private static final long serialVersionUID = 1137972673979789034L;
@@ -57,10 +58,6 @@ public class GeneralInfoImpl extends ModelImpl implements GeneralInfo {
 
     @Column(name = "birthdate")
     private LocalDate birthdate;
-    
-    @NotAudited
-    @OneToMany(fetch = LAZY, mappedBy = "generalInfo", orphanRemoval = true)
-    private List<UserImpl> users;
 	
 	@Override
 	public String getCpf() {
@@ -113,16 +110,6 @@ public class GeneralInfoImpl extends ModelImpl implements GeneralInfo {
 	}	
 	
 	@Override
-	public List<UserImpl> getUsers() {
-		return users;
-	}
-
-	@Override
-	public void setUsers(List<UserImpl> users) {
-		this.users = users;
-	}
-	
-	@Override
 	public boolean equals(final Object objectToBeComparated) {
 
 		if(objectToBeComparated == this) {
@@ -135,7 +122,7 @@ public class GeneralInfoImpl extends ModelImpl implements GeneralInfo {
 		
 		final GeneralInfoImpl objectComparatedInstance = (GeneralInfoImpl) objectToBeComparated;
 		
-		return id == objectComparatedInstance.id && 
+		return id.equals(objectComparatedInstance.id) && 
 				Objects.equals(cpf, objectComparatedInstance.cpf) &&
 				Objects.equals(email, objectComparatedInstance.email);
 	}

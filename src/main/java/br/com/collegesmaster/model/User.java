@@ -2,8 +2,12 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
-import br.com.collegesmaster.model.impl.RoleImpl;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.collegesmaster.model.impl.RoleImpl;
+import br.com.collegesmaster.model.impl.UserImpl;
+
+@JsonDeserialize(as = UserImpl.class)
 public interface User extends Model {
 
 	String getSalt();

@@ -2,6 +2,11 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import br.com.collegesmaster.model.impl.ChallengeResponseImpl;
+
+@JsonDeserialize(as = ChallengeResponseImpl.class)
 public interface ChallengeResponse extends Model {
 
 	void setPontuation(Integer note);

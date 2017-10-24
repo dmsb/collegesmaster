@@ -1,10 +1,12 @@
 package br.com.collegesmaster.model;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import br.com.collegesmaster.model.impl.UserImpl;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.collegesmaster.model.impl.GeneralInfoImpl;
+
+@JsonDeserialize(as = GeneralInfoImpl.class)
 public interface GeneralInfo extends Model {
 
 	String getCpf();
@@ -26,9 +28,5 @@ public interface GeneralInfo extends Model {
 	LocalDate getBirthdate();
 
 	void setBirthdate(LocalDate birthdate);
-
-	void setUsers(List<UserImpl> users);
-
-	List<UserImpl> getUsers();
 
 }

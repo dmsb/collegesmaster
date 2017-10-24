@@ -1,7 +1,11 @@
 package br.com.collegesmaster.model;
 
-import br.com.collegesmaster.enums.Letter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.collegesmaster.enums.Letter;
+import br.com.collegesmaster.model.impl.QuestionResponseImpl;
+
+@JsonDeserialize(as = QuestionResponseImpl.class)
 public interface QuestionResponse extends Model {
 
 	void setTargetQuestion(Question targetQuestion);

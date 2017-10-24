@@ -2,8 +2,12 @@ package br.com.collegesmaster.model;
 
 import java.util.List;
 
-import br.com.collegesmaster.model.impl.ChallengeImpl;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.collegesmaster.model.impl.ChallengeImpl;
+import br.com.collegesmaster.model.impl.DisciplineImpl;
+
+@JsonDeserialize(as = DisciplineImpl.class)
 public interface Discipline extends Model {
 
 	Course getCourse();

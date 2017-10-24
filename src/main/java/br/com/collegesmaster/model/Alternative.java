@@ -1,7 +1,11 @@
 package br.com.collegesmaster.model;
 
-import br.com.collegesmaster.enums.Letter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.collegesmaster.enums.Letter;
+import br.com.collegesmaster.model.impl.AlternativeImpl;
+
+@JsonDeserialize(as = AlternativeImpl.class)
 public interface Alternative extends Model {
 
 	void setDescription(String description);

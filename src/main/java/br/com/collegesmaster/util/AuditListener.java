@@ -17,9 +17,13 @@ public class AuditListener implements RevisionListener {
 	public void newRevision(final Object revisionEntity) {
 
 		final AuditInfo auditInfo = (AuditInfo) revisionEntity;
-		final Principal principal = FacesContext.getCurrentInstance()
-									.getExternalContext()
-									.getUserPrincipal();
+		final FacesContext facesContext = FacesContext.getCurrentInstance();
+		Principal principal = null;
+		if(facesContext != null ) {			
+			principal = facesContext
+					.getExternalContext()
+					.getUserPrincipal();
+		}
 		
 		if(principal != null) {
 			final String username = principal.getName();			
