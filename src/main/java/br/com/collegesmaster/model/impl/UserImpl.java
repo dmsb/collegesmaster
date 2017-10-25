@@ -71,7 +71,7 @@ public class UserImpl extends ModelImpl implements User {
 		foreignKey = @ForeignKey(name = "USER_generalInfoFK"))
 	private GeneralInfo generalInfo;
     
-    @ManyToMany(fetch = LAZY)
+    @ManyToMany(fetch = EAGER)
     @JoinTable(name="user_role",
 	    joinColumns = {@JoinColumn(name="userFK", referencedColumnName = "id")},
 	    foreignKey = @ForeignKey(name = "UR_userFK"),

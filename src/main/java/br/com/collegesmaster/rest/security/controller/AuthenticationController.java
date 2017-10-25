@@ -1,8 +1,5 @@
 package br.com.collegesmaster.rest.security.controller;
 
-import java.io.Serializable;
-
-import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -16,11 +13,10 @@ import javax.ws.rs.core.Response;
 @Path("/auth")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Local
-public interface AuthenticationController extends Serializable {
+public interface AuthenticationController {
 	
 	@POST
-	@Path("/jaas")
+	@Path("/login")
 	public Response jaasAuthentication(@Context HttpServletRequest servletRequest,
 		@QueryParam("username")String username, @QueryParam("password")String password);
 

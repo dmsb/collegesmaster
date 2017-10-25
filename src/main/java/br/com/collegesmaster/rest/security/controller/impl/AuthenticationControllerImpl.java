@@ -2,32 +2,22 @@ package br.com.collegesmaster.rest.security.controller.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static javax.ejb.TransactionAttributeType.REQUIRED;
-import static javax.ejb.TransactionManagementType.CONTAINER;
 
-import javax.annotation.security.PermitAll;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionManagement;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.jboss.ejb3.annotation.SecurityDomain;
 import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.business.UserBusiness;
 import br.com.collegesmaster.model.impl.UserImpl;
 import br.com.collegesmaster.rest.security.controller.AuthenticationController;
 
-@Stateless
-@TransactionManagement(CONTAINER)
-@SecurityDomain("collegesmasterSecurityDomain")
+@RequestScoped
 public class AuthenticationControllerImpl implements AuthenticationController {
-
-	private static final long serialVersionUID = -2870919955624591411L;
 	
 	@Inject
 	private Logger LOGGER;
@@ -35,18 +25,16 @@ public class AuthenticationControllerImpl implements AuthenticationController {
 	@Inject
 	private transient UserBusiness userBusiness;
 	
-	private UserImpl loggedUser;
-	
-	@PermitAll
-	@TransactionAttribute(REQUIRED)
 	@Override
 	public Response jaasAuthentication(final HttpServletRequest authenticationRequest, 
 			final String username, final String password) {
 		
+		UserImpl user = null;
+		
 		try {
 			logoutPrincipalIfExists(authenticationRequest);
 			authenticationRequest.login(username, password);
-			loggedUser = userBusiness.findByUsername(username);
+			user = userBusiness.findByUsername(username);
 			LOGGER.info("Login success!");
 			
 		} catch (ServletException e) {
@@ -54,11 +42,9 @@ public class AuthenticationControllerImpl implements AuthenticationController {
 			return Response.status(Status.UNAUTHORIZED).build();
 		}
 		
-		return Response.ok().entity(loggedUser).build();
+		return Response.ok().entity(user).build();
 	}
 	
-	@PermitAll
-	@TransactionAttribute(REQUIRED)
 	@Override
 	public Response jaasLogout(final HttpServletRequest logoutRequest) {
 		try {
