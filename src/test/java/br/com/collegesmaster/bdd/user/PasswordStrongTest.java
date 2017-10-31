@@ -5,8 +5,12 @@ import org.junit.runner.RunWith;
 
 import br.com.collegesmaster.bdd.user.steps.ValidPasswordSteps;
 import net.serenitybdd.junit.runners.SerenityRunner;
+import net.thucydides.core.annotations.Narrative;
 import net.thucydides.core.annotations.Steps;
 
+@Narrative(text={"In the user creation or update, the user password must have the rule",                      
+        "That a password must contain at least 6 characters",
+        "Being a letter, a number and a special character"})
 @RunWith(SerenityRunner.class)
 public class PasswordStrongTest {
 	
