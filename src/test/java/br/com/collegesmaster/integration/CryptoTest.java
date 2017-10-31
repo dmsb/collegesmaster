@@ -1,4 +1,4 @@
-package tests;
+package br.com.collegesmaster.integration;
 
 import static java.util.Base64.getEncoder;
 

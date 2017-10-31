@@ -1,4 +1,4 @@
-package br.com.collegesmaster.challengeresponse.steps;
+package br.com.collegesmaster.bdd.challengeresponse.steps;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import br.com.collegesmaster.model.impl.QuestionImpl;
 import br.com.collegesmaster.model.impl.QuestionResponseImpl;
 import net.thucydides.core.annotations.Step;
 
-public class ChallengeResponseSteps {
+public class ReplyChallengeSteps {
 	
 	private ChallengeResponse challengeResponse;
 	
@@ -37,7 +37,7 @@ public class ChallengeResponseSteps {
 	}
 	
 	@Step("Then a student must have scored {0} points")
-	public void then_a_student_select_the_alternative(final Integer pontuation) {
+	public void then_a_student_must_have_score(final Integer pontuation) {
 		
 		for(final QuestionResponse questionResponse : challengeResponse.getQuestionsResponse()) {
 			questionResponse.getTargetQuestion().getAlternatives()

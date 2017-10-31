@@ -1,4 +1,4 @@
-package tests;
+package br.com.collegesmaster.integration;
 
 import static org.junit.Assert.fail;
 
@@ -20,7 +20,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
-import util.DBUnitUtil;
+import br.com.collegesmaster.integration.util.DBUnitUtil;
 
 public class JUnitConfiguration {
 		

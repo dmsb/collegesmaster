@@ -1,4 +1,4 @@
-package util;
+package br.com.collegesmaster.integration.util;
 
 import java.net.URL;
 import java.sql.Connection;

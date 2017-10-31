@@ -1,4 +1,4 @@
-package tests;
+package br.com.collegesmaster.integration;
 
 import static org.junit.Assert.assertEquals;
 
