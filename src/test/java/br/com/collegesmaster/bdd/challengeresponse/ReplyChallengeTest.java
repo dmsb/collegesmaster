@@ -19,14 +19,14 @@ public class ReplyChallengeTest {
 	private Integer pontuation = 100;
 	
 	@Test
-	public void calculateResponsePontuationWithACorrectAlteranative() {
+	public void answerChallengeCorrectlyTest() {
 		replyChallengeSteps.a_challenge_that_contains_a_correct_letter_question(Letter.A, pontuation);
 		replyChallengeSteps.when_a_student_select_the_alternative(Letter.A);
 		replyChallengeSteps.then_a_student_must_have_score(pontuation);
 	}
 	
 	@Test
-	public void calculateResponsePontuationWithAWrongAlteranative() {
+	public void answerChallengeWronglyTest() {
 		replyChallengeSteps.a_challenge_that_contains_a_correct_letter_question(Letter.A, pontuation);
 		replyChallengeSteps.when_a_student_select_the_alternative(Letter.B);
 		replyChallengeSteps.then_a_student_must_have_score(0);

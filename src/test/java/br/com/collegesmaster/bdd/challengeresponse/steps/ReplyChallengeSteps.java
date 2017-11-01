@@ -19,7 +19,7 @@ public class ReplyChallengeSteps {
 	
 	private ChallengeResponse challengeResponse;
 	
-	@Step("Given a challenge that contains a correct letter question equals to {0}")
+	@Step("Given a challenge that contains a correct letter question equals to {0} with a score of {1} points")
 	public void a_challenge_that_contains_a_correct_letter_question(final Letter letter,
 			final Integer pontuation) {
 		
@@ -31,7 +31,7 @@ public class ReplyChallengeSteps {
 		challengeResponse.setPontuation(0);
 	}
 	
-	@Step("When a student select the alternative {0}")
+	@Step("When a student select the alternative {0} and send the response")
 	public void when_a_student_select_the_alternative(final Letter letter) {
 		challengeResponse.setQuestionsResponse(buildQuestionsResponse(letter));
 	}
