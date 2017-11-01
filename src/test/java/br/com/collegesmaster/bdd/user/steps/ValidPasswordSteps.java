@@ -10,7 +10,23 @@ import net.thucydides.core.annotations.Step;
 public class ValidPasswordSteps {
 
 	private String password;
-
+	private Integer lenght;
+	private String atLeast1LetterRegex;
+	private String atLeast1NumberRegex;
+	private String atLeast1SpecialCharRegex;
+	
+	@Step("Given a password rule with contains at least {0} characters and "
+			+ "the regexes: \"{1}\" (at least 1 letter), \"{2}\" (at least 1 number) and "
+			+ "\"{3}\" (at least 1 special character).")
+	public void given_the_password_rule(final Integer lenght, final String atLeast1Letter,
+			final String atLeast1Number, final String atLeast1SpecialChar) {
+		
+		this.lenght = lenght;
+		this.atLeast1LetterRegex = atLeast1Letter;
+		this.atLeast1NumberRegex = atLeast1Number;
+		this.atLeast1SpecialCharRegex = atLeast1SpecialChar;
+	}
+	
 	@Step("When a password contains only non numbers: {0}")
 	public void when_a_password_contains_only_non_numbers(final String nonNumericPassword) {
 		password = nonNumericPassword;
@@ -36,30 +52,17 @@ public class ValidPasswordSteps {
 		password = validPassword;
 	}
 
-	@Step("Then {0} is a valid password")
-	public void then_is_a_valid_password(final String validPassword) {
-		if (validPassword.equals(password)) {
-			Assert.assertTrue(isAValidPassword());
-		} else {
-			Assert.fail("The validPassword is not equals to given password");
-		}
-	}
-
-	@Step("Then {0} is a invalid password")
-	public void then_is_a_invalid_password(final String invalidPassword) {
-		if (invalidPassword.equals(password)) {
-			Assert.assertFalse(isAValidPassword());
-		} else {
-			Assert.fail("The invalidPassword is not equals to given password");
-		}
+	@Step("Then the valid password status is {0}")
+	public void then_is_a_valid_password(final Boolean validPassword) {
+		Assert.assertTrue(isAValidPassword().equals(validPassword));
 	}
 
 	private Boolean isAValidPassword() {
-		final Boolean isAtLeast6 = password.length() >= 6;
 		
-		final Matcher containsLetter = Pattern.compile("([a-zA-Z])").matcher(password);
-		final Matcher containsNumber = Pattern.compile("([0-9])").matcher(password);
-		final Matcher containsSpecialCharacter =  Pattern.compile("[^A-Za-z0-9 ]").matcher(password);
+		final Boolean isAtLeast6 = password.length() >= lenght;
+		final Matcher containsLetter = Pattern.compile(atLeast1LetterRegex).matcher(password);
+		final Matcher containsNumber = Pattern.compile(atLeast1NumberRegex).matcher(password);
+		final Matcher containsSpecialCharacter =  Pattern.compile(atLeast1SpecialCharRegex).matcher(password);
 		
 		final Boolean hasLetter = containsLetter.find();
 		final Boolean hasNumber =containsNumber.find();

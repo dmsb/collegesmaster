@@ -19,7 +19,7 @@ public class ReplyChallengeSteps {
 	
 	private ChallengeResponse challengeResponse;
 	
-	@Step("Given a challenge that contains a correct letter question {0}")
+	@Step("Given a challenge that contains a correct letter question equals to {0}")
 	public void a_challenge_that_contains_a_correct_letter_question(final Letter letter,
 			final Integer pontuation) {
 		
