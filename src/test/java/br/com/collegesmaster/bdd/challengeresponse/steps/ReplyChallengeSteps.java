@@ -5,20 +5,19 @@ import java.util.List;
 
 import org.junit.Assert;
 
-import br.com.collegesmaster.enums.Letter;
-import br.com.collegesmaster.model.ChallengeResponse;
-import br.com.collegesmaster.model.QuestionResponse;
-import br.com.collegesmaster.model.impl.AlternativeImpl;
-import br.com.collegesmaster.model.impl.ChallengeImpl;
-import br.com.collegesmaster.model.impl.ChallengeResponseImpl;
-import br.com.collegesmaster.model.impl.QuestionImpl;
-import br.com.collegesmaster.model.impl.QuestionResponseImpl;
+import br.com.collegesmaster.model.entities.alternative.impl.AlternativeImpl;
+import br.com.collegesmaster.model.entities.challenge.impl.ChallengeImpl;
+import br.com.collegesmaster.model.entities.challengeresponse.impl.ChallengeResponseImpl;
+import br.com.collegesmaster.model.entities.enums.Letter;
+import br.com.collegesmaster.model.entities.question.impl.QuestionImpl;
+import br.com.collegesmaster.model.entities.questionresponse.QuestionResponse;
+import br.com.collegesmaster.model.entities.questionresponse.impl.QuestionResponseImpl;
 import net.thucydides.core.annotations.Step;
 
-public class ReplyChallengeSteps {
+public class ReplyChallengeSteps extends ChallengeResponseImpl {
 	
-	private ChallengeResponse challengeResponse;
-	
+	private static final long serialVersionUID = -8351341291376891555L;
+
 	@Step("Given a challenge that contains a correct letter question equals to {0} with a score of {1} points")
 	public void a_challenge_that_contains_a_correct_letter_question(final Letter letter,
 			final Integer pontuation) {
@@ -26,42 +25,31 @@ public class ReplyChallengeSteps {
 		final List<AlternativeImpl> alternatives = buildAlternatives(letter);
 		final List<QuestionImpl> questions = buildQuestions(alternatives, pontuation);
 		
-		challengeResponse = new ChallengeResponseImpl();
-		challengeResponse.setTargetChallenge(buildChallenge(questions));
-		challengeResponse.setPontuation(0);
+		this.setTargetChallenge(buildChallenge(questions));
+		this.setPontuation(0);
 	}
 	
 	@Step("When a student select the alternative {0} and send the response")
 	public void when_a_student_select_the_alternative(final Letter letter) {
-		challengeResponse.setQuestionsResponse(buildQuestionsResponse(letter));
+		this.setQuestionsResponse(buildQuestionsResponse(letter));
 	}
 	
 	@Step("Then a student must have scored {0} points")
 	public void then_a_student_must_have_score(final Integer pontuation) {
 		
-		for(final QuestionResponse questionResponse : challengeResponse.getQuestionsResponse()) {
+		for(final QuestionResponse questionResponse : this.getQuestionsResponse()) {
 			questionResponse.getTargetQuestion().getAlternatives()
-				.forEach(alternativeResponse -> {					
+				.forEach(alternativeResponse -> {
 					buildPontuation(questionResponse, alternativeResponse);
 				});
 		}
-		Assert.assertTrue(challengeResponse.getPontuation().equals(pontuation));
-	}
-
-	private void buildPontuation(final QuestionResponse response, final AlternativeImpl alternative) {
-		
-		if(alternative.getIsTrue() && alternative.getLetter().equals(response.getLetter())) {
-			final Integer currentPontuation = challengeResponse.getPontuation();
-			final Integer questionPontuation = response.getTargetQuestion().getPontuation();
-			challengeResponse.setPontuation(currentPontuation + questionPontuation);
-		}
-		
+		Assert.assertTrue(this.getPontuation().equals(pontuation));
 	}
 	
 	private List<QuestionResponse> buildQuestionsResponse(final Letter letter) {
 		final QuestionResponse questionResponse = new QuestionResponseImpl();
 		questionResponse.setLetter(letter);
-		questionResponse.setTargetQuestion(challengeResponse.getTargetChallenge().getQuestions().get(0));
+		questionResponse.setTargetQuestion(this.getTargetChallenge().getQuestions().get(0));
 		
 		final List<QuestionResponse> questionsResponse = new ArrayList<>();
 		questionsResponse.add(questionResponse);

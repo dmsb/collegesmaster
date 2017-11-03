@@ -7,7 +7,7 @@ import javax.faces.convert.FacesConverter;
 
 import com.google.common.base.Strings;
 
-import br.com.collegesmaster.model.impl.DisciplineImpl;
+import br.com.collegesmaster.model.entities.discipline.impl.DisciplineImpl;
 
 @FacesConverter("disciplineConverter")
 public class DisciplineConverter implements Converter {

@@ -7,8 +7,8 @@ import javax.faces.convert.FacesConverter;
 
 import com.google.common.base.Strings;
 
-import br.com.collegesmaster.model.Role;
-import br.com.collegesmaster.model.impl.RoleImpl;
+import br.com.collegesmaster.model.entities.role.Role;
+import br.com.collegesmaster.model.entities.role.impl.RoleImpl;
 
 @FacesConverter(value = "roleConverter")
 public class RoleConverter implements Converter {

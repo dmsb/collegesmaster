@@ -1,19 +1,13 @@
 package br.com.collegesmaster.bdd.user.steps;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.junit.Assert;
 
+import br.com.collegesmaster.model.entities.constraints.password.PasswordConstraintValidator;
 import net.thucydides.core.annotations.Step;
 
-public class PasswordStrongValidationSteps {
+public class PasswordStrongValidationSteps extends PasswordConstraintValidator {
 
 	private String password;
-	private Integer atLeastLenght;
-	private String atLeast1LetterRegex;
-	private String atLeast1NumberRegex;
-	private String atLeast1SpecialCharRegex;
 	
 	@Step("Given the rule with the password must contains at least {0} characters "
 			+ "1 letter (regex: \"{1}\"), "
@@ -35,26 +29,12 @@ public class PasswordStrongValidationSteps {
 
 	@Step("Then this is a valid password")
 	public void then_this_is_a_valid_password() {
-		Assert.assertTrue(isAValidPassword());
+		Assert.assertTrue(isValidPasswordEntry(password));
 	}
 	
 	@Step("Then this is a invalid password")
 	public void then_this_is_a_invalid_password() {
-		Assert.assertFalse(isAValidPassword());
-	}
-
-	private Boolean isAValidPassword() {
-		
-		final Boolean isAtLeast6 = password.length() >= atLeastLenght;
-		final Matcher containsLetter = Pattern.compile(atLeast1LetterRegex).matcher(password);
-		final Matcher containsNumber = Pattern.compile(atLeast1NumberRegex).matcher(password);
-		final Matcher containsSpecialCharacter =  Pattern.compile(atLeast1SpecialCharRegex).matcher(password);
-		
-		final Boolean hasLetter = containsLetter.find();
-		final Boolean hasNumber =containsNumber.find();
-		final Boolean hasEspecialCharacter = containsSpecialCharacter.find();
-		
-		return isAtLeast6 && hasEspecialCharacter && hasLetter && hasNumber;
+		Assert.assertFalse(isValidPasswordEntry(password));
 	}
 
 }

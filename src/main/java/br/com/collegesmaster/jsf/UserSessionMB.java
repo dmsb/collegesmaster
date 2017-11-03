@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.jboss.logging.Logger;
 
-import br.com.collegesmaster.annotation.qualifier.AuthenticatedUser;
-import br.com.collegesmaster.business.UserBusiness;
-import br.com.collegesmaster.model.impl.UserImpl;
+import br.com.collegesmaster.model.business.UserBusiness;
+import br.com.collegesmaster.model.entities.user.impl.UserImpl;
+import br.com.collegesmaster.qualifiers.AuthenticatedUser;
 import br.com.collegesmaster.security.model.Credentials;
 import br.com.collegesmaster.security.model.impl.CredentialsImpl;
 

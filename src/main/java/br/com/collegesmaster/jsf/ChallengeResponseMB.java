@@ -16,22 +16,22 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.annotation.qualifier.AuthenticatedUser;
-import br.com.collegesmaster.business.ChallengeBusiness;
-import br.com.collegesmaster.business.ChallengeResponseBusiness;
-import br.com.collegesmaster.business.DisciplineBusiness;
-import br.com.collegesmaster.model.Alternative;
-import br.com.collegesmaster.model.Challenge;
-import br.com.collegesmaster.model.Course;
-import br.com.collegesmaster.model.Discipline;
-import br.com.collegesmaster.model.Question;
-import br.com.collegesmaster.model.QuestionResponse;
-import br.com.collegesmaster.model.User;
-import br.com.collegesmaster.model.impl.AlternativeImpl;
-import br.com.collegesmaster.model.impl.ChallengeResponseImpl;
-import br.com.collegesmaster.model.impl.DisciplineImpl;
-import br.com.collegesmaster.model.impl.QuestionImpl;
-import br.com.collegesmaster.model.impl.QuestionResponseImpl;
+import br.com.collegesmaster.model.business.ChallengeBusiness;
+import br.com.collegesmaster.model.business.ChallengeResponseBusiness;
+import br.com.collegesmaster.model.business.DisciplineBusiness;
+import br.com.collegesmaster.model.entities.alternative.Alternative;
+import br.com.collegesmaster.model.entities.alternative.impl.AlternativeImpl;
+import br.com.collegesmaster.model.entities.challenge.Challenge;
+import br.com.collegesmaster.model.entities.challengeresponse.impl.ChallengeResponseImpl;
+import br.com.collegesmaster.model.entities.course.Course;
+import br.com.collegesmaster.model.entities.discipline.Discipline;
+import br.com.collegesmaster.model.entities.discipline.impl.DisciplineImpl;
+import br.com.collegesmaster.model.entities.question.Question;
+import br.com.collegesmaster.model.entities.question.impl.QuestionImpl;
+import br.com.collegesmaster.model.entities.questionresponse.QuestionResponse;
+import br.com.collegesmaster.model.entities.questionresponse.impl.QuestionResponseImpl;
+import br.com.collegesmaster.model.entities.user.User;
+import br.com.collegesmaster.qualifiers.AuthenticatedUser;
 
 @Named("challengeResponseMB")
 @ViewScoped

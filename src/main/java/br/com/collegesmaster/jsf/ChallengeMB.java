@@ -16,17 +16,17 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.annotation.qualifier.AuthenticatedUser;
-import br.com.collegesmaster.business.ChallengeBusiness;
-import br.com.collegesmaster.business.DisciplineBusiness;
-import br.com.collegesmaster.enums.Letter;
-import br.com.collegesmaster.model.Alternative;
-import br.com.collegesmaster.model.Discipline;
-import br.com.collegesmaster.model.User;
-import br.com.collegesmaster.model.impl.AlternativeImpl;
-import br.com.collegesmaster.model.impl.ChallengeImpl;
-import br.com.collegesmaster.model.impl.DisciplineImpl;
-import br.com.collegesmaster.model.impl.QuestionImpl;
+import br.com.collegesmaster.model.business.ChallengeBusiness;
+import br.com.collegesmaster.model.business.DisciplineBusiness;
+import br.com.collegesmaster.model.entities.alternative.Alternative;
+import br.com.collegesmaster.model.entities.alternative.impl.AlternativeImpl;
+import br.com.collegesmaster.model.entities.challenge.impl.ChallengeImpl;
+import br.com.collegesmaster.model.entities.discipline.Discipline;
+import br.com.collegesmaster.model.entities.discipline.impl.DisciplineImpl;
+import br.com.collegesmaster.model.entities.enums.Letter;
+import br.com.collegesmaster.model.entities.question.impl.QuestionImpl;
+import br.com.collegesmaster.model.entities.user.User;
+import br.com.collegesmaster.qualifiers.AuthenticatedUser;
 
 @Named("challengeMB")
 @ViewScoped

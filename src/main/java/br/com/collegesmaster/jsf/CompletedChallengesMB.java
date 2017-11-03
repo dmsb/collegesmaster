@@ -8,10 +8,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.annotation.qualifier.AuthenticatedUser;
-import br.com.collegesmaster.business.ChallengeResponseBusiness;
-import br.com.collegesmaster.model.User;
-import br.com.collegesmaster.model.impl.ChallengeResponseImpl;
+import br.com.collegesmaster.model.business.ChallengeResponseBusiness;
+import br.com.collegesmaster.model.entities.challengeresponse.impl.ChallengeResponseImpl;
+import br.com.collegesmaster.model.entities.user.User;
+import br.com.collegesmaster.qualifiers.AuthenticatedUser;
 
 @Named("completedChallengesMB")
 @ViewScoped

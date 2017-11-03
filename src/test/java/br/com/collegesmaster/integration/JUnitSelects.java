@@ -15,12 +15,12 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.collegesmaster.model.User;
-import br.com.collegesmaster.model.impl.ChallengeImpl;
-import br.com.collegesmaster.model.impl.DisciplineImpl;
-import br.com.collegesmaster.model.impl.InstituteImpl;
-import br.com.collegesmaster.model.impl.UserImpl;
-import br.com.collegesmaster.util.CryptoUtils;
+import br.com.collegesmaster.model.entities.challenge.impl.ChallengeImpl;
+import br.com.collegesmaster.model.entities.discipline.impl.DisciplineImpl;
+import br.com.collegesmaster.model.entities.institute.impl.InstituteImpl;
+import br.com.collegesmaster.model.entities.user.User;
+import br.com.collegesmaster.model.entities.user.impl.UserImpl;
+import br.com.collegesmaster.utils.CryptoUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JUnitSelects extends JUnitConfiguration {

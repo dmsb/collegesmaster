@@ -1,6 +1,6 @@
 package br.com.collegesmaster.security;
 
-import static br.com.collegesmaster.util.CryptoUtils.generateHashedPassword;
+import static br.com.collegesmaster.utils.CryptoUtils.generateHashedPassword;
 
 import java.security.Principal;
 import java.security.acl.Group;
@@ -19,9 +19,9 @@ import org.jboss.security.auth.spi.DatabaseServerLoginModule;
 
 import com.google.common.base.Strings;
 
-import br.com.collegesmaster.model.impl.RoleImpl;
+import br.com.collegesmaster.model.entities.role.impl.RoleImpl;
 import br.com.collegesmaster.security.business.AuthenticationBusiness;
-import br.com.collegesmaster.util.CdiHelper;
+import br.com.collegesmaster.utils.CdiHelper;
 
 public class DatabaseLoginModule extends DatabaseServerLoginModule {
 

@@ -23,11 +23,11 @@ import org.jboss.logging.Logger.Level;
 
 import com.google.common.base.Strings;
 
-import br.com.collegesmaster.annotation.qualifier.UserDatabase;
-import br.com.collegesmaster.model.impl.RoleImpl;
-import br.com.collegesmaster.model.impl.UserImpl;
-import br.com.collegesmaster.model.impl.UserImpl_;
-import br.com.collegesmaster.util.CryptoUtils;
+import br.com.collegesmaster.model.entities.role.impl.RoleImpl;
+import br.com.collegesmaster.model.entities.user.impl.UserImpl;
+import br.com.collegesmaster.model.entities.user.impl.UserImpl_;
+import br.com.collegesmaster.qualifiers.UserDatabase;
+import br.com.collegesmaster.utils.CryptoUtils;
 
 @Stateless
 @TransactionManagement(CONTAINER)

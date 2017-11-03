@@ -7,7 +7,7 @@ import javax.faces.convert.FacesConverter;
 
 import com.google.common.base.Strings;
 
-import br.com.collegesmaster.model.impl.InstituteImpl;
+import br.com.collegesmaster.model.entities.institute.impl.InstituteImpl;
 
 @FacesConverter(value = "instituteConverter")
 public class InstituteConverter implements Converter {

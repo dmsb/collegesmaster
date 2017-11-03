@@ -17,18 +17,18 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.business.CourseBusiness;
-import br.com.collegesmaster.business.InstituteBusiness;
-import br.com.collegesmaster.business.RoleBusiness;
-import br.com.collegesmaster.business.UserBusiness;
-import br.com.collegesmaster.model.Course;
-import br.com.collegesmaster.model.Institute;
-import br.com.collegesmaster.model.Role;
-import br.com.collegesmaster.model.impl.CourseImpl;
-import br.com.collegesmaster.model.impl.GeneralInfoImpl;
-import br.com.collegesmaster.model.impl.InstituteImpl;
-import br.com.collegesmaster.model.impl.RoleImpl;
-import br.com.collegesmaster.model.impl.UserImpl;
+import br.com.collegesmaster.model.business.CourseBusiness;
+import br.com.collegesmaster.model.business.InstituteBusiness;
+import br.com.collegesmaster.model.business.RoleBusiness;
+import br.com.collegesmaster.model.business.UserBusiness;
+import br.com.collegesmaster.model.entities.course.Course;
+import br.com.collegesmaster.model.entities.course.impl.CourseImpl;
+import br.com.collegesmaster.model.entities.generalinfo.impl.GeneralInfoImpl;
+import br.com.collegesmaster.model.entities.institute.Institute;
+import br.com.collegesmaster.model.entities.institute.impl.InstituteImpl;
+import br.com.collegesmaster.model.entities.role.Role;
+import br.com.collegesmaster.model.entities.role.impl.RoleImpl;
+import br.com.collegesmaster.model.entities.user.impl.UserImpl;
 
 @Named("homeMB")
 @ViewScoped

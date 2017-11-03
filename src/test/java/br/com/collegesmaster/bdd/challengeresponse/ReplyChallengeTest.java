@@ -4,13 +4,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import br.com.collegesmaster.bdd.challengeresponse.steps.ReplyChallengeSteps;
-import br.com.collegesmaster.enums.Letter;
+import br.com.collegesmaster.model.entities.enums.Letter;
 import net.serenitybdd.junit.runners.SerenityRunner;
-import net.thucydides.core.annotations.Narrative;
 import net.thucydides.core.annotations.Steps;
 
-@Narrative(text={"When answering a challenge the user",                      
-        "Should already have their score calculated."})
 @RunWith(SerenityRunner.class)
 public class ReplyChallengeTest {
 	
