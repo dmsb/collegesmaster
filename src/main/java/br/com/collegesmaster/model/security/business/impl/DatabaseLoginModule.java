@@ -1,4 +1,4 @@
-package br.com.collegesmaster.security;
+package br.com.collegesmaster.model.security.business.impl;
 
 import static br.com.collegesmaster.utils.CryptoUtils.generateHashedPassword;
 
@@ -20,7 +20,6 @@ import org.jboss.security.auth.spi.DatabaseServerLoginModule;
 import com.google.common.base.Strings;
 
 import br.com.collegesmaster.model.entities.role.impl.RoleImpl;
-import br.com.collegesmaster.security.business.AuthenticationBusiness;
 import br.com.collegesmaster.utils.CdiHelper;
 
 public class DatabaseLoginModule extends DatabaseServerLoginModule {
@@ -28,7 +27,7 @@ public class DatabaseLoginModule extends DatabaseServerLoginModule {
 	private String userSalt;
 
 	@Inject
-	private AuthenticationBusiness authBusiness;
+	private AuthenticationBusinessImpl authBusiness;
 
 	@Inject
 	private Logger LOGGER;

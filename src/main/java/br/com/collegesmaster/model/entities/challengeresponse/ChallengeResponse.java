@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.collegesmaster.model.entities.alternative.impl.AlternativeImpl;
 import br.com.collegesmaster.model.entities.challenge.Challenge;
 import br.com.collegesmaster.model.entities.challengeresponse.impl.ChallengeResponseImpl;
 import br.com.collegesmaster.model.entities.model.Model;
@@ -28,5 +29,9 @@ public interface ChallengeResponse extends Model {
 	void setTargetChallenge(Challenge targetChallenge);
 
 	Challenge getTargetChallenge();
+
+	void buildPontuation(final QuestionResponse response, AlternativeImpl alternative);
+
+	void calculatePontuation();
 
 }

@@ -64,9 +64,10 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 		fetch = LAZY, orphanRemoval = true, mappedBy = "challengeResponse")
 	private List<QuestionResponse> questionsResponse;
 	
+	@Override
 	@PrePersist
 	@PreUpdate
-	protected void calculatePontuation() {
+	public void calculatePontuation() {
 		pontuation = 0;			
 		
 		for(final QuestionResponse response : questionsResponse) {
@@ -78,7 +79,8 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 		}
 	}
 
-	protected void buildPontuation(final QuestionResponse response, AlternativeImpl alternative) {
+	@Override
+	public void buildPontuation(final QuestionResponse response, AlternativeImpl alternative) {
 		if(alternative.getIsTrue() && 
 				alternative.getLetter().equals(response.getLetter())) {
 			pontuation = pontuation + response.getTargetQuestion().getPontuation();

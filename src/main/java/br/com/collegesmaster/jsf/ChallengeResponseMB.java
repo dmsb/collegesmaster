@@ -22,6 +22,7 @@ import br.com.collegesmaster.model.business.DisciplineBusiness;
 import br.com.collegesmaster.model.entities.alternative.Alternative;
 import br.com.collegesmaster.model.entities.alternative.impl.AlternativeImpl;
 import br.com.collegesmaster.model.entities.challenge.Challenge;
+import br.com.collegesmaster.model.entities.challengeresponse.ChallengeResponse;
 import br.com.collegesmaster.model.entities.challengeresponse.impl.ChallengeResponseImpl;
 import br.com.collegesmaster.model.entities.course.Course;
 import br.com.collegesmaster.model.entities.discipline.Discipline;
@@ -198,7 +199,7 @@ public class ChallengeResponseMB implements Serializable {
 		this.selectedQuestion = selectedQuestion;
 	}
 
-	public ChallengeResponseImpl getChallengeResponse() {
+	public ChallengeResponse getChallengeResponse() {
 		return challengeResponse;
 	}
 

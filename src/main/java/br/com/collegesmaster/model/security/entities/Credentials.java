@@ -1,4 +1,4 @@
-package br.com.collegesmaster.security.model;
+package br.com.collegesmaster.model.security.entities;
 
 import java.io.Serializable;
 

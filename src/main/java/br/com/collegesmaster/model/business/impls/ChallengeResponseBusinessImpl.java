@@ -30,6 +30,7 @@ import org.jboss.logging.Logger;
 import br.com.collegesmaster.model.business.ChallengeResponseBusiness;
 import br.com.collegesmaster.model.business.factories.BooleanReponseFactory;
 import br.com.collegesmaster.model.entities.challenge.Challenge;
+import br.com.collegesmaster.model.entities.challengeresponse.ChallengeResponse;
 import br.com.collegesmaster.model.entities.challengeresponse.impl.ChallengeResponseImpl;
 import br.com.collegesmaster.model.entities.challengeresponse.impl.ChallengeResponseImpl_;
 import br.com.collegesmaster.model.entities.user.User;
@@ -72,7 +73,7 @@ public class ChallengeResponseBusinessImpl  implements ChallengeResponseBusiness
 		}
 	}
 
-	private Boolean wasRespondedByUser(final ChallengeResponseImpl response) {
+	private Boolean wasRespondedByUser(final ChallengeResponse response) {
 		final Root<ChallengeResponseImpl> challengeRoot = booleanResponseBuilder
 				.build(ChallengeResponseImpl.class);
 		final Predicate wasRespondedPredicate = 

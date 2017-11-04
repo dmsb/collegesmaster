@@ -1,4 +1,4 @@
-package br.com.collegesmaster.bdd.challengeresponse.steps;
+package br.com.collegesmaster.bdd.features.manage_challenge_response.reply_challenge.steps;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import org.junit.Assert;
 
 import br.com.collegesmaster.model.entities.alternative.impl.AlternativeImpl;
 import br.com.collegesmaster.model.entities.challenge.impl.ChallengeImpl;
+import br.com.collegesmaster.model.entities.challengeresponse.ChallengeResponse;
 import br.com.collegesmaster.model.entities.challengeresponse.impl.ChallengeResponseImpl;
 import br.com.collegesmaster.model.entities.enums.Letter;
 import br.com.collegesmaster.model.entities.question.impl.QuestionImpl;
@@ -14,42 +15,43 @@ import br.com.collegesmaster.model.entities.questionresponse.QuestionResponse;
 import br.com.collegesmaster.model.entities.questionresponse.impl.QuestionResponseImpl;
 import net.thucydides.core.annotations.Step;
 
-public class ReplyChallengeSteps extends ChallengeResponseImpl {
+public class ReplyAChallengeSteps {
 	
-	private static final long serialVersionUID = -8351341291376891555L;
-
+	private ChallengeResponse challengeResponse;
+	
 	@Step("Given a challenge that contains a correct letter question equals to {0} with a score of {1} points")
-	public void a_challenge_that_contains_a_correct_letter_question(final Letter letter,
+	public void givenAChallenge(final Letter letter,
 			final Integer pontuation) {
 		
+		challengeResponse = new ChallengeResponseImpl();
 		final List<AlternativeImpl> alternatives = buildAlternatives(letter);
 		final List<QuestionImpl> questions = buildQuestions(alternatives, pontuation);
 		
-		this.setTargetChallenge(buildChallenge(questions));
-		this.setPontuation(0);
+		challengeResponse.setTargetChallenge(buildChallenge(questions));
+		challengeResponse.setPontuation(0);
 	}
 	
 	@Step("When a student select the alternative {0} and send the response")
-	public void when_a_student_select_the_alternative(final Letter letter) {
-		this.setQuestionsResponse(buildQuestionsResponse(letter));
+	public void whenAStudentSelect(final Letter letter) {
+		challengeResponse.setQuestionsResponse(buildQuestionsResponse(letter));
 	}
 	
 	@Step("Then a student must have scored {0} points")
-	public void then_a_student_must_have_score(final Integer pontuation) {
+	public void thenTheStudentScored(final Integer pontuation) {
 		
-		for(final QuestionResponse questionResponse : this.getQuestionsResponse()) {
+		for(final QuestionResponse questionResponse : challengeResponse.getQuestionsResponse()) {
 			questionResponse.getTargetQuestion().getAlternatives()
 				.forEach(alternativeResponse -> {
-					buildPontuation(questionResponse, alternativeResponse);
+					challengeResponse.buildPontuation(questionResponse, alternativeResponse);
 				});
 		}
-		Assert.assertTrue(this.getPontuation().equals(pontuation));
+		Assert.assertTrue(challengeResponse.getPontuation().equals(pontuation));
 	}
 	
 	private List<QuestionResponse> buildQuestionsResponse(final Letter letter) {
 		final QuestionResponse questionResponse = new QuestionResponseImpl();
 		questionResponse.setLetter(letter);
-		questionResponse.setTargetQuestion(this.getTargetChallenge().getQuestions().get(0));
+		questionResponse.setTargetQuestion(challengeResponse.getTargetChallenge().getQuestions().get(0));
 		
 		final List<QuestionResponse> questionsResponse = new ArrayList<>();
 		questionsResponse.add(questionResponse);

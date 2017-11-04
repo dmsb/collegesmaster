@@ -1,4 +1,4 @@
-package br.com.collegesmaster.security.business;
+package br.com.collegesmaster.model.security.business.impl;
 
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
@@ -32,7 +32,7 @@ import br.com.collegesmaster.utils.CryptoUtils;
 @Stateless
 @TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
-public class AuthenticationBusiness {
+public class AuthenticationBusinessImpl {
 	
 	@Inject
 	private Logger LOGGER;

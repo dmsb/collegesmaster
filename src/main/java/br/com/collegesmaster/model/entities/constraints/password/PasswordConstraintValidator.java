@@ -8,10 +8,10 @@ import javax.validation.ConstraintValidatorContext;
 
 public class PasswordConstraintValidator implements ConstraintValidator<Password, String> {
 	
-	protected Integer atLeastLenght;
-	protected String atLeast1LetterRegex;
-	protected String atLeast1NumberRegex;
-	protected String atLeast1SpecialCharRegex;
+	public Integer atLeastLenght;
+	public String atLeast1LetterRegex;
+	public String atLeast1NumberRegex;
+	public String atLeast1SpecialCharRegex;
 	
 	@Override
 	public void initialize(Password password) {
@@ -19,7 +19,6 @@ public class PasswordConstraintValidator implements ConstraintValidator<Password
 		atLeast1LetterRegex = "[a-zA-z]";
 		atLeast1NumberRegex = "[0-9]";
 		atLeast1SpecialCharRegex = "[^A-Za-z0-9 ]";
-		
 	}
 
 	@Override
@@ -30,7 +29,7 @@ public class PasswordConstraintValidator implements ConstraintValidator<Password
 		return false;
 	}
 	
-	protected Boolean isValidPasswordEntry(final String password) {
+	public Boolean isValidPasswordEntry(final String password) {
 		
 		final Boolean isAtLeast6 = password.length() >= atLeastLenght;
 		final Matcher containsLetter = Pattern.compile(atLeast1LetterRegex).matcher(password);

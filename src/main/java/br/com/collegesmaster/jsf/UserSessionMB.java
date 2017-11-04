@@ -19,9 +19,9 @@ import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.model.business.UserBusiness;
 import br.com.collegesmaster.model.entities.user.impl.UserImpl;
+import br.com.collegesmaster.model.security.entities.Credentials;
+import br.com.collegesmaster.model.security.entities.impl.CredentialsImpl;
 import br.com.collegesmaster.qualifiers.AuthenticatedUser;
-import br.com.collegesmaster.security.model.Credentials;
-import br.com.collegesmaster.security.model.impl.CredentialsImpl;
 
 @Named("userSessionMB")
 @SessionScoped

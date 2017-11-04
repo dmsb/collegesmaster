@@ -1,8 +1,8 @@
-package br.com.collegesmaster.security.model.impl;
+package br.com.collegesmaster.model.security.entities.impl;
 
 import javax.enterprise.inject.Model;
 
-import br.com.collegesmaster.security.model.Credentials;
+import br.com.collegesmaster.model.security.entities.Credentials;
 
 @Model
 public class CredentialsImpl implements Credentials {
