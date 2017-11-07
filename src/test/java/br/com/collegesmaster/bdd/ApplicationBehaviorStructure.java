@@ -6,7 +6,7 @@ public class ApplicationBehaviorStructure {
 
 	@Feature
 	public class ManageChallengeResponse {
-		public class ReplyAChallenge{}
+		public class ReplyChallenge{}
 	}
 	
 	@Feature

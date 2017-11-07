@@ -1,4 +1,4 @@
-package br.com.collegesmaster.bdd.features.manage_challenge_response.reply_challenge.steps;
+package br.com.collegesmaster.bdd.features.manage_challenge_response.steps;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +19,8 @@ public class ReplyAChallengeSteps {
 	
 	private ChallengeResponse challengeResponse;
 	
-	@Step("Given a challenge that contains a correct letter question equals to {0} with a score of {1} points")
-	public void givenAChallenge(final Letter letter,
-			final Integer pontuation) {
+    @Step("Given a challenge that contains a correct letter question equals to {0} with a score of {1} points")
+    public void givenAChallenge(final Letter letter, final Integer pontuation) {
 		
 		challengeResponse = new ChallengeResponseImpl();
 		final List<AlternativeImpl> alternatives = buildAlternatives(letter);
@@ -38,13 +37,7 @@ public class ReplyAChallengeSteps {
 	
 	@Step("Then a student must have scored {0} points")
 	public void thenTheStudentScored(final Integer pontuation) {
-		
-		for(final QuestionResponse questionResponse : challengeResponse.getQuestionsResponse()) {
-			questionResponse.getTargetQuestion().getAlternatives()
-				.forEach(alternativeResponse -> {
-					challengeResponse.buildPontuation(questionResponse, alternativeResponse);
-				});
-		}
+		challengeResponse.calculatePontuation();
 		Assert.assertTrue(challengeResponse.getPontuation().equals(pontuation));
 	}
 	

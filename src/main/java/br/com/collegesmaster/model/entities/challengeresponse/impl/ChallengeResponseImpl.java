@@ -68,19 +68,23 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 	@PrePersist
 	@PreUpdate
 	public void calculatePontuation() {
-		pontuation = 0;			
-		
-		for(final QuestionResponse response : questionsResponse) {
-			response.getTargetQuestion()
-				.getAlternatives()
-				.forEach(alternative -> {					
-					buildPontuation(response, alternative);
-				});
-		}
+		pontuation = 0;
+		questionsResponse.stream()
+			.forEach(response -> {
+			selectQuestionToProcessPontuation(response);
+		});
+	}
+
+	private void selectQuestionToProcessPontuation(QuestionResponse response) {
+		response.getTargetQuestion()
+		.getAlternatives().stream()
+			.forEach(alternative -> {					
+			addPontuation(response, alternative);
+		});
 	}
 
 	@Override
-	public void buildPontuation(final QuestionResponse response, AlternativeImpl alternative) {
+	public void addPontuation(final QuestionResponse response, AlternativeImpl alternative) {
 		if(alternative.getIsTrue() && 
 				alternative.getLetter().equals(response.getLetter())) {
 			pontuation = pontuation + response.getTargetQuestion().getPontuation();

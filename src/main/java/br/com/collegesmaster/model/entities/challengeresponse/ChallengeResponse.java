@@ -30,7 +30,7 @@ public interface ChallengeResponse extends Model {
 
 	Challenge getTargetChallenge();
 
-	void buildPontuation(final QuestionResponse response, AlternativeImpl alternative);
+	void addPontuation(final QuestionResponse response, AlternativeImpl alternative);
 
 	void calculatePontuation();
 
