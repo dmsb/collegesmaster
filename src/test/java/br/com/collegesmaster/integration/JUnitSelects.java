@@ -20,7 +20,7 @@ import br.com.collegesmaster.model.entities.discipline.impl.DisciplineImpl;
 import br.com.collegesmaster.model.entities.institute.impl.InstituteImpl;
 import br.com.collegesmaster.model.entities.user.User;
 import br.com.collegesmaster.model.entities.user.impl.UserImpl;
-import br.com.collegesmaster.utils.CryptoUtils;
+import br.com.collegesmaster.utils.PasswordEncoderWithSalt;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JUnitSelects extends JUnitConfiguration {
@@ -146,8 +146,8 @@ public class JUnitSelects extends JUnitConfiguration {
 	}
 
 	private User buildLogin(final String username, final String password, final String salt) {
-		
-		final String hashedPassword = CryptoUtils.generateHashedPassword(password, salt);        	
+		final PasswordEncoderWithSalt encoder = new PasswordEncoderWithSalt();
+		final String hashedPassword = encoder.generateHashedPassword(password, salt);        	
 		
 		final CriteriaBuilder builder = em.getCriteriaBuilder();
 		final CriteriaQuery<UserImpl> criteria = builder.createQuery(UserImpl.class);		

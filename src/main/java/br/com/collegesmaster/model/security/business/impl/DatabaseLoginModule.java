@@ -1,7 +1,5 @@
 package br.com.collegesmaster.model.security.business.impl;
 
-import static br.com.collegesmaster.utils.CryptoUtils.generateHashedPassword;
-
 import java.security.Principal;
 import java.security.acl.Group;
 import java.util.List;
@@ -21,6 +19,7 @@ import com.google.common.base.Strings;
 
 import br.com.collegesmaster.model.entities.role.impl.RoleImpl;
 import br.com.collegesmaster.utils.CdiHelper;
+import br.com.collegesmaster.utils.PasswordEncoderWithSalt;
 
 public class DatabaseLoginModule extends DatabaseServerLoginModule {
 
@@ -31,6 +30,9 @@ public class DatabaseLoginModule extends DatabaseServerLoginModule {
 
 	@Inject
 	private Logger LOGGER;
+	
+	@Inject
+	private PasswordEncoderWithSalt encoder;
 
 	@Override
 	public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ?> sharedState,
@@ -52,7 +54,7 @@ public class DatabaseLoginModule extends DatabaseServerLoginModule {
 	@Override
 	protected boolean validatePassword(String enteredPassword, final String encrypted) {
 		if (!(Strings.isNullOrEmpty(userSalt) && Strings.isNullOrEmpty(enteredPassword))) {
-			enteredPassword = generateHashedPassword(enteredPassword, userSalt);
+			enteredPassword = encoder.generateHashedPassword(enteredPassword, userSalt);
 			if (encrypted.equals(enteredPassword)) {
 				return true;
 			}

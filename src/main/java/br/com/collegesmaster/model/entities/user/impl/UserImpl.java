@@ -1,7 +1,5 @@
 package br.com.collegesmaster.model.entities.user.impl;
 
-import static br.com.collegesmaster.utils.CryptoUtils.generateHashedPassword;
-import static br.com.collegesmaster.utils.CryptoUtils.generateSalt;
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
@@ -37,6 +35,7 @@ import br.com.collegesmaster.model.entities.generalinfo.impl.GeneralInfoImpl;
 import br.com.collegesmaster.model.entities.model.impl.ModelImpl;
 import br.com.collegesmaster.model.entities.role.impl.RoleImpl;
 import br.com.collegesmaster.model.entities.user.User;
+import br.com.collegesmaster.utils.PasswordEncoderWithSalt;
 
 @Entity
 @Table(name = "user",
@@ -87,16 +86,17 @@ public class UserImpl extends ModelImpl implements User {
     @PreUpdate
     private void prePersistUser() {
     	encriptyPassword();
-    	buildCpf();
+    	parseCpfToCrude();
     }
     
-    private void encriptyPassword() {
-    	final String salt = generateSalt();	
+    public void encriptyPassword() {
+    	final PasswordEncoderWithSalt encoder = new PasswordEncoderWithSalt();
+    	final String salt = encoder.generateSalt();	
 		setSalt(salt);
-		setPassword(generateHashedPassword(getPassword(), salt));
+		setPassword(encoder.generateHashedPassword(getPassword(), salt));
     }
     
-    private void buildCpf() {
+    public void parseCpfToCrude() {
 		final String crudeCpf = getGeneralInfo().getCpf().replaceAll("[^0-9]", "");
 		getGeneralInfo().setCpf(crudeCpf);
     }

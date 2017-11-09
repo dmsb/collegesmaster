@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import br.com.collegesmaster.bdd.ApplicationBehaviorStructure.ManageUsers;
-import br.com.collegesmaster.bdd.features.manage_users.steps.PasswordValidatorScenarioSteps;
+import br.com.collegesmaster.bdd.features.manage_users.steps.PasswordValidationSteps;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.annotations.Story;
@@ -12,7 +12,7 @@ import net.thucydides.core.annotations.Title;
 
 @RunWith(SerenityRunner.class)
 @Story(ManageUsers.AddNewUser.class)
-public class AddNewUserTest {
+public class PasswordValidationScenariosTest {
 	
 	private final String PASSWORD_WITH_LESS_THAN_SIX_CHARS = "#la12";
 	private final String PASSWORD_WITHOUT_NUMBERS = "#eadCd";
@@ -21,7 +21,7 @@ public class AddNewUserTest {
 	private final String VALID_PASSWORD = "!d10g0";
 	
 	@Steps
-	private PasswordValidatorScenarioSteps passwordValidatorScenarioSteps;
+	private PasswordValidationSteps passwordValidatorScenarioSteps;
 
 	@Title("The user signing up for the system with a password without at least 6 characters")
 	@Test

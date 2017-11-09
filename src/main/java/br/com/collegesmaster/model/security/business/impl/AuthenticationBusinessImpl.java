@@ -27,7 +27,7 @@ import br.com.collegesmaster.model.entities.role.impl.RoleImpl;
 import br.com.collegesmaster.model.entities.user.impl.UserImpl;
 import br.com.collegesmaster.model.entities.user.impl.UserImpl_;
 import br.com.collegesmaster.qualifiers.UserDatabase;
-import br.com.collegesmaster.utils.CryptoUtils;
+import br.com.collegesmaster.utils.PasswordEncoderWithSalt;
 
 @Stateless
 @TransactionManagement(CONTAINER)
@@ -43,6 +43,9 @@ public class AuthenticationBusinessImpl {
 
 	@Inject
 	private CriteriaBuilder cb;
+	
+	@Inject
+	private PasswordEncoderWithSalt encoder;
 	
 	private StringBuilder queryBuilder;
 	
@@ -133,7 +136,7 @@ public class AuthenticationBusinessImpl {
 	private UserImpl buildLogin(final String username,
 			final String password, final String salt) throws LoginException {
 
-		final String hashedPassword = CryptoUtils
+		final String hashedPassword = encoder
 				.generateHashedPassword(password, salt);
 
 		final CriteriaQuery<UserImpl> query = cb.createQuery(UserImpl.class);

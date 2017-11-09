@@ -7,7 +7,7 @@ import br.com.collegesmaster.model.entities.user.User;
 import br.com.collegesmaster.model.entities.user.impl.UserImpl;
 import net.thucydides.core.annotations.Step;
 
-public class PasswordValidatorScenarioSteps {
+public class PasswordValidationSteps {
 
 	private PasswordValidator passwordValidation;
 	private User user;
