@@ -6,11 +6,12 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-<f:view locale="#{localeBean.locale}" />
+<f:view locale="#{localeMB.locale}" />
 
 <h:head>
 	<title>#{text['collegesmaster']}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script type="text/javascript" src="resources/js/calendar_pt_BR.js"></script>
 </h:head>
 <h:body>
 	<h:outputStylesheet name="css/default.css" />
@@ -98,8 +99,8 @@
 						</p:column>
 						<p:column>
 							<p:calendar id="birthdate" value="#{homeMB.user.generalInfo.birthdate}" size="8"
-								pattern="dd-MM-yyyy" mask="true" required="true" converter="localDateTimeConverter"
-								label="#{text['birthdate']}" />				
+								pattern="dd-MM-yyyy" mask="true" required="true" locale="#{localeMB.locale}"
+								converter="localDateTimeConverter" label="#{text['birthdate']}" />
 						</p:column>
 					</p:row>
 					<p:row>

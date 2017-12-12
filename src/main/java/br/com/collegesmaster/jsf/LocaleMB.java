@@ -8,9 +8,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-@Named("localeBean")
+@Named("localeMB")
 @SessionScoped
-public class LocaleBean implements Serializable {
+public class LocaleMB implements Serializable {
 	
 	private static final long serialVersionUID = -4840308196500474498L;
 	
