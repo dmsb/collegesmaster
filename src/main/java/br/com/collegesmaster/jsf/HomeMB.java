@@ -28,6 +28,7 @@ import br.com.collegesmaster.model.entities.institute.Institute;
 import br.com.collegesmaster.model.entities.institute.impl.InstituteImpl;
 import br.com.collegesmaster.model.entities.role.Role;
 import br.com.collegesmaster.model.entities.role.impl.RoleImpl;
+import br.com.collegesmaster.model.entities.user.User;
 import br.com.collegesmaster.model.entities.user.impl.UserImpl;
 
 @Named("homeMB")
@@ -48,7 +49,7 @@ public class HomeMB implements Serializable {
 	@Inject
 	private transient CourseBusiness courseBusiness;
 	
-	private UserImpl user;
+	private User user;
 	private Role selectedRole;
 	private Institute selectedInstitute;	
 	private List<InstituteImpl> institutes;
@@ -84,7 +85,7 @@ public class HomeMB implements Serializable {
 			return;
 		} else {
 			
-			final Boolean created = userBusiness.create(user);
+			final Boolean created = userBusiness.create((UserImpl) user);
 			if(created) {
 				addMessageWithDetails(SEVERITY_INFO, "success_message", "user_registred_with_success_message");
 			} else {
@@ -127,11 +128,11 @@ public class HomeMB implements Serializable {
 		}
 	}
 	
-	public UserImpl getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(UserImpl user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

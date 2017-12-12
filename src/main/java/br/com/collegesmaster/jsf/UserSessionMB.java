@@ -95,5 +95,4 @@ public class UserSessionMB implements Serializable {
 	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
 	}
-
 }

@@ -16,7 +16,7 @@ public class MainMenuMB implements Serializable {
 	
 	@Inject @AuthenticatedUser 
 	private User loggedUser;
-	
+
 	private static final long serialVersionUID = 344294436330653003L;
 
 	private static final String CREATED_CHALLENGES = "/pages/users/professor/created_challenges.xhtml?faces-redirect=true";
@@ -60,4 +60,11 @@ public class MainMenuMB implements Serializable {
 		return EDIT_USER; 
 	}
 
+	public User getLoggedUser() {
+		return loggedUser;
+	}
+
+	public void setLoggedUser(User loggedUser) {
+		this.loggedUser = loggedUser;
+	}
 }

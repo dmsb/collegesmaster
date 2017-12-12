@@ -24,10 +24,7 @@ import br.com.collegesmaster.utils.PasswordEncoderWithSalt;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JUnitSelects extends JUnitConfiguration {
-    
-    public JUnitSelects() {
-    }
-
+	
 	@Test
 	public void test01_getInstitutes() {
 		
@@ -88,8 +85,8 @@ public class JUnitSelects extends JUnitConfiguration {
 	public void test05_sortUserFirstName() {
 
 		queryBuilder
-				.append("SELECT   user.person.cpf, ")
-				.append("		  user.person.firstName ")
+				.append("SELECT   user.generalInfo.cpf, ")
+				.append("		  user.generalInfo.firstName ")
 				.append("FROM     UserImpl user ")
 				.append("ORDER BY user.generalInfo.firstName");
 		

@@ -37,4 +37,14 @@ public interface User extends Model {
 
 	void setCourse(Course course);
 
+	List<String> getRoleNames();
+
+	Boolean isUserInRole(final String roleName);
+
+	void parseCpfToCrude();
+
+	void encriptyPassword();
+
+	Boolean isUserInAnyRoles(final List<String> roleNames);
+
 }

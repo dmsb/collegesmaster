@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response.Status;
 import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.model.business.UserBusiness;
-import br.com.collegesmaster.model.entities.user.impl.UserImpl;
+import br.com.collegesmaster.model.entities.user.User;
 import br.com.collegesmaster.rest.security.controller.AuthenticationController;
 
 @RequestScoped
@@ -29,7 +29,7 @@ public class AuthenticationControllerImpl implements AuthenticationController {
 	public Response jaasAuthentication(final HttpServletRequest authenticationRequest, 
 			final String username, final String password) {
 		
-		UserImpl user = null;
+		User user = null;
 		
 		try {
 			logoutPrincipalIfExists(authenticationRequest);

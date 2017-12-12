@@ -46,7 +46,7 @@ public class UserEditMB implements Serializable {
 		}
 	}
 	
-	public UserImpl getUser() {
+	public User getUser() {
 		return user;
 	}
 

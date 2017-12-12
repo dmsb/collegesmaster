@@ -68,20 +68,22 @@ public class DatabaseLoginModule extends DatabaseServerLoginModule {
 		return buildRoleGroup(userRoles);
 	}
 
-	private Group[] buildRoleGroup(List<RoleImpl> userRoles) {
+	public Group[] buildRoleGroup(List<RoleImpl> userRoles) {
 		final Group group = new SimpleGroup("Roles");
 		buildRolePrincipals(userRoles, group);
 		return new Group[] {group};
 	}
 
-	private void buildRolePrincipals(List<RoleImpl> userRoles, final Group group) {
-		userRoles.forEach(role -> {
-			try {
-				final Principal p = createIdentity(role.getName());
-				group.addMember(p);
-			} catch (Exception e) {
-				LOGGER.error("Fail to build user roles", e);
-			}
-		});
+	public void buildRolePrincipals(List<RoleImpl> userRoles, Group group) {
+		userRoles.forEach(role -> insertRoleIntoGroup(group, role));
+	}
+
+	public void insertRoleIntoGroup(Group group, RoleImpl role) {
+		try {
+			final Principal p = createIdentity(role.getName());
+			group.addMember(p);
+		} catch (Exception e) {
+			LOGGER.error("Fail to build user roles", e);
+		}
 	}
 }

@@ -24,6 +24,7 @@ import org.jboss.logging.Logger.Level;
 import com.google.common.base.Strings;
 
 import br.com.collegesmaster.model.entities.role.impl.RoleImpl;
+import br.com.collegesmaster.model.entities.user.User;
 import br.com.collegesmaster.model.entities.user.impl.UserImpl;
 import br.com.collegesmaster.model.entities.user.impl.UserImpl_;
 import br.com.collegesmaster.qualifiers.UserDatabase;
@@ -50,7 +51,7 @@ public class AuthenticationBusinessImpl {
 	private StringBuilder queryBuilder;
 	
 	@PermitAll
-	public UserImpl authenticate(final String username, 
+	public User authenticate(final String username, 
 			final String password) throws LoginException {
 		
 		if (!(Strings.isNullOrEmpty(username) || Strings.isNullOrEmpty(password))) {
@@ -58,7 +59,7 @@ public class AuthenticationBusinessImpl {
 			final String salt = findUserSalt(username);
 
 			if(Strings.isNullOrEmpty(salt) == false) {
-				final UserImpl user = buildLogin(username, password, salt);
+				final User user = buildLogin(username, password, salt);
 				return user;
 			}
 		}
@@ -124,7 +125,7 @@ public class AuthenticationBusinessImpl {
 		final TypedQuery<UserImpl> typedQuery = em.createQuery(criteriaQuery);
 		
 		try {
-			final UserImpl user = typedQuery.getSingleResult();
+			final User user = typedQuery.getSingleResult();
 			return user.getRoles();
 		} catch (NoResultException e) {
 			LOGGER.log(Level.INFO, "No roles foundeds.");
@@ -133,7 +134,7 @@ public class AuthenticationBusinessImpl {
 		throw new LoginException();
 	}
 
-	private UserImpl buildLogin(final String username,
+	private User buildLogin(final String username,
 			final String password, final String salt) throws LoginException {
 
 		final String hashedPassword = encoder

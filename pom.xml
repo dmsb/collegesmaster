@@ -10,7 +10,7 @@
 	<properties>
 		<hibernate.version>5.2.10.Final</hibernate.version>
 		<wildfly.home>D:\wildfly-10.1.0.Final</wildfly.home>
-		<serenity.version>1.6.6</serenity.version>
+		<serenity.version>1.8.1</serenity.version>
 	</properties>
 
 	<repositories>

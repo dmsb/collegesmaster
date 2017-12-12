@@ -10,7 +10,6 @@ import org.jboss.logging.Logger;
 public class PasswordEncoderWithSalt {
 
 	private static final Logger LOGGER = Logger.getLogger(PasswordEncoderWithSalt.class);
-	private MessageDigest digester;
 
 	public String generateSalt() {
 		final SecureRandom secureRandom = getSecureRandomInstanceSHA1PRNG();
@@ -20,16 +19,16 @@ public class PasswordEncoderWithSalt {
 	}
 
 	public String generateHashedPassword(final String password, final String salt) {
-		digester = getDigestInstanceSHA512();
-		final String hashedPassword = buildHashedPassword(password, salt);
+		final MessageDigest digester = getDigestInstanceSHA512();
+		final String hashedPassword = buildHashedPassword(digester, password, salt);
+		digester.reset();
 		final byte[] hashedPasswordBytes = digester.digest(hashedPassword.getBytes());
 		final String hashedPasswordWithSalt = convertToBase64(hashedPasswordBytes);
 		return hashedPasswordWithSalt;
 	}
 
-	private String buildHashedPassword(final String password, final String salt) {
+	private String buildHashedPassword(final MessageDigest digester, final String password, final String salt) {
 		String hashedPassword = convertToBase64(digester.digest(password.getBytes()));
-		digester.reset();
 		hashedPassword = hashedPassword.concat(salt);
 		return hashedPassword;
 	}

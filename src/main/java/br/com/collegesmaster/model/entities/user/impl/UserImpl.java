@@ -7,6 +7,7 @@ import static javax.persistence.FetchType.LAZY;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.persistence.Access;
 import javax.persistence.Basic;
@@ -89,17 +90,37 @@ public class UserImpl extends ModelImpl implements User {
     	parseCpfToCrude();
     }
     
-    public void encriptyPassword() {
+    @Override
+	public void encriptyPassword() {
     	final PasswordEncoderWithSalt encoder = new PasswordEncoderWithSalt();
     	final String salt = encoder.generateSalt();	
 		setSalt(salt);
 		setPassword(encoder.generateHashedPassword(getPassword(), salt));
     }
     
-    public void parseCpfToCrude() {
+    @Override
+	public void parseCpfToCrude() {
 		final String crudeCpf = getGeneralInfo().getCpf().replaceAll("[^0-9]", "");
 		getGeneralInfo().setCpf(crudeCpf);
     }
+	
+    @Override
+	public Boolean isUserInRole(final String roleName) {
+    	final List<String> userRoleNames = getRoleNames();
+    	return userRoleNames.stream().anyMatch(roleName::equals);
+    }
+    
+    @Override
+	public Boolean isUserInAnyRoles(final List<String> roleNames) {
+    	final List<String> userRoleNames = getRoleNames();
+    	return roleNames.stream().anyMatch(userRoleNames::contains);
+    }
+
+	@Override
+	public List<String> getRoleNames() {
+		return getRoles().stream().map(role -> {return role.getName();})
+    		.collect(Collectors.toList());
+	}
 	
 	@Override
 	public GeneralInfo getGeneralInfo() {
