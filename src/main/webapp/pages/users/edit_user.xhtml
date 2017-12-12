@@ -54,7 +54,8 @@
 						<p:column>
 							<p:calendar id="birthdate" value="#{userEditMB.user.generalInfo.birthdate}" size="20"
 								pattern="dd-MM-yyyy" mask="true" required="true" converter="localDateTimeConverter"
-								label="#{text['birthdate']}" locale="#{localeMB.locale}"/>
+								label="#{text['birthdate']}" locale="#{localeMB.locale}"
+								showButtonPanel="true" navigator="true" yearRange="c-100:c+10"/>
 						</p:column>
 					</p:row>
 					<p:row>

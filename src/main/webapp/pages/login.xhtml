@@ -100,7 +100,8 @@
 						<p:column>
 							<p:calendar id="birthdate" value="#{homeMB.user.generalInfo.birthdate}" size="8"
 								pattern="dd-MM-yyyy" mask="true" required="true" locale="#{localeMB.locale}"
-								converter="localDateTimeConverter" label="#{text['birthdate']}" />
+								converter="localDateTimeConverter" label="#{text['birthdate']}"
+								showButtonPanel="true" navigator="true" yearRange="c-100:c+10" />
 						</p:column>
 					</p:row>
 					<p:row>
