@@ -17,16 +17,17 @@ import org.jboss.security.auth.spi.DatabaseServerLoginModule;
 
 import com.google.common.base.Strings;
 
-import br.com.collegesmaster.model.entities.role.impl.RoleImpl;
+import br.com.collegesmaster.model.security.business.AuthenticationBusiness;
+import br.com.collegesmaster.model.user.business.impl.PasswordEncoderWithSalt;
+import br.com.collegesmaster.model.user.impl.RoleImpl;
 import br.com.collegesmaster.utils.CdiHelper;
-import br.com.collegesmaster.utils.PasswordEncoderWithSalt;
 
 public class DatabaseLoginModule extends DatabaseServerLoginModule {
 
 	private String userSalt;
 
 	@Inject
-	private AuthenticationBusinessImpl authBusiness;
+	private AuthenticationBusiness authBusiness;
 
 	@Inject
 	private Logger LOGGER;

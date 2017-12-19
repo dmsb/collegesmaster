@@ -126,9 +126,9 @@
 			<version>6.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.primefaces.themes</groupId>
-			<artifactId>dot-luv</artifactId>
-			<version>1.0.10</version>
+		    <groupId>org.primefaces.themes</groupId>
+		    <artifactId>rocket</artifactId>
+		    <version>1.0.10</version>
 		</dependency>
 
 		<!-- JSF -->

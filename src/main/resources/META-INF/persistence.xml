@@ -36,19 +36,19 @@
 	<persistence-unit name="collegesmasterPU" transaction-type="JTA">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<jta-data-source>java:jboss/datasources/collegesmasterDS</jta-data-source>
-		<class>br.com.collegesmaster.model.entities.institute.impl.InstituteImpl</class>
-		<class>br.com.collegesmaster.model.entities.course.impl.CourseImpl</class>
-		<class>br.com.collegesmaster.model.entities.discipline.impl.DisciplineImpl</class>
-		<class>br.com.collegesmaster.model.entities.localization.impl.LocalizationImpl</class>
-		<class>br.com.collegesmaster.model.entities.user.impl.UserImpl</class>
-		<class>br.com.collegesmaster.model.entities.generalinfo.impl.GeneralInfoImpl</class>
-		<class>br.com.collegesmaster.model.entities.challenge.impl.ChallengeImpl</class>
-		<class>br.com.collegesmaster.model.entities.question.impl.QuestionImpl</class>
-		<class>br.com.collegesmaster.model.entities.alternative.impl.AlternativeImpl</class>
-		<class>br.com.collegesmaster.model.entities.challengeresponse.impl.ChallengeResponseImpl</class>
-		<class>br.com.collegesmaster.model.entities.questionresponse.impl.QuestionResponseImpl</class>		
-		<class>br.com.collegesmaster.model.entities.role.impl.RoleImpl</class>
-		<class>br.com.collegesmaster.model.entities.auditinfo.impl.AuditInfoImpl</class>
+		<class>br.com.collegesmaster.model.institute.impl.InstituteImpl</class>
+		<class>br.com.collegesmaster.model.institute.impl.CourseImpl</class>
+		<class>br.com.collegesmaster.model.institute.impl.DisciplineImpl</class>
+		<class>br.com.collegesmaster.model.localization.impl.LocalizationImpl</class>
+		<class>br.com.collegesmaster.model.user.impl.UserImpl</class>
+		<class>br.com.collegesmaster.model.user.impl.GeneralInfoImpl</class>
+		<class>br.com.collegesmaster.model.challenge.impl.ChallengeImpl</class>
+		<class>br.com.collegesmaster.model.challenge.impl.QuestionImpl</class>
+		<class>br.com.collegesmaster.model.challenge.impl.AlternativeImpl</class>
+		<class>br.com.collegesmaster.model.challengeresponse.impl.ChallengeResponseImpl</class>
+		<class>br.com.collegesmaster.model.challengeresponse.impl.QuestionResponseImpl</class>		
+		<class>br.com.collegesmaster.model.user.impl.RoleImpl</class>
+		<class>br.com.collegesmaster.model.auditinfo.impl.AuditInfoImpl</class>
 		<class>org.hibernate.envers.DefaultRevisionEntity</class>
 		
 		<properties>

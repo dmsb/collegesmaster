@@ -7,8 +7,8 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import br.com.collegesmaster.model.business.RoleBusiness;
-import br.com.collegesmaster.model.entities.role.impl.RoleImpl;
+import br.com.collegesmaster.model.user.business.RoleBusiness;
+import br.com.collegesmaster.model.user.impl.RoleImpl;
 import br.com.collegesmaster.rest.controllers.RoleController;
 import br.com.collegesmaster.rest.controllers.util.CustomResponseBuilder;
 

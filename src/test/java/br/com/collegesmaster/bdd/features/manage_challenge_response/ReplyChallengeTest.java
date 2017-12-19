@@ -5,7 +5,7 @@ import org.junit.runner.RunWith;
 
 import br.com.collegesmaster.bdd.ApplicationBehaviorStructure.ManageChallengeResponse;
 import br.com.collegesmaster.bdd.features.manage_challenge_response.steps.ReplyAChallengeSteps;
-import br.com.collegesmaster.model.entities.enums.Letter;
+import br.com.collegesmaster.model.challenge.enums.Letter;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.annotations.Story;

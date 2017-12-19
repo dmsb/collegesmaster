@@ -1,162 +1,87 @@
 package br.com.collegesmaster.model.security.business.impl;
 
+import static javax.ejb.TransactionAttributeType.NOT_SUPPORTED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.List;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionManagement;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import javax.security.auth.login.LoginException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
 import org.jboss.logging.Logger;
-import org.jboss.logging.Logger.Level;
 
-import com.google.common.base.Strings;
-
-import br.com.collegesmaster.model.entities.role.impl.RoleImpl;
-import br.com.collegesmaster.model.entities.user.User;
-import br.com.collegesmaster.model.entities.user.impl.UserImpl;
-import br.com.collegesmaster.model.entities.user.impl.UserImpl_;
-import br.com.collegesmaster.qualifiers.UserDatabase;
-import br.com.collegesmaster.utils.PasswordEncoderWithSalt;
+import br.com.collegesmaster.model.security.business.AuthenticationBusiness;
+import br.com.collegesmaster.model.security.dataprovider.AuthenticationDataProvider;
+import br.com.collegesmaster.model.security.entities.Credentials;
+import br.com.collegesmaster.model.user.impl.RoleImpl;
+import br.com.collegesmaster.view.enums.Page;
 
 @Stateless
 @TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
-public class AuthenticationBusinessImpl {
+public class AuthenticationBusinessImpl implements AuthenticationBusiness {
 	
 	@Inject
 	private Logger LOGGER;
 
 	@Inject
-	@UserDatabase
-	private EntityManager em;
-
-	@Inject
-	private CriteriaBuilder cb;
-	
-	@Inject
-	private PasswordEncoderWithSalt encoder;
-	
-	private StringBuilder queryBuilder;
+	private AuthenticationDataProvider authenticationDataProvider;
 	
 	@PermitAll
-	public User authenticate(final String username, 
-			final String password) throws LoginException {
-		
-		if (!(Strings.isNullOrEmpty(username) || Strings.isNullOrEmpty(password))) {
-
-			final String salt = findUserSalt(username);
-
-			if(Strings.isNullOrEmpty(salt) == false) {
-				final User user = buildLogin(username, password, salt);
-				return user;
+	@TransactionAttribute(NOT_SUPPORTED)
+	@Override
+	public String processLoginServletRequest(final Credentials credentials, 
+			final HttpServletRequest loginRequest) {
+		try {
+			checkIfExistsALoggedUser(loginRequest);
+			loginRequest.login(credentials.getUsername(), credentials.getPassword());
+			if (loginRequest.getUserPrincipal() != null) {
+				if (loginRequest.isUserInRole("PROFESSOR")) {
+					return Page.getPageByCode("create_challenge");
+				} else if (loginRequest.isUserInRole("STUDENT")) {
+					return Page.getPageByCode("reply_challenges");
+				}
 			}
+		} catch (ServletException e) {
+			LOGGER.error(e.getMessage());
 		}
-		throw new LoginException();
+		return null;
 	}
 	
 	@PermitAll
+	@TransactionAttribute(NOT_SUPPORTED)
+	@Override
+	public void checkIfExistsALoggedUser(final HttpServletRequest loginRequest) throws ServletException {
+		if (loginRequest.getUserPrincipal() != null) {
+			loginRequest.logout();
+		}
+	}
+	
+	@TransactionAttribute(NOT_SUPPORTED)
+	@PermitAll
+	@Override
 	public String findUserSalt(final String username) throws LoginException {
-		
-		queryBuilder = new StringBuilder();
-		
-		queryBuilder
-			.append("SELECT user.salt ")
-			.append("FROM   UserImpl user ")
-			.append("WHERE  user.username = :username");
-
-		final TypedQuery<String> query = em.createQuery(queryBuilder.toString(), String.class);
-		query.setParameter("username", username);
-		try {
-			final String salt = query.getSingleResult();
-			return salt;
-		} catch (NoResultException e) {
-			LOGGER.log(Level.INFO, "No salt founded.");
-		}
-		
-		throw new LoginException();
+		return authenticationDataProvider.findUserSalt(username);
 	}
 	
+	@TransactionAttribute(NOT_SUPPORTED)
 	@PermitAll
+	@Override
 	public String findUserPassword(final String username) throws LoginException {
-		
-		queryBuilder = new StringBuilder();
-		
-		queryBuilder
-			.append("SELECT user.password ")
-			.append("FROM   UserImpl user ")
-			.append("WHERE  user.username = :username");
-
-		final TypedQuery<String> typedQuery = em
-				.createQuery(queryBuilder.toString(), String.class);
-		
-		typedQuery.setParameter("username", username);
-		
-		try {
-			final String password = typedQuery.getSingleResult();
-			return password;
-		} catch (NoResultException e) {
-			LOGGER.log(Level.INFO, "No password founded.");
-		}
-		
-		throw new LoginException();
+		return authenticationDataProvider.findUserPassword(username);
 	}
 	
+	@TransactionAttribute(NOT_SUPPORTED)
 	@PermitAll
+	@Override
 	public List<RoleImpl> findUserRoles(final String username) throws LoginException {
-		
-		final CriteriaQuery<UserImpl> criteriaQuery = cb.createQuery(UserImpl.class);		
-		final Root<UserImpl> rootUser = criteriaQuery.from(UserImpl.class);
-		
-		criteriaQuery
-			.where(cb.equal(rootUser.get(UserImpl_.username), username));
-		
-		final TypedQuery<UserImpl> typedQuery = em.createQuery(criteriaQuery);
-		
-		try {
-			final User user = typedQuery.getSingleResult();
-			return user.getRoles();
-		} catch (NoResultException e) {
-			LOGGER.log(Level.INFO, "No roles foundeds.");
-		}
-		
-		throw new LoginException();
-	}
-
-	private User buildLogin(final String username,
-			final String password, final String salt) throws LoginException {
-
-		final String hashedPassword = encoder
-				.generateHashedPassword(password, salt);
-
-		final CriteriaQuery<UserImpl> query = cb.createQuery(UserImpl.class);
-		final Root<UserImpl> userRoot = query.from(UserImpl.class);
-		userRoot.fetch(UserImpl_.generalInfo);
-		
-		final Predicate usernamePredicate = cb.equal(userRoot.get(UserImpl_.username), username);
-		final Predicate passwordPredicate = cb.equal(userRoot.get(UserImpl_.password), hashedPassword);
-		
-		query.select(userRoot).where(usernamePredicate, passwordPredicate);		
-
-		final TypedQuery<UserImpl> typedQuery = em.createQuery(query);
-		
-		try {
-			return typedQuery.getSingleResult();
-		} catch (NoResultException e) {
-			LOGGER.warn(e.getMessage());
-		}
-		throw new LoginException();
-	}
-	
+		return authenticationDataProvider.findUserRoles(username);
+	}	
 }

@@ -1,17 +1,21 @@
 <?xml version="1.0"?>
 <faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-	<application>		
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+	http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+	<application>
 		<locale-config>
 			<default-locale>pt_BR</default-locale>
 			<supported-locale>pt_BR</supported-locale>
-		<supported-locale>en</supported-locale>
+			<supported-locale>en</supported-locale>
 		</locale-config>
 		<resource-bundle>
 			<base-name>i18n.texts.text</base-name>
 			<var>text</var>
 		</resource-bundle>
-		<message-bundle>i18n.messages.message</message-bundle>		
+		<message-bundle>i18n.messages.message</message-bundle>
 	</application>
+	<factory>
+        <exception-handler-factory>br.com.collegesmaster.handlers.CustomExceptionHandlerFactory</exception-handler-factory>
+    </factory>
 </faces-config>

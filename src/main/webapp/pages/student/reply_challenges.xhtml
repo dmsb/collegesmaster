@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composites="http://java.sun.com/jsf/composite/composites">
+
+<f:view locale="#{localeMB.locale}" />
+
+<h:head>
+	<title>#{text['collegesmaster']}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</h:head>
+<h:body>
+	<h:outputStylesheet name="css/default.css" />
+	<composites:layouts main_menu_mb="#{mainMenuMB}" id="composite" >
+		<p:layoutUnit id="layout_center" position="center" header="#{text['disciplines']}" style="text-align:center">
+			
+			<h:form id="disciplines_form">
+				<p:dataTable id="disciplines_data_table" var="discipline" value="#{challengeResponseMB.userDisciplines}"
+					selectionMode="single" selection="#{challengeResponseMB.selectedDiscipline}" rowKey="#{discipline.id}"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
+					{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['no_records_found_message']}" paginator="true"
+					rows="10" currentPageReportTemplate="{currentPage} #{text['of_message']} {totalPages}">							
+					
+					<p:column headerText="#{text['title']}">
+						<h:outputText value="#{discipline.name}" />
+					</p:column>
+					
+					<p:column headerText="#{text['total_challenges']}">
+						<h:outputText value="#{discipline.challenges.size()}" />					
+					</p:column>
+					
+					<p:ajax event="rowSelect" process="@parent" listener="#{challengeResponseMB.resetResponse()}"
+						update="composite:challenges_form:challenges_data_table"
+						oncomplete="PF('challenges_wv').show(); PF('questions_wv').hide(); PF('alternatives_wv').hide();" />
+				</p:dataTable>
+			</h:form>
+			
+			
+			<h:form id="challenges_form">				
+				<p:dialog id="challenges_dialog" widgetVar="challenges_wv" closeOnEscape="true" closable="true" resizable="false"
+					responsive="true" hideEffect="puff" showEffect="puff" header="#{text['challenges']}"
+					maximizable="true" minimizable="true" width="1280">
+					<p:panelGrid id="challenges_pg">
+						<p:row>
+							<p:column>
+								<p:dataTable id="challenges_data_table" var="challenge" value="#{challengeResponseMB.selectedDiscipline.challenges}"
+									selectionMode="single" selection="#{challengeResponseMB.selectedChallenge}" rowKey="#{challenge.id}"
+									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
+									{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['no_records_found_message']}" paginator="true"
+									rows="10" currentPageReportTemplate="{currentPage} #{text['of_message']} {totalPages}">
+									
+									<p:column headerText="#{text['title']}">
+										<h:outputText value="#{challenge.title}" />
+									</p:column>
+									
+									<p:ajax event="rowSelect" process="@parent" listener="#{challengeResponseMB.loadChallengeQuestions()}"
+										update="composite:challenges_form:questions_data_table" oncomplete="PF('questions_wv').show(); PF('challenges_wv').hide()" />
+									
+								</p:dataTable>	
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:dialog>	
+				
+				<p:dialog id="questions_dialog" widgetVar="questions_wv" closeOnEscape="true" closable="true" resizable="false"
+					responsive="true" hideEffect="puff" showEffect="puff" header="#{text['questions']}" 
+					maximizable="true" minimizable="true" width="1280">
+					<p:panelGrid id="questions_pg">
+						<p:row>
+							<p:column>
+								<p:dataTable id="questions_data_table" var="question" value="#{challengeResponseMB.selectedChallenge.questions}"
+									selectionMode="single" selection="#{challengeResponseMB.selectedQuestion}" rowKey="#{question.id}"
+									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
+									{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['no_records_found_message']}" paginator="true"
+									rows="10" currentPageReportTemplate="{currentPage} #{text['of_message']} {totalPages}" rowIndexVar="index">							
+									
+									<f:facet name="header">
+										#{challengeResponseMB.selectedChallenge.title}
+									</f:facet>
+									
+									<p:column width="15">
+										<h:outputText value="${index + 1}" />
+									</p:column>
+									
+									<p:column headerText="#{text['description']}" colspan="2">
+										<h:outputText value="#{question.description}" />
+									</p:column>
+									
+									<p:column headerText="#{text['marked_alternative']}" colspan="2" width="10%">
+										<h:outputText
+											value="#{challengeResponseMB.lettersMarked.get(index)}" />
+									</p:column>
+									
+									<p:ajax event="rowSelect" process="@parent"
+										update="composite:challenges_form:alternatives_data_table" 
+										oncomplete="PF('alternatives_wv').show();" />								
+								</p:dataTable>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:commandButton value="#{text['submit_response']}" update="composite:challenges_form"
+									oncomplete="PF('alternatives_wv').hide(); PF('questions_wv').hide();" ajax="false"
+									actionListener="#{challengeResponseMB.persistResponse()}" icon="fa fa-fw fa-send"/>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<p:ajax event="close" oncomplete="PF('alternatives_wv').hide()" />
+				</p:dialog>
+				
+				<p:dialog id="alternatives_dialog" widgetVar="alternatives_wv" closeOnEscape="true" closable="true" resizable="false"
+					responsive="true" hideEffect="puff" showEffect="puff" header="#{text['alternatives']}"
+					maximizable="true" minimizable="true" width="1280">
+					<p:panelGrid id="responses_pg">
+						<p:row>						
+							<p:column>
+								<p:dataTable id="alternatives_data_table" var="alternative" value="#{challengeResponseMB.selectedQuestion.alternatives}"
+									selection="#{challengeResponseMB.selectedAlternative}" rowKey="#{alternative.id}" selectionMode="single"
+									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
+									{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['no_records_found_message']}" paginator="true"
+									rows="10" currentPageReportTemplate="{currentPage} #{text['of_message']} {totalPages}">
+									
+									<f:facet name="header">
+										#{challengeResponseMB.selectedQuestion.description}
+									</f:facet>
+									
+									<p:column headerText="#{text['letter']}" width="5%">
+										<h:outputText value="#{alternative.letter}" />
+									</p:column>
+									
+									<p:column headerText="#{text['description']}">
+										<h:outputText value="#{alternative.description}" />
+									</p:column>
+									<p:ajax event="rowSelect" process="@this" />
+								</p:dataTable>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:commandButton value="#{text['answer']}" oncomplete="PF('alternatives_wv').hide()"
+									actionListener="#{challengeResponseMB.selectAlternative()}"
+									process="@this @parent" icon="fa fa-fw fa-send"
+									update="composite:challenges_form:questions_data_table
+									composite:growl" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:dialog>
+			</h:form>
+		</p:layoutUnit>
+	</composites:layouts>
+</h:body>
+</html>

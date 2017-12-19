@@ -6,8 +6,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
-import br.com.collegesmaster.model.business.InstituteBusiness;
-import br.com.collegesmaster.model.entities.institute.impl.InstituteImpl;
+import br.com.collegesmaster.model.institute.business.InstituteBusiness;
+import br.com.collegesmaster.model.institute.impl.InstituteImpl;
 import br.com.collegesmaster.rest.controllers.InstituteController;
 import br.com.collegesmaster.rest.controllers.util.CustomResponseBuilder;
 

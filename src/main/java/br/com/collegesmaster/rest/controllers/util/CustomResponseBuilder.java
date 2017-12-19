@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import br.com.collegesmaster.model.entities.model.Model;
+import br.com.collegesmaster.model.model.Model;
 
 public class CustomResponseBuilder {
 

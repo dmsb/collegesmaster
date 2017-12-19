@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composites="http://java.sun.com/jsf/composite/composites">
+
+<f:view locale="#{localeMB.locale}" />
+
+<h:head>
+	<title>#{text['collegesmaster']}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</h:head>
+<h:body>
+	<h:outputStylesheet name="css/default.css" />
+	<composites:layouts main_menu_mb="#{mainMenuMB}" id="composite">
+		<p:layoutUnit position="center" header="#{text['ranking']}" style="text-align:center">
+			<h:form id="ranking_form">
+				<p:dataTable id="disciplines_data_table" var="discipline" value="#{rankingMB.userDisciplines}"
+					selectionMode="single" selection="#{rankingMB.selectedDiscipline}" rowKey="#{discipline.id}"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
+					{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['no_records_found_message']}" paginator="true"
+					rows="10" currentPageReportTemplate="{currentPage} #{text['of_message']} {totalPages}">							
+					
+					<p:column headerText="#{text['title']}">
+						<h:outputText value="#{discipline.name}" />
+					</p:column>
+					
+					<p:column headerText="#{text['first_place']}">
+						<h:outputText value="#{rankingMB.bestPlaces.get(0)}" />					
+					</p:column>
+					
+					<p:column headerText="#{text['second_place']}">
+						<h:outputText value="#{rankingMB.bestPlaces.get(1)}" />					
+					</p:column>
+					
+					<p:column headerText="#{text['third_place']}">
+						<h:outputText value="#{rankingMB.bestPlaces.get(2)}" />					
+					</p:column>
+					
+					<p:ajax event="rowSelect" process="@parent" listener="#{rankingMB.loadRankingByDiscipline(discipline.id)}"
+						update="composite:challenges_form:challenges_data_table"
+						oncomplete="PF('ranking_dialog_wv').show();" />
+				</p:dataTable>
+			</h:form>
+			<h:form>
+				<p:dialog id="ranking_dialog" widgetVar="ranking_dialog_wv" closeOnEscape="true" 
+					closable="true" resizable="false" responsive="true" hideEffect="puff" showEffect="puff" 
+					header="#{text['ranking' += rankingMB.selectedDiscipline.name]}" maximizable="true" 
+					minimizable="true" width="1280">
+					
+					<p:dataTable id="ranking_data_table" var="user" value="#{rankingMB.usersInDiscipline}"
+						selectionMode="single" selection="#{rankingMB.selectedUser}" rowKey="#{user.id}"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
+						{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['no_records_found_message']}" paginator="true"
+						rows="10" currentPageReportTemplate="{currentPage} #{text['of_message']} {totalPages}">							
+						
+						<p:column headerText="#{text['title']}">
+							<h:outputText value="#{user.username}" />
+						</p:column>
+						
+						<p:column headerText="#{text['total_pontuation]']}">
+							<h:outputText value="#{rankingMB.totalPontuation}" />					
+						</p:column>
+					</p:dataTable>
+				</p:dialog>
+			</h:form>
+		</p:layoutUnit>
+	</composites:layouts>
+</h:body>

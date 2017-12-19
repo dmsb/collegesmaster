@@ -31,15 +31,14 @@
 	</context-param>
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>dot-luv</param-value>
+		<param-value>rocket</param-value>
 	</context-param>
 	
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-		<load-on-startup>10</load-on-startup>
 	</servlet>
-
+    
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
@@ -67,13 +66,16 @@
 			<url-pattern>/resources/*</url-pattern>
 			<url-pattern>../resources/i18n/*</url-pattern>
 		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
 	</security-constraint>
 	
 	<!-- Professor Security Constraint -->
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>professor resources</web-resource-name>
-			<url-pattern>/pages/users/professor/*</url-pattern>
+			<url-pattern>/pages/professor/*</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 			<http-method>PUT</http-method>
@@ -93,7 +95,7 @@
 		<web-resource-collection>
 			<web-resource-name>student resources</web-resource-name>
 			<description />
-			<url-pattern>/pages/users/student/*</url-pattern>
+			<url-pattern>/pages/student/*</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 			<http-method>PUT</http-method>
@@ -115,6 +117,11 @@
 			<web-resource-name>administrator resources</web-resource-name>
 			<description />
 			<url-pattern>/pages/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+			<http-method>OPTION</http-method>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>ADMINISTRATOR</role-name>
@@ -129,7 +136,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>In commom resources</web-resource-name>
-			<url-pattern>/pages/users/edit_user.xhtml</url-pattern>
+			<url-pattern>/pages/edit_user.xhtml</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 			<http-method>PUT</http-method>

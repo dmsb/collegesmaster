@@ -5,14 +5,14 @@ import java.util.List;
 
 import org.junit.Assert;
 
-import br.com.collegesmaster.model.entities.alternative.impl.AlternativeImpl;
-import br.com.collegesmaster.model.entities.challenge.impl.ChallengeImpl;
-import br.com.collegesmaster.model.entities.challengeresponse.ChallengeResponse;
-import br.com.collegesmaster.model.entities.challengeresponse.impl.ChallengeResponseImpl;
-import br.com.collegesmaster.model.entities.enums.Letter;
-import br.com.collegesmaster.model.entities.question.impl.QuestionImpl;
-import br.com.collegesmaster.model.entities.questionresponse.QuestionResponse;
-import br.com.collegesmaster.model.entities.questionresponse.impl.QuestionResponseImpl;
+import br.com.collegesmaster.model.challenge.enums.Letter;
+import br.com.collegesmaster.model.challenge.impl.AlternativeImpl;
+import br.com.collegesmaster.model.challenge.impl.ChallengeImpl;
+import br.com.collegesmaster.model.challenge.impl.QuestionImpl;
+import br.com.collegesmaster.model.challengeresponse.ChallengeResponse;
+import br.com.collegesmaster.model.challengeresponse.QuestionResponse;
+import br.com.collegesmaster.model.challengeresponse.impl.ChallengeResponseImpl;
+import br.com.collegesmaster.model.challengeresponse.impl.QuestionResponseImpl;
 import net.thucydides.core.annotations.Step;
 
 public class ReplyAChallengeSteps {

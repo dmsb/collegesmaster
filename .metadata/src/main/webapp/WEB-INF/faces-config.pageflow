@@ -1,2 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14967456317620" configfile="/collegesmaster/src/main/webapp/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14967456317620" configfile="/collegesmaster/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="pages/login.xhtml" x="368" y="12" id="pf151338315533515" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15136213979040 pf15136214888991" path="/pages/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="resources/composites/layouts.xhtml" x="320" y="216" id="pf151338422585236" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf15134239054056 pf15134239054057 pf15134239054058 pf15134239054059 pf151342393408516" path="/resources/composites/layouts.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/professor/create_challenge.xhtml" x="531" y="84" id="pf151342390540511" referenceLink="//@navigationRule.1/@navigationCase.3/@toViewId|" inlinks="pf15134239054059 pf15136214888991" path="/pages/professor/create_challenge.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/student/reply_challenges.xhtml" x="156" y="77" id="pf151342390540512" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf15134239054056 pf15136213979040" path="/pages/student/reply_challenges.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/student/completed_challenges.xhtml" x="300" y="360" id="pf151342390540513" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf15134239054057" path="/pages/student/completed_challenges.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/professor/created_challenges.xhtml" x="576" y="216" id="pf151342390540614" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf15134239054058" path="/pages/professor/created_challenges.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/edit_user.xhtml" x="96" y="216" id="pf151342393408517" referenceLink="//@navigationRule.1/@navigationCase.4/@toViewId|" inlinks="pf151342393408516" path="/pages/edit_user.xhtml"/>
+  <links id="pf15134239054056" target="pf151342390540512" source="pf151338422585236" outcome="reply_challenge" redirect="true"/>
+  <links id="pf15134239054057" target="pf151342390540513" source="pf151338422585236" outcome="completed_challenges" redirect="true"/>
+  <links id="pf15134239054058" target="pf151342390540614" source="pf151338422585236" outcome="created_challenges" redirect="true"/>
+  <links id="pf15134239054059" target="pf151342390540511" source="pf151338422585236" outcome="create_challenge" redirect="true"/>
+  <links id="pf151342393408516" target="pf151342393408517" source="pf151338422585236" outcome="edit_user" redirect="true"/>
+  <links id="pf15136213979040" target="pf151342390540512" source="pf151338315533515" outcome="student" redirect="true"/>
+  <links id="pf15136214888991" target="pf151342390540511" source="pf151338315533515" outcome="professor" redirect="true"/>
+</pageflow:Pageflow>

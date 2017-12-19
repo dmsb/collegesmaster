@@ -3,7 +3,7 @@ package br.com.collegesmaster.utils;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-import br.com.collegesmaster.model.entities.model.Model;
+import br.com.collegesmaster.model.model.Model;
 
 public abstract class FunctionUtils {
 
