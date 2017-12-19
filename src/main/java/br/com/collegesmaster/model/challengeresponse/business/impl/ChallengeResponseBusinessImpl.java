@@ -23,8 +23,8 @@ import javax.persistence.criteria.Root;
 import org.jboss.ejb3.annotation.SecurityDomain;
 import org.jboss.logging.Logger;
 
+import br.com.collegesmaster.exceptions.BusinessException;
 import br.com.collegesmaster.model.challenge.Challenge;
-import br.com.collegesmaster.model.challengeresponse.ChallengeResponse;
 import br.com.collegesmaster.model.challengeresponse.business.ChallengeResponseBusiness;
 import br.com.collegesmaster.model.challengeresponse.impl.ChallengeResponseImpl;
 import br.com.collegesmaster.model.challengeresponse.impl.ChallengeResponseImpl_;
@@ -54,30 +54,28 @@ public class ChallengeResponseBusinessImpl  implements ChallengeResponseBusiness
 	@Override
 	public Boolean create(final ChallengeResponseImpl response) {
 		if(response != null && response.getId() == null && response.getVersion() == null) {
-			
-			final Boolean wasResponded = wasRespondedByUser(response);
-
-			if(wasResponded) {
-				return FALSE;
-			} else {
+			final Boolean alrealdyRepliedByUser = alrealdyRepliedByUser(response);
+			if(Boolean.FALSE.equals(alrealdyRepliedByUser)) {
 				em.persist(response);
+				return TRUE;
+			} else {
+				throw new BusinessException("already_replied_challenge_message");
 			}
-			return TRUE;
 		} else {
 			LOGGER.error("Entity not persisted, invalid arguments");
-			return FALSE;			
 		}
+		return FALSE;
 	}
-
-	private Boolean wasRespondedByUser(final ChallengeResponse response) {
-		final Root<ChallengeResponseImpl> challengeRoot = booleanResponseBuilder
-				.build(ChallengeResponseImpl.class);
-		final Predicate wasRespondedPredicate = 
-				cb.equal(challengeRoot.get(ChallengeResponseImpl_.owner), response.getOwner());
-		final Boolean wasResponded = booleanResponseBuilder.where(wasRespondedPredicate).execute();
-		return wasResponded;
+	
+	public Boolean alrealdyRepliedByUser(final ChallengeResponseImpl response) {
+		final Root<ChallengeResponseImpl> crRoot = booleanResponseBuilder.build(ChallengeResponseImpl.class);
+		final Predicate equalsUser = cb.equal(crRoot.get(ChallengeResponseImpl_.owner), response.getOwner());
+		final Predicate equalsTargetChallenge = cb.equal(crRoot.get(ChallengeResponseImpl_.targetChallenge), 
+				response.getTargetChallenge());
+		return booleanResponseBuilder.where(equalsUser, equalsTargetChallenge).execute();
+		
 	}
-
+	
 	@RolesAllowed({"STUDENT", "ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override

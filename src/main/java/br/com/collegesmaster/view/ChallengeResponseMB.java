@@ -125,7 +125,9 @@ public class ChallengeResponseMB implements Serializable {
 
 	private void setMarkedLetter(final QuestionResponse questionResponse, final QuestionResponse response) {
 		final Integer questionIndex = selectedChallenge.getQuestions().indexOf(questionResponse.getTargetQuestion());
-		lettersMarked.set(questionIndex, response.getLetter().getLetter());
+		if(lettersMarked.get(questionIndex) != null) {
+			lettersMarked.set(questionIndex, response.getLetter().getLetter());
+		}
 	}
 
 	private Boolean existsAResponseForThisQuestion(final QuestionResponse questionResponse) {

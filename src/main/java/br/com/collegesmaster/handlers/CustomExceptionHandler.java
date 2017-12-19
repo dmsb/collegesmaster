@@ -1,6 +1,7 @@
 package br.com.collegesmaster.handlers;
 
 import java.util.Iterator;
+import java.util.stream.Stream;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.FacesException;
@@ -50,14 +51,27 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
             try {
                 final Throwable throwable = exceptionQueuedEventContext.getException();
                 LOGGER.error("Exception: " + throwable.getMessage());
-                if(throwable.getClass().isAssignableFrom(BusinessException.class)) {
-                	BusinessException be = (BusinessException) throwable;
-                	JsfUtils.addMessage(FacesMessage.SEVERITY_ERROR, be.getMessage());
-                }
-                JsfUtils.addMessage(FacesMessage.SEVERITY_ERROR, "unexpected_error_message");
+                final Throwable rootCause = findRootCause(throwable);
+                processMessage(rootCause);
             } finally {
                 queue.remove();
             }
         }
     }
+
+	private void processMessage(final Throwable throwable) {
+		if(throwable instanceof BusinessException) {
+			BusinessException be = (BusinessException) throwable;
+			JsfUtils.addMessage(FacesMessage.SEVERITY_WARN, be.getMessage());
+		} else {
+			JsfUtils.addMessage(FacesMessage.SEVERITY_ERROR, "unexpected_error_message");
+		}
+	}
+
+	private Throwable findRootCause(final Throwable throwable) {
+		return Stream.iterate(throwable, Throwable::getCause)
+			.filter(element -> element.getCause() == null)
+			.findFirst()
+			.orElse(null);
+	}
 }
