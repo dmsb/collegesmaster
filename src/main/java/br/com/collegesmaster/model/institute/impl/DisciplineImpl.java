@@ -48,7 +48,7 @@ public class DisciplineImpl extends ModelImpl implements Discipline {
     private Course course;
     
 	@NotAudited
-    @OneToMany(targetEntity = ChallengeImpl.class, cascade = ALL, fetch = LAZY,
+    @OneToMany(cascade = ALL, fetch = LAZY,
     		orphanRemoval = true, mappedBy = "discipline")
     private List<ChallengeImpl> challenges;
 	
@@ -101,18 +101,18 @@ public class DisciplineImpl extends ModelImpl implements Discipline {
 	@Override
 	public boolean equals(final Object objectToBeComparated) {			
 		
-		if(objectToBeComparated == this) {
-			return true;
-		}
-		
 		if(!(objectToBeComparated instanceof DisciplineImpl)) {
 			return false;
+		}
+		
+		if(objectToBeComparated == this) {
+			return true;
 		}
 		
 		final DisciplineImpl objectComparatedInstance = (DisciplineImpl) objectToBeComparated;
 		
 		return id == objectComparatedInstance.id && 
-				Objects.equals(name, objectComparatedInstance.name);
+				version.equals(objectComparatedInstance.version);
 	}
     
 	@Override

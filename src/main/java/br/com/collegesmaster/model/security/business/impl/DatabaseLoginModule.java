@@ -18,8 +18,7 @@ import org.jboss.security.auth.spi.DatabaseServerLoginModule;
 import com.google.common.base.Strings;
 
 import br.com.collegesmaster.model.security.business.AuthenticationBusiness;
-import br.com.collegesmaster.model.user.business.impl.PasswordEncoderWithSalt;
-import br.com.collegesmaster.model.user.impl.RoleImpl;
+import br.com.collegesmaster.model.security.impl.RoleImpl;
 import br.com.collegesmaster.utils.CdiHelper;
 
 public class DatabaseLoginModule extends DatabaseServerLoginModule {

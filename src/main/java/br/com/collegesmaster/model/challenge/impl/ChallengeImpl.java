@@ -26,8 +26,8 @@ import br.com.collegesmaster.model.challenge.Challenge;
 import br.com.collegesmaster.model.institute.Discipline;
 import br.com.collegesmaster.model.institute.impl.DisciplineImpl;
 import br.com.collegesmaster.model.model.impl.ModelImpl;
-import br.com.collegesmaster.model.user.User;
-import br.com.collegesmaster.model.user.impl.UserImpl;
+import br.com.collegesmaster.model.security.User;
+import br.com.collegesmaster.model.security.impl.UserImpl;
 
 @Entity
 @Table(name = "challenge")

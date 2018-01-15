@@ -6,8 +6,8 @@ import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
-import br.com.collegesmaster.model.security.entities.Credentials;
-import br.com.collegesmaster.model.user.impl.RoleImpl;
+import br.com.collegesmaster.model.security.Credentials;
+import br.com.collegesmaster.model.security.impl.RoleImpl;
 
 public interface AuthenticationBusiness {
 

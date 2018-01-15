@@ -7,7 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.model.user.User;
+import br.com.collegesmaster.model.security.User;
 import br.com.collegesmaster.qualifiers.AuthenticatedUser;
 import br.com.collegesmaster.view.enums.Page;
 

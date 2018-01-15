@@ -13,7 +13,7 @@ import br.com.collegesmaster.model.challenge.business.ChallengeBusiness;
 import br.com.collegesmaster.model.challenge.impl.ChallengeImpl;
 import br.com.collegesmaster.model.challengeresponse.business.ChallengeResponseBusiness;
 import br.com.collegesmaster.model.challengeresponse.impl.ChallengeResponseImpl;
-import br.com.collegesmaster.model.user.User;
+import br.com.collegesmaster.model.security.User;
 import br.com.collegesmaster.qualifiers.AuthenticatedUser;
 
 @Named("createdChallengesMB")

@@ -18,9 +18,9 @@ import org.junit.runners.MethodSorters;
 import br.com.collegesmaster.model.challenge.impl.ChallengeImpl;
 import br.com.collegesmaster.model.institute.impl.DisciplineImpl;
 import br.com.collegesmaster.model.institute.impl.InstituteImpl;
-import br.com.collegesmaster.model.user.User;
-import br.com.collegesmaster.model.user.business.impl.PasswordEncoderWithSalt;
-import br.com.collegesmaster.model.user.impl.UserImpl;
+import br.com.collegesmaster.model.security.User;
+import br.com.collegesmaster.model.security.business.impl.PasswordEncoderWithSalt;
+import br.com.collegesmaster.model.security.impl.UserImpl;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JUnitSelects extends JUnitConfiguration {

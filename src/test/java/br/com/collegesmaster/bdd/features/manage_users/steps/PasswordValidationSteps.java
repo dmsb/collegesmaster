@@ -2,9 +2,9 @@ package br.com.collegesmaster.bdd.features.manage_users.steps;
 
 import org.junit.Assert;
 
-import br.com.collegesmaster.model.user.User;
-import br.com.collegesmaster.model.user.constraints.PasswordValidator;
-import br.com.collegesmaster.model.user.impl.UserImpl;
+import br.com.collegesmaster.model.security.User;
+import br.com.collegesmaster.model.security.business.impl.PasswordValidator;
+import br.com.collegesmaster.model.security.impl.UserImpl;
 import net.thucydides.core.annotations.Step;
 
 public class PasswordValidationSteps {

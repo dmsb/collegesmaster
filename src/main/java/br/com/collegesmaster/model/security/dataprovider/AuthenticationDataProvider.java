@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.security.auth.login.LoginException;
 
-import br.com.collegesmaster.model.user.impl.RoleImpl;
+import br.com.collegesmaster.model.security.impl.RoleImpl;
 
 public interface AuthenticationDataProvider {
 

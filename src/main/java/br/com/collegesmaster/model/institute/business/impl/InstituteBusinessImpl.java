@@ -1,11 +1,8 @@
 package br.com.collegesmaster.model.institute.business.impl;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-import static javax.ejb.TransactionAttributeType.REQUIRED;
+import static javax.ejb.TransactionAttributeType.NEVER;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.security.PermitAll;
@@ -14,126 +11,59 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionManagement;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Selection;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
-import org.jboss.logging.Logger;
 
+import br.com.collegesmaster.model.generics.impl.GenericBusinessImpl;
 import br.com.collegesmaster.model.institute.business.InstituteBusiness;
+import br.com.collegesmaster.model.institute.dataprovider.InstituteDataProvider;
 import br.com.collegesmaster.model.institute.impl.InstituteImpl;
-import br.com.collegesmaster.model.institute.impl.InstituteImpl_;
-import br.com.collegesmaster.qualifiers.UserDatabase;
 
 @Stateless
 @TransactionManagement(CONTAINER)
 @RolesAllowed({"ADMINISTRATOR"})
 @SecurityDomain("collegesmasterSecurityDomain")
-public class InstituteBusinessImpl implements InstituteBusiness {
+public class InstituteBusinessImpl extends GenericBusinessImpl<InstituteImpl> implements InstituteBusiness {
 	
 	@Inject
-	private Logger LOGGER;
+	private InstituteDataProvider instituteDataProvider;
 	
-	@Inject @UserDatabase
-	private EntityManager em;
-	
-	@Inject
-	protected CriteriaBuilder cb;
-	
-	@TransactionAttribute(REQUIRED)
+	@TransactionAttribute(NEVER)
 	@Override
 	public Boolean create(final InstituteImpl institute) {
-		if(institute != null && institute.getId() == null && institute.getVersion() == null) {
-			em.persist(institute);
-			return TRUE;
-		} else {
-			LOGGER.warn("Entity not persisted, invalid arguments");
-			return FALSE;			
-		}
+		return super.create(institute);
 	}
 	
-	@TransactionAttribute(REQUIRED)
+	@TransactionAttribute(NEVER)
 	@Override
 	public InstituteImpl update(final InstituteImpl institute) {
-		if(institute != null && institute.getId() != null && institute.getVersion() != null) {
-			return em.merge(institute);
-		} else {
-			LOGGER.warn("Entity not persisted, invalid arguments");
-			return null;
-		}
+		return super.update(institute);
 	}
 	
-	@TransactionAttribute(REQUIRED)
+	@TransactionAttribute(NEVER)
 	@Override
 	public Boolean remove(final InstituteImpl institute) {
-		if(institute != null && institute.getId() != null && institute.getVersion() != null) {
-			em.remove(institute);				
-			return TRUE;
-		} else {
-			LOGGER.warn("Entity not removed, invalid arguments");
-			return FALSE;
-		}
+		return super.remove(institute);
 	}
 	
 	@PermitAll
-	@TransactionAttribute(REQUIRED)
+	@TransactionAttribute(NEVER)
 	@Override
 	public InstituteImpl findById(final Integer id) {
-		if(id != null) {
-			return em.find(InstituteImpl.class, id);			
-		} else {
-			LOGGER.warn("Cannot find entity, invalid arguments");
-			return null;
-		}
-	}
-	
-	@TransactionAttribute(REQUIRED)
-	@Override
-	public List<InstituteImpl> findAll() {
-		final CriteriaQuery<InstituteImpl> criteriaQuery = cb.createQuery(InstituteImpl.class);		
-		criteriaQuery.from(InstituteImpl.class);
-		
-		final TypedQuery<InstituteImpl> typedQuery = em.createQuery(criteriaQuery);		
-		
-		return typedQuery.getResultList();
+		return super.findById(InstituteImpl.class, id);
 	}
 	
 	@PermitAll
-	@TransactionAttribute(REQUIRED)
+	@TransactionAttribute(NEVER)
 	@Override
 	public List<InstituteImpl> findNames() {
-		
-		final CriteriaQuery<InstituteImpl> criteriaQuery = cb.createQuery(InstituteImpl.class);
-		
-		final Root<InstituteImpl> rootInstitute = criteriaQuery.from(InstituteImpl.class);
-		
-		final List<Selection<?>> selections = new ArrayList<>();
-		selections.add(rootInstitute.get(InstituteImpl_.id));		
-		selections.add(rootInstitute.get(InstituteImpl_.name));
-		selections.add(rootInstitute.get(InstituteImpl_.version));
-		criteriaQuery.multiselect(selections);
-
-		final TypedQuery<InstituteImpl> typedQuery = em.createQuery(criteriaQuery); 
-		
-		return typedQuery.getResultList();
+		return instituteDataProvider.findNames();
 	}
 	
 	@PermitAll
-	@TransactionAttribute(REQUIRED)
+	@TransactionAttribute(NEVER)
 	@Override
 	public List<InstituteImpl> findFetchingCourses() {
-		final CriteriaQuery<InstituteImpl> criteriaQuery = cb.createQuery(InstituteImpl.class);
-		final Root<InstituteImpl> instituteRoot = criteriaQuery.from(InstituteImpl.class);
-				
-		instituteRoot.fetch(InstituteImpl_.courses);
-		criteriaQuery.select(instituteRoot).distinct(true);
-		
-		final TypedQuery<InstituteImpl> typedQuery = em.createQuery(criteriaQuery);		
-		
-		return typedQuery.getResultList();
+		return instituteDataProvider.findFetchingCourses();
 	}
 }

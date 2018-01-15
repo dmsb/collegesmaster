@@ -20,11 +20,11 @@ import org.jboss.ejb3.annotation.SecurityDomain;
 import org.jboss.logging.Logger;
 import org.jboss.logging.Logger.Level;
 
+import br.com.collegesmaster.model.security.User;
 import br.com.collegesmaster.model.security.dataprovider.AuthenticationDataProvider;
-import br.com.collegesmaster.model.user.User;
-import br.com.collegesmaster.model.user.impl.RoleImpl;
-import br.com.collegesmaster.model.user.impl.UserImpl;
-import br.com.collegesmaster.model.user.impl.UserImpl_;
+import br.com.collegesmaster.model.security.impl.RoleImpl;
+import br.com.collegesmaster.model.security.impl.UserImpl;
+import br.com.collegesmaster.model.security.impl.UserImpl_;
 import br.com.collegesmaster.qualifiers.UserDatabase;
 
 @Stateless

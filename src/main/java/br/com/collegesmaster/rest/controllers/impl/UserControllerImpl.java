@@ -7,8 +7,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import br.com.collegesmaster.model.user.business.UserBusiness;
-import br.com.collegesmaster.model.user.impl.UserImpl;
+import br.com.collegesmaster.model.security.business.UserBusiness;
+import br.com.collegesmaster.model.security.impl.UserImpl;
 import br.com.collegesmaster.rest.controllers.UserController;
 
 @RequestScoped

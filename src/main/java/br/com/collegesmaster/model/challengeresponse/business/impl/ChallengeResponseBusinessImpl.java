@@ -28,14 +28,16 @@ import br.com.collegesmaster.model.challenge.Challenge;
 import br.com.collegesmaster.model.challengeresponse.business.ChallengeResponseBusiness;
 import br.com.collegesmaster.model.challengeresponse.impl.ChallengeResponseImpl;
 import br.com.collegesmaster.model.challengeresponse.impl.ChallengeResponseImpl_;
+import br.com.collegesmaster.model.generics.impl.GenericBusinessImpl;
 import br.com.collegesmaster.model.generics.producers.BooleanReponseFactory;
-import br.com.collegesmaster.model.user.User;
+import br.com.collegesmaster.model.security.User;
 import br.com.collegesmaster.qualifiers.UserDatabase;
 
 @Stateless
 @TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
-public class ChallengeResponseBusinessImpl  implements ChallengeResponseBusiness {
+public class ChallengeResponseBusinessImpl extends GenericBusinessImpl<ChallengeResponseImpl> 
+	implements ChallengeResponseBusiness {
 	
 	@Inject
 	private Logger LOGGER;
@@ -111,15 +113,6 @@ public class ChallengeResponseBusinessImpl  implements ChallengeResponseBusiness
 			LOGGER.warn("Cannot find entity, invalid arguments");
 			return null;
 		}
-	}
-	
-	@RolesAllowed({"ADMINISTRATOR"})
-	@TransactionAttribute(REQUIRED)
-	@Override
-	public List<ChallengeResponseImpl> findAll() {
-		final CriteriaQuery<ChallengeResponseImpl> criteriaQuery = cb.createQuery(ChallengeResponseImpl.class);
-		final TypedQuery<ChallengeResponseImpl> typedQuery = em.createQuery(criteriaQuery);
-		return typedQuery.getResultList();
 	}
 	
 	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})

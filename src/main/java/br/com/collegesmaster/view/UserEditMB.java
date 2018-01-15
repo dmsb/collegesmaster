@@ -11,9 +11,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.collegesmaster.model.user.User;
-import br.com.collegesmaster.model.user.business.UserBusiness;
-import br.com.collegesmaster.model.user.impl.UserImpl;
+import br.com.collegesmaster.model.security.User;
+import br.com.collegesmaster.model.security.business.UserBusiness;
+import br.com.collegesmaster.model.security.impl.UserImpl;
 import br.com.collegesmaster.qualifiers.AuthenticatedUser;
 
 @Named("userEditMB")

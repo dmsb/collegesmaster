@@ -69,11 +69,11 @@
 	<role name='STUDENT' version='1498780800000' />
 	<role name='ADMINISTRATOR' version='1498780800000' />
 	
-	<user_role userFK='1' roleFK='1' />
-	<user_role userFK='1' roleFK='2' />
-	<user_role userFK='2' roleFK='1' />
-	<user_role userFK='3' roleFK='3' />
-	<user_role userFK='4' roleFK='2' />
+	<user_has_roles userFK='1' roleFK='1' />
+	<user_has_roles userFK='1' roleFK='2' />
+	<user_has_roles userFK='2' roleFK='1' />
+	<user_has_roles userFK='3' roleFK='3' />
+	<user_has_roles userFK='4' roleFK='2' />
 
 	<challenge title='Challenge 1' disciplineFK='4' userFK='1' version='1498780800000' />
 	<challenge title='Challenge 2' disciplineFK='1' userFK='3' version='1498780800000' />

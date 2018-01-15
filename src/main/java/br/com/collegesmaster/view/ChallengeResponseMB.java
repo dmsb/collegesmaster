@@ -31,7 +31,7 @@ import br.com.collegesmaster.model.institute.Course;
 import br.com.collegesmaster.model.institute.Discipline;
 import br.com.collegesmaster.model.institute.business.DisciplineBusiness;
 import br.com.collegesmaster.model.institute.impl.DisciplineImpl;
-import br.com.collegesmaster.model.user.User;
+import br.com.collegesmaster.model.security.User;
 import br.com.collegesmaster.qualifiers.AuthenticatedUser;
 
 @Named("challengeResponseMB")

@@ -51,14 +51,14 @@
 					header="#{text['ranking' += rankingMB.selectedDiscipline.name]}" maximizable="true" 
 					minimizable="true" width="1280">
 					
-					<p:dataTable id="ranking_data_table" var="user" value="#{rankingMB.usersInDiscipline}"
-						selectionMode="single" selection="#{rankingMB.selectedUser}" rowKey="#{user.id}"
+					<p:dataTable id="ranking_data_table" var="student" value="#{rankingMB.disciplineStudents}"
+						selectionMode="single" selection="#{rankingMB.selectedStudent}" rowKey="#{user.id}"
 						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
 						{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['no_records_found_message']}" paginator="true"
 						rows="10" currentPageReportTemplate="{currentPage} #{text['of_message']} {totalPages}">							
 						
 						<p:column headerText="#{text['title']}">
-							<h:outputText value="#{user.username}" />
+							<h:outputText value="#{student.username}" />
 						</p:column>
 						
 						<p:column headerText="#{text['total_pontuation]']}">

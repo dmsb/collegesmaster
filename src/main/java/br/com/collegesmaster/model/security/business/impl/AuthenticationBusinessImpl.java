@@ -1,5 +1,6 @@
 package br.com.collegesmaster.model.security.business.impl;
 
+import static javax.ejb.TransactionAttributeType.NEVER;
 import static javax.ejb.TransactionAttributeType.NOT_SUPPORTED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
@@ -17,10 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.jboss.ejb3.annotation.SecurityDomain;
 import org.jboss.logging.Logger;
 
+import br.com.collegesmaster.model.security.Credentials;
 import br.com.collegesmaster.model.security.business.AuthenticationBusiness;
 import br.com.collegesmaster.model.security.dataprovider.AuthenticationDataProvider;
-import br.com.collegesmaster.model.security.entities.Credentials;
-import br.com.collegesmaster.model.user.impl.RoleImpl;
+import br.com.collegesmaster.model.security.impl.RoleImpl;
 import br.com.collegesmaster.view.enums.Page;
 
 @Stateless
@@ -35,7 +36,7 @@ public class AuthenticationBusinessImpl implements AuthenticationBusiness {
 	private AuthenticationDataProvider authenticationDataProvider;
 	
 	@PermitAll
-	@TransactionAttribute(NOT_SUPPORTED)
+	@TransactionAttribute(NEVER)
 	@Override
 	public String processLoginServletRequest(final Credentials credentials, 
 			final HttpServletRequest loginRequest) {
@@ -56,7 +57,7 @@ public class AuthenticationBusinessImpl implements AuthenticationBusiness {
 	}
 	
 	@PermitAll
-	@TransactionAttribute(NOT_SUPPORTED)
+	@TransactionAttribute(NEVER)
 	@Override
 	public void checkIfExistsALoggedUser(final HttpServletRequest loginRequest) throws ServletException {
 		if (loginRequest.getUserPrincipal() != null) {

@@ -12,8 +12,8 @@ import javax.ws.rs.core.Response.Status;
 
 import org.jboss.logging.Logger;
 
-import br.com.collegesmaster.model.user.User;
-import br.com.collegesmaster.model.user.business.UserBusiness;
+import br.com.collegesmaster.model.security.User;
+import br.com.collegesmaster.model.security.business.UserBusiness;
 import br.com.collegesmaster.rest.security.controller.AuthenticationController;
 
 @RequestScoped

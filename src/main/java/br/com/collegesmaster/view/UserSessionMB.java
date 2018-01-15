@@ -13,11 +13,11 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.collegesmaster.model.security.Credentials;
 import br.com.collegesmaster.model.security.business.AuthenticationBusiness;
-import br.com.collegesmaster.model.security.entities.Credentials;
-import br.com.collegesmaster.model.security.entities.impl.CredentialsImpl;
-import br.com.collegesmaster.model.user.business.UserBusiness;
-import br.com.collegesmaster.model.user.impl.UserImpl;
+import br.com.collegesmaster.model.security.business.UserBusiness;
+import br.com.collegesmaster.model.security.impl.CredentialsImpl;
+import br.com.collegesmaster.model.security.impl.UserImpl;
 import br.com.collegesmaster.qualifiers.AuthenticatedUser;
 
 @Named("userSessionMB")

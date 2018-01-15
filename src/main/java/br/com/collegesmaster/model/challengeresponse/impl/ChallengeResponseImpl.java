@@ -30,8 +30,8 @@ import br.com.collegesmaster.model.challenge.impl.ChallengeImpl;
 import br.com.collegesmaster.model.challengeresponse.ChallengeResponse;
 import br.com.collegesmaster.model.challengeresponse.QuestionResponse;
 import br.com.collegesmaster.model.model.impl.ModelImpl;
-import br.com.collegesmaster.model.user.User;
-import br.com.collegesmaster.model.user.impl.UserImpl;
+import br.com.collegesmaster.model.security.User;
+import br.com.collegesmaster.model.security.impl.UserImpl;
 
 @Entity
 @Table(name = "challenge_response",

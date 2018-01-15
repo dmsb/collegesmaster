@@ -8,7 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import br.com.collegesmaster.model.user.impl.UserImpl;
+import br.com.collegesmaster.model.security.impl.UserImpl;
 
 @Path("/users")
 @Produces(APPLICATION_JSON)

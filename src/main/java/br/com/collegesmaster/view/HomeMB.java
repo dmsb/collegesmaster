@@ -23,13 +23,13 @@ import br.com.collegesmaster.model.institute.business.CourseBusiness;
 import br.com.collegesmaster.model.institute.business.InstituteBusiness;
 import br.com.collegesmaster.model.institute.impl.CourseImpl;
 import br.com.collegesmaster.model.institute.impl.InstituteImpl;
-import br.com.collegesmaster.model.user.Role;
-import br.com.collegesmaster.model.user.User;
-import br.com.collegesmaster.model.user.business.RoleBusiness;
-import br.com.collegesmaster.model.user.business.UserBusiness;
-import br.com.collegesmaster.model.user.impl.GeneralInfoImpl;
-import br.com.collegesmaster.model.user.impl.RoleImpl;
-import br.com.collegesmaster.model.user.impl.UserImpl;
+import br.com.collegesmaster.model.security.Role;
+import br.com.collegesmaster.model.security.User;
+import br.com.collegesmaster.model.security.business.RoleBusiness;
+import br.com.collegesmaster.model.security.business.UserBusiness;
+import br.com.collegesmaster.model.security.impl.GeneralInfoImpl;
+import br.com.collegesmaster.model.security.impl.RoleImpl;
+import br.com.collegesmaster.model.security.impl.UserImpl;
 
 @Named("homeMB")
 @ViewScoped

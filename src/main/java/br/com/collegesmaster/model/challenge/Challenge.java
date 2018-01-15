@@ -8,7 +8,7 @@ import br.com.collegesmaster.model.challenge.impl.ChallengeImpl;
 import br.com.collegesmaster.model.challenge.impl.QuestionImpl;
 import br.com.collegesmaster.model.institute.Discipline;
 import br.com.collegesmaster.model.model.Model;
-import br.com.collegesmaster.model.user.User;
+import br.com.collegesmaster.model.security.User;
 
 @JsonDeserialize(as = ChallengeImpl.class)
 public interface Challenge extends Model {

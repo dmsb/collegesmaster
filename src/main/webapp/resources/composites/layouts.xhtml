@@ -30,10 +30,6 @@
 			<h:form id="menu_form">
 				<p:menu>
 					<p:submenu label="#{text['user_menu']}">
-						<p:menuitem value="#{text['ranking']}"
-							rendered="false"	
-							action="#{cc.attrs.main_menu_mb.toPage('ranking')}"
-							icon="fa fa-fw fa-tasks" />
 						<p:menuitem value="#{text['reply_challenges']}"
 							rendered="#{cc.attrs.main_menu_mb.loggedUser.isUserInAnyRoles(['STUDENT', 'ADMINISTRATOR'])}"
 							action="#{cc.attrs.main_menu_mb.toPage('reply_challenges')}"
@@ -50,6 +46,10 @@
 							rendered="#{cc.attrs.main_menu_mb.loggedUser.isUserInAnyRoles(['PROFESSOR', 'ADMINISTRATOR'])}"
 							action="#{cc.attrs.main_menu_mb.toPage('created_challenges')}"
 							icon="fa fa-fw fa-list" />
+						<p:menuitem value="#{text['ranking']}"
+							rendered="#{cc.attrs.main_menu_mb.loggedUser.isUserInAnyRoles(['PROFESSOR', 'STUDENT', 'ADMINISTRATOR'])}"
+							action="#{cc.attrs.main_menu_mb.toPage('ranking')}"
+							icon="fa fa-fw fa-tasks" />
 						<p:menuitem value="#{text['edit_user']}"
 							action="#{cc.attrs.main_menu_mb.toPage('edit_user')}"
 							icon="fa fa-fw fa-edit" />

@@ -10,7 +10,7 @@ import javax.inject.Named;
 
 import br.com.collegesmaster.model.challengeresponse.business.ChallengeResponseBusiness;
 import br.com.collegesmaster.model.challengeresponse.impl.ChallengeResponseImpl;
-import br.com.collegesmaster.model.user.User;
+import br.com.collegesmaster.model.security.User;
 import br.com.collegesmaster.qualifiers.AuthenticatedUser;
 
 @Named("completedChallengesMB")
