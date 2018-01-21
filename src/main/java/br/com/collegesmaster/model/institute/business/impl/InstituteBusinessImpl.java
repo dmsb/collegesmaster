@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model.institute.business.impl;
 
-import static javax.ejb.TransactionAttributeType.NEVER;
+import static javax.ejb.TransactionAttributeType.REQUIRED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.List;
@@ -28,40 +28,40 @@ public class InstituteBusinessImpl extends GenericBusinessImpl<InstituteImpl> im
 	@Inject
 	private InstituteDataProvider instituteDataProvider;
 	
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean create(final InstituteImpl institute) {
 		return super.create(institute);
 	}
 	
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public InstituteImpl update(final InstituteImpl institute) {
 		return super.update(institute);
 	}
 	
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean remove(final InstituteImpl institute) {
 		return super.remove(institute);
 	}
 	
 	@PermitAll
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public InstituteImpl findById(final Integer id) {
 		return super.findById(InstituteImpl.class, id);
 	}
 	
 	@PermitAll
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public List<InstituteImpl> findNames() {
 		return instituteDataProvider.findNames();
 	}
 	
 	@PermitAll
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public List<InstituteImpl> findFetchingCourses() {
 		return instituteDataProvider.findFetchingCourses();

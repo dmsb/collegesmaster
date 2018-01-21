@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.collegesmaster.model.model.impl.ModelImpl;
 
-public interface GenericBusiness <T extends ModelImpl> {
+public interface GenericCRUD <T extends ModelImpl> {
 	
 	Boolean create(T model);
 	

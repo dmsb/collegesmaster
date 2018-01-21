@@ -1,7 +1,7 @@
 package br.com.collegesmaster.model.security.business.impl;
 
 import static javax.ejb.TransactionAttributeType.NEVER;
-import static javax.ejb.TransactionAttributeType.NOT_SUPPORTED;
+import static javax.ejb.TransactionAttributeType.REQUIRED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.List;
@@ -35,8 +35,8 @@ public class AuthenticationBusinessImpl implements AuthenticationBusiness {
 	@Inject
 	private AuthenticationDataProvider authenticationDataProvider;
 	
-	@PermitAll
 	@TransactionAttribute(NEVER)
+	@PermitAll
 	@Override
 	public String processLoginServletRequest(final Credentials credentials, 
 			final HttpServletRequest loginRequest) {
@@ -56,8 +56,8 @@ public class AuthenticationBusinessImpl implements AuthenticationBusiness {
 		return null;
 	}
 	
-	@PermitAll
 	@TransactionAttribute(NEVER)
+	@PermitAll
 	@Override
 	public void checkIfExistsALoggedUser(final HttpServletRequest loginRequest) throws ServletException {
 		if (loginRequest.getUserPrincipal() != null) {
@@ -65,21 +65,21 @@ public class AuthenticationBusinessImpl implements AuthenticationBusiness {
 		}
 	}
 	
-	@TransactionAttribute(NOT_SUPPORTED)
+	@TransactionAttribute(REQUIRED)
 	@PermitAll
 	@Override
 	public String findUserSalt(final String username) throws LoginException {
 		return authenticationDataProvider.findUserSalt(username);
 	}
 	
-	@TransactionAttribute(NOT_SUPPORTED)
+	@TransactionAttribute(REQUIRED)
 	@PermitAll
 	@Override
 	public String findUserPassword(final String username) throws LoginException {
 		return authenticationDataProvider.findUserPassword(username);
 	}
 	
-	@TransactionAttribute(NOT_SUPPORTED)
+	@TransactionAttribute(REQUIRED)
 	@PermitAll
 	@Override
 	public List<RoleImpl> findUserRoles(final String username) throws LoginException {

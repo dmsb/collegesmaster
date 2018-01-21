@@ -1,12 +1,8 @@
 package br.com.collegesmaster.model.security.dataprovider.impl;
 
-import static javax.ejb.TransactionManagementType.CONTAINER;
-
 import java.util.List;
 
-import javax.annotation.security.PermitAll;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionManagement;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -16,7 +12,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.security.auth.login.LoginException;
 
-import org.jboss.ejb3.annotation.SecurityDomain;
 import org.jboss.logging.Logger;
 import org.jboss.logging.Logger.Level;
 
@@ -27,9 +22,7 @@ import br.com.collegesmaster.model.security.impl.UserImpl;
 import br.com.collegesmaster.model.security.impl.UserImpl_;
 import br.com.collegesmaster.qualifiers.UserDatabase;
 
-@Stateless
-@TransactionManagement(CONTAINER)
-@SecurityDomain("collegesmasterSecurityDomain")
+@Dependent
 public class AuthenticationDataProviderImpl implements AuthenticationDataProvider {
 
 	@Inject
@@ -45,7 +38,6 @@ public class AuthenticationDataProviderImpl implements AuthenticationDataProvide
 	private StringBuilder queryBuilder;
 	
 	@Override
-	@PermitAll
 	public String findUserSalt(final String username) throws LoginException {
 		
 		queryBuilder = new StringBuilder();
@@ -68,7 +60,6 @@ public class AuthenticationDataProviderImpl implements AuthenticationDataProvide
 	}
 	
 	@Override
-	@PermitAll
 	public String findUserPassword(final String username) throws LoginException {
 		
 		queryBuilder = new StringBuilder();
@@ -94,7 +85,6 @@ public class AuthenticationDataProviderImpl implements AuthenticationDataProvide
 	}
 	
 	@Override
-	@PermitAll
 	public List<RoleImpl> findUserRoles(final String username) throws LoginException {
 		
 		final CriteriaQuery<UserImpl> criteriaQuery = cb.createQuery(UserImpl.class);		

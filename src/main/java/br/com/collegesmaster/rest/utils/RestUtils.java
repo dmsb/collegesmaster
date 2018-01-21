@@ -6,11 +6,7 @@ import java.util.Map;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
 
-public class RestUtils {
-	
-	private RestUtils() {
-		
-	}
+public abstract class RestUtils {
 
 	public static Map<String, Object> buildPredicatesFromRequest(
 			final MultivaluedMap<String, String> queryParameters) {

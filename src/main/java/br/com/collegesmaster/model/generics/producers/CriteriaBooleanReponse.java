@@ -23,7 +23,7 @@ import br.com.collegesmaster.qualifiers.UserDatabase;
 
 @Stateless
 @TransactionManagement(CONTAINER)
-public class BooleanReponseFactory<T extends Model> {
+public class CriteriaBooleanReponse<T extends Model> {
 	
 	@Inject
 	private Logger LOGGER;
@@ -51,7 +51,7 @@ public class BooleanReponseFactory<T extends Model> {
 		return root;
 	}
 	
-	public BooleanReponseFactory<T> where(final Predicate... predicates) {
+	public CriteriaBooleanReponse<T> where(final Predicate... predicates) {
 		subquery.where(predicates);
 		final Predicate exists = cb.exists(subquery);
 		booleanQuery.where(exists);

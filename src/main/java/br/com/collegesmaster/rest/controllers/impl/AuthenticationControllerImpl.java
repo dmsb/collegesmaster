@@ -1,4 +1,4 @@
-package br.com.collegesmaster.rest.security.controller.impl;
+package br.com.collegesmaster.rest.controllers.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -14,7 +14,7 @@ import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.model.security.User;
 import br.com.collegesmaster.model.security.business.UserBusiness;
-import br.com.collegesmaster.rest.security.controller.AuthenticationController;
+import br.com.collegesmaster.rest.controllers.AuthenticationController;
 
 @RequestScoped
 public class AuthenticationControllerImpl implements AuthenticationController {

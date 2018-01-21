@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model.security.business.impl;
 
-import static javax.ejb.TransactionAttributeType.NEVER;
+import static javax.ejb.TransactionAttributeType.REQUIRED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import javax.annotation.security.PermitAll;
@@ -32,14 +32,14 @@ public class UserBusinessImpl extends GenericBusinessImpl<UserImpl> implements U
 	private Event<UserImpl> userUpdateEvent;
 
 	@PermitAll
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean create(final UserImpl user) {
 		return super.create(user);
 	}
 
 	@RolesAllowed({ "STUDENT", "PROFESSOR", "ADMINISTATOR" })
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public UserImpl update(final UserImpl user) {
 		final UserImpl savedUser = super.update(user);
@@ -53,22 +53,21 @@ public class UserBusinessImpl extends GenericBusinessImpl<UserImpl> implements U
 	}
 
 	@RolesAllowed({ "ADMINISTRATOR" })
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean remove(final UserImpl user) {
-		
 		return super.remove(user);
 	}
 
 	@RolesAllowed({ "STUDENT", "PROFESSOR", "ADMINISTATOR" })
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public UserImpl findById(final Integer id) {
 		return super.findById(UserImpl.class, id);
 	}
 	
 	@PermitAll
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean existsCpf(final String cpf) {
 		final String crudeCpfToBeComparated = cpf.replaceAll("[^0-9]", "");
@@ -76,21 +75,21 @@ public class UserBusinessImpl extends GenericBusinessImpl<UserImpl> implements U
 	}
 
 	@PermitAll
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean existsUsername(final String username) {
 		return userDataProvider.existsUsername(username);
 	}
 
 	@PermitAll
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean existsEmail(final String email) {
 		return userDataProvider.existsEmail(email);
 	}
 
 	@PermitAll
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public UserImpl findByUsername(final String username) {
 		return userDataProvider.findByUsername(username);

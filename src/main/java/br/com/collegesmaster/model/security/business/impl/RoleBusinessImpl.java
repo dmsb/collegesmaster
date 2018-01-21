@@ -1,7 +1,7 @@
 package br.com.collegesmaster.model.security.business.impl;
 
 import static br.com.collegesmaster.rest.utils.RestUtils.buildPredicatesFromRequest;
-import static javax.ejb.TransactionAttributeType.NEVER;
+import static javax.ejb.TransactionAttributeType.REQUIRED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.List;
@@ -31,40 +31,40 @@ public class RoleBusinessImpl extends GenericBusinessImpl<RoleImpl> implements R
 	@Inject
 	private RoleDataProvider roleDataProvider;
 	
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean create(RoleImpl role) {
 		return super.create(role);
 	}
 
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public RoleImpl update(RoleImpl role) {
 		return super.update(role);
 	}
 
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean remove(RoleImpl role) {
 		return super.remove(role);
 	}
 	
 	@PermitAll
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public RoleImpl findById(Integer id) {
 		return super.findById(RoleImpl.class, id);
 	}
 	
 	@PermitAll
-	@TransactionAttribute(NEVER)	
+	@TransactionAttribute(REQUIRED)	
 	@Override
 	public List<RoleImpl> findAll() {
 		return roleDataProvider.findAllElegibleRoles();
 	}
 	
 	@PermitAll
-	@TransactionAttribute(NEVER)
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public List<RoleImpl> findAllByPredicates(final UriInfo requestInfo) {
 		final Map<String, Object> equalsPredicate = buildPredicatesFromRequest(requestInfo.getQueryParameters());		

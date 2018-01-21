@@ -4,23 +4,22 @@ import static java.lang.Boolean.FALSE;
 
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 
-import br.com.collegesmaster.model.generics.GenericBusiness;
+import br.com.collegesmaster.model.generics.GenericCRUD;
 import br.com.collegesmaster.model.generics.GenericDataProvider;
 import br.com.collegesmaster.model.model.impl.ModelImpl;
 
 @Dependent
-public abstract class GenericBusinessImpl<T extends ModelImpl> implements GenericBusiness<T> {
+public abstract class GenericBusinessImpl<T extends ModelImpl> implements GenericCRUD<T> {
 
 	@Inject
 	private Logger LOGGER;
 	
-	@EJB
+	@Inject
 	private GenericDataProvider<T> genericDataProvider;
 	
 	@Override

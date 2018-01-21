@@ -11,12 +11,12 @@ public class CdiHelper {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static <T> void programmaticInjection(Class<?> clazz, T injectionObject) throws NamingException {
-		InitialContext initialContext = new InitialContext();
-		Object lookup = initialContext.lookup("java:comp/BeanManager");
-		BeanManager beanManager = (BeanManager) lookup;
-		AnnotatedType annotatedType = beanManager.createAnnotatedType(clazz);
-		InjectionTarget injectionTarget = beanManager.createInjectionTarget(annotatedType);
-		CreationalContext creationalContext = beanManager.createCreationalContext(null);
+		final InitialContext initialContext = new InitialContext();
+		final Object lookup = initialContext.lookup("java:comp/BeanManager");
+		final BeanManager beanManager = (BeanManager) lookup;
+		final AnnotatedType annotatedType = beanManager.createAnnotatedType(clazz);
+		final InjectionTarget injectionTarget = beanManager.createInjectionTarget(annotatedType);
+		final CreationalContext creationalContext = beanManager.createCreationalContext(null);
 		injectionTarget.inject(injectionObject, creationalContext);
 		creationalContext.release();
 	}

@@ -2,11 +2,11 @@ package br.com.collegesmaster.model.institute.business;
 
 import java.util.List;
 
-import br.com.collegesmaster.model.generics.GenericBusiness;
+import br.com.collegesmaster.model.generics.GenericCRUD;
 import br.com.collegesmaster.model.institute.Course;
 import br.com.collegesmaster.model.institute.impl.DisciplineImpl;
 
-public interface DisciplineBusiness extends GenericBusiness<DisciplineImpl> {
+public interface DisciplineBusiness extends GenericCRUD<DisciplineImpl> {
 	
 	DisciplineImpl findById(final Integer id);
 	

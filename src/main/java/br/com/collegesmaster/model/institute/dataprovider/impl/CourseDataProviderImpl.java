@@ -1,15 +1,9 @@
 package br.com.collegesmaster.model.institute.dataprovider.impl;
 
-import static javax.ejb.TransactionAttributeType.REQUIRED;
-import static javax.ejb.TransactionManagementType.CONTAINER;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.security.PermitAll;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionManagement;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -19,17 +13,12 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
 
-import org.jboss.ejb3.annotation.SecurityDomain;
-
 import br.com.collegesmaster.model.institute.Institute;
 import br.com.collegesmaster.model.institute.dataprovider.CourseDataProvider;
 import br.com.collegesmaster.model.institute.impl.CourseImpl;
 import br.com.collegesmaster.qualifiers.UserDatabase;
 
-@Stateless
-@TransactionManagement(CONTAINER)
-@SecurityDomain("collegesmasterSecurityDomain")
-@PermitAll
+@Dependent
 public class CourseDataProviderImpl implements CourseDataProvider {
 	
 	@Inject @UserDatabase
@@ -38,7 +27,6 @@ public class CourseDataProviderImpl implements CourseDataProvider {
 	@Inject
 	protected CriteriaBuilder cb;
 
-	@TransactionAttribute(REQUIRED)
 	@Override
 	public List<CourseImpl> findNamesByInstitute(Institute institute) {
 
@@ -60,5 +48,4 @@ public class CourseDataProviderImpl implements CourseDataProvider {
 		
 		return result;
 	}
-
 }

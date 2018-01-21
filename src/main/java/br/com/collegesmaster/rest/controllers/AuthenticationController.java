@@ -1,4 +1,4 @@
-package br.com.collegesmaster.rest.security.controller;
+package br.com.collegesmaster.rest.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
