@@ -32,19 +32,19 @@ public class CourseBusinessImpl extends GenericBusinessImpl<CourseImpl> implemen
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean create(CourseImpl course) {
-		return super.create(course);
+		return super.genericCreate(course);
 	}
 
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public CourseImpl update(CourseImpl course) {
-		return super.update(course);
+		return super.genericUpdate(course);
 	}
 
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean remove(CourseImpl course) {
-		return super.remove(course);
+		return super.genericRemove(course);
 	}
 
 	@PermitAll

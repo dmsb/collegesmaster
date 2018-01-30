@@ -2,6 +2,7 @@ package br.com.collegesmaster.model.institute.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
 import java.util.List;
@@ -13,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -32,6 +35,8 @@ import br.com.collegesmaster.model.model.impl.ModelImpl;
 @Table(name = "discipline")
 @Access(FIELD)
 @Audited
+@NamedEntityGraph(name = "graph.discipline.challenges", 
+	attributeNodes = @NamedAttributeNode("challenges"))
 public class DisciplineImpl extends ModelImpl implements Discipline {
 
     private static final long serialVersionUID = -8467860341227715787L;
@@ -42,16 +47,16 @@ public class DisciplineImpl extends ModelImpl implements Discipline {
 	
 	@JsonIgnore
     @NotNull
-    @ManyToOne(targetEntity = CourseImpl.class, optional = false, fetch = LAZY)
+    @ManyToOne(targetEntity = CourseImpl.class, optional = false, fetch = EAGER)
     @JoinColumn(name = "courseFK", referencedColumnName = "id",
     	foreignKey = @ForeignKey(name = "DISCIPLINE_courseFK"))
     private Course course;
-    
+	
 	@NotAudited
     @OneToMany(cascade = ALL, fetch = LAZY,
     		orphanRemoval = true, mappedBy = "discipline")
     private List<ChallengeImpl> challenges;
-	
+    
     public DisciplineImpl() {
     	
 	}
@@ -60,12 +65,6 @@ public class DisciplineImpl extends ModelImpl implements Discipline {
     	this.id = id;
     	this.name = name;
     	this.version = version;
-    }
-    
-    public DisciplineImpl(Integer id, String name, List<ChallengeImpl> challenges) {
-    	this.id = id;
-    	this.name = name;    	
-    	this.challenges = challenges;
     }
 	
 	@Override
@@ -87,8 +86,8 @@ public class DisciplineImpl extends ModelImpl implements Discipline {
 	public void setName(String name) {
         this.name = name;
     }
-    
-    @Override
+	
+	@Override
 	public List<ChallengeImpl> getChallenges() {
 		return challenges;
 	}
@@ -97,22 +96,22 @@ public class DisciplineImpl extends ModelImpl implements Discipline {
 	public void setChallenges(List<ChallengeImpl> challenges) {
 		this.challenges = challenges;
 	}
-	
+
 	@Override
 	public boolean equals(final Object objectToBeComparated) {			
+		
+		if(this == objectToBeComparated) {
+			return true;
+		}
 		
 		if(!(objectToBeComparated instanceof DisciplineImpl)) {
 			return false;
 		}
 		
-		if(objectToBeComparated == this) {
-			return true;
-		}
-		
 		final DisciplineImpl objectComparatedInstance = (DisciplineImpl) objectToBeComparated;
 		
-		return id == objectComparatedInstance.id && 
-				version.equals(objectComparatedInstance.version);
+		return Objects.equals(this.id, objectComparatedInstance.id) && 
+				Objects.equals(version, objectComparatedInstance.version);
 	}
     
 	@Override

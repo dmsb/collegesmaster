@@ -86,7 +86,7 @@ public class QuestionResponseImpl extends ModelImpl implements QuestionResponse 
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 		
-		if(objectToBeComparated == this) {
+		if(this == objectToBeComparated) {
 			return true;
 		}
 		
@@ -96,7 +96,8 @@ public class QuestionResponseImpl extends ModelImpl implements QuestionResponse 
 		
 		final QuestionResponseImpl objectComparatedInstance = (QuestionResponseImpl) objectToBeComparated;
 		
-		return id == objectComparatedInstance.id;
+		return Objects.equals(this.id, objectComparatedInstance.id) &&
+				Objects.equals(this.version, objectComparatedInstance.version);
 	}
 	
 	@Override

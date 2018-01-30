@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import org.jboss.ejb3.annotation.SecurityDomain;
 
 import br.com.collegesmaster.model.generics.impl.GenericBusinessImpl;
+import br.com.collegesmaster.model.institute.Institute;
 import br.com.collegesmaster.model.institute.business.InstituteBusiness;
 import br.com.collegesmaster.model.institute.dataprovider.InstituteDataProvider;
 import br.com.collegesmaster.model.institute.impl.InstituteImpl;
@@ -31,25 +32,25 @@ public class InstituteBusinessImpl extends GenericBusinessImpl<InstituteImpl> im
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean create(final InstituteImpl institute) {
-		return super.create(institute);
+		return super.genericCreate(institute);
 	}
 	
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public InstituteImpl update(final InstituteImpl institute) {
-		return super.update(institute);
+		return super.genericUpdate(institute);
 	}
 	
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean remove(final InstituteImpl institute) {
-		return super.remove(institute);
+		return super.genericRemove(institute);
 	}
 	
 	@PermitAll
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public InstituteImpl findById(final Integer id) {
+	public Institute findById(final Integer id) {
 		return super.findById(InstituteImpl.class, id);
 	}
 	

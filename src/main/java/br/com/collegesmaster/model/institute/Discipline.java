@@ -19,8 +19,8 @@ public interface Discipline extends Model {
 
 	void setName(String name);
 
-	List<ChallengeImpl> getChallenges();
-
 	void setChallenges(List<ChallengeImpl> challenges);
+
+	List<ChallengeImpl> getChallenges();
 
 }

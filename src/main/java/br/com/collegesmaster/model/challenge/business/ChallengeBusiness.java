@@ -10,7 +10,7 @@ import br.com.collegesmaster.model.security.User;
 
 public interface ChallengeBusiness extends GenericCRUD<ChallengeImpl> {
 	
-	ChallengeImpl findById(final Integer id);
+	Challenge findById(final Integer id);
 	
 	List<QuestionImpl> findQuestionsByChallenge(Challenge selectedChallenge);
 	

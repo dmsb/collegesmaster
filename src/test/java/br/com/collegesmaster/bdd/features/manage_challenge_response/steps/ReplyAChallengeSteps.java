@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.Assert;
 
+import br.com.collegesmaster.model.challenge.Challenge;
 import br.com.collegesmaster.model.challenge.enums.Letter;
 import br.com.collegesmaster.model.challenge.impl.AlternativeImpl;
 import br.com.collegesmaster.model.challenge.impl.ChallengeImpl;
@@ -51,8 +52,8 @@ public class ReplyAChallengeSteps {
 		return questionsResponse;
 	}
 
-	private ChallengeImpl buildChallenge(final List<QuestionImpl> questions) {
-		final ChallengeImpl targetChallenge = new ChallengeImpl();
+	private Challenge buildChallenge(final List<QuestionImpl> questions) {
+		final Challenge targetChallenge = new ChallengeImpl();
 		targetChallenge.setQuestions(questions);
 		return targetChallenge;
 	}

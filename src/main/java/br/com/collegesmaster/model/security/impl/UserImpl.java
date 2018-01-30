@@ -1,10 +1,10 @@
 package br.com.collegesmaster.model.security.impl;
 
 import static javax.persistence.AccessType.FIELD;
-import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -22,25 +22,31 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.br.CPF;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.collegesmaster.model.institute.Course;
 import br.com.collegesmaster.model.institute.impl.CourseImpl;
 import br.com.collegesmaster.model.model.impl.ModelImpl;
-import br.com.collegesmaster.model.security.GeneralInfo;
 import br.com.collegesmaster.model.security.User;
 import br.com.collegesmaster.model.security.business.impl.Password;
 import br.com.collegesmaster.model.security.business.impl.PasswordEncoderWithSalt;
 
 @Entity
 @Table(name = "user",
-	uniqueConstraints = @UniqueConstraint(columnNames = "username",  name = "UK_USER_username"))
+	uniqueConstraints = {
+			@UniqueConstraint(columnNames = "username",  name = "UK_USER_username"),
+			@UniqueConstraint(columnNames = "cpf",  name = "UK_GI_username"),
+			@UniqueConstraint(columnNames = "email",  name = "UK_GI_email")})
 @Access(FIELD)
 @Audited
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserImpl extends ModelImpl implements User {
 
     private static final long serialVersionUID = -7809703915845045860L;
@@ -62,16 +68,33 @@ public class UserImpl extends ModelImpl implements User {
     private String salt;
 	
     @NotNull
+	@CPF
+	@Column(name = "cpf", nullable = false, length = 11)	
+    private String cpf;
+		
+	@NotNull
+	@Email
+	@Column(name = "email", nullable = false, length = 50)
+    private String email;
+
+	@NotNull
+	@Size(max = 25)
+	@Column(name = "firstName", nullable = false, length = 25)
+    private String firstName;
+
+	@NotNull
+	@Size(max = 80)
+    @Column(name = "lastName", nullable = false, length = 80)
+    private String lastName;
+
+    @Column(name = "birthdate")
+    private LocalDate birthdate;
+    
+    @NotNull
     @ManyToOne(targetEntity = CourseImpl.class, fetch = EAGER, optional = false)
     @JoinColumn(name = "courseFK", referencedColumnName = "id", updatable = false,
     	foreignKey = @ForeignKey(name = "USER_courseFK"))
     private Course course;
-    
-    @Valid
-    @ManyToOne(targetEntity = GeneralInfoImpl.class, fetch = LAZY, optional = false, cascade = ALL)
-    @JoinColumn(name = "generalInfoFK", referencedColumnName = "id", updatable = false,
-		foreignKey = @ForeignKey(name = "USER_generalInfoFK"))
-	private GeneralInfo generalInfo;
     
     @ManyToMany(fetch = EAGER)
     @JoinTable(name="user_has_roles",
@@ -82,12 +105,6 @@ public class UserImpl extends ModelImpl implements User {
     private List<RoleImpl> roles;
     
     @PrePersist
-    @PreUpdate
-    private void prePersistUser() {
-    	encriptyPassword();
-    	parseCpfToCrude();
-    }
-    
     @Override
 	public void encriptyPassword() {
     	final PasswordEncoderWithSalt encoder = new PasswordEncoderWithSalt();
@@ -96,10 +113,11 @@ public class UserImpl extends ModelImpl implements User {
 		setPassword(encoder.generateHashedPassword(getPassword(), salt));
     }
     
+    @PreUpdate
     @Override
 	public void parseCpfToCrude() {
-		final String crudeCpf = getGeneralInfo().getCpf().replaceAll("[^0-9]", "");
-		getGeneralInfo().setCpf(crudeCpf);
+		final String crudeCpf = getCpf().replaceAll("[^0-9]", "");
+		setCpf(crudeCpf);
     }
 	
     @Override
@@ -121,14 +139,54 @@ public class UserImpl extends ModelImpl implements User {
 	}
 	
 	@Override
-	public GeneralInfo getGeneralInfo() {
-		return generalInfo;
+	public String getCpf() {
+        return cpf;
+    }
+
+	@Override
+	public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+	@Override
+	public String getEmail() {
+		return email;
 	}
 
 	@Override
-	public void setGeneralInfo(GeneralInfo generalInfo) {
-		this.generalInfo = generalInfo;
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
+	@Override
+	public String getFirstName() {
+		return firstName;
+	}
+
+	@Override
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	@Override
+	public String getLastName() {
+		return lastName;
+	}
+
+	@Override
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	@Override
+	public LocalDate getBirthdate() {
+		return birthdate;
+	}
+
+	@Override
+	public void setBirthdate(LocalDate birthdate) {
+		this.birthdate = birthdate;
+	}	
 
 	@Override
 	public String getSalt() {		
@@ -183,7 +241,7 @@ public class UserImpl extends ModelImpl implements User {
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 
-		if(objectToBeComparated == this) {
+		if(this == objectToBeComparated) {
 			return true;
 		}
 		
@@ -193,8 +251,8 @@ public class UserImpl extends ModelImpl implements User {
 		
 		final UserImpl objectComparatedInstance = (UserImpl) objectToBeComparated;
 		
-		return id == objectComparatedInstance.id && 
-				Objects.equals(username, objectComparatedInstance.username);
+		return Objects.equals(id, objectComparatedInstance.id) &&
+				Objects.equals(this.username, objectComparatedInstance.username);
 	}
 	
 	@Override

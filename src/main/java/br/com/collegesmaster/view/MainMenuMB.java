@@ -21,7 +21,7 @@ public class MainMenuMB implements Serializable {
 	private User loggedUser;
 	
 	public String loadUserFirstName() {
-		return loggedUser.getGeneralInfo().getFirstName();
+		return loggedUser.getFirstName();
 	}
 	
 	public String toPage(final String code) {

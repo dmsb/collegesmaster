@@ -97,11 +97,11 @@ public class ChallengeImpl extends ModelImpl implements Challenge {
 	public void setQuestions(List<QuestionImpl> questions) {
 		this.questions = questions;
 	}
-	
+
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 		
-		if(objectToBeComparated == this) {
+		if(this == objectToBeComparated) {
 			return true;
 		}
 		
@@ -111,7 +111,7 @@ public class ChallengeImpl extends ModelImpl implements Challenge {
 		
 		final ChallengeImpl objectComparatedInstance = (ChallengeImpl) objectToBeComparated;
 		
-		return id == objectComparatedInstance.id && 
+		return Objects.equals(this.id, objectComparatedInstance.id) && 
 			    Objects.equals(title, objectComparatedInstance.title);
 	}
 	

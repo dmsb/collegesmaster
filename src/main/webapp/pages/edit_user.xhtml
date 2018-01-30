@@ -25,7 +25,7 @@
 							<h:outputLabel for="email" value="#{text['email']}" />
 						</p:column>
 						<p:column>
-							<p:inputText id="email" value="#{userEditMB.user.generalInfo.email}" size="20"
+							<p:inputText id="email" value="#{userEditMB.user.email}" size="20"
 								required="true" label="#{text['email']}" />
 						</p:column>
 					</p:row>
@@ -34,7 +34,7 @@
 							<h:outputLabel for="firstName" value="#{text['first_name']}" />
 						</p:column>
 						<p:column>
-							<p:inputText id="firstName" value="#{userEditMB.user.generalInfo.firstName}" size="20"
+							<p:inputText id="firstName" value="#{userEditMB.user.firstName}" size="20"
 								required="true" label="#{text['first_name']}" />
 						</p:column>
 					</p:row>
@@ -43,7 +43,7 @@
 							<h:outputLabel for="lastName" value="#{text['last_name']}" />
 						</p:column>
 						<p:column>
-							<p:inputText id="lastName" value="#{userEditMB.user.generalInfo.lastName}" size="20"
+							<p:inputText id="lastName" value="#{userEditMB.user.lastName}" size="20"
 								required="true" label="#{text['last_name']}" />
 						</p:column>
 					</p:row>
@@ -52,7 +52,7 @@
 							<h:outputLabel for="birthdate" value="#{text['birthdate']}" />
 						</p:column>
 						<p:column>
-							<p:calendar id="birthdate" value="#{userEditMB.user.generalInfo.birthdate}" size="20"
+							<p:calendar id="birthdate" value="#{userEditMB.user.birthdate}" size="20"
 								pattern="dd-MM-yyyy" mask="true" required="true" converter="localDateTimeConverter"
 								label="#{text['birthdate']}" locale="#{localeMB.locale}"
 								showButtonPanel="true" navigator="true" yearRange="c-100:c+10"/>

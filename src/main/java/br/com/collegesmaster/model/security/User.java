@@ -1,5 +1,6 @@
 package br.com.collegesmaster.model.security;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -28,13 +29,29 @@ public interface User extends Model {
 
 	List<RoleImpl> getRoles();
 
-	void setGeneralInfo(GeneralInfo person);
-
-	GeneralInfo getGeneralInfo();
-
 	Course getCourse();
 
 	void setCourse(Course course);
+	
+	String getCpf();
+
+	void setCpf(String cpf);
+
+	String getEmail();
+
+	void setEmail(String email);
+
+	String getFirstName();
+
+	void setFirstName(String firstName);
+
+	String getLastName();
+
+	void setLastName(String lastName);
+
+	LocalDate getBirthdate();
+
+	void setBirthdate(LocalDate birthdate);
 
 	List<String> getRoleNames();
 

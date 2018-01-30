@@ -2,8 +2,6 @@ package br.com.collegesmaster.model.generics.impl;
 
 import static java.lang.Boolean.FALSE;
 
-import java.util.List;
-
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
@@ -23,51 +21,47 @@ public abstract class GenericBusinessImpl<T extends ModelImpl> implements Generi
 	private GenericDataProvider<T> genericDataProvider;
 	
 	@Override
-	public Boolean create(final T user) {
-		if(user != null && user.isNew()) {
-			return genericDataProvider.create(user);
+	public abstract Boolean create(final T model);
+	
+	@Override
+	public abstract T update(final T model);
+	
+	@Override
+	public abstract Boolean remove(final T model);
+	
+	public Boolean genericCreate(final T model) {
+		if(model != null && model.isNew()) {
+			return genericDataProvider.create(model);
 		} else {
 			LOGGER.warn("Entity not persisted, invalid arguments");
 			return FALSE;			
 		}
 	}
-
-	@Override
-	public T update(final T user) {
-		if(user != null && Boolean.FALSE.equals(user.isNew())) {
-			return genericDataProvider.update(user);
+	
+	public T genericUpdate(final T model) {
+		if(model != null && Boolean.FALSE.equals(model.isNew())) {
+			return genericDataProvider.update(model);
 		} else {
 			LOGGER.warn("Entity not persisted, invalid arguments");
 			return null;
 		}
 	}
 
-	@Override
-	public Boolean remove(final T user) {
-		if(user != null && Boolean.FALSE.equals(user.isNew())) {
-			return genericDataProvider.remove(user);
+	public Boolean genericRemove(final T model) {
+		if(model != null && Boolean.FALSE.equals(model.isNew())) {
+			return genericDataProvider.remove(model);
 		} else {
 			LOGGER.warn("Entity not removed, invalid arguments");
 			return FALSE;
 		}
 	}
-
+	
 	@Override
 	public T findById(final Class<T> modelClass, final Integer id) {
 		if(id != null) {
 			return genericDataProvider.findById(modelClass, id);			
 		} else {
 			LOGGER.warn("Cannot find entity, invalid arguments");
-			return null;
-		}
-	}
-
-	@Override
-	public List<T> findAll(Class<T> modelType) {
-		if(modelType != null) {
-			return genericDataProvider.findAll(modelType);
-		} else {
-			LOGGER.warn("Cannot find entity, modelType is null");
 			return null;
 		}
 	}

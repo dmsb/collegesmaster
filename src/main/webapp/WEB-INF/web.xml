@@ -137,6 +137,7 @@
 		<web-resource-collection>
 			<web-resource-name>In commom resources</web-resource-name>
 			<url-pattern>/pages/edit_user.xhtml</url-pattern>
+			<url-pattern>/pages/ranking.xhtml</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 			<http-method>PUT</http-method>

@@ -18,6 +18,7 @@ import org.jboss.logging.Logger;
 import br.com.collegesmaster.exceptions.BusinessException;
 import br.com.collegesmaster.model.challenge.Challenge;
 import br.com.collegesmaster.model.challengeresponse.business.ChallengeResponseBusiness;
+import br.com.collegesmaster.model.challengeresponse.business.RankingBusiness;
 import br.com.collegesmaster.model.challengeresponse.dataprovider.ChallengeResponseDataProvider;
 import br.com.collegesmaster.model.challengeresponse.impl.ChallengeResponseImpl;
 import br.com.collegesmaster.model.generics.impl.GenericBusinessImpl;
@@ -35,13 +36,20 @@ public class ChallengeResponseBusinessImpl extends GenericBusinessImpl<Challenge
 	@Inject
 	private ChallengeResponseDataProvider challengeResponseDataProvider;
 	
+	@Inject
+	private RankingBusiness rankingBusiness;
+	
 	@RolesAllowed({"STUDENT", "ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean create(final ChallengeResponseImpl response) {
 		final Boolean alrealdyRepliedByUser = alrealdyRepliedByUser(response);
 		if(Boolean.FALSE.equals(alrealdyRepliedByUser)) {
-			return super.create(response);
+			final Boolean wasCreated = super.genericCreate(response);
+			if(wasCreated) {
+				rankingBusiness.addPontuationToUser(response);
+			}
+			return wasCreated;
 		} else {
 			throw new BusinessException("already_replied_challenge_message");
 		}
@@ -51,14 +59,14 @@ public class ChallengeResponseBusinessImpl extends GenericBusinessImpl<Challenge
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public ChallengeResponseImpl update(final ChallengeResponseImpl response) {
-		return super.update(response);
+		return super.genericUpdate(response);
 	}
 	
 	@RolesAllowed({"ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean remove(final ChallengeResponseImpl response) {
-		return super.remove(response);
+		return super.genericRemove(response);
 	}
 
 	@RolesAllowed({"STUDENT", "ADMINISTRATOR"})

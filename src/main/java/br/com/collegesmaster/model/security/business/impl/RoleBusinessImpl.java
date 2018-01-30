@@ -34,19 +34,19 @@ public class RoleBusinessImpl extends GenericBusinessImpl<RoleImpl> implements R
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean create(RoleImpl role) {
-		return super.create(role);
+		return super.genericCreate(role);
 	}
 
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public RoleImpl update(RoleImpl role) {
-		return super.update(role);
+		return super.genericUpdate(role);
 	}
 
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean remove(RoleImpl role) {
-		return super.remove(role);
+		return super.genericRemove(role);
 	}
 	
 	@PermitAll

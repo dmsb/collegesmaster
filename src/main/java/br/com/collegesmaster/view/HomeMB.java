@@ -27,7 +27,6 @@ import br.com.collegesmaster.model.security.Role;
 import br.com.collegesmaster.model.security.User;
 import br.com.collegesmaster.model.security.business.RoleBusiness;
 import br.com.collegesmaster.model.security.business.UserBusiness;
-import br.com.collegesmaster.model.security.impl.GeneralInfoImpl;
 import br.com.collegesmaster.model.security.impl.RoleImpl;
 import br.com.collegesmaster.model.security.impl.UserImpl;
 
@@ -51,33 +50,26 @@ public class HomeMB implements Serializable {
 	
 	private User user;
 	private Role selectedRole;
-	private Institute selectedInstitute;	
+	private Course selectedCourse;
+	private Institute selectedInstitute;
+	private List<RoleImpl> roles;
 	private List<InstituteImpl> institutes;
 	
 	@PostConstruct
 	public void init() {
 		user = new UserImpl();
-		user.setRoles(new ArrayList<>());
-		user.setGeneralInfo(new GeneralInfoImpl());
-
 		selectedRole = new RoleImpl();
-
-		institutes = instituteBusiness.findNames();
 		selectedInstitute = new InstituteImpl();
 		selectedInstitute.setCourses(new ArrayList<>());
-		user.setCourse(new CourseImpl());
-	}
-	
-	public List<RoleImpl> allRoles() {
-		return roleBusiness.findAll();
+		
+		institutes = instituteBusiness.findNames();
+		roles = roleBusiness.findAll();
 	}
 	
 	public void persistUser() {
-		final RoleImpl completeRole = roleBusiness.findById(selectedRole.getId());
-		user.getRoles().add(completeRole);
-		
-		final Course completedCourse = courseBusiness.findById(user.getCourse().getId());
-		user.setCourse(completedCourse);
+		user.setRoles(new ArrayList<>());
+		user.getRoles().add((RoleImpl) selectedRole);
+		user.setCourse(selectedCourse);
 		
 		final Boolean isValid = checkUniqueConstraints();
 		
@@ -98,8 +90,8 @@ public class HomeMB implements Serializable {
 
 	private Boolean checkUniqueConstraints() {
 		final Boolean existsUsername = userBusiness.existsUsername(user.getUsername());
-		final Boolean existsEmail = userBusiness.existsEmail(user.getGeneralInfo().getEmail());
-		final Boolean existsCpf = userBusiness.existsCpf(user.getGeneralInfo().getCpf());
+		final Boolean existsEmail = userBusiness.existsEmail(user.getEmail());
+		final Boolean existsCpf = userBusiness.existsCpf(user.getCpf());
 		
 		if(TRUE.equals(existsCpf)) {
 			addMessage(SEVERITY_WARN, "exists_cpf_message");
@@ -150,6 +142,22 @@ public class HomeMB implements Serializable {
 
 	public void setSelectedInstitute(Institute selectedInstitute) {
 		this.selectedInstitute = selectedInstitute;
+	}
+
+	public Course getSelectedCourse() {
+		return selectedCourse;
+	}
+
+	public void setSelectedCourse(Course selectedCourse) {
+		this.selectedCourse = selectedCourse;
+	}
+
+	public List<RoleImpl> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<RoleImpl> roles) {
+		this.roles = roles;
 	}
 
 	public List<InstituteImpl> getInstitutes() {

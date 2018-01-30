@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,6 +13,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
+
+import org.hibernate.jpa.QueryHints;
 
 import br.com.collegesmaster.model.institute.Course;
 import br.com.collegesmaster.model.institute.dataprovider.DisciplineDataProvider;
@@ -44,9 +47,7 @@ public class DisciplineDataProviderImpl implements DisciplineDataProvider{
 		criteriaQuery.where(coursePredicate);
 		
 		final TypedQuery<DisciplineImpl> typedQuery = em.createQuery(criteriaQuery);		
-		final List<DisciplineImpl> result = typedQuery.getResultList();
-		
-		return result;
+		return typedQuery.getResultList();
 	}
 	
 	@Override
@@ -55,15 +56,20 @@ public class DisciplineDataProviderImpl implements DisciplineDataProvider{
 		final Root<DisciplineImpl> rootDiscipline = criteriaQuery.from(DisciplineImpl.class);
 		
 		final Predicate coursePredicate = cb.equal(rootDiscipline.get(DisciplineImpl_.course), course);
-		rootDiscipline.fetch(DisciplineImpl_.challenges);
 		
 		criteriaQuery.select(rootDiscipline)
 					 .distinct(true)
 					 .where(coursePredicate);
 		
-		final TypedQuery<DisciplineImpl> typedQuery = em.createQuery(criteriaQuery);		
-		final List<DisciplineImpl> result = typedQuery.getResultList();
-		
-		return result;
+		final EntityGraph<DisciplineImpl> dynamicGraph = createEntityGraphToLoadChallenges();
+		final TypedQuery<DisciplineImpl> typedQuery = em.createQuery(criteriaQuery)
+				.setHint(QueryHints.HINT_LOADGRAPH, dynamicGraph);
+		return typedQuery.getResultList();
+	}
+
+	private EntityGraph<DisciplineImpl> createEntityGraphToLoadChallenges() {
+		final EntityGraph<DisciplineImpl> dynamicGraph = em.createEntityGraph(DisciplineImpl.class);
+		dynamicGraph.addSubgraph(DisciplineImpl_.challenges);
+		return dynamicGraph;
 	}
 }

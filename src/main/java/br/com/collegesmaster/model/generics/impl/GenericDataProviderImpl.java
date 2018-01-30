@@ -3,16 +3,12 @@ package br.com.collegesmaster.model.generics.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-import java.util.List;
-
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.TransactionRequiredException;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 
 import org.jboss.logging.Logger;
 
@@ -73,14 +69,6 @@ public class GenericDataProviderImpl<T extends ModelImpl> implements GenericData
 			LOGGER.error(e);
 			return null;
 		}
-	}
-
-	@Override
-	public List<T> findAll(Class<T> modelType) {
-		final CriteriaQuery<T> criteriaQuery = cb.createQuery(modelType);		
-		final TypedQuery<T> typedQuery = em.createQuery(criteriaQuery);
-		final List<T> result = typedQuery.getResultList();
-		return result;
 	}
 
 }

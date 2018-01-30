@@ -7,6 +7,7 @@ import javax.faces.convert.FacesConverter;
 
 import com.google.common.base.Strings;
 
+import br.com.collegesmaster.model.institute.Institute;
 import br.com.collegesmaster.model.institute.impl.InstituteImpl;
 
 @FacesConverter(value = "instituteConverter")
@@ -15,24 +16,24 @@ public class InstituteConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String institute) {
 		if(!Strings.isNullOrEmpty(institute)) {
-			return (InstituteImpl)component.getAttributes().get(institute);
+			return (Institute) component.getAttributes().get(institute);
 		} else {
-			return null;
+			return "";
 		}
 	}
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object institute) {
 		if(institute instanceof InstituteImpl) {
-			InstituteImpl currentInstitute = (InstituteImpl) institute;
+			Institute currentInstitute = (Institute) institute;
 			if(currentInstitute.getId() != null) {
 				component.getAttributes().put(currentInstitute.getId().toString(), currentInstitute);
 				return currentInstitute.getId().toString();
 			} else {
-				return null;
+				return "";
 			}
 		} else {
-			return null;	
+			return "";	
 		}
 	}
 

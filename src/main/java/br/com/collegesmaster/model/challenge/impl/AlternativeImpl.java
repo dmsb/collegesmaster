@@ -98,7 +98,7 @@ public class AlternativeImpl extends ModelImpl implements Alternative {
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 		
-		if(objectToBeComparated == this) {
+		if(this == objectToBeComparated) {
 			return true;
 		}
 		
@@ -108,7 +108,7 @@ public class AlternativeImpl extends ModelImpl implements Alternative {
 		
 		final AlternativeImpl objectComparatedInstance = (AlternativeImpl) objectToBeComparated;
 		
-		return id == objectComparatedInstance.id && 
+		return Objects.equals(this.id, objectComparatedInstance.id) && 
 			    Objects.equals(description, objectComparatedInstance.description) &&
 			    Objects.equals(isTrue, objectComparatedInstance.isTrue);
 	}

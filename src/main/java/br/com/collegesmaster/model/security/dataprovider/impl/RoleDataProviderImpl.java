@@ -36,9 +36,7 @@ public class RoleDataProviderImpl implements RoleDataProvider {
 		criteriaQuery.where(exceptAdmRole);
 		
 		final TypedQuery<RoleImpl> typedQuery = em.createQuery(criteriaQuery);
-		final List<RoleImpl> result = typedQuery.getResultList();
-		
-		return result;
+		return typedQuery.getResultList();
 	}
 
 	@Override

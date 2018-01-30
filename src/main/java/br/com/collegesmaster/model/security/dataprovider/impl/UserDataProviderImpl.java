@@ -11,7 +11,6 @@ import javax.persistence.criteria.Root;
 
 import br.com.collegesmaster.model.generics.producers.CriteriaBooleanReponse;
 import br.com.collegesmaster.model.security.dataprovider.UserDataProvider;
-import br.com.collegesmaster.model.security.impl.GeneralInfoImpl_;
 import br.com.collegesmaster.model.security.impl.UserImpl;
 import br.com.collegesmaster.model.security.impl.UserImpl_;
 import br.com.collegesmaster.qualifiers.UserDatabase;
@@ -31,8 +30,7 @@ public class UserDataProviderImpl implements UserDataProvider {
 	@Override
 	public Boolean existsCpf(String cpf) {
 		final Root<UserImpl> userRoot = booleanResponseBuilder.build(UserImpl.class);
-		final Predicate containsCpf = cb.equal(userRoot.join(UserImpl_.generalInfo)
-				.get(GeneralInfoImpl_.cpf), cpf);
+		final Predicate containsCpf = cb.equal(userRoot.get(UserImpl_.cpf), cpf);
 		
 		return booleanResponseBuilder.where(containsCpf).execute();
 	}
@@ -40,8 +38,7 @@ public class UserDataProviderImpl implements UserDataProvider {
 	@Override
 	public Boolean existsEmail(String email) {
 		final Root<UserImpl> userRoot = booleanResponseBuilder.build(UserImpl.class);
-		final Predicate containsEmail = cb.equal(userRoot.join(UserImpl_.generalInfo)
-				.get(GeneralInfoImpl_.email), email);
+		final Predicate containsEmail = cb.equal(userRoot.get(UserImpl_.email), email);
 		return booleanResponseBuilder.where(containsEmail).execute();
 	}
 
@@ -57,7 +54,6 @@ public class UserDataProviderImpl implements UserDataProvider {
 		final CriteriaQuery<UserImpl> criteriaQuery = cb.createQuery(UserImpl.class);
 		
 		final Root<UserImpl> userRoot = criteriaQuery.from(UserImpl.class);
-		userRoot.fetch(UserImpl_.generalInfo);
 		
 		final Predicate usernamePredicate = cb.equal(userRoot.get(UserImpl_.username), username);
 		criteriaQuery.select(userRoot).where(usernamePredicate);

@@ -54,7 +54,7 @@ public class LocalizationImpl implements Localization {
 	@Override
     public boolean equals(final Object objectToBeComparated) {
     	
-    	if(objectToBeComparated == this) {
+		if(this == objectToBeComparated) {
 			return true;
 		}
 		

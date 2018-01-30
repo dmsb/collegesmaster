@@ -16,6 +16,7 @@ import org.jboss.ejb3.annotation.SecurityDomain;
 
 import br.com.collegesmaster.model.generics.impl.GenericBusinessImpl;
 import br.com.collegesmaster.model.institute.Course;
+import br.com.collegesmaster.model.institute.Discipline;
 import br.com.collegesmaster.model.institute.business.DisciplineBusiness;
 import br.com.collegesmaster.model.institute.dataprovider.DisciplineDataProvider;
 import br.com.collegesmaster.model.institute.impl.DisciplineImpl;
@@ -32,25 +33,25 @@ public class DisciplineBusinessImpl extends GenericBusinessImpl<DisciplineImpl> 
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean create(DisciplineImpl discipline) {
-		return super.create(discipline);
+		return super.genericCreate(discipline);
 	}
 
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public DisciplineImpl update(DisciplineImpl discipline) {
-		return super.update(discipline);
+		return super.genericUpdate(discipline);
 	}
 
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean remove(DisciplineImpl discipline) {
-		return super.remove(discipline);
+		return super.genericRemove(discipline);
 	}
 	
 	@TransactionAttribute(REQUIRED)
 	@PermitAll
 	@Override
-	public DisciplineImpl findById(Integer id) {
+	public Discipline findById(Integer id) {
 		return super.findById(DisciplineImpl.class, id);
 	}
 	

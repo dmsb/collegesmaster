@@ -34,27 +34,27 @@ public class ChallengeBusinessImpl extends GenericBusinessImpl<ChallengeImpl> im
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean create(final ChallengeImpl challenge) {
-		return super.create(challenge);
+		return super.genericCreate(challenge);
 	}
 	
 	@RolesAllowed({"PROFESSOR", "ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public ChallengeImpl update(final ChallengeImpl challenge) {
-		return super.update(challenge);
+		return super.genericUpdate(challenge);
 	}
 	
 	@RolesAllowed({"ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean remove(final ChallengeImpl challenge) {
-		return super.remove(challenge);
+		return super.genericRemove(challenge);
 	}
 
 	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public ChallengeImpl findById(Integer id) {
+	public Challenge findById(Integer id) {
 		return super.findById(ChallengeImpl.class, id);
 	}
 	

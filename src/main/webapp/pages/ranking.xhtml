@@ -18,55 +18,25 @@
 	<composites:layouts main_menu_mb="#{mainMenuMB}" id="composite">
 		<p:layoutUnit position="center" header="#{text['ranking']}" style="text-align:center">
 			<h:form id="ranking_form">
-				<p:dataTable id="disciplines_data_table" var="discipline" value="#{rankingMB.userDisciplines}"
-					selectionMode="single" selection="#{rankingMB.selectedDiscipline}" rowKey="#{discipline.id}"
+				<p:dataTable id="ranking_dt" var="podium" value="#{rankingMB.podiumPositionsByDiscipline}"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
 					{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['no_records_found_message']}" paginator="true"
 					rows="10" currentPageReportTemplate="{currentPage} #{text['of_message']} {totalPages}">							
 					
-					<p:column headerText="#{text['title']}">
-						<h:outputText value="#{discipline.name}" />
+					<p:column headerText="#{text['title']}" groupRow="true">
+						<h:outputText value="#{podium.discipline.name}" />
 					</p:column>
 					
-					<p:column headerText="#{text['first_place']}">
-						<h:outputText value="#{rankingMB.bestPlaces.get(0)}" />					
+					<p:column headerText="#{text['username']}">
+						<h:outputText value="#{podium.user.username}" />
 					</p:column>
 					
-					<p:column headerText="#{text['second_place']}">
-						<h:outputText value="#{rankingMB.bestPlaces.get(1)}" />					
+					<p:column headerText="#{text['pontuation']}">
+						<h:outputText value="#{podium.totalPontuation}" />
 					</p:column>
-					
-					<p:column headerText="#{text['third_place']}">
-						<h:outputText value="#{rankingMB.bestPlaces.get(2)}" />					
-					</p:column>
-					
-					<p:ajax event="rowSelect" process="@parent" listener="#{rankingMB.loadRankingByDiscipline(discipline.id)}"
-						update="composite:challenges_form:challenges_data_table"
-						oncomplete="PF('ranking_dialog_wv').show();" />
 				</p:dataTable>
-			</h:form>
-			<h:form>
-				<p:dialog id="ranking_dialog" widgetVar="ranking_dialog_wv" closeOnEscape="true" 
-					closable="true" resizable="false" responsive="true" hideEffect="puff" showEffect="puff" 
-					header="#{text['ranking' += rankingMB.selectedDiscipline.name]}" maximizable="true" 
-					minimizable="true" width="1280">
-					
-					<p:dataTable id="ranking_data_table" var="student" value="#{rankingMB.disciplineStudents}"
-						selectionMode="single" selection="#{rankingMB.selectedStudent}" rowKey="#{user.id}"
-						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}
-						{LastPageLink}" paginatorPosition="bottom" emptyMessage="#{text['no_records_found_message']}" paginator="true"
-						rows="10" currentPageReportTemplate="{currentPage} #{text['of_message']} {totalPages}">							
-						
-						<p:column headerText="#{text['title']}">
-							<h:outputText value="#{student.username}" />
-						</p:column>
-						
-						<p:column headerText="#{text['total_pontuation]']}">
-							<h:outputText value="#{rankingMB.totalPontuation}" />					
-						</p:column>
-					</p:dataTable>
-				</p:dialog>
 			</h:form>
 		</p:layoutUnit>
 	</composites:layouts>
 </h:body>
+</html>

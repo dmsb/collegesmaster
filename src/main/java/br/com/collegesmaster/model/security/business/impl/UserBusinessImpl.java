@@ -35,14 +35,14 @@ public class UserBusinessImpl extends GenericBusinessImpl<UserImpl> implements U
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean create(final UserImpl user) {
-		return super.create(user);
+		return super.genericCreate(user);
 	}
 
 	@RolesAllowed({ "STUDENT", "PROFESSOR", "ADMINISTATOR" })
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public UserImpl update(final UserImpl user) {
-		final UserImpl savedUser = super.update(user);
+		final UserImpl savedUser = super.genericUpdate(user);
 		if(savedUser != null) {
 			userUpdateEvent.fire(savedUser);
 			return savedUser;
@@ -56,7 +56,7 @@ public class UserBusinessImpl extends GenericBusinessImpl<UserImpl> implements U
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean remove(final UserImpl user) {
-		return super.remove(user);
+		return super.genericRemove(user);
 	}
 
 	@RolesAllowed({ "STUDENT", "PROFESSOR", "ADMINISTATOR" })

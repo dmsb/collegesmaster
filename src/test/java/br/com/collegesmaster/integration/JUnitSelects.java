@@ -85,10 +85,10 @@ public class JUnitSelects extends JUnitConfiguration {
 	public void test05_sortUserFirstName() {
 
 		queryBuilder
-				.append("SELECT   user.generalInfo.cpf, ")
-				.append("		  user.generalInfo.firstName ")
+				.append("SELECT   user.cpf, ")
+				.append("		  user.firstName ")
 				.append("FROM     UserImpl user ")
-				.append("ORDER BY user.generalInfo.firstName");
+				.append("ORDER BY user.firstName");
 		
 		final String listByName = queryBuilder.toString();
 		logger.info("Proccessing test 05: " + listByName);

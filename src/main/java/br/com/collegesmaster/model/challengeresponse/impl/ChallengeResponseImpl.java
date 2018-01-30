@@ -69,9 +69,7 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 	public void calculatePontuation() {
 		pontuation = 0;
 		questionsResponse.stream()
-			.forEach(response -> {
-			selectQuestionToProcessPontuation(response);
-		});
+			.forEach(response -> { selectQuestionToProcessPontuation(response); });
 	}
 
 	private void selectQuestionToProcessPontuation(QuestionResponse response) {
@@ -133,7 +131,7 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 
-		if(objectToBeComparated == this) {
+		if(this == objectToBeComparated) {
 			return true;
 		}
 		
@@ -143,8 +141,8 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 		
 		final ChallengeResponseImpl objectComparatedInstance = (ChallengeResponseImpl) objectToBeComparated;
 		
-		return id == objectComparatedInstance.id && 
-				pontuation == objectComparatedInstance.pontuation;
+		return Objects.equals(this.id, objectComparatedInstance.id) && 
+				Objects.equals(this.pontuation, objectComparatedInstance.pontuation);
 	}
 	
 	@Override

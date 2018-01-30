@@ -27,4 +27,8 @@ public interface Institute extends Model {
 
 	int hashCode();
 
+	void setSemester(String semester);
+
+	String getSemester();
+
 }

@@ -16,7 +16,7 @@ public class RoleConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String role) {
 		if(!Strings.isNullOrEmpty(role)) {
-			return (Role)component.getAttributes().get(role);
+			return (Role) component.getAttributes().get(role);
 		} else {
 			return null;
 		}
@@ -34,8 +34,7 @@ public class RoleConverter implements Converter {
 				return null;
 			}
 		} else {
-			return null;	
+			return null;
 		}
-		
 	}
 }

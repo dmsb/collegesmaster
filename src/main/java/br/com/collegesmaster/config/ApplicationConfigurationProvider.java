@@ -14,6 +14,7 @@ public class ApplicationConfigurationProvider extends HttpConfigurationProvider 
 		return ConfigurationBuilder.begin()
 				.addRule(Join.path("/").to("/pages/login.xhtml"))
 		        .addRule(Join.path("/edit_user").to("/pages/edit_user.xhtml"))
+		        .addRule(Join.path("/ranking").to("/pages/ranking.xhtml"))
 		        .addRule(Join.path("/create_challenge").to("/pages/professor/create_challenge.xhtml"))
 		        .addRule(Join.path("/reply_challenges").to("/pages/student/reply_challenges.xhtml"))
 		        .addRule(Join.path("/completed_challenges").to("/pages/student/completed_challenges.xhtml"))

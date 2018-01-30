@@ -27,7 +27,6 @@ public class RoleImpl extends ModelImpl implements Role {
 	@Column(name = "name", nullable = false, unique = true, length = 20)
 	private String name;
 	
-	
 	@Override
 	public String getName() {
 		return name;
@@ -38,11 +37,10 @@ public class RoleImpl extends ModelImpl implements Role {
 		this.name = name;
 	}
 
-
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 		
-		if(objectToBeComparated == this) {
+		if(this == objectToBeComparated) {
 			return true;
 		}
 		

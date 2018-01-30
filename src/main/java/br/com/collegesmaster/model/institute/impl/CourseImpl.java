@@ -2,6 +2,7 @@ package br.com.collegesmaster.model.institute.impl;
 
 import static javax.persistence.AccessType.FIELD;
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class CourseImpl extends ModelImpl implements Course {
 	
 	@JsonIgnore
 	@NotNull
-	@ManyToOne(targetEntity = InstituteImpl.class, optional = false, fetch = LAZY)
+	@ManyToOne(targetEntity = InstituteImpl.class, optional = false, fetch = EAGER)
 	@JoinColumn(name = "instituteFK", referencedColumnName = "id", updatable = false,
 		foreignKey = @ForeignKey(name = "COURSE_instituteFK"))
 	private Institute institute;
@@ -94,7 +95,7 @@ public class CourseImpl extends ModelImpl implements Course {
 	@Override
 	public boolean equals(final Object objectToBeComparated) {
 		
-		if(objectToBeComparated == this) {
+		if(this == objectToBeComparated) {
 			return true;
 		}
 		
@@ -104,7 +105,7 @@ public class CourseImpl extends ModelImpl implements Course {
 		
 		final CourseImpl objectComparatedInstance = (CourseImpl) objectToBeComparated;
 		
-		return id == objectComparatedInstance.id && 
+		return Objects.equals(this.id, objectComparatedInstance.id) && 
 			    Objects.equals(name, objectComparatedInstance.name);
 	}
 	

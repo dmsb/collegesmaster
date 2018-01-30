@@ -45,6 +45,10 @@ public class InstituteImpl extends ModelImpl implements Institute {
     		fetch = LAZY, orphanRemoval = true, mappedBy = "institute")
     private List<CourseImpl> courses;
 
+    @NotBlank
+    @Column(name = "semester", nullable = false, length = 6)
+    private String semester;
+    
 	@Embedded
     private LocalizationImpl localization;
 	
@@ -79,6 +83,16 @@ public class InstituteImpl extends ModelImpl implements Institute {
 	}
 
     @Override
+	public String getSemester() {
+		return semester;
+	}
+
+	@Override
+	public void setSemester(String semester) {
+		this.semester = semester;
+	}
+
+	@Override
 	public Localization getLocalization() {
         return localization;
     }
@@ -91,7 +105,7 @@ public class InstituteImpl extends ModelImpl implements Institute {
     @Override
     public boolean equals(final Object objectToBeComparated) {
     	
-    	if(objectToBeComparated == this) {
+		if(this == objectToBeComparated) {
 			return true;
 		}
 		
@@ -101,7 +115,7 @@ public class InstituteImpl extends ModelImpl implements Institute {
 		
 		final InstituteImpl objectComparatedInstance = (InstituteImpl) objectToBeComparated;
 		
-		return id == objectComparatedInstance.id && 
+		return Objects.equals(this.id, objectComparatedInstance.id) && 
 				Objects.equals(name, objectComparatedInstance.name);
 	}
     

@@ -27,14 +27,13 @@ public class LocalDateTimeConverter implements Converter {
 			LOGGER.error("Invalid date format: " + e.getMessage());
 			addMessage(SEVERITY_WARN, "invalid_date_message");
 		}
-		return null;
+		return "";
 	}
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		LocalDate dateValue = (LocalDate) value;
 		return dateValue.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-
 	}
 
 }
