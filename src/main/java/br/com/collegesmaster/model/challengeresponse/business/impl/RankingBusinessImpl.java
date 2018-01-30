@@ -23,6 +23,7 @@ import br.com.collegesmaster.model.challengeresponse.business.RankingBusiness;
 import br.com.collegesmaster.model.challengeresponse.dataprovider.RankingDataProvider;
 import br.com.collegesmaster.model.challengeresponse.impl.RankingImpl;
 import br.com.collegesmaster.model.generics.impl.GenericBusinessImpl;
+import br.com.collegesmaster.model.institute.Institute;
 import br.com.collegesmaster.model.security.User;
 
 @Stateless
@@ -46,6 +47,7 @@ public class RankingBusinessImpl extends GenericBusinessImpl<RankingImpl> implem
 		return super.genericUpdate(ranking);
 	}
 
+	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean remove(RankingImpl ranking) {
 		return super.genericRemove(ranking);
@@ -53,9 +55,9 @@ public class RankingBusinessImpl extends GenericBusinessImpl<RankingImpl> implem
 	
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public List<RankingImpl> findBestPositionsByPeriod(String period) {
+	public List<RankingImpl> findBestPositionsByPeriod(String period, final Institute userInstitute) {
 		if(!Strings.isNullOrEmpty(period)) {
-			return rankingDataProvider.findBestPositionsByPeriod(period);	
+			return rankingDataProvider.findBestPositionsByPeriod(period, userInstitute);	
 		} else {
 			throw new BusinessException("provide_a_period_message");
 		}

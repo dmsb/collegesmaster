@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import br.com.collegesmaster.model.challengeresponse.business.RankingBusiness;
 import br.com.collegesmaster.model.challengeresponse.impl.RankingImpl;
+import br.com.collegesmaster.model.institute.Institute;
 import br.com.collegesmaster.model.security.User;
 import br.com.collegesmaster.qualifiers.AuthenticatedUser;
 
@@ -32,7 +33,8 @@ public class RankingMB implements Serializable {
 	@PostConstruct
 	public void init() {
 		semester = loggedUser.getCourse().getInstitute().getSemester();
-		podiumPositionsByDiscipline = rankingBusiness.findBestPositionsByPeriod(semester);
+		final Institute userInstitute = loggedUser.getCourse().getInstitute();
+		podiumPositionsByDiscipline = rankingBusiness.findBestPositionsByPeriod(semester, userInstitute);
 	}
 
 	public User getLoggedUser() {

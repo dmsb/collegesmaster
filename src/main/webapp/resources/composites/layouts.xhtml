@@ -10,9 +10,7 @@
 	<composite:attribute name="main_menu_mb" required="true"
 		type="br.com.collegesmaster.view.MainMenuMB"
 		shortDescription="Managed bean for main menu" />
-	
 	<composite:attribute name="id" />
-	
 </composite:interface>
 
 <composite:implementation>
@@ -60,7 +58,7 @@
 				</p:menu>
 			</h:form>
 		</p:layoutUnit>
-		<p:layoutUnit id="layout_south" position="south" footer="version 0.1 | Copyright 2017"
+		<p:layoutUnit id="layout_south" position="south" footer="#{text['system_version']}"
 			style="text-align: center;" />
 		<composite:insertChildren />
 	</p:layout>

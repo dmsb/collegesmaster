@@ -9,6 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -16,14 +17,17 @@ import javax.persistence.criteria.Root;
 import br.com.collegesmaster.model.challengeresponse.dataprovider.RankingDataProvider;
 import br.com.collegesmaster.model.challengeresponse.impl.RankingImpl;
 import br.com.collegesmaster.model.challengeresponse.impl.RankingImpl_;
+import br.com.collegesmaster.model.institute.Institute;
+import br.com.collegesmaster.model.institute.impl.CourseImpl;
 import br.com.collegesmaster.model.institute.impl.CourseImpl_;
 import br.com.collegesmaster.model.institute.impl.DisciplineImpl_;
+import br.com.collegesmaster.model.institute.impl.InstituteImpl;
 import br.com.collegesmaster.model.institute.impl.InstituteImpl_;
 import br.com.collegesmaster.model.security.User;
 import br.com.collegesmaster.qualifiers.UserDatabase;
 
 @Dependent
-public class RakingDataProviderImpl implements RankingDataProvider {
+public class RankingDataProviderImpl implements RankingDataProvider {
 	
 	@Inject @UserDatabase
 	private EntityManager em;
@@ -32,19 +36,22 @@ public class RakingDataProviderImpl implements RankingDataProvider {
 	protected CriteriaBuilder cb;
 	
 	@Override
-	public List<RankingImpl> findBestPositionsByPeriod(String semester) {
+	public List<RankingImpl> findBestPositionsByPeriod(String semester, Institute userInstitute) {
 		final CriteriaQuery<RankingImpl> criteriaQuery = cb.createQuery(RankingImpl.class);
-		final Root<RankingImpl> RankingRoot = criteriaQuery.from(RankingImpl.class);
-		final Predicate periodPredicate = cb.equal(RankingRoot
+		final Root<RankingImpl> rankingRoot = criteriaQuery.from(RankingImpl.class);
+		
+		final Join<CourseImpl, InstituteImpl> instituteJoin = rankingRoot
 				.join(RankingImpl_.discipline)
 				.join(DisciplineImpl_.course)
-				.join(CourseImpl_.institute)
-				.get(InstituteImpl_.semester), semester);
-		final Order bestPositionsPredicate = cb.desc(RankingRoot.get(RankingImpl_.totalPontuation));
+				.join(CourseImpl_.institute);
+		
+		final Predicate institutePredicate = cb.equal(instituteJoin, userInstitute);
+		final Predicate semesterPredicate = cb.equal(instituteJoin.get(InstituteImpl_.semester), semester);		
+		final Order bestPositionsPredicate = cb.desc(rankingRoot.get(RankingImpl_.totalPontuation));
 		
 		criteriaQuery
-			.select(RankingRoot)
-			.where(periodPredicate)
+			.select(rankingRoot)
+			.where(semesterPredicate, institutePredicate)
 			.orderBy(bestPositionsPredicate);
 		final TypedQuery<RankingImpl> typedQuery = em.createQuery(criteriaQuery)
 				.setMaxResults(5);
