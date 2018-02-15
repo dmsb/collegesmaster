@@ -26,6 +26,7 @@ import br.com.collegesmaster.model.institute.impl.InstituteImpl_;
 import br.com.collegesmaster.model.security.User;
 import br.com.collegesmaster.qualifiers.UserDatabase;
 
+
 @Dependent
 public class RankingDataProviderImpl implements RankingDataProvider {
 	
@@ -36,7 +37,7 @@ public class RankingDataProviderImpl implements RankingDataProvider {
 	protected CriteriaBuilder cb;
 	
 	@Override
-	public List<RankingImpl> findBestPositionsByPeriod(String semester, Institute userInstitute) {
+	public List<RankingImpl> findBestPositionsByPeriod(final String semester, final Institute userInstitute) {
 		final CriteriaQuery<RankingImpl> criteriaQuery = cb.createQuery(RankingImpl.class);
 		final Root<RankingImpl> rankingRoot = criteriaQuery.from(RankingImpl.class);
 		
@@ -47,7 +48,7 @@ public class RankingDataProviderImpl implements RankingDataProvider {
 		
 		final Predicate institutePredicate = cb.equal(instituteJoin, userInstitute);
 		final Predicate semesterPredicate = cb.equal(instituteJoin.get(InstituteImpl_.semester), semester);		
-		final Order bestPositionsPredicate = cb.desc(rankingRoot.get(RankingImpl_.totalPontuation));
+		final Order bestPositionsPredicate = cb.desc(rankingRoot.get(RankingImpl_.totalPunctuation));
 		
 		criteriaQuery
 			.select(rankingRoot)
@@ -59,7 +60,7 @@ public class RankingDataProviderImpl implements RankingDataProvider {
 	}
 
 	@Override
-	public RankingImpl findByUserAndPeriod(final User user, String semester) {
+	public RankingImpl findByUserAndPeriod(final User user, final String semester) {
 		final CriteriaQuery<RankingImpl> criteriaQuery = cb.createQuery(RankingImpl.class);
 		final Root<RankingImpl> RankingRoot = criteriaQuery.from(RankingImpl.class);
 		final Predicate existUserPredicate = cb.equal(RankingRoot.get(RankingImpl_.user), user);

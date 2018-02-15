@@ -8,7 +8,9 @@
 	<name>Colleges Master</name>
 
 	<properties>
-		<hibernate.version>5.2.10.Final</hibernate.version>
+		<hibernate.version>5.2.12.Final</hibernate.version>
+		<hibernate.validation.version>6.0.7.Final</hibernate.validation.version>
+		<jackson.datatype.version>2.9.3</jackson.datatype.version>
 		<wildfly.home>D:\wildfly-10.1.0.Final</wildfly.home>
 		<serenity.version>1.8.1</serenity.version>
 	</properties>
@@ -24,11 +26,11 @@
 
 	<dependencies>
 
-		<!-- API for JavaEE, provided by Wildfly 10 -->
+		<!-- API for JavaEE, provided by Wildfly -->
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>
-			<version>7.0</version>
+			<version>8.0</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -40,7 +42,7 @@
 		</dependency>
 
 		<!-- dom4j is an open source Java library for working with XML, XPath and 
-			XSLT, provided by Wildfly 10 -->
+			XSLT, provided by Wildfly -->
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
@@ -87,26 +89,26 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jdk8</artifactId>
-			<version>2.9.3</version>
+			<version>${jackson.datatype.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
-			<version>2.9.3</version>
+			<version>${jackson.datatype.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-hibernate5</artifactId>
-			<version>2.9.3</version>
+			<version>${jackson.datatype.version}</version>
 		</dependency>
 
 		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.4.1.Final</version>
+			<version>${hibernate.validation.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>

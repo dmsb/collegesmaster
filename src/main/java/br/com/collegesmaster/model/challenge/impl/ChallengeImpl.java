@@ -5,7 +5,7 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 import javax.persistence.Access;
@@ -16,11 +16,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
-import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.collegesmaster.model.challenge.Challenge;
 import br.com.collegesmaster.model.institute.Discipline;
@@ -37,7 +37,7 @@ public class ChallengeImpl extends ModelImpl implements Challenge {
 
 	private static final long serialVersionUID = 6314730845000580522L;
 	
-	@NotBlank
+	@NotNull
 	@Column(name= "title", nullable = false, length = 30)
 	private String title;
 	
@@ -53,10 +53,11 @@ public class ChallengeImpl extends ModelImpl implements Challenge {
 		foreignKey = @ForeignKey(name = "CHALLENGE_disciplineFK"))
 	private Discipline discipline;
 	
+	@NotEmpty
 	@NotAudited
 	@OneToMany(targetEntity = QuestionImpl.class, cascade = ALL, fetch = LAZY, 
 		orphanRemoval = true, mappedBy="challenge")
-	private List<QuestionImpl> questions;
+	private Collection<QuestionImpl> questions;
 	
 	@Override
 	public User getOwner() {
@@ -89,12 +90,12 @@ public class ChallengeImpl extends ModelImpl implements Challenge {
 	}
 	
 	@Override
-	public List<QuestionImpl> getQuestions() {
+	public Collection<QuestionImpl> getQuestions() {
 		return questions;
 	}
 
 	@Override
-	public void setQuestions(List<QuestionImpl> questions) {
+	public void setQuestions(Collection<QuestionImpl> questions) {
 		this.questions = questions;
 	}
 
@@ -112,11 +113,11 @@ public class ChallengeImpl extends ModelImpl implements Challenge {
 		final ChallengeImpl objectComparatedInstance = (ChallengeImpl) objectToBeComparated;
 		
 		return Objects.equals(this.id, objectComparatedInstance.id) && 
-			    Objects.equals(title, objectComparatedInstance.title);
+			    Objects.equals(this.title, objectComparatedInstance.title);
 	}
 	
 	@Override
     public int hashCode() {
-        return Objects.hash(id, title);
+        return Objects.hash(this.id, this.title);
     }
 }

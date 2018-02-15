@@ -2,7 +2,7 @@ package br.com.collegesmaster.model.security.business.impl;
 
 import java.security.Principal;
 import java.security.acl.Group;
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -64,17 +64,17 @@ public class DatabaseLoginModule extends DatabaseServerLoginModule {
 
 	@Override
 	protected Group[] getRoleSets() throws LoginException {
-		final List<RoleImpl> userRoles = authBusiness.findUserRoles(getUsername());
+		final Collection<RoleImpl> userRoles = authBusiness.findUserRoles(getUsername());
 		return buildRoleGroup(userRoles);
 	}
 
-	public Group[] buildRoleGroup(List<RoleImpl> userRoles) {
+	public Group[] buildRoleGroup(Collection<RoleImpl> userRoles) {
 		final Group group = new SimpleGroup("Roles");
 		buildRolePrincipals(userRoles, group);
 		return new Group[] {group};
 	}
 
-	public void buildRolePrincipals(List<RoleImpl> userRoles, Group group) {
+	public void buildRolePrincipals(Collection<RoleImpl> userRoles, Group group) {
 		userRoles.forEach(role -> insertRoleIntoGroup(group, role));
 	}
 

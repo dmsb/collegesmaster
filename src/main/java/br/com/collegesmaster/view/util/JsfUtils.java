@@ -43,9 +43,9 @@ public class JsfUtils {
 		final FacesContext facesContext = FacesContext.getCurrentInstance();		
 		final ResourceBundle bundle = getResourceBundle(facesContext);
 		
-		if(Strings.isNullOrEmpty(details)) {			
-			facesContext.addMessage(clientId, new FacesMessage(severity, 
-					bundle.getString(message), ""));	
+		if(Strings.isNullOrEmpty(details)) {
+			facesContext.addMessage(clientId, new FacesMessage(severity,
+					bundle.getString(message), ""));
 		} else {
 			facesContext.addMessage(clientId, new FacesMessage(severity,
 				bundle.getString(message), bundle.getString(details)));

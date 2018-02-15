@@ -2,6 +2,7 @@ package br.com.collegesmaster.bdd.features.manage_challenge_response.steps;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.Assert;
 
@@ -21,14 +22,14 @@ public class ReplyAChallengeSteps {
 	private ChallengeResponse challengeResponse;
 	
     @Step("Given a challenge that contains a correct letter question equals to {0} with a score of {1} points")
-    public void givenAChallenge(final Letter letter, final Integer pontuation) {
+    public void givenAChallenge(final Letter letter, final Integer punctuation) {
 		
 		challengeResponse = new ChallengeResponseImpl();
 		final List<AlternativeImpl> alternatives = buildAlternatives(letter);
-		final List<QuestionImpl> questions = buildQuestions(alternatives, pontuation);
+		final List<QuestionImpl> questions = buildQuestions(alternatives, punctuation);
 		
 		challengeResponse.setTargetChallenge(buildChallenge(questions));
-		challengeResponse.setPontuation(0);
+		challengeResponse.setPunctuation(0);
 	}
 	
 	@Step("When a student select the alternative {0} and send the response")
@@ -37,15 +38,17 @@ public class ReplyAChallengeSteps {
 	}
 	
 	@Step("Then a student must have scored {0} points")
-	public void thenTheStudentScored(final Integer pontuation) {
-		challengeResponse.calculatePontuation();
-		Assert.assertTrue(challengeResponse.getPontuation().equals(pontuation));
+	public void thenTheStudentScored(final Integer punctuation) {
+		challengeResponse.calculatePunctuation();
+		Assert.assertTrue(challengeResponse.getPunctuation().equals(punctuation));
 	}
 	
 	private List<QuestionResponse> buildQuestionsResponse(final Letter letter) {
 		final QuestionResponse questionResponse = new QuestionResponseImpl();
 		questionResponse.setLetter(letter);
-		questionResponse.setTargetQuestion(challengeResponse.getTargetChallenge().getQuestions().get(0));
+		final List<QuestionImpl> questionList = challengeResponse.getTargetChallenge()
+				.getQuestions().stream().collect(Collectors.toList());
+		questionResponse.setTargetQuestion(questionList.get(0));
 		
 		final List<QuestionResponse> questionsResponse = new ArrayList<>();
 		questionsResponse.add(questionResponse);
@@ -59,10 +62,10 @@ public class ReplyAChallengeSteps {
 	}
 
 	private List<QuestionImpl> buildQuestions(final List<AlternativeImpl> alternatives,
-			final Integer pontuation) {
+			final Integer punctuation) {
 		final QuestionImpl question = new QuestionImpl();
 		question.setAlternatives(alternatives);
-		question.setPontuation(pontuation);
+		question.setPunctuation(punctuation);
 		
 		final List<QuestionImpl> questions = new ArrayList<>();
 		questions.add(question);

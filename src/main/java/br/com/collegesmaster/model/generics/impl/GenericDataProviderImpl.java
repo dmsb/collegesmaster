@@ -70,5 +70,4 @@ public class GenericDataProviderImpl<T extends ModelImpl> implements GenericData
 			return null;
 		}
 	}
-
 }

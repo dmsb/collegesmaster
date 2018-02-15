@@ -54,7 +54,6 @@ public class DisciplineDataProviderImpl implements DisciplineDataProvider{
 	public List<DisciplineImpl> findByCourse(Course course) {
 		final CriteriaQuery<DisciplineImpl> criteriaQuery = cb.createQuery(DisciplineImpl.class);
 		final Root<DisciplineImpl> rootDiscipline = criteriaQuery.from(DisciplineImpl.class);
-		
 		final Predicate coursePredicate = cb.equal(rootDiscipline.get(DisciplineImpl_.course), course);
 		
 		criteriaQuery.select(rootDiscipline)
@@ -64,6 +63,7 @@ public class DisciplineDataProviderImpl implements DisciplineDataProvider{
 		final EntityGraph<DisciplineImpl> dynamicGraph = createEntityGraphToLoadChallenges();
 		final TypedQuery<DisciplineImpl> typedQuery = em.createQuery(criteriaQuery)
 				.setHint(QueryHints.HINT_LOADGRAPH, dynamicGraph);
+		
 		return typedQuery.getResultList();
 	}
 

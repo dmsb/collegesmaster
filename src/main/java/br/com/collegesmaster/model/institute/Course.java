@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model.institute;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -19,8 +19,8 @@ public interface Course extends Model{
 
 	void setInstitute(Institute institute);
 
-	List<DisciplineImpl> getDisciplines();
+	Collection<DisciplineImpl> getDisciplines();
 
-	void setDisciplines(List<DisciplineImpl> disciplines);
+	void setDisciplines(Collection<DisciplineImpl> disciplines);
 
 }

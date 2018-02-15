@@ -1,6 +1,7 @@
 package br.com.collegesmaster.model.security;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -25,9 +26,9 @@ public interface User extends Model {
 
 	void setPassword(String password);
 
-	void setRoles(List<RoleImpl> roles);
+	void setRoles(Collection<RoleImpl> roles);
 
-	List<RoleImpl> getRoles();
+	Collection<RoleImpl> getRoles();
 
 	Course getCourse();
 

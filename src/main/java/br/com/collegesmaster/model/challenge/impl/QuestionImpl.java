@@ -5,7 +5,7 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 import javax.persistence.Access;
@@ -19,11 +19,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
-import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.collegesmaster.model.challenge.Challenge;
 import br.com.collegesmaster.model.challenge.Question;
@@ -37,7 +37,7 @@ public class QuestionImpl extends ModelImpl implements Question {
 
 	private static final long serialVersionUID = -8970625810455399880L;
 	
-	@NotBlank
+	@NotEmpty
 	@Lob
 	@Column(name = "description", nullable = false, unique = false, columnDefinition = "text")
 	private String description;
@@ -45,12 +45,14 @@ public class QuestionImpl extends ModelImpl implements Question {
 	@NotNull
 	@Min(0)
 	@Max(100)
-	@Column(name = "pontuation", nullable = false, length = 11)
-	private Integer pontuation;
+	@Column(name = "punctuation", nullable = false, length = 11)
+	private Integer punctuation;
 
+	@NotEmpty
 	@NotAudited
-	@OneToMany(targetEntity = AlternativeImpl.class, cascade = ALL, fetch = EAGER, orphanRemoval = true, mappedBy = "question")
-	private List<AlternativeImpl> alternatives;
+	@OneToMany(targetEntity = AlternativeImpl.class, cascade = ALL, fetch = EAGER, 
+		orphanRemoval = true, mappedBy = "question")
+	private Collection<AlternativeImpl> alternatives;
 
 	@NotNull
 	@ManyToOne(targetEntity = ChallengeImpl.class, optional = false, fetch = LAZY)
@@ -59,13 +61,13 @@ public class QuestionImpl extends ModelImpl implements Question {
 	private Challenge challenge;
 	
 	@Override
-	public Integer getPontuation() {
-		return pontuation;
+	public Integer getPunctuation() {
+		return punctuation;
 	}
 
 	@Override
-	public void setPontuation(Integer pontuation) {
-		this.pontuation = pontuation;
+	public void setPunctuation(Integer punctuation) {
+		this.punctuation = punctuation;
 	}
 
 	@Override
@@ -89,12 +91,12 @@ public class QuestionImpl extends ModelImpl implements Question {
 	}
 
 	@Override
-	public void setAlternatives(List<AlternativeImpl> alternatives) {
+	public void setAlternatives(Collection<AlternativeImpl> alternatives) {
 		this.alternatives = alternatives;
 	}
 
 	@Override
-	public List<AlternativeImpl> getAlternatives() {
+	public Collection<AlternativeImpl> getAlternatives() {
 		return alternatives;
 	}
 
@@ -113,11 +115,11 @@ public class QuestionImpl extends ModelImpl implements Question {
 
 		return Objects.equals(this.id, objectComparatedInstance.id) && 
 				Objects.equals(description, objectComparatedInstance.description) &&
-				Objects.equals(pontuation, objectComparatedInstance.pontuation);
+				Objects.equals(punctuation, objectComparatedInstance.punctuation);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, description, pontuation);
+		return Objects.hash(id, description, punctuation);
 	}
 }

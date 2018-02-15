@@ -4,7 +4,7 @@ import static javax.ejb.TransactionAttributeType.NEVER;
 import static javax.ejb.TransactionAttributeType.REQUIRED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
@@ -82,7 +82,7 @@ public class AuthenticationBusinessImpl implements AuthenticationBusiness {
 	@TransactionAttribute(REQUIRED)
 	@PermitAll
 	@Override
-	public List<RoleImpl> findUserRoles(final String username) throws LoginException {
+	public Collection<RoleImpl> findUserRoles(final String username) throws LoginException {
 		return authenticationDataProvider.findUserRoles(username);
 	}	
 }

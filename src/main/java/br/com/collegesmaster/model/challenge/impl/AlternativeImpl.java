@@ -16,10 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
-import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.collegesmaster.model.challenge.Alternative;
 import br.com.collegesmaster.model.challenge.Question;
@@ -40,7 +40,7 @@ public class AlternativeImpl extends ModelImpl implements Alternative {
 	@Column(name = "letter", unique = false, length = 1)
 	private Letter letter;
 	
-	@NotBlank
+	@NotEmpty
     @Lob
     @Column(name = "description", unique= false, length = 150, nullable = false, columnDefinition = "text")
     private String description;

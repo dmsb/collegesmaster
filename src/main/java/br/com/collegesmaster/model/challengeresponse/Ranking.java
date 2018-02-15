@@ -18,8 +18,8 @@ public interface Ranking extends Model {
 
 	Discipline getDiscipline();
 
-	void setTotalPontuation(Integer totalPontuation);
+	void setTotalPunctuation(Integer totalPunctuation);
 
-	Integer getTotalPontuation();
+	Integer getTotalPunctuation();
 	
 }

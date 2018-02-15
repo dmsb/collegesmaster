@@ -5,7 +5,7 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 import javax.persistence.Access;
@@ -18,11 +18,11 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
-import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,7 +41,7 @@ public class DisciplineImpl extends ModelImpl implements Discipline {
 
     private static final long serialVersionUID = -8467860341227715787L;
 	
-	@NotBlank
+	@NotEmpty
     @Column(name = "name", length = 30, nullable = false)
     private String name;
 	
@@ -55,7 +55,7 @@ public class DisciplineImpl extends ModelImpl implements Discipline {
 	@NotAudited
     @OneToMany(cascade = ALL, fetch = LAZY,
     		orphanRemoval = true, mappedBy = "discipline")
-    private List<ChallengeImpl> challenges;
+    private Collection<ChallengeImpl> challenges;
     
     public DisciplineImpl() {
     	
@@ -88,12 +88,12 @@ public class DisciplineImpl extends ModelImpl implements Discipline {
     }
 	
 	@Override
-	public List<ChallengeImpl> getChallenges() {
+	public Collection<ChallengeImpl> getChallenges() {
 		return challenges;
 	}
 
 	@Override
-	public void setChallenges(List<ChallengeImpl> challenges) {
+	public void setChallenges(Collection<ChallengeImpl> challenges) {
 		this.challenges = challenges;
 	}
 

@@ -52,12 +52,9 @@ public class UserDataProviderImpl implements UserDataProvider {
 	@Override
 	public UserImpl findByUsername(String username) {
 		final CriteriaQuery<UserImpl> criteriaQuery = cb.createQuery(UserImpl.class);
-		
 		final Root<UserImpl> userRoot = criteriaQuery.from(UserImpl.class);
-		
 		final Predicate usernamePredicate = cb.equal(userRoot.get(UserImpl_.username), username);
 		criteriaQuery.select(userRoot).where(usernamePredicate);
-		
 		final TypedQuery<UserImpl> typedQuery = em.createQuery(criteriaQuery);
 		return typedQuery.getSingleResult();
 	}

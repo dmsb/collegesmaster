@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model.challenge;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -21,9 +21,9 @@ public interface Challenge extends Model {
 
 	void setDiscipline(Discipline discipline);
 
-	void setQuestions(List<QuestionImpl> questions);
+	void setQuestions(Collection<QuestionImpl> questions);
 
-	List<QuestionImpl> getQuestions();
+	Collection<QuestionImpl> getQuestions();
 
 	void setTitle(String title);
 

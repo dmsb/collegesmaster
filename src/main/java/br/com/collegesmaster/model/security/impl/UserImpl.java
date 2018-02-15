@@ -5,6 +5,7 @@ import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -22,11 +23,12 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -51,38 +53,38 @@ public class UserImpl extends ModelImpl implements User {
 
     private static final long serialVersionUID = -7809703915845045860L;
 	
-    @NotNull
+    @NotEmpty
     @Size(min = 2, max = 25)
     @Column(name = "username", unique= true, length = 25, nullable = false)
     private String username;
     
-    @NotNull
+    @NotEmpty
     @Password
     @Basic(fetch = LAZY)
 	@Column(name = "password", nullable = false, length = 88)
     private String password;
      
-    @NotNull
+    @NotEmpty
     @Basic(fetch = LAZY)
 	@Column(name = "salt", nullable = false, length = 44)
     private String salt;
 	
-    @NotNull
+    @NotEmpty
 	@CPF
 	@Column(name = "cpf", nullable = false, length = 11)	
     private String cpf;
 		
-	@NotNull
+    @NotEmpty
 	@Email
 	@Column(name = "email", nullable = false, length = 50)
     private String email;
 
-	@NotNull
+    @NotEmpty
 	@Size(max = 25)
 	@Column(name = "firstName", nullable = false, length = 25)
     private String firstName;
 
-	@NotNull
+    @NotEmpty
 	@Size(max = 80)
     @Column(name = "lastName", nullable = false, length = 80)
     private String lastName;
@@ -102,7 +104,7 @@ public class UserImpl extends ModelImpl implements User {
 	    foreignKey = @ForeignKey(name = "UR_userFK"),
 	    inverseJoinColumns = {@JoinColumn(name="roleFK", referencedColumnName = "id")},
 	    inverseForeignKey = @ForeignKey(name = "UR_roleFK"))
-    private List<RoleImpl> roles;
+    private Collection<RoleImpl> roles;
     
     @PrePersist
     @Override
@@ -229,12 +231,12 @@ public class UserImpl extends ModelImpl implements User {
 	}
 	
 	@Override
-	public List<RoleImpl> getRoles() {
+	public Collection<RoleImpl> getRoles() {
 		return roles;
 	}
 
 	@Override
-	public void setRoles(List<RoleImpl> roles) {
+	public void setRoles(Collection<RoleImpl> roles) {
 		this.roles = roles;
 	}
 	

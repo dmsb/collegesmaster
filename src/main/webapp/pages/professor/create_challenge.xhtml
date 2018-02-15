@@ -24,9 +24,9 @@
 						<p:column>
 							<h:outputLabel for="title" value="#{text['title']}" />
 						</p:column>
-						<p:column style="text-align:left">											
-							<p:inputText id="title" required="true" size="40"
-								value="#{challengeMB.challenge.title}"  />							
+						<p:column style="text-align:left">								
+							<p:inputText id="title" size="40"
+								value="#{challengeMB.challenge.title}" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -36,7 +36,7 @@
 						<p:column style="text-align:left">
 							<p:selectOneMenu id="discipline" value="#{challengeMB.challenge.discipline}" converter="disciplineConverter"
 								required="true" requiredMessage="#{text['required_discipline_message']}">
-								<f:selectItem itemLabel="#{text['select']}" itemValue="" />
+								<f:selectItem itemLabel="#{text['select']}" itemValue="#{discipline}" />
 					            <f:selectItems value="#{challengeMB.loadUserDisciplines()}" var="discipline" itemLabel="#{discipline.name}"
 					            	itemValue="#{discipline}" />
 					        </p:selectOneMenu>							
@@ -108,12 +108,12 @@
 		   						<p:panelGrid>
 			   						<p:row>
 										<p:column>
-											<h:outputLabel for="pontuation" value="#{text['pontuation']}" />
+											<h:outputLabel for="punctuation" value="#{text['punctuation']}" />
 										</p:column>
 										<p:column>
-					        				<p:spinner id="pontuation" value="#{challengeMB.currentQuestion.pontuation}"
+					        				<p:spinner id="punctuation" value="#{challengeMB.currentQuestion.punctuation}"
 					        					stepFactor="10" min="0" max="100" size="5" required="true"
-												requiredMessage="#{text['required_pontuation_message']}"
+												requiredMessage="#{text['required_punctuation_message']}"
 												style="margin-right: 10px"/>
 			   							</p:column>
 			   						</p:row>

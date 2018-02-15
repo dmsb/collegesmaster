@@ -76,16 +76,16 @@
 	<challenge title='Challenge 5' disciplineFK='2' userFK='3' version='1498780800000' />
 	<challenge title='Challenge 6' disciplineFK='1' userFK='3' version='1498780800000' />
 
-	<question description='Question about Internet Protocols' pontuation='50' challengeFK='1' version='1498780800000' />
-	<question description='Question about Math' pontuation='50' challengeFK='1' version='1498780800000' />
+	<question description='Question about Internet Protocols' punctuation='50' challengeFK='1' version='1498780800000' />
+	<question description='Question about Math' punctuation='50' challengeFK='1' version='1498780800000' />
 
-	<question description='Question about Physic' pontuation='50' challengeFK='2' version='1498780800000' />
-	<question description='Question about maintenance' pontuation='50' challengeFK='2' version='1498780800000' />
+	<question description='Question about Physic' punctuation='50' challengeFK='2' version='1498780800000' />
+	<question description='Question about maintenance' punctuation='50' challengeFK='2' version='1498780800000' />
 
-	<question description='Question about TDD' pontuation='50' challengeFK='3' version='1498780800000' />
-	<question description='Question about BDD' pontuation='50' challengeFK='3' version='1498780800000' />
+	<question description='Question about TDD' punctuation='50' challengeFK='3' version='1498780800000' />
+	<question description='Question about BDD' punctuation='50' challengeFK='3' version='1498780800000' />
 	
-	<question description='Question about DDD' pontuation='50' challengeFK='4' version='1498780800000' />
+	<question description='Question about DDD' punctuation='50' challengeFK='4' version='1498780800000' />
 
 	<alternative isTrue='true' description="Response 1" letter='A' questionFK='1' version='1498780800000' />
 	<alternative isTrue='false' description="Response 2" letter='B' questionFK='1' version='1498780800000' />

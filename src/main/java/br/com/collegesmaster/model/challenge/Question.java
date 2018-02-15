@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model.challenge;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -11,13 +11,13 @@ import br.com.collegesmaster.model.model.Model;
 @JsonDeserialize(as = QuestionImpl.class)
 public interface Question extends Model {
 
-	void setAlternatives(List<AlternativeImpl> alternatives);
+	void setAlternatives(Collection<AlternativeImpl> alternatives);
 
-	List<AlternativeImpl> getAlternatives();
+	Collection<AlternativeImpl> getAlternatives();
 
-	void setPontuation(Integer pontuation);
+	void setPunctuation(Integer punctuation);
 
-	Integer getPontuation();
+	Integer getPunctuation();
 
 	void setDescription(String description);
 

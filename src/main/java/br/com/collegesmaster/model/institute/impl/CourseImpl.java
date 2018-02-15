@@ -5,7 +5,7 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 import javax.persistence.Access;
@@ -16,10 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
-import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -37,7 +37,7 @@ public class CourseImpl extends ModelImpl implements Course {
 
 	private static final long serialVersionUID = -8528499270451458997L;
 	
-	@NotBlank
+	@NotEmpty
 	@Column(name = "name", length = 50, nullable = false)
 	private String name;
 	
@@ -48,9 +48,10 @@ public class CourseImpl extends ModelImpl implements Course {
 		foreignKey = @ForeignKey(name = "COURSE_instituteFK"))
 	private Institute institute;
 	
+	@NotEmpty
 	@OneToMany(targetEntity = DisciplineImpl.class, cascade = ALL, fetch = LAZY,
 			orphanRemoval = true, mappedBy = "course")
-	private List<DisciplineImpl> disciplines;
+	private Collection<DisciplineImpl> disciplines;
 	
 	public CourseImpl() {
     	
@@ -83,12 +84,12 @@ public class CourseImpl extends ModelImpl implements Course {
 	}
 
 	@Override
-	public List<DisciplineImpl> getDisciplines() {
+	public Collection<DisciplineImpl> getDisciplines() {
 		return disciplines;
 	}
 
 	@Override
-	public void setDisciplines(List<DisciplineImpl> disciplines) {
+	public void setDisciplines(Collection<DisciplineImpl> disciplines) {
 		this.disciplines = disciplines;
 	}
 	

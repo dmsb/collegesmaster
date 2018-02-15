@@ -57,7 +57,6 @@ public class ChallengeMB implements Serializable {
 		challenge.setDiscipline(new DisciplineImpl());
 		challenge.setOwner(loggedUser);
 		challenge.setQuestions(new ArrayList<QuestionImpl>());
-		
 		initCurrentQuestion();
 	}
 	
@@ -72,61 +71,44 @@ public class ChallengeMB implements Serializable {
 	}
 
 	private void initAlternatives() {
-		
 		alternatives = new ArrayList<>(4);
 		alternatives.add(new AlternativeImpl());
 		alternatives.add(new AlternativeImpl());
 		alternatives.add(new AlternativeImpl());
 		alternatives.add(new AlternativeImpl());
-		
 		final Letter[] letters = Letter.values();
-		
 		for(int i = 0; i < letters.length; i++) {
 			alternatives.get(i).setLetter(letters[i]);
 		}
-		
 		trueAlternative = null;
 	}
 	
 	public void persistChallenge() {
-		
 		final Integer disciplineId = challenge.getDiscipline().getId();		
-		
 		final Discipline discipline = disciplineBusiness.findById(disciplineId);
-		
 		challenge.setDiscipline(discipline);
-		
 		final Boolean created = challengeBusiness.create(challenge);
-		
 		if(created) {
 			addMessage(SEVERITY_INFO, "challenge_registred_with_success_message");
 		} else {
 			addMessage(SEVERITY_ERROR, "unexpected_error");
 		}
-
 		init();
 	}
 	
 	public void addQuestionToChallenge() {
-		
 		if(trueAlternative != null) {
-			
 			currentQuestion.setChallenge(challenge);
-			
 			for(final Alternative alternative : alternatives) {
 				alternative.setQuestion(currentQuestion);
-				
 				if(trueAlternative.equals(alternative.getLetter())) {
 					alternative.setIsTrue(TRUE);
 				} else {
 					alternative.setIsTrue(FALSE);
 				}
 			}
-			
 			currentQuestion.setAlternatives(alternatives);
-			
 			challenge.getQuestions().add(currentQuestion);
-			
 			addMessage(SEVERITY_INFO, "questiond_added_message");
 		} else {
 			addMessage(SEVERITY_WARN, "correct_alternative_required_message");

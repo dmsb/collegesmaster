@@ -5,7 +5,7 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 import javax.persistence.Access;
@@ -19,6 +19,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -55,36 +56,37 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 	private User owner;
 	
 	@NotNull
-	@Column(name = "pontuation", nullable = false, length = 11)
-	private Integer pontuation;
+	@Column(name = "punctuation", nullable = false, length = 11)
+	private Integer punctuation;
 	
+	@NotEmpty
 	@NotAudited
 	@OneToMany(targetEntity = QuestionResponseImpl.class, cascade = ALL, 
 		fetch = LAZY, orphanRemoval = true, mappedBy = "challengeResponse")
-	private List<QuestionResponse> questionsResponse;
+	private Collection<QuestionResponse> questionsResponse;
 	
 	@Override
 	@PrePersist
 	@PreUpdate
-	public void calculatePontuation() {
-		pontuation = 0;
+	public void calculatePunctuation() {
+		punctuation = 0;
 		questionsResponse.stream()
-			.forEach(response -> { selectQuestionToProcessPontuation(response); });
+			.forEach(response -> { selectQuestionToProcessPunctuation(response); });
 	}
 
-	private void selectQuestionToProcessPontuation(QuestionResponse response) {
+	private void selectQuestionToProcessPunctuation(QuestionResponse response) {
 		response.getTargetQuestion()
 		.getAlternatives().stream()
 			.forEach(alternative -> {					
-			addPontuation(response, alternative);
+			addPunctuation(response, alternative);
 		});
 	}
 
 	@Override
-	public void addPontuation(final QuestionResponse response, AlternativeImpl alternative) {
+	public void addPunctuation(final QuestionResponse response, AlternativeImpl alternative) {
 		if(alternative.getIsTrue() && 
 				alternative.getLetter().equals(response.getLetter())) {
-			pontuation = pontuation + response.getTargetQuestion().getPontuation();
+			punctuation = punctuation + response.getTargetQuestion().getPunctuation();
 		}
 	}
 
@@ -109,22 +111,22 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 	}
 
 	@Override
-	public Integer getPontuation() {
-		return pontuation;
+	public Integer getPunctuation() {
+		return punctuation;
 	}
 
 	@Override
-	public void setPontuation(Integer pontuation) {
-		this.pontuation = pontuation;
+	public void setPunctuation(Integer punctuation) {
+		this.punctuation = punctuation;
 	}
 
 	@Override
-	public List<QuestionResponse> getQuestionsResponse() {
+	public Collection<QuestionResponse> getQuestionsResponse() {
 		return questionsResponse;
 	}
 
 	@Override
-	public void setQuestionsResponse(List<QuestionResponse> questionsResponse) {
+	public void setQuestionsResponse(Collection<QuestionResponse> questionsResponse) {
 		this.questionsResponse = questionsResponse;
 	}
 	
@@ -142,12 +144,12 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 		final ChallengeResponseImpl objectComparatedInstance = (ChallengeResponseImpl) objectToBeComparated;
 		
 		return Objects.equals(this.id, objectComparatedInstance.id) && 
-				Objects.equals(this.pontuation, objectComparatedInstance.pontuation);
+				Objects.equals(this.punctuation, objectComparatedInstance.punctuation);
 	}
 	
 	@Override
     public int hashCode() {
-        return Objects.hash(id, pontuation);
+        return Objects.hash(id, punctuation);
     }
 	
 }

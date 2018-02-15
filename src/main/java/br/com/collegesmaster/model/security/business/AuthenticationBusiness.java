@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model.security.business;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -11,7 +11,7 @@ import br.com.collegesmaster.model.security.impl.RoleImpl;
 
 public interface AuthenticationBusiness {
 
-	List<RoleImpl> findUserRoles(final String username) throws LoginException;
+	Collection<RoleImpl> findUserRoles(final String username) throws LoginException;
 
 	String findUserPassword(final String username) throws LoginException;
 

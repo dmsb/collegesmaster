@@ -10,9 +10,9 @@ import br.com.collegesmaster.model.security.User;
 
 public interface RankingBusiness extends GenericCRUD<RankingImpl> {
 	
-	List<RankingImpl> findBestPositionsByPeriod(String semester, Institute userInstitute);
+	List<RankingImpl> findBestPositionsBySemester(String semester, Institute userInstitute);
 	
-	void addPontuationToUser(ChallengeResponse challengeResponse);
+	void addPunctuationToUser(ChallengeResponse challengeResponse);
 	
 	RankingImpl findByUserAndPeriod(User user, String semester);
 }

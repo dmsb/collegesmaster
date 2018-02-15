@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import org.jboss.ejb3.annotation.SecurityDomain;
 
+import br.com.collegesmaster.exceptions.BusinessException;
 import br.com.collegesmaster.model.generics.impl.GenericBusinessImpl;
 import br.com.collegesmaster.model.security.business.UserBusiness;
 import br.com.collegesmaster.model.security.dataprovider.UserDataProvider;
@@ -70,8 +71,12 @@ public class UserBusinessImpl extends GenericBusinessImpl<UserImpl> implements U
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Boolean existsCpf(final String cpf) {
-		final String crudeCpfToBeComparated = cpf.replaceAll("[^0-9]", "");
-		return userDataProvider.existsCpf(crudeCpfToBeComparated);
+		if(cpf != null) {
+			final String crudeCpfToBeComparated = cpf.replaceAll("[^0-9]", "");
+			return userDataProvider.existsCpf(crudeCpfToBeComparated);
+		} else {
+			throw new BusinessException("null_cpf_message");
+		}
 	}
 
 	@PermitAll

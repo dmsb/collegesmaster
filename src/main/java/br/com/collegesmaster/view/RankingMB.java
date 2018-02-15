@@ -34,7 +34,7 @@ public class RankingMB implements Serializable {
 	public void init() {
 		semester = loggedUser.getCourse().getInstitute().getSemester();
 		final Institute userInstitute = loggedUser.getCourse().getInstitute();
-		podiumPositionsByDiscipline = rankingBusiness.findBestPositionsByPeriod(semester, userInstitute);
+		podiumPositionsByDiscipline = rankingBusiness.findBestPositionsBySemester(semester, userInstitute);
 	}
 
 	public User getLoggedUser() {

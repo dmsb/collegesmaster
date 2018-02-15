@@ -9,7 +9,6 @@
 		<class>br.com.collegesmaster.model.institute.impl.InstituteImpl</class>
 		<class>br.com.collegesmaster.model.institute.impl.CourseImpl</class>
 		<class>br.com.collegesmaster.model.institute.impl.DisciplineImpl</class>
-		<class>br.com.collegesmaster.model.localization.impl.LocalizationImpl</class>
 		<class>br.com.collegesmaster.model.security.impl.UserImpl</class>
 		<class>br.com.collegesmaster.model.challenge.impl.ChallengeImpl</class>
 		<class>br.com.collegesmaster.model.challenge.impl.QuestionImpl</class>
@@ -41,7 +40,6 @@
 <!-- 		<class>br.com.collegesmaster.model.institute.impl.InstituteImpl</class> -->
 <!-- 		<class>br.com.collegesmaster.model.institute.impl.CourseImpl</class> -->
 <!-- 		<class>br.com.collegesmaster.model.institute.impl.DisciplineImpl</class> -->
-<!-- 		<class>br.com.collegesmaster.model.localization.impl.LocalizationImpl</class> -->
 <!-- 		<class>br.com.collegesmaster.model.security.impl.UserImpl</class> -->
 <!-- 		<class>br.com.collegesmaster.model.challenge.impl.ChallengeImpl</class> -->
 <!-- 		<class>br.com.collegesmaster.model.challenge.impl.QuestionImpl</class> -->

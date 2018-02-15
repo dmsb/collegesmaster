@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model.security.dataprovider.impl;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -85,7 +85,7 @@ public class AuthenticationDataProviderImpl implements AuthenticationDataProvide
 	}
 	
 	@Override
-	public List<RoleImpl> findUserRoles(final String username) throws LoginException {
+	public Collection<RoleImpl> findUserRoles(final String username) throws LoginException {
 		
 		final CriteriaQuery<UserImpl> criteriaQuery = cb.createQuery(UserImpl.class);		
 		final Root<UserImpl> rootUser = criteriaQuery.from(UserImpl.class);

@@ -3,13 +3,15 @@ package br.com.collegesmaster.view;
 import static br.com.collegesmaster.view.util.JsfUtils.addMessage;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
+import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -89,17 +91,14 @@ public class ChallengeResponseMB implements Serializable {
 	public void loadChallengeQuestions() {		
 		selectedChallenge
 			.setQuestions(challengeBusiness.findQuestionsByChallenge(selectedChallenge));
-		
 		challengeResponse.setTargetChallenge(selectedChallenge);
 		buildQuestionsResponse();
 		
 	}
 
 	private void buildQuestionsResponse() {
-		final List<QuestionImpl> questions = selectedChallenge.getQuestions();
-		
+		final Collection<QuestionImpl> questions = selectedChallenge.getQuestions();
 		final Iterator<QuestionImpl> iterator = questions.iterator();
-		
 		while(iterator.hasNext()) {
 			lettersMarked.add(null);
 			iterator.next();
@@ -107,47 +106,31 @@ public class ChallengeResponseMB implements Serializable {
 	}
 	
 	public void selectAlternative() {
-		
 		final QuestionResponse questionResponse = buildQuestionResponse();
-		
 		final Boolean existsAResponse = existsAResponseForThisQuestion(questionResponse);		
-		
-		addMessage(SEVERITY_INFO, "picked_alternative_message");
-		
-		if(existsAResponse) {
-			return;
-		} else {
+		if(FALSE.equals(existsAResponse)) {
 			challengeResponse.getQuestionsResponse().add(questionResponse);
 			setMarkedLetter(questionResponse, questionResponse);
 		}
-
+		addMessage(SEVERITY_INFO, "picked_alternative_message");
 	}
 
 	private void setMarkedLetter(final QuestionResponse questionResponse, final QuestionResponse response) {
-		final Integer questionIndex = selectedChallenge.getQuestions().indexOf(questionResponse.getTargetQuestion());
+		final List<QuestionImpl> list = selectedChallenge.getQuestions().stream().collect(Collectors.toList());
+		final Integer questionIndex = list.indexOf(questionResponse.getTargetQuestion());
 		lettersMarked.set(questionIndex, response.getLetter().getLetter());
-//		if(lettersMarked.get(questionIndex) == null) {
-//			lettersMarked.set(questionIndex, response.getLetter().getLetter());
-//		}
 	}
 
 	private Boolean existsAResponseForThisQuestion(final QuestionResponse questionResponse) {
-		
 		final Iterator<QuestionResponse> iterator = challengeResponse.getQuestionsResponse().iterator();
-		
 		while(iterator.hasNext()) {
-			
 			QuestionResponse response = iterator.next();
-			
 			if(response.getTargetQuestion().equals(questionResponse.getTargetQuestion())) {				
-
 				response = questionResponse;
 				setMarkedLetter(questionResponse, response);
-				
 				return TRUE;
 			}
 		}
-
 		return FALSE;
 	}
 
@@ -160,13 +143,11 @@ public class ChallengeResponseMB implements Serializable {
 	}
 	
 	public void persistResponse() {
-		
 		final Boolean created = challengeResponseBusiness.create(challengeResponse);
-		
 		if(created) {
 			addMessage(SEVERITY_INFO, "response_registred_with_success_message");
 		} else {
-			addMessage(SEVERITY_ERROR, "unexpected_error");
+			addMessage(SEVERITY_WARN, "already_replied_challenge_message");
 		}
 	}
 

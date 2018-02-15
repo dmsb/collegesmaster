@@ -1,6 +1,6 @@
 package br.com.collegesmaster.model.challengeresponse;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -13,13 +13,13 @@ import br.com.collegesmaster.model.security.User;
 @JsonDeserialize(as = ChallengeResponseImpl.class)
 public interface ChallengeResponse extends Model {
 
-	void setPontuation(Integer note);
+	void setPunctuation(Integer punctuation);
 
-	Integer getPontuation();
+	Integer getPunctuation();
 
-	void setQuestionsResponse(List<QuestionResponse> myQuestionsResolution);
+	void setQuestionsResponse(Collection<QuestionResponse> myQuestionsResolution);
 
-	List<QuestionResponse> getQuestionsResponse();
+	Collection<QuestionResponse> getQuestionsResponse();
 
 	void setOwner(User owner);
 
@@ -29,8 +29,8 @@ public interface ChallengeResponse extends Model {
 
 	Challenge getTargetChallenge();
 
-	void addPontuation(final QuestionResponse response, AlternativeImpl alternative);
+	void addPunctuation(final QuestionResponse response, AlternativeImpl alternative);
 
-	void calculatePontuation();
+	void calculatePunctuation();
 
 }

@@ -1,5 +1,6 @@
 package br.com.collegesmaster.model.challengeresponse.business.impl;
 
+import static java.lang.Boolean.FALSE;
 import static javax.ejb.TransactionAttributeType.MANDATORY;
 import static javax.ejb.TransactionAttributeType.REQUIRED;
 import static javax.ejb.TransactionManagementType.CONTAINER;
@@ -44,14 +45,14 @@ public class ChallengeResponseBusinessImpl extends GenericBusinessImpl<Challenge
 	@Override
 	public Boolean create(final ChallengeResponseImpl response) {
 		final Boolean alrealdyRepliedByUser = alrealdyRepliedByUser(response);
-		if(Boolean.FALSE.equals(alrealdyRepliedByUser)) {
+		if(FALSE.equals(alrealdyRepliedByUser)) {
 			final Boolean wasCreated = super.genericCreate(response);
 			if(wasCreated) {
-				rankingBusiness.addPontuationToUser(response);
+				rankingBusiness.addPunctuationToUser(response);
 			}
 			return wasCreated;
 		} else {
-			throw new BusinessException("already_replied_challenge_message");
+			return FALSE;
 		}
 	}
 	
@@ -77,7 +78,7 @@ public class ChallengeResponseBusinessImpl extends GenericBusinessImpl<Challenge
 			return challengeResponseDataProvider.alrealdyRepliedByUser(response);
 		} else {
 			LOGGER.warn("This challenge already registered");
-			throw new BusinessException("this_challenge_already_registered");
+			throw new BusinessException("this_challenge_already_registered_message");
 		}
 	}
 	

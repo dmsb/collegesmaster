@@ -50,12 +50,12 @@ public class RoleImpl extends ModelImpl implements Role {
 		
 		final RoleImpl objectComparatedInstance = (RoleImpl) objectToBeComparated;
 		
-		return Objects.equals(id, objectComparatedInstance.id) &&
-				Objects.equals(name, objectComparatedInstance.name);
+		return Objects.equals(this.id, objectComparatedInstance.id) &&
+				Objects.equals(this.name, objectComparatedInstance.name);
 	}
 	
 	@Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(this.id, this.name);
     }
 }
