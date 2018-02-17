@@ -18,7 +18,6 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -41,7 +40,7 @@ public class DisciplineImpl extends ModelImpl implements Discipline {
 
     private static final long serialVersionUID = -8467860341227715787L;
 	
-	@NotEmpty
+	@NotNull
     @Column(name = "name", length = 30, nullable = false)
     private String name;
 	

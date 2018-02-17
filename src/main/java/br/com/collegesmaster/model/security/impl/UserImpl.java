@@ -24,7 +24,6 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -53,38 +52,38 @@ public class UserImpl extends ModelImpl implements User {
 
     private static final long serialVersionUID = -7809703915845045860L;
 	
-    @NotEmpty
+    @NotNull
     @Size(min = 2, max = 25)
     @Column(name = "username", unique= true, length = 25, nullable = false)
     private String username;
     
-    @NotEmpty
+    @NotNull
     @Password
     @Basic(fetch = LAZY)
 	@Column(name = "password", nullable = false, length = 88)
     private String password;
      
-    @NotEmpty
+    @NotNull
     @Basic(fetch = LAZY)
 	@Column(name = "salt", nullable = false, length = 44)
     private String salt;
 	
-    @NotEmpty
+    @NotNull
 	@CPF
 	@Column(name = "cpf", nullable = false, length = 11)	
     private String cpf;
 		
-    @NotEmpty
+    @NotNull
 	@Email
 	@Column(name = "email", nullable = false, length = 50)
     private String email;
 
-    @NotEmpty
+    @NotNull
 	@Size(max = 25)
 	@Column(name = "firstName", nullable = false, length = 25)
     private String firstName;
 
-    @NotEmpty
+    @NotNull
 	@Size(max = 80)
     @Column(name = "lastName", nullable = false, length = 80)
     private String lastName;

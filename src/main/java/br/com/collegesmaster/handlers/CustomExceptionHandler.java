@@ -1,7 +1,6 @@
 package br.com.collegesmaster.handlers;
 
 import java.util.Iterator;
-import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -13,7 +12,6 @@ import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
 import javax.inject.Inject;
 import javax.naming.NamingException;
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import org.jboss.logging.Logger;
@@ -30,8 +28,8 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 	
 	private ExceptionHandler exceptionHandler;
 
-	
-    public CustomExceptionHandler(ExceptionHandler exceptionHandler) {
+	@SuppressWarnings("deprecation")
+	public CustomExceptionHandler(ExceptionHandler exceptionHandler) {
     	try {
 			CdiHelper.programmaticInjection(CustomExceptionHandler.class, this);
 		} catch (NamingException e) {

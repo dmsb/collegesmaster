@@ -19,7 +19,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -59,7 +58,7 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 	@Column(name = "punctuation", nullable = false, length = 11)
 	private Integer punctuation;
 	
-	@NotEmpty
+	@NotNull
 	@NotAudited
 	@OneToMany(targetEntity = QuestionResponseImpl.class, cascade = ALL, 
 		fetch = LAZY, orphanRemoval = true, mappedBy = "challengeResponse")

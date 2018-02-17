@@ -16,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -53,7 +52,7 @@ public class ChallengeImpl extends ModelImpl implements Challenge {
 		foreignKey = @ForeignKey(name = "CHALLENGE_disciplineFK"))
 	private Discipline discipline;
 	
-	@NotEmpty
+	@NotNull
 	@NotAudited
 	@OneToMany(targetEntity = QuestionImpl.class, cascade = ALL, fetch = LAZY, 
 		orphanRemoval = true, mappedBy="challenge")

@@ -12,7 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
@@ -32,7 +32,7 @@ public class InstituteImpl extends ModelImpl implements Institute {
 
     private static final long serialVersionUID = -7480055661943707725L;
 	
-    @NotEmpty
+    @NotNull
     @Column(name = "name",  nullable = false, length = 50)
     @Size(min = 3)
     private String name;
@@ -42,7 +42,7 @@ public class InstituteImpl extends ModelImpl implements Institute {
     		fetch = LAZY, orphanRemoval = true, mappedBy = "institute")
     private Collection<CourseImpl> courses;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "semester", nullable = false, length = 6)
     private String semester;
     

@@ -16,8 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
 
@@ -40,7 +40,8 @@ public class AlternativeImpl extends ModelImpl implements Alternative {
 	@Column(name = "letter", unique = false, length = 1)
 	private Letter letter;
 	
-	@NotEmpty
+	@NotNull
+	@Size
     @Lob
     @Column(name = "description", unique= false, length = 150, nullable = false, columnDefinition = "text")
     private String description;

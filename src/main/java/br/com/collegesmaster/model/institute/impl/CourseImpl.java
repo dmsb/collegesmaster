@@ -16,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
@@ -37,7 +36,7 @@ public class CourseImpl extends ModelImpl implements Course {
 
 	private static final long serialVersionUID = -8528499270451458997L;
 	
-	@NotEmpty
+	@NotNull
 	@Column(name = "name", length = 50, nullable = false)
 	private String name;
 	
@@ -48,7 +47,7 @@ public class CourseImpl extends ModelImpl implements Course {
 		foreignKey = @ForeignKey(name = "COURSE_instituteFK"))
 	private Institute institute;
 	
-	@NotEmpty
+	@NotNull
 	@OneToMany(targetEntity = DisciplineImpl.class, cascade = ALL, fetch = LAZY,
 			orphanRemoval = true, mappedBy = "course")
 	private Collection<DisciplineImpl> disciplines;

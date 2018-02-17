@@ -15,25 +15,24 @@ import javax.faces.convert.FacesConverter;
 import org.jboss.logging.Logger;
 
 @FacesConverter(value = "localDateTimeConverter")
-public class LocalDateTimeConverter implements Converter {
+public class LocalDateTimeConverter implements Converter<LocalDate> {
 	
 	private static final Logger LOGGER = Logger.getLogger(LocalDateTimeConverter.class);
 	
 	@Override
-	public Object getAsObject(FacesContext context, UIComponent component, String value) {
+	public LocalDate getAsObject(FacesContext context, UIComponent component, String localDate) {
 		try {
-			return LocalDate.parse(value, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+			return LocalDate.parse(localDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 		} catch (DateTimeParseException | IllegalArgumentException e) {
 			LOGGER.error("Invalid date format: " + e.getMessage());
 			addMessage(SEVERITY_WARN, "invalid_date_message");
 		}
-		return "";
+		return null;
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		LocalDate dateValue = (LocalDate) value;
-		return dateValue.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+	public String getAsString(FacesContext context, UIComponent component, LocalDate localDate) {
+		return localDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 	}
 
 }

@@ -6,11 +6,8 @@ import javax.faces.context.ExceptionHandlerFactory;
 public class CustomExceptionHandlerFactory extends ExceptionHandlerFactory {
 
 	private ExceptionHandlerFactory exceptionHandlerFactory;
-
-	public CustomExceptionHandlerFactory() {
-
-	}
-
+	
+	@SuppressWarnings("deprecation")
 	public CustomExceptionHandlerFactory(ExceptionHandlerFactory exceptionHandlerFactory) {
 		this.exceptionHandlerFactory = exceptionHandlerFactory;
 	}

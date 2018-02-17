@@ -125,7 +125,7 @@
 						<p:column>
 							<p:selectOneMenu id="role" value="#{homeMB.selectedRole}" label="#{text['role']}"
 								converter="roleConverter" required="true" requiredMessage="#{text['required_role_message']}" >
-								<f:selectItem itemLabel="#{text['select']}" itemValue="" />
+								<f:selectItem itemLabel="#{text['select']}" itemValue="#{role}" noSelectionOption="true" />
 					            <f:selectItems value="#{homeMB.roles}" var="role" itemLabel="#{text['' += role.name]}" 
 					            	itemValue="#{role}" />
 					        </p:selectOneMenu>
@@ -138,7 +138,7 @@
 						<p:column>
 							<p:selectOneMenu id="institute" value="#{homeMB.selectedInstitute}" label="#{text['institute']}"
 								converter="instituteConverter" required="true" requiredMessage="#{text['required_institute_message']}">
-								<f:selectItem itemLabel="#{text['select']}" itemValue="" />
+								<f:selectItem itemLabel="#{text['select']}" itemValue="#{institute}" noSelectionOption="true" />
 					            <f:selectItems value="#{homeMB.institutes}" var="institute" itemLabel="#{institute.name}" 
 					            	itemValue="#{institute}" />
 					            <p:ajax listener="#{homeMB.changeInstituteEvent()}" event="change" update=":register_form:course" />
@@ -152,7 +152,7 @@
 						<p:column>
 							<p:selectOneMenu id="course" value="#{homeMB.selectedCourse}" label="#{text['course']}"
 								converter="courseConverter" required="true" requiredMessage="#{text['required_course_message']}">
-								<f:selectItem itemLabel="#{text['select']}" itemValue="" />
+								<f:selectItem itemLabel="#{text['select']}" itemValue="#{course}" noSelectionOption="true" />
 					            <f:selectItems value="#{homeMB.selectedInstitute.courses}" var="course" itemLabel="#{course.name}" 
 					            	itemValue="#{course}" />
 					        </p:selectOneMenu>
