@@ -10,15 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
-import org.hibernate.envers.Audited;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.collegesmaster.model.model.Model;
 
 @MappedSuperclass
 @Access(FIELD)
-@Audited
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ModelImpl implements Model {
 

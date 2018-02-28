@@ -25,7 +25,6 @@ import br.com.collegesmaster.integration.util.DBUnitUtil;
 public class JUnitConfiguration {
 		
     protected static EntityManagerFactory emf;
-	
     protected final static Logger logger = Logger.getGlobal();
     protected static EntityManager em;
     protected static EntityTransaction et;

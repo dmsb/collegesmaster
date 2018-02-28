@@ -7,6 +7,7 @@ import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -27,7 +28,7 @@ import br.com.collegesmaster.model.security.User;
 @Stateless
 @TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
-@RolesAllowed({"ADMINISTRATOR", "STUDENT"})
+@RolesAllowed({"STUDENT", "ADMINISTRATOR"})
 public class RankingBusinessImpl extends GenericBusinessImpl<RankingImpl> implements RankingBusiness {
 	
 	@Inject
@@ -51,6 +52,7 @@ public class RankingBusinessImpl extends GenericBusinessImpl<RankingImpl> implem
 		return super.genericRemove(ranking);
 	}
 	
+	@PermitAll
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public List<RankingImpl> findBestPositionsBySemester(final String semester, final Institute userInstitute) {
@@ -70,18 +72,23 @@ public class RankingBusinessImpl extends GenericBusinessImpl<RankingImpl> implem
 						.getDiscipline().getCourse()
 						.getInstitute().getSemester());
 			if(userRankingInPeriod != null) {
-				final Integer currentPunctuation = userRankingInPeriod.getTotalPunctuation();
-				final Integer currentChallengeResponsePunctuation = challengeResponse.getPunctuation();
-				userRankingInPeriod.setTotalPunctuation(currentPunctuation + currentChallengeResponsePunctuation);
+				final Integer currentPontuation = addStudentPontuation(challengeResponse.getPunctuation(), 
+						userRankingInPeriod.getTotalPunctuation());
+				userRankingInPeriod.setTotalPunctuation(currentPontuation);
 				this.update(userRankingInPeriod);
 			} else {
-				final RankingImpl newUserRanking = buildNewRanking(challengeResponse);
+				final RankingImpl newUserRanking = buildANewRanking(challengeResponse);
 				this.create(newUserRanking);
 			}
 		}
 	}
 
-	private RankingImpl buildNewRanking(final ChallengeResponse challengeResponse) {
+	private Integer addStudentPontuation(final Integer currentChallengeResponsePunctuation,
+			final Integer currentPunctuation) {
+		return currentPunctuation + currentChallengeResponsePunctuation;
+	}
+
+	private RankingImpl buildANewRanking(final ChallengeResponse challengeResponse) {
 		final RankingImpl newUserRanking = new RankingImpl();
 		newUserRanking.setDiscipline(challengeResponse.getTargetChallenge().getDiscipline());
 		newUserRanking.setTotalPunctuation(challengeResponse.getPunctuation());
@@ -89,6 +96,7 @@ public class RankingBusinessImpl extends GenericBusinessImpl<RankingImpl> implem
 		return newUserRanking;
 	}
 	
+	@PermitAll
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public RankingImpl findByUserAndPeriod(final User user, final String period) {

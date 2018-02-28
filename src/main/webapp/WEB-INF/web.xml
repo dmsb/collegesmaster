@@ -62,7 +62,7 @@
 		<display-name>Public</display-name>
 		<web-resource-collection>
 			<web-resource-name>Public</web-resource-name>
-			<url-pattern>/pages/login.xhtml</url-pattern>
+			<url-pattern>/</url-pattern>
 			<url-pattern>/resources/*</url-pattern>
 			<url-pattern>../resources/i18n/*</url-pattern>
 		</web-resource-collection>
@@ -75,7 +75,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>professor resources</web-resource-name>
-			<url-pattern>/pages/professor/*</url-pattern>
+			<url-pattern>/professor/*</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 			<http-method>PUT</http-method>
@@ -95,7 +95,7 @@
 		<web-resource-collection>
 			<web-resource-name>student resources</web-resource-name>
 			<description />
-			<url-pattern>/pages/student/*</url-pattern>
+			<url-pattern>/student/*</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 			<http-method>PUT</http-method>
@@ -116,7 +116,7 @@
 		<web-resource-collection>
 			<web-resource-name>administrator resources</web-resource-name>
 			<description />
-			<url-pattern>/pages/*</url-pattern>
+			<url-pattern>/*</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 			<http-method>PUT</http-method>
@@ -136,8 +136,8 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>In commom resources</web-resource-name>
-			<url-pattern>/pages/edit_user.xhtml</url-pattern>
-			<url-pattern>/pages/ranking.xhtml</url-pattern>
+			<url-pattern>/edit_user</url-pattern>
+			<url-pattern>/ranking</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 			<http-method>PUT</http-method>

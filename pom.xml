@@ -8,7 +8,7 @@
 	<name>Colleges Master</name>
 
 	<properties>
-		<hibernate.version>5.2.12.Final</hibernate.version>
+		<hibernate.version>5.3.0.CR1</hibernate.version>
 		<hibernate.validation.version>6.0.7.Final</hibernate.validation.version>
 		<jackson.datatype.version>2.9.3</jackson.datatype.version>
 		<wildfly.home>D:\wildfly-10.1.0.Final</wildfly.home>
@@ -26,18 +26,11 @@
 
 	<dependencies>
 
-		<!-- API for JavaEE, provided by Wildfly -->
+		<!-- API for Java EE -->
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>
 			<version>8.0</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<version>2.0</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -64,13 +57,6 @@
 			<artifactId>picketbox</artifactId>
 			<version>5.0.2.Final</version>
 			<scope>provided</scope>
-		</dependency>
-
-		<!-- For CDI in Wildfly -->
-		<dependency>
-			<groupId>org.jboss.weld</groupId>
-			<artifactId>weld-core</artifactId>
-			<version>2.4.4.Final</version>
 		</dependency>
 
 		<!-- RestEasy -->
@@ -106,9 +92,14 @@
 
 		<!-- Hibernate -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>${hibernate.validation.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.glassfish</groupId>
+		    <artifactId>javax.el</artifactId>
+		    <version>3.0.1-b08</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -131,13 +122,6 @@
 		    <groupId>org.primefaces.themes</groupId>
 		    <artifactId>rocket</artifactId>
 		    <version>1.0.10</version>
-		</dependency>
-
-		<!-- JSF -->
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.faces</artifactId>
-			<version>2.2.13</version>
 		</dependency>
 
 		<!-- Database -->
@@ -173,13 +157,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.glassfish.web</groupId>
-			<artifactId>javax.el</artifactId>
-			<version>2.2.6</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -245,12 +222,19 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<compilerArgument>-proc:none</compilerArgument>
+					<annotationProcessorPaths>
+                        <path>
+                            <groupId>org.hibernate.validator</groupId>
+                            <artifactId>hibernate-validator-annotation-processor</artifactId>
+                            <version>${hibernate.validation.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.bsc.maven</groupId>
 				<artifactId>maven-processor-plugin</artifactId>
-				<version>3.2.0</version>
+				<version>3.3.2</version>
 				<executions>
 					<execution>
 						<id>process</id>
@@ -270,7 +254,7 @@
 					<dependency>
 						<groupId>org.hibernate</groupId>
 						<artifactId>hibernate-jpamodelgen</artifactId>
-						<version>5.2.10.Final</version>
+						<version>${hibernate.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>

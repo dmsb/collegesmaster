@@ -23,7 +23,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -62,7 +61,7 @@ public class UserImpl extends ModelImpl implements User {
     @Basic(fetch = LAZY)
 	@Column(name = "password", nullable = false, length = 88)
     private String password;
-     
+
     @NotNull
     @Basic(fetch = LAZY)
 	@Column(name = "salt", nullable = false, length = 44)
@@ -74,7 +73,6 @@ public class UserImpl extends ModelImpl implements User {
     private String cpf;
 		
     @NotNull
-	@Email
 	@Column(name = "email", nullable = false, length = 50)
     private String email;
 
@@ -112,6 +110,7 @@ public class UserImpl extends ModelImpl implements User {
     	final String salt = encoder.generateSalt();	
 		setSalt(salt);
 		setPassword(encoder.generateHashedPassword(getPassword(), salt));
+		parseCpfToCrude();
     }
     
     @PreUpdate
