@@ -17,7 +17,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
 
@@ -37,17 +36,16 @@ public class AlternativeImpl extends ModelImpl implements Alternative {
 	@NotNull
 	@Enumerated(STRING)
 	@Basic(fetch = LAZY, optional = false)
-	@Column(name = "letter", unique = false, length = 1)
+	@Column(name = "letter", length = 1)
 	private Letter letter;
 	
 	@NotNull
-	@Size
     @Lob
-    @Column(name = "description", unique= false, length = 150, nullable = false, columnDefinition = "text")
+    @Column(name = "description", length = 150, nullable = false, columnDefinition = "text")
     private String description;
     
     @NotNull
-	@Column(name = "isTrue", unique = false, nullable = false)
+	@Column(name = "isTrue", nullable = false)
 	private Boolean isTrue;
 	
     @NotNull

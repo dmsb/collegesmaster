@@ -2,6 +2,7 @@ package br.com.collegesmaster.view;
 
 import static br.com.collegesmaster.view.util.JsfUtils.addMessage;
 import static br.com.collegesmaster.view.util.JsfUtils.addMessageWithDetails;
+import static br.com.collegesmaster.view.util.JsfUtils.getHttpServletRequest;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
@@ -23,10 +24,13 @@ import br.com.collegesmaster.model.institute.business.CourseBusiness;
 import br.com.collegesmaster.model.institute.business.InstituteBusiness;
 import br.com.collegesmaster.model.institute.impl.CourseImpl;
 import br.com.collegesmaster.model.institute.impl.InstituteImpl;
+import br.com.collegesmaster.model.security.Credentials;
 import br.com.collegesmaster.model.security.Role;
 import br.com.collegesmaster.model.security.User;
+import br.com.collegesmaster.model.security.business.AuthenticationBusiness;
 import br.com.collegesmaster.model.security.business.RoleBusiness;
 import br.com.collegesmaster.model.security.business.UserBusiness;
+import br.com.collegesmaster.model.security.impl.CredentialsImpl;
 import br.com.collegesmaster.model.security.impl.RoleImpl;
 import br.com.collegesmaster.model.security.impl.UserImpl;
 
@@ -48,12 +52,19 @@ public class HomeMB implements Serializable {
 	@Inject
 	private transient CourseBusiness courseBusiness;
 	
+	@Inject
+	private transient AuthenticationBusiness authenticationBusiness;
+	
+	@Inject
+	private SessionMB sessionMB;
+	
 	private User user;
 	private Role selectedRole;
 	private Course selectedCourse;
 	private Institute selectedInstitute;
 	private List<RoleImpl> roles;
 	private List<InstituteImpl> institutes;
+	private Credentials credentials;
 	
 	@PostConstruct
 	public void init() {
@@ -64,6 +75,20 @@ public class HomeMB implements Serializable {
 		
 		institutes = instituteBusiness.findNames();
 		roles = roleBusiness.findAll();
+		
+		credentials = new CredentialsImpl();
+	}
+	
+	public String jaasLogin() {
+		final String pageToRedirect = authenticationBusiness
+				.processLoginServletRequest(credentials, getHttpServletRequest());
+		if(pageToRedirect != null) {
+			sessionMB.setLoggedUser(userBusiness.findByUsername(credentials.getUsername()));
+			return pageToRedirect + "?faces-redirect=true";
+		} else {
+			addMessageWithDetails(SEVERITY_WARN, "invalid_credentials_mesage", "wrong_login_or_password_message");
+			return null;
+		}
 	}
 	
 	public void persistUser() {
@@ -166,6 +191,14 @@ public class HomeMB implements Serializable {
 
 	public void setInstitutes(List<InstituteImpl> institutes) {
 		this.institutes = institutes;
+	}
+	
+	public Credentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
 	}
 	
 }

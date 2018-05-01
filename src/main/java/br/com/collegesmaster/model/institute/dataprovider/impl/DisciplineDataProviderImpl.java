@@ -23,7 +23,7 @@ import br.com.collegesmaster.model.institute.impl.DisciplineImpl_;
 import br.com.collegesmaster.qualifiers.UserDatabase;
 
 @Dependent
-public class DisciplineDataProviderImpl implements DisciplineDataProvider{
+public class DisciplineDataProviderImpl implements DisciplineDataProvider {
 
 	@Inject @UserDatabase
 	private EntityManager em;
@@ -32,7 +32,7 @@ public class DisciplineDataProviderImpl implements DisciplineDataProvider{
 	protected CriteriaBuilder cb;
 	
 	@Override
-	public List<DisciplineImpl> findNamesByCourse(Course course) {
+	public List<DisciplineImpl> findNamesByCourse(final Course course) {
 		final CriteriaQuery<DisciplineImpl> criteriaQuery = cb.createQuery(DisciplineImpl.class);
 		final Root<DisciplineImpl> rootDiscipline = criteriaQuery.from(DisciplineImpl.class);
 		
@@ -51,7 +51,7 @@ public class DisciplineDataProviderImpl implements DisciplineDataProvider{
 	}
 	
 	@Override
-	public List<DisciplineImpl> findByCourse(Course course) {
+	public List<DisciplineImpl> findByCourse(final Course course) {
 		final CriteriaQuery<DisciplineImpl> criteriaQuery = cb.createQuery(DisciplineImpl.class);
 		final Root<DisciplineImpl> rootDiscipline = criteriaQuery.from(DisciplineImpl.class);
 		final Predicate coursePredicate = cb.equal(rootDiscipline.get(DisciplineImpl_.course), course);

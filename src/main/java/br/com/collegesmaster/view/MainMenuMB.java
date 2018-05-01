@@ -24,8 +24,8 @@ public class MainMenuMB implements Serializable {
 		return loggedUser.getFirstName();
 	}
 	
-	public String toPage(final String code) {
-		if("login".equals(code)) {
+	public String redirectToAction(final String code) {
+		if("logout".equals(code)) {
 			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		}
 		return Page.getPageByCode(code) + "?faces-redirect=true";

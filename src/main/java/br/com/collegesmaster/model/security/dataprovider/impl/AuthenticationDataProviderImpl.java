@@ -99,7 +99,7 @@ public class AuthenticationDataProviderImpl implements AuthenticationDataProvide
 			final User user = typedQuery.getSingleResult();
 			return user.getRoles();
 		} catch (NoResultException e) {
-			LOGGER.log(Level.INFO, "No roles foundeds.");
+			LOGGER.log(Level.INFO, "No roles found.");
 		}
 		
 		throw new LoginException();

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
 <f:view locale="#{localeMB.locale}" />
@@ -15,8 +15,8 @@
 <h:body>
 	<h:outputStylesheet name="css/default.css" />
 	<h:outputScript name="js/calendar_pt_BR.js" />
-	<p:layout fullPage="true">
-		<p:growl id="growl" life="4000" showDetail="true"/>
+	<p:growl id="growl" life="4000" showDetail="true"/>
+	<p:layout id="layout_id" fullPage="true">
 		<p:layoutUnit position="north"
 			header="#{text['collegesmaster']}"
 			style="text-align: center;" />
@@ -26,14 +26,14 @@
 				<p:panelGrid id="login_pg">
 					<p:row>
 						<p:column>
-							<p:inputText id="username" value="#{userSessionMB.credentials.username}" size="15"
+							<p:inputText id="username" value="#{homeMB.credentials.username}" size="15"
 								placeholder="#{text['username']}" required="true"
 								requiredMessage="#{text['required_username_message']}" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:password id="password" value="#{userSessionMB.credentials.password}" size="15"
+							<p:password id="password" value="#{homeMB.credentials.password}" size="15"
 								placeholder="#{text['password']}" required="true"
 								requiredMessage="#{text['required_password_message']}" />
 						</p:column>
@@ -41,7 +41,7 @@
 					<p:row>
 						<p:column style="text-align:center">
 							<p:commandButton value="#{text['login']}" ajax="false"
-								action="#{userSessionMB.jaasLogin}" process="@form" icon="fa fa-fw fa-sign-in" />
+								action="#{homeMB.jaasLogin}" process="layout_id:login_form" icon="fa fa-fw fa-sign-in" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
@@ -94,10 +94,10 @@
 							<h:outputLabel for="birthdate" value="#{text['birthdate']}" />
 						</p:column>
 						<p:column>
-							<p:calendar id="birthdate" value="#{homeMB.user.birthdate}" size="8"
-								pattern="dd-MM-yyyy" mask="true" required="true" locale="#{localeMB.locale}"
-								converter="localDateTimeConverter" label="#{text['birthdate']}"
-								showButtonPanel="true" navigator="true" yearRange="c-100:c+10" />
+							<p:calendar id="birthdate" value="#{homeMB.user.birthdate}"
+							 	required="true" pattern="dd-MM-yyyy" converter="localDateConverter"
+								label="#{text['birthdate']}" showButtonPanel="true" 
+								navigator="true" yearRange="c-100:c+10" size="8" />
 						</p:column>
 					</p:row>
 					<p:row>

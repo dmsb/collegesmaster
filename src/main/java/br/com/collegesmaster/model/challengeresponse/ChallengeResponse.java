@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import br.com.collegesmaster.model.challenge.Challenge;
 import br.com.collegesmaster.model.challenge.impl.AlternativeImpl;
 import br.com.collegesmaster.model.challengeresponse.impl.ChallengeResponseImpl;
+import br.com.collegesmaster.model.challengeresponse.impl.QuestionResponseImpl;
 import br.com.collegesmaster.model.model.Model;
 import br.com.collegesmaster.model.security.User;
 
@@ -17,9 +18,9 @@ public interface ChallengeResponse extends Model {
 
 	Integer getPunctuation();
 
-	void setQuestionsResponse(Collection<QuestionResponse> myQuestionsResolution);
+	void setQuestionsResponse(Collection<QuestionResponseImpl> myQuestionsResolution);
 
-	Collection<QuestionResponse> getQuestionsResponse();
+	Collection<QuestionResponseImpl> getQuestionsResponse();
 
 	void setOwner(User owner);
 

@@ -10,14 +10,18 @@ import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.collegesmaster.model.challenge.Alternative;
 import br.com.collegesmaster.model.challenge.business.ChallengeBusiness;
+import br.com.collegesmaster.model.challenge.enums.ChallengeType;
 import br.com.collegesmaster.model.challenge.enums.Letter;
 import br.com.collegesmaster.model.challenge.impl.AlternativeImpl;
 import br.com.collegesmaster.model.challenge.impl.ChallengeImpl;
@@ -45,11 +49,15 @@ public class ChallengeMB implements Serializable {
 	
 	private ChallengeImpl challenge;
 	
+	private QuestionImpl oldQuestion;
+	
 	private QuestionImpl currentQuestion;
 	
-	private List<AlternativeImpl> alternatives;
-	
 	private Letter trueAlternative;
+	
+	private Boolean isANewQuestion;
+	
+	private Boolean isOnlyView;
 	
 	@PostConstruct
 	public void init() {
@@ -57,6 +65,8 @@ public class ChallengeMB implements Serializable {
 		challenge.setDiscipline(new DisciplineImpl());
 		challenge.setOwner(loggedUser);
 		challenge.setQuestions(new ArrayList<QuestionImpl>());
+		isANewQuestion = true;
+		isOnlyView = false;
 		initCurrentQuestion();
 	}
 	
@@ -66,12 +76,7 @@ public class ChallengeMB implements Serializable {
 	
 	public void initCurrentQuestion() {
 		currentQuestion = new QuestionImpl();
-		currentQuestion.setAlternatives(new ArrayList<AlternativeImpl>());
-		initAlternatives();
-	}
-
-	private void initAlternatives() {
-		alternatives = new ArrayList<>(4);
+		final List<AlternativeImpl> alternatives = new ArrayList<>(4);
 		alternatives.add(new AlternativeImpl());
 		alternatives.add(new AlternativeImpl());
 		alternatives.add(new AlternativeImpl());
@@ -79,14 +84,19 @@ public class ChallengeMB implements Serializable {
 		final Letter[] letters = Letter.values();
 		for(int i = 0; i < letters.length; i++) {
 			alternatives.get(i).setLetter(letters[i]);
+			alternatives.get(i).setQuestion(currentQuestion);
 		}
+		currentQuestion.setAlternatives(alternatives);
 		trueAlternative = null;
+		setIsOnlyView(FALSE);
+		setIsANewQuestion(TRUE);
 	}
 	
 	public void persistChallenge() {
-		final Integer disciplineId = challenge.getDiscipline().getId();		
+		final Integer disciplineId = challenge.getDiscipline().getId();
 		final Discipline discipline = disciplineBusiness.findById(disciplineId);
 		challenge.setDiscipline(discipline);
+		challenge.setChallengetType(ChallengeType.NORMAL);
 		final Boolean created = challengeBusiness.create(challenge);
 		if(created) {
 			addMessage(SEVERITY_INFO, "challenge_registred_with_success_message");
@@ -99,7 +109,24 @@ public class ChallengeMB implements Serializable {
 	public void addQuestionToChallenge() {
 		if(trueAlternative != null) {
 			currentQuestion.setChallenge(challenge);
-			for(final Alternative alternative : alternatives) {
+			for(final Alternative alternative : currentQuestion.getAlternatives()) {
+				if(trueAlternative.equals(alternative.getLetter())) {
+					alternative.setIsTrue(TRUE);
+				} else {
+					alternative.setIsTrue(FALSE);
+				}
+			}
+			challenge.getQuestions().add(currentQuestion);
+			addMessage(SEVERITY_INFO, "question_added_message");
+		} else {
+			addMessage(SEVERITY_WARN, "correct_alternative_required_message");
+		}
+	}
+	
+	public void updateQuestionToChallenge() {
+		if(trueAlternative != null) {
+			currentQuestion.setChallenge(challenge);
+			for(final Alternative alternative : currentQuestion.getAlternatives()) {
 				alternative.setQuestion(currentQuestion);
 				if(trueAlternative.equals(alternative.getLetter())) {
 					alternative.setIsTrue(TRUE);
@@ -107,11 +134,30 @@ public class ChallengeMB implements Serializable {
 					alternative.setIsTrue(FALSE);
 				}
 			}
-			currentQuestion.setAlternatives(alternatives);
-			challenge.getQuestions().add(currentQuestion);
-			addMessage(SEVERITY_INFO, "questiond_added_message");
+			final List<QuestionImpl> updatedQuestions = challenge.getQuestions().stream()
+					.map(question -> { return oldQuestion.equals(question) ? currentQuestion : question; })
+					.collect(Collectors.toList());
+			challenge.setQuestions(updatedQuestions);
+			addMessage(SEVERITY_INFO, "question_updated_message");
 		} else {
 			addMessage(SEVERITY_WARN, "correct_alternative_required_message");
+		}
+		setIsANewQuestion(true);
+	}
+	
+	public void buildParametersForUpdateQuestion() {
+		setOldQuestion(currentQuestion); 
+		setIsANewQuestion(FALSE);
+		setIsOnlyView(FALSE);
+	}
+	
+	public void removeCurrenQuestionFromQuestionList() {
+		challenge.getQuestions().remove(currentQuestion);
+	}
+	
+	public void onChallengeQuestionsDataTableRowSelect(SelectEvent event) {
+		if(QuestionImpl.class.isAssignableFrom(event.getObject().getClass())) {
+			currentQuestion = (QuestionImpl) event.getObject();			
 		}
 	}
 	
@@ -134,14 +180,6 @@ public class ChallengeMB implements Serializable {
 	public void setCurrentQuestion(QuestionImpl currentQuestion) {
 		this.currentQuestion = currentQuestion;
 	}
-	
-	public List<AlternativeImpl> getAlternatives() {
-		return alternatives;
-	}
-
-	public void setAlternatives(List<AlternativeImpl> alternatives) {
-		this.alternatives = alternatives;
-	}
 
 	public Letter getTrueAlternative() {
 		return trueAlternative;
@@ -149,6 +187,30 @@ public class ChallengeMB implements Serializable {
 
 	public void setTrueAlternative(Letter trueAlternative) {
 		this.trueAlternative = trueAlternative;
+	}
+
+	public QuestionImpl getOldQuestion() {
+		return oldQuestion;
+	}
+
+	public void setOldQuestion(QuestionImpl oldQuestion) {
+		this.oldQuestion = oldQuestion;
+	}
+
+	public Boolean getIsANewQuestion() {
+		return isANewQuestion;
+	}
+
+	public void setIsANewQuestion(Boolean isANewQuestion) {
+		this.isANewQuestion = isANewQuestion;
+	}
+
+	public Boolean getIsOnlyView() {
+		return isOnlyView;
+	}
+
+	public void setIsOnlyView(Boolean isOnlyView) {
+		this.isOnlyView = isOnlyView;
 	}
 	
 }

@@ -106,7 +106,7 @@ public class ChallengeResponseMB implements Serializable {
 	}
 	
 	public void selectAlternative() {
-		final QuestionResponse questionResponse = buildQuestionResponse();
+		final QuestionResponseImpl questionResponse = buildQuestionResponse();
 		final Boolean existsAResponse = existsAResponseForThisQuestion(questionResponse);		
 		if(FALSE.equals(existsAResponse)) {
 			challengeResponse.getQuestionsResponse().add(questionResponse);
@@ -122,7 +122,7 @@ public class ChallengeResponseMB implements Serializable {
 	}
 
 	private Boolean existsAResponseForThisQuestion(final QuestionResponse questionResponse) {
-		final Iterator<QuestionResponse> iterator = challengeResponse.getQuestionsResponse().iterator();
+		final Iterator<QuestionResponseImpl> iterator = challengeResponse.getQuestionsResponse().iterator();
 		while(iterator.hasNext()) {
 			QuestionResponse response = iterator.next();
 			if(response.getTargetQuestion().equals(questionResponse.getTargetQuestion())) {				
@@ -134,8 +134,8 @@ public class ChallengeResponseMB implements Serializable {
 		return FALSE;
 	}
 
-	private QuestionResponse buildQuestionResponse() {
-		final QuestionResponse questionResponse = new QuestionResponseImpl();
+	private QuestionResponseImpl buildQuestionResponse() {
+		final QuestionResponseImpl questionResponse = new QuestionResponseImpl();
 		questionResponse.setChallengeResponse(challengeResponse);
 		questionResponse.setTargetQuestion(selectedQuestion);
 		questionResponse.setLetter(selectedAlternative.getLetter());

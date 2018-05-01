@@ -10,8 +10,8 @@ public enum Page {
 	REPLY_CHALLENGES("reply_challenges", "/pages/student/reply_challenges.xhtml"),
 	COMPLETED_CHALLENGES("completed_challenges", "/pages/student/completed_challenges.xhtml"),
 	CREATED_CHALLENGES("created_challenges", "/pages/professor/created_challenges.xhtml"),
-	EDIT_USER("edit_user", "/pages/edit_user.xhtml"),
-	LOGIN("login", "/pages/login.xhtml");
+	EDIT_USER("user_edit", "/pages/user_edit.xhtml"),
+	LOGOUT("logout", "/pages/home.xhtml");
 	
 	private String code;
 	

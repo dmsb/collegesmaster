@@ -24,9 +24,12 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -51,28 +54,28 @@ public class UserImpl extends ModelImpl implements User {
 
     private static final long serialVersionUID = -7809703915845045860L;
 	
-    @NotNull
+	@NotNull
     @Size(min = 2, max = 25)
-    @Column(name = "username", unique= true, length = 25, nullable = false)
+    @Column(name = "username", length = 25, nullable = false)
     private String username;
     
-    @NotNull
+	@NotNull
     @Password
     @Basic(fetch = LAZY)
 	@Column(name = "password", nullable = false, length = 88)
     private String password;
 
-    @NotNull
+	@NotNull
     @Basic(fetch = LAZY)
 	@Column(name = "salt", nullable = false, length = 44)
     private String salt;
 	
-    @NotNull
+	@NotNull
 	@CPF
 	@Column(name = "cpf", nullable = false, length = 11)	
     private String cpf;
-		
-    @NotNull
+    
+	@Email
 	@Column(name = "email", nullable = false, length = 50)
     private String email;
 
@@ -86,6 +89,7 @@ public class UserImpl extends ModelImpl implements User {
     @Column(name = "lastName", nullable = false, length = 80)
     private String lastName;
 
+    @Past
     @Column(name = "birthdate")
     private LocalDate birthdate;
     
@@ -95,6 +99,7 @@ public class UserImpl extends ModelImpl implements User {
     	foreignKey = @ForeignKey(name = "USER_courseFK"))
     private Course course;
     
+    @NotEmpty
     @ManyToMany(fetch = EAGER)
     @JoinTable(name="user_has_roles",
 	    joinColumns = {@JoinColumn(name="userFK", referencedColumnName = "id")},

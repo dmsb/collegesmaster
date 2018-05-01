@@ -12,17 +12,17 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import org.jboss.logging.Logger;
+import  org.jboss.logging.Logger;
 
-@FacesConverter(value = "localDateTimeConverter")
-public class LocalDateTimeConverter implements Converter<LocalDate> {
-	
-	private static final Logger LOGGER = Logger.getLogger(LocalDateTimeConverter.class);
+@FacesConverter("localDateConverter")
+public class LocalDateConverter implements Converter {
+
+	private static final Logger LOGGER = Logger.getLogger(LocalDateConverter.class);
 	
 	@Override
-	public LocalDate getAsObject(FacesContext context, UIComponent component, String localDate) {
+	public LocalDate getAsObject(FacesContext context, UIComponent component, String value) {
 		try {
-			return LocalDate.parse(localDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+			return LocalDate.parse(value, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 		} catch (DateTimeParseException | IllegalArgumentException e) {
 			LOGGER.error("Invalid date format: " + e.getMessage());
 			addMessage(SEVERITY_WARN, "invalid_date_message");
@@ -31,8 +31,9 @@ public class LocalDateTimeConverter implements Converter<LocalDate> {
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, LocalDate localDate) {
-		return localDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+	public String getAsString(FacesContext context, UIComponent component, Object value) {
+		final LocalDate dateValue =  (LocalDate) value;
+ 		return dateValue.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 	}
 
 }

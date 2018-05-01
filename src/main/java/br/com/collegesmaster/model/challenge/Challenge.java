@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.collegesmaster.model.challenge.enums.ChallengeType;
 import br.com.collegesmaster.model.challenge.impl.ChallengeImpl;
 import br.com.collegesmaster.model.challenge.impl.QuestionImpl;
 import br.com.collegesmaster.model.institute.Discipline;
@@ -28,5 +29,13 @@ public interface Challenge extends Model {
 	void setTitle(String title);
 
 	String getTitle();
+
+	void setChallengetType(ChallengeType challengetType);
+
+	ChallengeType getChallengetType();
+
+	void setEnabled(Boolean enabled);
+
+	Boolean getEnabled();
 	
 }

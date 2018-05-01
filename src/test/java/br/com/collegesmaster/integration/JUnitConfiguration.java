@@ -34,10 +34,10 @@ public class JUnitConfiguration {
     @BeforeClass
     public static void setUpClass() {
         logger.setLevel(Level.INFO);        
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
         emf = Persistence.createEntityManagerFactory("collegesmasterPU");
         DBUnitUtil.inserirDados();
+        final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
     }
 
     @AfterClass
@@ -74,7 +74,6 @@ public class JUnitConfiguration {
 
         em.clear();
     }
-    
     public <T> void validateConstraints(final T object) {
         final Set<ConstraintViolation<T>> constraintViolations = validator.validate( object );
         constraintViolations.forEach(violation -> logger.log(Level.SEVERE, violation.getMessage()));

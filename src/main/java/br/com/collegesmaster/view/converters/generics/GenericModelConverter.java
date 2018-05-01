@@ -8,7 +8,7 @@ import com.google.common.base.Strings;
 
 import br.com.collegesmaster.model.model.Model;
 
-public class GenericModelConverter <T extends Model> implements Converter<T> {
+public class GenericModelConverter <T extends Model> implements Converter {
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -21,7 +21,8 @@ public class GenericModelConverter <T extends Model> implements Converter<T> {
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, T model) {
+	public String getAsString(FacesContext context, UIComponent component, Object value) {
+		final Model model = (Model) value;
 		if(model != null && model.getId() != null) {
 			component.getAttributes().put(model.getId().toString(), model);
 			return model.getId().toString();

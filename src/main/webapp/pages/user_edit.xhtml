@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:composites="http://java.sun.com/jsf/composite/composites">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:composites="http://xmlns.jcp.org/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
 
 <f:view locale="#{localeMB.locale}" />
 
@@ -17,7 +17,7 @@
 	<h:outputStylesheet name="css/default.css" />
 	<h:outputScript name="js/calendar_pt_BR.js" />
 	<composites:layouts main_menu_mb="#{mainMenuMB}" id="composite">
-		<p:layoutUnit position="center" header="#{text['edit_user']}" style="text-align:center">
+		<p:layoutUnit position="center" header="#{text['user_edit']}" style="text-align:center">
 			<h:form id="register_form">
 				<p:panelGrid style="text-align:left">
 					<p:row>
@@ -51,11 +51,11 @@
 						<p:column>
 							<h:outputLabel for="birthdate" value="#{text['birthdate']}" />
 						</p:column>
-						<p:column>
+						<p:column>	
 							<p:calendar id="birthdate" value="#{userEditMB.user.birthdate}" size="20"
-								pattern="dd-MM-yyyy" mask="true" required="true" converter="localDateTimeConverter"
-								label="#{text['birthdate']}" locale="#{localeMB.locale}"
-								showButtonPanel="true" navigator="true" yearRange="c-100:c+10"/>
+								required="true" label="#{text['birthdate']}" pattern="dd/MM/yyyy"
+								showButtonPanel="true" navigator="true" yearRange="c-100:c+10" 
+								locale="#{localeMB.locale}" converter="localDateConverter" />
 						</p:column>
 					</p:row>
 					<p:row>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 
@@ -14,9 +14,7 @@
 </composite:interface>
 
 <composite:implementation>
-	
 	<p:growl id="growl" life="4000" />
-	
 	<p:layout id="layout" fullPage="true">
 		<p:layoutUnit id="layout_north" position="north"
 			header="#{text['collegesmaster']}"
@@ -30,29 +28,29 @@
 					<p:submenu label="#{text['user_menu']}">
 						<p:menuitem value="#{text['reply_challenges']}"
 							rendered="#{cc.attrs.main_menu_mb.loggedUser.isUserInAnyRoles(['STUDENT', 'ADMINISTRATOR'])}"
-							action="#{cc.attrs.main_menu_mb.toPage('reply_challenges')}"
+							action="#{cc.attrs.main_menu_mb.redirectToAction('reply_challenges')}"
 							icon="fa fa-fw fa-tasks" />
 						<p:menuitem value="#{text['completed_challenges']}"
 							rendered="#{cc.attrs.main_menu_mb.loggedUser.isUserInAnyRoles(['STUDENT', 'ADMINISTRATOR'])}"
-							action="#{cc.attrs.main_menu_mb.toPage('completed_challenges')}"
+							action="#{cc.attrs.main_menu_mb.redirectToAction('completed_challenges')}"
 							icon="fa fa-fw fa-history" />
 						<p:menuitem value="#{text['create_challenge']}"
 							rendered="#{cc.attrs.main_menu_mb.loggedUser.isUserInAnyRoles(['PROFESSOR', 'ADMINISTRATOR'])}"
-							action="#{cc.attrs.main_menu_mb.toPage('create_challenge')}"
+							action="#{cc.attrs.main_menu_mb.redirectToAction('create_challenge')}"
 							icon="fa fa-fw fa-plus" />
 						<p:menuitem value=" #{text['created_challenges']}"
 							rendered="#{cc.attrs.main_menu_mb.loggedUser.isUserInAnyRoles(['PROFESSOR', 'ADMINISTRATOR'])}"
-							action="#{cc.attrs.main_menu_mb.toPage('created_challenges')}"
+							action="#{cc.attrs.main_menu_mb.redirectToAction('created_challenges')}"
 							icon="fa fa-fw fa-list" />
 						<p:menuitem value="#{text['ranking']}"
 							rendered="#{cc.attrs.main_menu_mb.loggedUser.isUserInAnyRoles(['PROFESSOR', 'STUDENT', 'ADMINISTRATOR'])}"
-							action="#{cc.attrs.main_menu_mb.toPage('ranking')}"
+							action="#{cc.attrs.main_menu_mb.redirectToAction('ranking')}"
 							icon="fa fa-fw fa-tasks" />
-						<p:menuitem value="#{text['edit_user']}"
-							action="#{cc.attrs.main_menu_mb.toPage('edit_user')}"
+						<p:menuitem value="#{text['user_edit']}"
+							action="#{cc.attrs.main_menu_mb.redirectToAction('user_edit')}"
 							icon="fa fa-fw fa-edit" />
 						<p:menuitem value="#{text['logout']}"
-							action="#{cc.attrs.main_menu_mb.toPage('login')}"
+							action="#{cc.attrs.main_menu_mb.redirectToAction('logout')}"
 							icon="fa fa-fw fa-sign-out" />							
 					</p:submenu>
 				</p:menu>

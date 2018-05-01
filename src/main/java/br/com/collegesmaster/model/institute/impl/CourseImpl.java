@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -47,7 +48,7 @@ public class CourseImpl extends ModelImpl implements Course {
 		foreignKey = @ForeignKey(name = "COURSE_instituteFK"))
 	private Institute institute;
 	
-	@NotNull
+	@NotEmpty
 	@OneToMany(targetEntity = DisciplineImpl.class, cascade = ALL, fetch = LAZY,
 			orphanRemoval = true, mappedBy = "course")
 	private Collection<DisciplineImpl> disciplines;

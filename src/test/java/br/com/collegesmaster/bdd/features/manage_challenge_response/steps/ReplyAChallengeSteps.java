@@ -12,7 +12,6 @@ import br.com.collegesmaster.model.challenge.impl.AlternativeImpl;
 import br.com.collegesmaster.model.challenge.impl.ChallengeImpl;
 import br.com.collegesmaster.model.challenge.impl.QuestionImpl;
 import br.com.collegesmaster.model.challengeresponse.ChallengeResponse;
-import br.com.collegesmaster.model.challengeresponse.QuestionResponse;
 import br.com.collegesmaster.model.challengeresponse.impl.ChallengeResponseImpl;
 import br.com.collegesmaster.model.challengeresponse.impl.QuestionResponseImpl;
 import net.thucydides.core.annotations.Step;
@@ -43,14 +42,14 @@ public class ReplyAChallengeSteps {
 		Assert.assertTrue(challengeResponse.getPunctuation().equals(punctuation));
 	}
 	
-	private List<QuestionResponse> buildQuestionsResponse(final Letter letter) {
-		final QuestionResponse questionResponse = new QuestionResponseImpl();
+	private List<QuestionResponseImpl> buildQuestionsResponse(final Letter letter) {
+		final QuestionResponseImpl questionResponse = new QuestionResponseImpl();
 		questionResponse.setLetter(letter);
 		final List<QuestionImpl> questionList = challengeResponse.getTargetChallenge()
 				.getQuestions().stream().collect(Collectors.toList());
 		questionResponse.setTargetQuestion(questionList.get(0));
 		
-		final List<QuestionResponse> questionsResponse = new ArrayList<>();
+		final List<QuestionResponseImpl> questionsResponse = new ArrayList<>();
 		questionsResponse.add(questionResponse);
 		return questionsResponse;
 	}

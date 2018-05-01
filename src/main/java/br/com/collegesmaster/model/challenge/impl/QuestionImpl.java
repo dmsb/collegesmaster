@@ -17,12 +17,10 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.collegesmaster.model.challenge.Challenge;
 import br.com.collegesmaster.model.challenge.Question;
@@ -42,13 +40,10 @@ public class QuestionImpl extends ModelImpl implements Question {
 	private String description;
 
 	@NotNull
-	@Min(0)
-	@Max(100)
 	@Column(name = "punctuation", nullable = false, length = 11)
 	private Integer punctuation;
 
-	@NotNull
-	@NotAudited
+	@NotEmpty
 	@OneToMany(targetEntity = AlternativeImpl.class, cascade = ALL, fetch = EAGER, 
 		orphanRemoval = true, mappedBy = "question")
 	private Collection<AlternativeImpl> alternatives;

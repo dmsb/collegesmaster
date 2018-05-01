@@ -28,7 +28,6 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 	
 	private ExceptionHandler exceptionHandler;
 
-	@SuppressWarnings("deprecation")
 	public CustomExceptionHandler(ExceptionHandler exceptionHandler) {
     	try {
 			CdiHelper.programmaticInjection(CustomExceptionHandler.class, this);

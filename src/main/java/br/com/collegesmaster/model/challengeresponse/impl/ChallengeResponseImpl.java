@@ -23,6 +23,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.collegesmaster.model.challenge.Challenge;
 import br.com.collegesmaster.model.challenge.impl.AlternativeImpl;
@@ -58,11 +59,10 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 	@Column(name = "punctuation", nullable = false, length = 11)
 	private Integer punctuation;
 	
-	@NotNull
+	@NotEmpty
 	@NotAudited
-	@OneToMany(targetEntity = QuestionResponseImpl.class, cascade = ALL, 
-		fetch = LAZY, orphanRemoval = true, mappedBy = "challengeResponse")
-	private Collection<QuestionResponse> questionsResponse;
+	@OneToMany(cascade = ALL, fetch = LAZY, orphanRemoval = true, mappedBy = "challengeResponse")
+	private Collection<QuestionResponseImpl> questionsResponse;
 	
 	@Override
 	@PrePersist
@@ -120,12 +120,12 @@ public class ChallengeResponseImpl extends ModelImpl implements ChallengeRespons
 	}
 
 	@Override
-	public Collection<QuestionResponse> getQuestionsResponse() {
+	public Collection<QuestionResponseImpl> getQuestionsResponse() {
 		return questionsResponse;
 	}
 
 	@Override
-	public void setQuestionsResponse(Collection<QuestionResponse> questionsResponse) {
+	public void setQuestionsResponse(Collection<QuestionResponseImpl> questionsResponse) {
 		this.questionsResponse = questionsResponse;
 	}
 	
