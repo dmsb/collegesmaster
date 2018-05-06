@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import org.jboss.ejb3.annotation.SecurityDomain;
 
 import br.com.collegesmaster.model.generics.impl.GenericBusinessImpl;
+import br.com.collegesmaster.model.institute.Course;
 import br.com.collegesmaster.model.institute.Institute;
 import br.com.collegesmaster.model.institute.business.CourseBusiness;
 import br.com.collegesmaster.model.institute.dataprovider.CourseDataProvider;
@@ -24,34 +25,34 @@ import br.com.collegesmaster.model.institute.impl.CourseImpl;
 @TransactionManagement(CONTAINER)
 @RolesAllowed({"ADMINISTRATOR"})
 @SecurityDomain("collegesmasterSecurityDomain")
-public class CourseBusinessImpl extends GenericBusinessImpl<CourseImpl> implements CourseBusiness {
+public class CourseBusinessImpl extends GenericBusinessImpl<Course> implements CourseBusiness {
 	
 	@Inject
 	private CourseDataProvider courseDataProvider;	
 	
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public Boolean create(CourseImpl course) {
+	public Boolean create(Course course) {
 		return super.genericCreate(course);
 	}
 
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public CourseImpl update(CourseImpl course) {
+	public Course update(Course course) {
 		return super.genericUpdate(course);
 	}
 
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public Boolean remove(CourseImpl course) {
+	public Boolean remove(Course course) {
 		return super.genericRemove(course);
 	}
 
 	@PermitAll
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public CourseImpl findById(Integer id) {
-		return super.findById(CourseImpl.class, id);
+	public Course findById(Integer id) {
+		return super.findById(Course.class, id);
 	}
 	
 	@PermitAll

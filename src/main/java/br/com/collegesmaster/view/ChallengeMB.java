@@ -20,6 +20,7 @@ import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 
 import br.com.collegesmaster.model.challenge.Alternative;
+import br.com.collegesmaster.model.challenge.Challenge;
 import br.com.collegesmaster.model.challenge.business.ChallengeBusiness;
 import br.com.collegesmaster.model.challenge.enums.ChallengeType;
 import br.com.collegesmaster.model.challenge.enums.Letter;
@@ -47,7 +48,7 @@ public class ChallengeMB implements Serializable {
 	@Inject @AuthenticatedUser 
 	private User loggedUser;
 	
-	private ChallengeImpl challenge;
+	private Challenge challenge;
 	
 	private QuestionImpl oldQuestion;
 	
@@ -165,11 +166,11 @@ public class ChallengeMB implements Serializable {
 		return Letter.values();
 	}
 
-	public ChallengeImpl getChallenge() {
+	public Challenge getChallenge() {
 		return challenge;
 	}
 
-	public void setChallenge(ChallengeImpl challenge) {
+	public void setChallenge(Challenge challenge) {
 		this.challenge = challenge;
 	}
 

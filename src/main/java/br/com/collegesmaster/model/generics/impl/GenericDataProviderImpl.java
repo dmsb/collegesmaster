@@ -13,11 +13,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.model.generics.GenericDataProvider;
-import br.com.collegesmaster.model.model.impl.ModelImpl;
+import br.com.collegesmaster.model.model.Model;
 import br.com.collegesmaster.qualifiers.UserDatabase;
 
 @Dependent
-public class GenericDataProviderImpl<T extends ModelImpl> implements GenericDataProvider<T> {
+public class GenericDataProviderImpl<T extends Model> implements GenericDataProvider<T> {
 	
 	@Inject
 	private Logger LOGGER;

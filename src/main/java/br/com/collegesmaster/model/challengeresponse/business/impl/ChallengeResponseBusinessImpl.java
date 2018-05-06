@@ -18,6 +18,7 @@ import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.exceptions.BusinessException;
 import br.com.collegesmaster.model.challenge.Challenge;
+import br.com.collegesmaster.model.challengeresponse.ChallengeResponse;
 import br.com.collegesmaster.model.challengeresponse.business.ChallengeResponseBusiness;
 import br.com.collegesmaster.model.challengeresponse.business.RankingBusiness;
 import br.com.collegesmaster.model.challengeresponse.dataprovider.ChallengeResponseDataProvider;
@@ -28,7 +29,7 @@ import br.com.collegesmaster.model.security.User;
 @Stateless
 @TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
-public class ChallengeResponseBusinessImpl extends GenericBusinessImpl<ChallengeResponseImpl> 
+public class ChallengeResponseBusinessImpl extends GenericBusinessImpl<ChallengeResponse> 
 	implements ChallengeResponseBusiness {
 	
 	@Inject
@@ -43,7 +44,7 @@ public class ChallengeResponseBusinessImpl extends GenericBusinessImpl<Challenge
 	@RolesAllowed({"STUDENT", "ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public Boolean create(final ChallengeResponseImpl response) {
+	public Boolean create(final ChallengeResponse response) {
 		final Boolean alrealdyRepliedByUser = alrealdyRepliedByUser(response);
 		if(FALSE.equals(alrealdyRepliedByUser)) {
 			final Boolean wasCreated = super.genericCreate(response);
@@ -59,21 +60,21 @@ public class ChallengeResponseBusinessImpl extends GenericBusinessImpl<Challenge
 	@RolesAllowed({"STUDENT", "ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public ChallengeResponseImpl update(final ChallengeResponseImpl response) {
+	public ChallengeResponse update(final ChallengeResponse response) {
 		return super.genericUpdate(response);
 	}
 	
 	@RolesAllowed({"ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public Boolean remove(final ChallengeResponseImpl response) {
+	public Boolean remove(final ChallengeResponse response) {
 		return super.genericRemove(response);
 	}
 
 	@RolesAllowed({"STUDENT", "ADMINISTRATOR"})
 	@TransactionAttribute(MANDATORY)
 	@Override
-	public Boolean alrealdyRepliedByUser(final ChallengeResponseImpl response) {
+	public Boolean alrealdyRepliedByUser(final ChallengeResponse response) {
 		if(response != null && response.isNew()) {
 			return challengeResponseDataProvider.alrealdyRepliedByUser(response);
 		} else {
@@ -85,8 +86,8 @@ public class ChallengeResponseBusinessImpl extends GenericBusinessImpl<Challenge
 	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public ChallengeResponseImpl findById(final Integer id) {
-		return super.findById(ChallengeResponseImpl.class, id);
+	public ChallengeResponse findById(final Integer id) {
+		return super.findById(ChallengeResponse.class, id);
 	}
 	
 	@RolesAllowed({"STUDENT", "PROFESSOR", "ADMINISTRATOR"})

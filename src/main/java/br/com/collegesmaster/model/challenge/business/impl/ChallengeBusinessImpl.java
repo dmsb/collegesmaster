@@ -25,7 +25,7 @@ import br.com.collegesmaster.model.security.User;
 @Stateless
 @TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
-public class ChallengeBusinessImpl extends GenericBusinessImpl<ChallengeImpl> implements ChallengeBusiness {
+public class ChallengeBusinessImpl extends GenericBusinessImpl<Challenge> implements ChallengeBusiness {
 	
 	@Inject
 	private ChallengeDataProvider challengeDataProvider;
@@ -33,21 +33,21 @@ public class ChallengeBusinessImpl extends GenericBusinessImpl<ChallengeImpl> im
 	@RolesAllowed({"PROFESSOR", "ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public Boolean create(final ChallengeImpl challenge) {
+	public Boolean create(final Challenge challenge) {
 		return super.genericCreate(challenge);
 	}
 	
 	@RolesAllowed({"PROFESSOR", "ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public ChallengeImpl update(final ChallengeImpl challenge) {
+	public Challenge update(final Challenge challenge) {
 		return super.genericUpdate(challenge);
 	}
 	
 	@RolesAllowed({"ADMINISTRATOR"})
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public Boolean remove(final ChallengeImpl challenge) {
+	public Boolean remove(final Challenge challenge) {
 		return super.genericRemove(challenge);
 	}
 
@@ -55,7 +55,7 @@ public class ChallengeBusinessImpl extends GenericBusinessImpl<ChallengeImpl> im
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Challenge findById(Integer id) {
-		return super.findById(ChallengeImpl.class, id);
+		return super.findById(Challenge.class, id);
 	}
 	
 	@PermitAll

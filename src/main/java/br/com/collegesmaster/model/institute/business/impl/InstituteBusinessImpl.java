@@ -24,26 +24,26 @@ import br.com.collegesmaster.model.institute.impl.InstituteImpl;
 @TransactionManagement(CONTAINER)
 @RolesAllowed({"ADMINISTRATOR"})
 @SecurityDomain("collegesmasterSecurityDomain")
-public class InstituteBusinessImpl extends GenericBusinessImpl<InstituteImpl> implements InstituteBusiness {
+public class InstituteBusinessImpl extends GenericBusinessImpl<Institute> implements InstituteBusiness {
 	
 	@Inject
 	private InstituteDataProvider instituteDataProvider;
 	
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public Boolean create(final InstituteImpl institute) {
+	public Boolean create(final Institute institute) {
 		return super.genericCreate(institute);
 	}
 	
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public InstituteImpl update(final InstituteImpl institute) {
+	public Institute update(final Institute institute) {
 		return super.genericUpdate(institute);
 	}
 	
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public Boolean remove(final InstituteImpl institute) {
+	public Boolean remove(final Institute institute) {
 		return super.genericRemove(institute);
 	}
 	
@@ -51,7 +51,7 @@ public class InstituteBusinessImpl extends GenericBusinessImpl<InstituteImpl> im
 	@TransactionAttribute(REQUIRED)
 	@Override
 	public Institute findById(final Integer id) {
-		return super.findById(InstituteImpl.class, id);
+		return super.findById(Institute.class, id);
 	}
 	
 	@PermitAll

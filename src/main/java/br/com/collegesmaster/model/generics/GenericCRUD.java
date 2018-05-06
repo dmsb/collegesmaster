@@ -1,8 +1,8 @@
 package br.com.collegesmaster.model.generics;
 
-import br.com.collegesmaster.model.model.impl.ModelImpl;
+import br.com.collegesmaster.model.model.Model;
 
-public interface GenericCRUD <T extends ModelImpl> {
+public interface GenericCRUD <T extends Model> {
 	
 	Boolean create(T model);
 	

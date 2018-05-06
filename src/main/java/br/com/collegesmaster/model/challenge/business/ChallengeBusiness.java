@@ -8,7 +8,7 @@ import br.com.collegesmaster.model.challenge.impl.QuestionImpl;
 import br.com.collegesmaster.model.generics.GenericCRUD;
 import br.com.collegesmaster.model.security.User;
 
-public interface ChallengeBusiness extends GenericCRUD<ChallengeImpl> {
+public interface ChallengeBusiness extends GenericCRUD<Challenge> {
 	
 	Challenge findById(final Integer id);
 	

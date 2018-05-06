@@ -15,6 +15,7 @@ import org.jboss.ejb3.annotation.SecurityDomain;
 
 import br.com.collegesmaster.exceptions.BusinessException;
 import br.com.collegesmaster.model.generics.impl.GenericBusinessImpl;
+import br.com.collegesmaster.model.security.User;
 import br.com.collegesmaster.model.security.business.UserBusiness;
 import br.com.collegesmaster.model.security.dataprovider.UserDataProvider;
 import br.com.collegesmaster.model.security.impl.UserImpl;
@@ -23,7 +24,7 @@ import br.com.collegesmaster.qualifiers.AuthenticatedUser;
 @Stateless
 @TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
-public class UserBusinessImpl extends GenericBusinessImpl<UserImpl> implements UserBusiness {
+public class UserBusinessImpl extends GenericBusinessImpl<User> implements UserBusiness {
 	
 	@Inject
 	private UserDataProvider userDataProvider;
@@ -35,36 +36,35 @@ public class UserBusinessImpl extends GenericBusinessImpl<UserImpl> implements U
 	@PermitAll
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public Boolean create(final UserImpl user) {
+	public Boolean create(final User user) {
 		return super.genericCreate(user);
 	}
 
 	@RolesAllowed({ "STUDENT", "PROFESSOR", "ADMINISTATOR" })
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public UserImpl update(final UserImpl user) {
-		final UserImpl savedUser = super.genericUpdate(user);
+	public User update(final User user) {
+		final User savedUser = super.genericUpdate(user);
 		if(savedUser != null) {
-			userUpdateEvent.fire(savedUser);
+			userUpdateEvent.fire((UserImpl)savedUser);
 			return savedUser;
 		} else {
 			return user;
 		}
-		
 	}
 
 	@RolesAllowed({ "ADMINISTRATOR" })
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public Boolean remove(final UserImpl user) {
+	public Boolean remove(final User user) {
 		return super.genericRemove(user);
 	}
 
 	@RolesAllowed({ "STUDENT", "PROFESSOR", "ADMINISTATOR" })
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public UserImpl findById(final Integer id) {
-		return super.findById(UserImpl.class, id);
+	public User findById(final Integer id) {
+		return super.findById(User.class, id);
 	}
 	
 	@PermitAll

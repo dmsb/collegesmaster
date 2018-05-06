@@ -12,6 +12,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import br.com.collegesmaster.model.challenge.Challenge;
+import br.com.collegesmaster.model.challengeresponse.ChallengeResponse;
 import br.com.collegesmaster.model.challengeresponse.dataprovider.ChallengeResponseDataProvider;
 import br.com.collegesmaster.model.challengeresponse.impl.ChallengeResponseImpl;
 import br.com.collegesmaster.model.challengeresponse.impl.ChallengeResponseImpl_;
@@ -32,7 +33,7 @@ public class ChallengeResponseDataProviderImpl implements ChallengeResponseDataP
 	protected CriteriaBuilder cb;
 	
 	@Override
-	public Boolean alrealdyRepliedByUser(ChallengeResponseImpl response) {
+	public Boolean alrealdyRepliedByUser(ChallengeResponse response) {
 		final Root<ChallengeResponseImpl> crRoot = booleanResponseBuilder.build(ChallengeResponseImpl.class);
 		final Predicate equalsUser = cb.equal(crRoot.get(ChallengeResponseImpl_.owner), response.getOwner());
 		final Predicate equalsTargetChallenge = cb.equal(crRoot.get(ChallengeResponseImpl_.targetChallenge), 

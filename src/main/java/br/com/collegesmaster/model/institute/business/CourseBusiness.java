@@ -9,15 +9,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import br.com.collegesmaster.model.generics.GenericCRUD;
+import br.com.collegesmaster.model.institute.Course;
 import br.com.collegesmaster.model.institute.Institute;
 import br.com.collegesmaster.model.institute.impl.CourseImpl;
 
 @Path("/courses")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-public interface CourseBusiness extends GenericCRUD<CourseImpl> {
+public interface CourseBusiness extends GenericCRUD<Course> {
 	
-	CourseImpl findById(final Integer id);
+	Course findById(final Integer id);
 	
 	List<CourseImpl> findNamesByInstitute(final Institute institute);
 

@@ -7,7 +7,7 @@ import br.com.collegesmaster.model.institute.Course;
 import br.com.collegesmaster.model.institute.Discipline;
 import br.com.collegesmaster.model.institute.impl.DisciplineImpl;
 
-public interface DisciplineBusiness extends GenericCRUD<DisciplineImpl> {
+public interface DisciplineBusiness extends GenericCRUD<Discipline> {
 	
 	Discipline findById(final Integer id);
 	

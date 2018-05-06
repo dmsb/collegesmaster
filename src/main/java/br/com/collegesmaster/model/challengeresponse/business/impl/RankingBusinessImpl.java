@@ -18,6 +18,7 @@ import org.jboss.security.annotation.SecurityDomain;
 
 import br.com.collegesmaster.exceptions.BusinessException;
 import br.com.collegesmaster.model.challengeresponse.ChallengeResponse;
+import br.com.collegesmaster.model.challengeresponse.Ranking;
 import br.com.collegesmaster.model.challengeresponse.business.RankingBusiness;
 import br.com.collegesmaster.model.challengeresponse.dataprovider.RankingDataProvider;
 import br.com.collegesmaster.model.challengeresponse.impl.RankingImpl;
@@ -29,26 +30,26 @@ import br.com.collegesmaster.model.security.User;
 @TransactionManagement(CONTAINER)
 @SecurityDomain("collegesmasterSecurityDomain")
 @RolesAllowed({"STUDENT", "ADMINISTRATOR"})
-public class RankingBusinessImpl extends GenericBusinessImpl<RankingImpl> implements RankingBusiness {
+public class RankingBusinessImpl extends GenericBusinessImpl<Ranking> implements RankingBusiness {
 	
 	@Inject
 	private RankingDataProvider rankingDataProvider;
 	
 	@TransactionAttribute(MANDATORY)
 	@Override
-	public Boolean create(final RankingImpl ranking) {
+	public Boolean create(final Ranking ranking) {
 		return super.genericCreate(ranking);
 	}
 
 	@TransactionAttribute(MANDATORY)
 	@Override
-	public RankingImpl update(final RankingImpl ranking) {
+	public Ranking update(final Ranking ranking) {
 		return super.genericUpdate(ranking);
 	}
 
 	@TransactionAttribute(REQUIRED)
 	@Override
-	public Boolean remove(final RankingImpl ranking) {
+	public Boolean remove(final Ranking ranking) {
 		return super.genericRemove(ranking);
 	}
 	

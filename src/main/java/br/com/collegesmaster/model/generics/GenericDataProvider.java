@@ -1,7 +1,15 @@
 package br.com.collegesmaster.model.generics;
 
-import br.com.collegesmaster.model.model.impl.ModelImpl;
+import br.com.collegesmaster.model.model.Model;
 
-public interface GenericDataProvider <T extends ModelImpl> extends GenericCRUD<T> {
+public interface GenericDataProvider <T extends Model> {
+	
+	Boolean create(T model);
+	
+	T update(T model);
+
+	Boolean remove(T model);
+	
+	T findById(Class<T> modelClass, Integer id);
 	
 }

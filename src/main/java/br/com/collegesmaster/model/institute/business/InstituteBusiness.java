@@ -6,7 +6,7 @@ import br.com.collegesmaster.model.generics.GenericCRUD;
 import br.com.collegesmaster.model.institute.Institute;
 import br.com.collegesmaster.model.institute.impl.InstituteImpl;
 
-public interface InstituteBusiness extends GenericCRUD<InstituteImpl> {
+public interface InstituteBusiness extends GenericCRUD<Institute> {
 
 	Institute findById(final Integer id);
 	

@@ -85,7 +85,7 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<p:contextMenu for="composite:challenge_form:challenge_questions_dt" event="click contextmenu">
+				<p:contextMenu for="composite:challenge_form:challenge_questions_dt" event="contextmenu">
 			        <p:menuitem value="#{text['view']}" icon="ui-icon-search"
 			        	process="@parent"
 			        	actionListener="#{challengeMB.setIsOnlyView(true)}"
@@ -116,7 +116,7 @@
 						<p:row>
 							<p:column colspan="2">
 								<p:inputTextarea id="description" rows="7" required="true"
-									cols="78" maxlength="1000" autoResize="false" disabled="#{challengeMB.getIsOnlyView()}"
+									cols="78" maxlength="1000" autoResize="false" readonly="#{challengeMB.getIsOnlyView()}"
 									value="#{challengeMB.currentQuestion.description}"
 									requiredMessage="#{text['required_question_description_message']}"/>
 							</p:column>				
@@ -128,7 +128,7 @@
 								</p:column>
 								<p:column>
 									<p:inputTextarea placeholder="#{text['description']}" id="description"
-									rows="5" cols="65" maxlength="1000" autoResize="false" disabled="#{challengeMB.getIsOnlyView()}"
+									rows="5" cols="65" maxlength="1000" autoResize="false" readonly="#{challengeMB.getIsOnlyView()}"
 									value="#{challengeMB.currentQuestion.alternatives.get(status.index).description}" required="true"
 									requiredMessage="#{text['required_alternative_message']}" />												
 								</p:column>
@@ -142,7 +142,7 @@
 		        				<p:spinner id="punctuation" value="#{challengeMB.currentQuestion.punctuation}"
 		        					stepFactor="10" min="0" max="100" size="5" required="true"
 									requiredMessage="#{text['required_punctuation_message']}"
-									style="margin-right: 10px" disabled="#{challengeMB.getIsOnlyView()}"/>
+									style="margin-right: 10px" readonly="#{challengeMB.getIsOnlyView()}"/>
    							</p:column>
    						</p:row>
    						<p:row>
@@ -152,7 +152,7 @@
 							<p:column>
 								<p:selectOneMenu id="true_alternative" value="#{challengeMB.trueAlternative}"
 									required="true" requiredMessage="#{text['required_true_alternative_message']}"
-									disabled="#{challengeMB.getIsOnlyView()}">
+									readonly="#{challengeMB.getIsOnlyView()}">
 									<f:selectItem itemLabel="#{text['select']}" itemValue="" />
 						            <f:selectItems value="#{challengeMB.loadAllLetters()}" var="letter" 
 						            	itemLabel="#{letter}" itemValue="#{letter}" />

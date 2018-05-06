@@ -24,7 +24,6 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
@@ -89,7 +88,6 @@ public class UserImpl extends ModelImpl implements User {
     @Column(name = "lastName", nullable = false, length = 80)
     private String lastName;
 
-    @Past
     @Column(name = "birthdate")
     private LocalDate birthdate;
     

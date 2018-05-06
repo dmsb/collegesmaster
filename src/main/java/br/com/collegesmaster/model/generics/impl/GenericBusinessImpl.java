@@ -9,10 +9,10 @@ import org.jboss.logging.Logger;
 
 import br.com.collegesmaster.model.generics.GenericCRUD;
 import br.com.collegesmaster.model.generics.GenericDataProvider;
-import br.com.collegesmaster.model.model.impl.ModelImpl;
+import br.com.collegesmaster.model.model.Model;
 
 @Dependent
-public abstract class GenericBusinessImpl<T extends ModelImpl> implements GenericCRUD<T> {
+public abstract class GenericBusinessImpl<T extends Model> implements GenericCRUD<T> {
 
 	@Inject
 	private Logger LOGGER;
